@@ -1,9 +1,11 @@
 // يجهّز مجلد dist للنشر على Vercel ويكتب config.js من متغيرات البيئة
 const fs = require('fs'), path = require('path');
 const url = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const anonKey = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const anonKey = process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+  process.env.SUPABASE_PUBLISHABLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || '';
 if (!url || !anonKey) {
-  console.error('\n✖ ناقص SUPABASE_URL أو SUPABASE_ANON_KEY في إعدادات Vercel (Environment Variables).\n');
+  console.error('\n✖ ناقص SUPABASE_URL أو SUPABASE_ANON_KEY في إعدادات Vercel (Environment Variables).');
+  console.error('  موجود حالياً: ' + (Object.keys(process.env).filter(k => /SUPABASE/i.test(k)).join(', ') || 'لا شيء') + '\n');
   process.exit(1);
 }
 fs.rmSync('dist', { recursive: true, force: true });
