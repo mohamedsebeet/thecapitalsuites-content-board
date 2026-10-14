@@ -22,7 +22,7 @@
     '#team-dlg{position:fixed;inset:0;z-index:9998;background:rgba(31,36,39,.45);display:flex;align-items:center;justify-content:center;padding:16px;direction:rtl}' +
     '#team-dlg .card{width:100%;max-width:520px;max-height:85vh;overflow:auto;background:#fff;border-radius:14px;padding:22px}' +
     '#team-dlg h2{margin:0 0 12px;font-size:18px}#team-dlg table{width:100%;border-collapse:collapse;font-size:14px}' +
-    '#team-dlg td{padding:8px 4px;border-bottom:1px solid #EEE8DA}#team-dlg td.e{direction:ltr;text-align:left}' +
+    '#team-dlg td{padding:8px 4px;border-bottom:1px solid #EEE8DA}#team-dlg input.nm{width:100%;box-sizing:border-box;border:1px solid transparent;background:#FBF8F1;padding:6px 8px}#team-dlg input.nm:focus{border-color:#C29B3C;outline:0;background:#fff}#team-dlg td.e{direction:ltr;text-align:left}' +
     '#team-dlg .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}#team-dlg input,#team-dlg select{padding:9px 10px;border:1px solid #CFC6B2;border-radius:8px;font:inherit;font-size:14px}' +
     '#team-dlg input.e{direction:ltr;flex:2 1 200px}#team-dlg input.n{flex:1 1 120px}' +
     '#team-dlg button{padding:9px 14px;border:0;border-radius:8px;background:#1F2427;color:#fff;font:inherit;cursor:pointer}' +
@@ -195,6 +195,11 @@
     var b = document.createElement('button'); b.id = 'team-btn'; b.type = 'button'; b.textContent = 'الفريق';
     b.onclick = openTeam; who.parentNode.insertBefore(b, who.nextSibling);
   }
+  function refreshWho() {
+    var w = document.getElementById('who'); if (!w) return;
+    var n = w.querySelector('span'); var m = MEMBERS[SESSION.user.email.toLowerCase()];
+    if (n && m) n.textContent = m.name || m.email.split('@')[0];
+  }
   function openTeam() {
     var d = document.createElement('div'); d.id = 'team-dlg';
     d.onclick = function (e) { if (e.target === d) d.remove(); };
@@ -205,7 +210,7 @@
       var me = SESSION.user.email.toLowerCase();
       var rows = Object.keys(MEMBERS).sort().map(function (k) {
         var m = MEMBERS[k];
-        return '<tr><td>' + esc(m.name || '') + '</td><td class="e">' + esc(m.email) + '</td><td>' + ROLE_AR[m.role] + '</td><td>' +
+        return '<tr><td><input class="nm" data-nm="' + esc(m.email) + '" value="' + esc(m.name || '') + '" placeholder="اكتب الاسم" title="عدّل الاسم واضغط Enter"></td><td class="e">' + esc(m.email) + '</td><td>' + ROLE_AR[m.role] + '</td><td>' +
           (k === me ? '' : '<button class="x" data-del="' + esc(m.email) + '">إزالة</button>') + '</td></tr>';
       }).join('');
       d.innerHTML = '<div class="card"><h2>فريق اللوحة</h2><table>' + rows + '</table>' +
@@ -217,9 +222,23 @@
       d.querySelector('#tm-f').onsubmit = function (ev) {
         ev.preventDefault();
         var e = d.querySelector('#tm-e').value.trim().toLowerCase();
+        if (e === me && d.querySelector('#tm-r').value !== 'owner') { alert('ده إيميلك. عدّل اسمك من الجدول فوق، ودورك يفضل مدير المحتوى.'); return; }
         sb.from('members').upsert({ email: e, role: d.querySelector('#tm-r').value, name: d.querySelector('#tm-n').value.trim() || null })
           .then(function (r) { if (r.error) alert('ما تمت الإضافة: ' + r.error.message); drawTeam(d); });
       };
+      d.querySelectorAll('[data-nm]').forEach(function (x) {
+        var save = function () {
+          var em = x.getAttribute('data-nm'), v = x.value.trim();
+          if ((MEMBERS[em] || {}).name === v) return;
+          sb.from('members').update({ name: v || null }).eq('email', em).then(function (r) {
+            if (r.error) { alert('ما اتحفظ الاسم: ' + r.error.message); return; }
+            MEMBERS[em].name = v; x.style.borderColor = '#2E7D4F';
+            if (em === me) refreshWho();
+          });
+        };
+        x.addEventListener('change', save);
+        x.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); x.blur(); } });
+      });
       d.querySelectorAll('[data-del]').forEach(function (x) {
         x.onclick = function () {
           sb.from('members').delete().eq('email', x.getAttribute('data-del')).then(function () { drawTeam(d); });
