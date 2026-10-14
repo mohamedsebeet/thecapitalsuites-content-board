@@ -90,6 +90,9 @@ create policy notes_insert on public.notes for insert with check (public.my_role
 create policy notes_delete on public.notes for delete using (public.my_role() = 'owner');
 
 grant execute on function public.my_role(), public.claim_owner(), public.merge_post(text, jsonb) to authenticated;
+grant usage on schema public to authenticated;
+grant select, insert, update, delete on public.posts, public.notes, public.members to authenticated;
+revoke all on public.posts, public.notes, public.members from anon;
 
 -- تحديث لحظي
 do $$ begin
