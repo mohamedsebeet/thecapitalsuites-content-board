@@ -235,6 +235,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   function dayD(s){var d=pd(s);return DAYS[d.getDay()]+' '+d.getDate()+' '+MON[d.getMonth()]}
   function workday(d){while(d.getDay()===5)d=addD(d,-1);return d}
   function due(s){return iso(workday(addD(pd(s),-DESIGN_LEAD)))}
+  function dueOf(p){return p.dd||due(p.d)}
   function safeUrl(u){u=String(u||'').trim();return /^https?:\/\//i.test(u)?u:''}
   function stTag(k){return '<span class="st" style="--sc:var(--st-'+k+')">'+esc(STL[k]||k)+'</span>'}
   function n0(x){return x==null||x===''?'—':Number(x).toLocaleString('en-US')}
@@ -299,8 +300,8 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     var wk=Math.max(weekOf(T),1),inWeek=POSTS.filter(function(p){return weekOf(p.d)===wk});
     var pub=inWeek.filter(function(p){return p.status==='published'}).length;
     var review=ALL.filter(function(p){return p.status==='review'});
-    var todo=ALL.filter(function(p){return TODO[p.status]&&(isSetup(p)?p.d:due(p.d))<=iso(addD(TODAY,7))}).sort(function(a,b){var x=isSetup(a)?a.d:due(a.d),y=isSetup(b)?b.d:due(b.d);return x<y?-1:x>y?1:0});
-    var late=todo.filter(function(p){return (isSetup(p)?p.d:due(p.d))<T});
+    var todo=ALL.filter(function(p){return TODO[p.status]&&(isSetup(p)?p.d:dueOf(p))<=iso(addD(TODAY,7))}).sort(function(a,b){var x=isSetup(a)?a.d:dueOf(a),y=isSetup(b)?b.d:dueOf(b);return x<y?-1:x>y?1:0});
+    var late=todo.filter(function(p){return (isSetup(p)?p.d:dueOf(p))<T});
     var pubSoon=POSTS.filter(function(p){return p.d>=T&&p.d<=iso(addD(TODAY,2))&&p.status!=='published'});
     var last=CAMP&&CAMP.periods&&CAMP.periods[CAMP.periods.length-1];
     var name=NAMES[ME]||'';
@@ -312,7 +313,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       (!CAN('view.campaigns')?'':last?'<a class="tile" href="#ads-live"><span class="k">صرف الحملات · '+esc(last.label||'')+'</span><span class="v num">'+n2(last.spend)+'</span><span class="s">ريال · '+fmtD(last.from)+' – '+fmtD(last.to)+'</span></a>':'<a class="tile" href="#ads-live"><span class="k">الحملات</span><span class="v">—</span><span class="s">'+(CAMP_ERR?'تعذّر التحميل':'جارِ التحميل…')+'</span></a>')+
     '</div>';
     var mineFirst=CAN('designs.upload')&&!CAN('posts.approve');
-    var pTodo='<div class="panel"><h4>'+(mineFirst?'مطلوب منك':'مطلوب من المصمم')+' <span class="c">خلال 7 أيام</span></h4>'+(todo.length?todo.slice(0,10).map(function(p){var dd=isSetup(p)?p.d:due(p.d);return li(p,'التسليم <span class="'+(dd<T?'late':'')+'">'+dayD(dd)+(dd<T?' · متأخر':'')+'</span>')}).join(''):'<p class="empty">مفيش تسليمات قريبة.</p>')+'</div>';
+    var pTodo='<div class="panel"><h4>'+(mineFirst?'مطلوب منك':'مطلوب من المصمم')+' <span class="c">خلال 7 أيام</span></h4>'+(todo.length?todo.slice(0,10).map(function(p){var dd=isSetup(p)?p.d:dueOf(p);return li(p,'التسليم <span class="'+(dd<T?'late':'')+'">'+dayD(dd)+(dd<T?' · متأخر':'')+'</span>')}).join(''):'<p class="empty">مفيش تسليمات قريبة.</p>')+'</div>';
     var pRev='<div class="panel"><h4>'+(CAN('posts.approve')?'بانتظار مراجعتك':'عند المراجعة')+' <span class="c">'+review.length+'</span></h4>'+(review.length?review.slice(0,10).map(function(p){return li(p)}).join(''):'<p class="empty">مفيش حاجة مستنية مراجعة.</p>')+'</div>';
     var pSoon='<div class="panel"><h4>النشر خلال يومين <a href="#publish"'+(CAN('view.publish')?'':' hidden')+' style="margin-inline-start:auto;font-size:12.5px;color:var(--gold-ink);text-decoration:none">جدول النشر ←</a></h4>'+(pubSoon.length?pubSoon.map(function(p){return li(p)}).join(''):'<p class="empty">مفيش نشر خلال اليومين الجايين.</p>')+'</div>';
     h+='<div class="sec"><h3>المطلوب الآن</h3></div><div class="cols">'+pTodo+pRev+pSoon+'</div>';

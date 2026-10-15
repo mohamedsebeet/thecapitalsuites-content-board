@@ -262,11 +262,12 @@ function isFri(s){return pd(s).getDay()===5}
 function nextWork(d){while(d.getDay()===5)d=addD(d,1);return d}
 function workday(d){while(d.getDay()===5)d=addD(d,-1);return d}
 function due(s){return iso(workday(addD(pd(s),-DESIGN_LEAD)))}
+function dueOf(p){return p.dd||due(p.d)}
 function tmOf(p){return p.tm||TIME[p.p]||''}
 function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function hasPH(p){return /\[[^\]]+\]/.test(p.c||'')}
 function isSetup(p){return p.kind==='setup'}
-function isLate(p){if(isSetup(p))return !DONE[p.status]&&p.d<iso(TODAY);return !DONE[p.status] && p.status!=='review' && due(p.d)<iso(TODAY)}
+function isLate(p){if(isSetup(p))return !DONE[p.status]&&p.d<iso(TODAY);return !DONE[p.status] && p.status!=='review' && dueOf(p)<iso(TODAY)}
 function pubLate(p){return !isSetup(p)&&p.status!=='published' && p.d<iso(TODAY)}
 function stTag(k){return '<span class="st" style="--sc:var(--st-'+k+')">'+esc(STL[k]||k)+'</span>'}
 function safeUrl(u){u=String(u||'').trim();return /^https?:\/\//i.test(u)?u:''}
@@ -409,7 +410,7 @@ function renderTable(){
         '<span class="c-plv"><span class="pl">'+esc(p.p)+'</span><span class="lv '+esc(p.lv)+'">'+(p.lv==='P'?'إثبات':esc(p.lv))+'</span></span>'+
         '<span class="c-main"><span class="ser">'+esc(p.s)+'</span><span class="ttl">'+esc(p.t)+'</span><span class="fmt">'+esc(p.f)+'</span>'+(flags?'<span class="flags">'+flags+'</span>':'')+'</span>'+
         '<span class="c-st">'+stTag(p.status)+'</span>'+
-        '<span class="c-due num'+(late?' late':'')+'">'+(DONE[p.status]?'—':fmtD(due(p.d))+(late?' · متأخر':''))+'</span>'+
+        '<span class="c-due num'+(late?' late':'')+'">'+(DONE[p.status]?'—':fmtD(dueOf(p))+(late?' · متأخر':''))+'</span>'+
         '<span class="c-files">'+files+'</span>'+
       '</button>';
     }).join('')+'</div></section>';
@@ -447,7 +448,7 @@ function renderSheet(){
     '<p class="updated" id="upd" style="margin-top:6px"></p></div>';
   // dates
   if(isSetup(p)) h+='<div class="blk"><dl class="kv"><dt>آخر موعد</dt><dd class="num">'+fmtD(p.d)+'</dd><dt>القسم</dt><dd>'+esc(p.s)+'</dd>'+(p.f?'<dt>المواصفات</dt><dd>'+esc(p.f)+'</dd>':'')+'</dl></div>';
-  else h+='<div class="blk"><dl class="kv"><dt>النشر</dt><dd class="num">'+fmtD(p.d)+' · '+tmOf(p)+'</dd><dt>تسليم التصميم</dt><dd class="num">'+fmtD(due(p.d))+' ('+DESIGN_LEAD+' أيام قبل النشر، والجمعة إجازة)</dd><dt>السلسلة</dt><dd>'+esc(p.s)+'</dd><dt>الشكل</dt><dd>'+esc(p.f)+'</dd>'+(p.cta?'<dt>الدعوة</dt><dd>'+esc(p.cta)+'</dd>':'')+'</dl></div>';
+  else h+='<div class="blk"><dl class="kv"><dt>النشر</dt><dd class="num">'+fmtD(p.d)+' · '+tmOf(p)+'</dd><dt>تسليم التصميم</dt><dd class="num">'+(C('posts.edit')?'<input type="date" id="in-dd" value="'+esc(dueOf(p))+'" max="'+esc(p.d)+'"> ':fmtD(dueOf(p))+' ')+(p.dd?'<span class="updated">موعد مخصص</span>'+(C('posts.edit')?' <button class="btn" id="rs-dd" style="padding:2px 10px">رجوع للتلقائي</button>':''):'<span class="updated">('+DESIGN_LEAD+' أيام قبل النشر، والجمعة إجازة)</span>')+'</dd><dt>السلسلة</dt><dd>'+esc(p.s)+'</dd><dt>الشكل</dt><dd>'+esc(p.f)+'</dd>'+(p.cta?'<dt>الدعوة</dt><dd>'+esc(p.cta)+'</dd>':'')+'</dl></div>';
   // images
   if(p.im&&p.im.length) h+='<div class="blk"><h4>التصميم المقترح ('+p.im.length+')</h4><div class="imgs">'+p.im.map(function(s){return '<a href="'+esc(s)+'" target="_blank" rel="noopener"><img src="'+esc(s)+'" alt="تصميم مقترح" loading="lazy"></a>'}).join('')+'</div></div>';
   // uploaded designs
@@ -485,6 +486,8 @@ function renderSheet(){
   var ep=document.getElementById('ed-post');if(ep)ep.onclick=function(){renderEdit(p.id)};
   var gs=document.getElementById('go-src');if(gs)gs.onclick=function(){openSheet(src.id)};
   var sn=document.getElementById('sv-note');if(sn)sn.onclick=addNote;
+  var idd=document.getElementById('in-dd');if(idd)idd.onchange=function(){var v=idd.value;if(!v)return;if(isFri(v)){toast('الجمعة إجازة، اختار يوم تاني.');idd.value=dueOf(p);return}if(v>p.d){toast('التسليم لازم يكون قبل ميعاد النشر ('+fmtD(p.d)+').');idd.value=dueOf(p);return}if(v===dueOf(p))return;write(p.id,{dd:v===due(p.d)?null:v},'اتغيّر ميعاد تسليم التصميم: '+fmtD(v),'غيّر ميعاد تسليم التصميم من '+fmtD(dueOf(p))+' إلى '+fmtD(v))};
+  var rdd=document.getElementById('rs-dd');if(rdd)rdd.onclick=function(){write(p.id,{dd:null},'رجع للميعاد التلقائي: '+fmtD(due(p.d)),'رجّع ميعاد تسليم التصميم للتلقائي ('+fmtD(due(p.d))+')')};
   renderUpd(p);renderNotes();
 }
 
