@@ -322,6 +322,8 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
 
   /* ---------- الحملات ---------- */
   var SEL='';
+  var STAR={PAUSED:'متوقف',ADSET_PAUSED:'المجموعة متوقفة',CAMPAIGN_PAUSED:'الحملة متوقفة',WITH_ISSUES:'فيه مشكلة',DISAPPROVED:'مرفوض',PENDING_REVIEW:'تحت المراجعة',IN_PROCESS:'قيد التجهيز',ARCHIVED:'مؤرشف',DELETED:'محذوف'};
+  function stAr(s){return '<span style="color:var(--ink-3)">'+esc(STAR[s]||s||'')+'</span>'}
   var PCOL={meta:'#3F6FA8',snap:'#C29B3C',snapform:'#8A8F93',tiktok:'#2C8288'};
   function renderAds(){
     if(CAMP_ERR)return '<h2>الحملات</h2><p class="note">تعذّر تحميل بيانات الحملات. حدّث الصفحة.</p>';
@@ -336,12 +338,12 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     if(per){
       var k=KPI[per.id]||{};
       var bookings=+k.bookings||0;
-      h+='<div class="sec"><h3>'+esc(per.label||'')+'</h3><small>'+fmtD(per.from)+' – '+fmtD(per.to)+'</small></div>';
+      h+='<div class="sec"><h3>'+esc(per.label||'')+'</h3><small>'+fmtD(per.from)+' – '+fmtD(per.to)+'</small></div>'+(per.partial?'<p class="note" style="margin-bottom:12px">'+esc(per.partial)+'</p>':'');
       h+='<div class="tiles"><div class="tile"><span class="k">إجمالي الصرف</span><span class="v num">'+n2(per.spend)+'</span><span class="s">ريال على كل المنصات</span></div>'+
         '<div class="tile"><span class="k">مرات الظهور</span><span class="v num">'+n0(per.impressions)+'</span><span class="s">في كل المنصات</span></div>'+
         '<div class="tile"><span class="k">الحجوزات</span><span class="v num">'+(k.bookings!=null&&k.bookings!==''?n0(k.bookings):'—')+'</span><span class="s">'+(bookings?'تكلفة الحجز '+n2(per.spend/bookings)+' ريال':'من فريق المبيعات')+'</span></div></div>';
       h+='<div class="sec"><h3>حسب المنصة</h3></div><div class="tiles">'+(per.platforms||[]).map(function(x){
-        return '<div class="plat" style="border-top:3px solid '+(PCOL[x.key]||'#8A8F93')+'"><div class="n">'+esc(x.name)+'</div><div class="v num">'+n0(x.results)+'</div><div class="s">'+esc(x.resultLabel)+(x.cpr!=null?' · '+n2(x.cpr)+' ريال للنتيجة':'')+(x.spend!=null?' · صرف '+n2(x.spend):'')+'</div>'+(x.best?'<div class="s">أقوى حي: '+esc(x.best)+'</div>':'')+'</div>';
+        return '<div class="plat" style="border-top:3px solid '+(PCOL[x.key]||'#8A8F93')+'"><div class="n">'+esc(x.name)+'</div><div class="v num">'+n0(x.results)+'</div><div class="s">'+esc(x.resultLabel)+(x.cpr!=null?' · '+n2(x.cpr)+' ريال للنتيجة':'')+(x.spend!=null?' · صرف '+n2(x.spend):'')+'</div>'+(x.best?'<div class="s">الأقوى: '+esc(x.best)+'</div>':'')+(x.note?'<div class="s">'+esc(x.note)+'</div>':'')+'</div>';
       }).join('')+'</div>';
       // قمع المبيعات
       h+='<div class="sec"><h3>نتائج المبيعات</h3><small>اللي حصل بعد المحادثة: يدخلها مدير المحتوى من أرقام فريق المبيعات</small></div>';
@@ -351,12 +353,12 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     }
     // الحملات والإعلانات
     var C=CAMP.campaigns||[];
-    h+='<div class="sec"><h3>الحملات والإعلانات</h3>'+(C.length?'<small>'+C.length+' حملة</small>':'')+'<a class="more" href="#ads">تصاميم الإعلانات ←</a></div>';
+    var CR=CAMP.campaignsRange;h+='<div class="sec"><h3>الحملات والإعلانات</h3>'+(C.length?'<small>'+C.length+' حملة'+(CR?' · الأرقام من '+fmtD(CR.from)+' لحد '+fmtD(CR.to):'')+'</small>':'')+'<a class="more" href="#ads">تصاميم الإعلانات ←</a></div>';
     if(C.length){
       h+='<table class="t"><thead><tr><th>الحملة / الإعلان</th><th>الحالة</th><th>الصرف</th><th>النتائج</th><th>تكلفة النتيجة</th><th>الظهور</th></tr></thead><tbody>'+C.map(function(c){
-        var on=/active|نشط/i.test(c.status||'');
-        var row='<tr><td><span class="dot" style="background:'+(PCOL[c.platform]||'#8A8F93')+'"></span><b>'+esc(c.name)+'</b></td><td>'+(on?'<span style="color:var(--ok)">شغالة</span>':esc(c.statusAr||c.status||''))+'</td><td class="num">'+n2(c.spend)+'</td><td class="num">'+n0(c.results)+' '+esc(c.resultLabel||'')+'</td><td class="num">'+n2(c.cpr)+'</td><td class="num">'+n0(c.impressions)+'</td></tr>';
-        return row+(c.ads||[]).map(function(a){return '<tr class="ad"><td>'+esc(a.name)+'</td><td>'+(/active|نشط/i.test(a.status||'')?'شغال':esc(a.status||''))+'</td><td class="num">'+n2(a.spend)+'</td><td class="num">'+n0(a.results)+'</td><td class="num">'+n2(a.cpr)+'</td><td class="num">'+n0(a.impressions)+'</td></tr>'}).join('');
+        var on=c.status==='ACTIVE';
+        var row='<tr><td><span class="dot" style="background:'+(PCOL[c.platform]||'#8A8F93')+'"></span><b>'+esc(c.name)+'</b></td><td>'+(on?'<span style="color:var(--ok)">شغالة</span>':stAr(c.status))+'</td><td class="num">'+n2(c.spend)+'</td><td class="num">'+n0(c.results)+' '+esc(c.resultLabel||'')+'</td><td class="num">'+n2(c.cpr)+'</td><td class="num">'+n0(c.impressions)+'</td></tr>';
+        return row+(c.ads||[]).map(function(a){return '<tr class="ad"><td>'+esc(a.name)+'</td><td>'+(a.status==='ACTIVE'?'<span style="color:var(--ok)">شغال</span>':stAr(a.status))+'</td><td class="num">'+n2(a.spend)+'</td><td class="num">'+n0(a.results)+'</td><td class="num">'+n2(a.cpr)+'</td><td class="num">'+n0(a.impressions)+'</td></tr>'}).join('');
       }).join('')+'</tbody></table>';
     } else h+='<p class="note">تفاصيل كل حملة وإعلان (الحالة والصرف والنتائج) هتظهر هنا تلقائياً أول ما حسابات سناب وميتا تتربط. لحد كده: <a href="#campaigns">مخطط تنفيذ الحملات</a> فيه الهيكل، و<a href="#d-weekly">التقرير الأسبوعي</a> فيه آخر نتائج معتمدة.</p>';
     return h;

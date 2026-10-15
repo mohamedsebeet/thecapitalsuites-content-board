@@ -1,11 +1,19 @@
 {
-  "updatedAt": "2026-10-08T12:00:00+03:00",
-  "source": "manual",
-  "sourceNote": "من تقرير الحملات الأسبوعي المعتمد (1 إلى 7 أكتوبر). يتحدث تلقائياً كل يوم بعد ربط حسابات الإعلانات.",
+  "updatedAt": "2026-10-15T17:30:00+03:00",
+  "source": "sync",
+  "sourceNote": "ميتا بيتحدث تلقائياً من حساب The Capital Suites 1. سناب من آخر تقرير معتمد لحد ما حسابه يتربط.",
   "currency": "ريال",
   "sync": {
-    "snap": { "state": "pending", "label": "سناب شات", "note": "حساب The Capital Suites Self Service محتاج يتربط بموصل سناب" },
-    "meta": { "state": "pending", "label": "ميتا", "note": "حساب ميتا الإعلاني محتاج يتربط بموصل بيانات" }
+    "snap": {
+      "state": "pending",
+      "label": "سناب شات",
+      "note": "موصل سناب مربوط بمنظمة أساق، وحساب The Capital Suites Self Service في منظمة تانية"
+    },
+    "meta": {
+      "state": "live",
+      "label": "ميتا",
+      "note": "حساب The Capital Suites 1 (1079250665078725)"
+    }
   },
   "periods": [
     {
@@ -16,9 +24,31 @@
       "spend": 839.93,
       "impressions": 80873,
       "platforms": [
-        { "key": "meta", "name": "ميتا · إنستغرام وفيسبوك", "results": 167, "resultLabel": "محادثة واتساب مؤكدة", "cpr": 2.36, "best": "الملز" },
-        { "key": "snap", "name": "سناب شات · واتساب", "results": 644, "resultLabel": "ضغطة على زر واتساب", "cpr": 0.47, "best": "الرمال" },
-        { "key": "snapform", "name": "سناب شات · نموذج", "results": 6, "resultLabel": "عميل محتمل" }
+        {
+          "key": "meta",
+          "name": "ميتا · إنستغرام وفيسبوك",
+          "results": 167,
+          "resultLabel": "محادثة واتساب مؤكدة",
+          "cpr": 2.36,
+          "best": "الملز",
+          "spend": 394.12,
+          "impressions": 33498
+        },
+        {
+          "key": "snap",
+          "name": "سناب شات · واتساب",
+          "results": 644,
+          "resultLabel": "ضغطة على زر واتساب",
+          "cpr": 0.47,
+          "best": "الرمال",
+          "note": "صرف سناب في الأسبوع (واتساب + نموذج): 445.81 ريال"
+        },
+        {
+          "key": "snapform",
+          "name": "سناب شات · نموذج",
+          "results": 6,
+          "resultLabel": "عميل محتمل"
+        }
       ],
       "learnings": [
         "السعر الشامل (يبدأ من 2,500 شهرياً) هو الرسالة اللي جابت أكثر تواصل بأقل تكلفة",
@@ -30,7 +60,170 @@
         "نسخ جديدة لرسالة السعر الشامل وصور الوحدات",
         "أرقام فريق المبيعات: المحادثات الفعلية والمعاينات والحجوزات"
       ]
+    },
+    {
+      "id": "2026-10-08",
+      "label": "الأسبوع الثاني",
+      "from": "2026-10-08",
+      "to": "2026-10-14",
+      "spend": 782.54,
+      "impressions": 88140,
+      "partial": "أرقام ميتا فقط، وسناب هيتضاف أول ما يتربط حسابه",
+      "platforms": [
+        {
+          "key": "meta",
+          "name": "ميتا · إنستغرام وفيسبوك",
+          "results": 264,
+          "resultLabel": "محادثة واتساب بدأت",
+          "cpr": 2.96,
+          "spend": 782.54,
+          "impressions": 88140
+        }
+      ]
     }
   ],
-  "campaigns": []
+  "campaigns": [
+    {
+      "platform": "meta",
+      "id": "120249345827570172",
+      "name": "ميتا · واتساب أكتوبر (الرمال والملز)",
+      "status": "ACTIVE",
+      "spend": 1103.76,
+      "impressions": 111007,
+      "results": 424,
+      "resultLabel": "محادثة",
+      "cpr": 2.6,
+      "ads": [
+        {
+          "name": "الرمال · احسبها صح",
+          "status": "ACTIVE",
+          "spend": 328.43,
+          "impressions": 35254,
+          "results": 126,
+          "cpr": 2.61
+        },
+        {
+          "name": "الملز · كاروسيل-جولة داخل الوحدة",
+          "status": "ACTIVE",
+          "spend": 309.41,
+          "impressions": 35463,
+          "results": 122,
+          "cpr": 2.54
+        },
+        {
+          "name": "الرمال · كاروسيل-ليش الشهري",
+          "status": "ACTIVE",
+          "spend": 125.39,
+          "impressions": 8327,
+          "results": 53,
+          "cpr": 2.37
+        },
+        {
+          "name": "الملز · كأنك في بيتك",
+          "status": "ACTIVE",
+          "spend": 105.31,
+          "impressions": 10817,
+          "results": 39,
+          "cpr": 2.7
+        },
+        {
+          "name": "الملز · صالة لضيوفك",
+          "status": "ACTIVE",
+          "spend": 101.43,
+          "impressions": 10918,
+          "results": 45,
+          "cpr": 2.25
+        },
+        {
+          "name": "الرمال · فاتورتك كاملة وشاملة",
+          "status": "ACTIVE",
+          "spend": 80.28,
+          "impressions": 6468,
+          "results": 27,
+          "cpr": 2.97
+        },
+        {
+          "name": "الملز · كاروسيل-ليش الشهري",
+          "status": "ACTIVE",
+          "spend": 30.06,
+          "impressions": 2482,
+          "results": 9,
+          "cpr": 3.34
+        },
+        {
+          "name": "الرمال · كاروسيل-جولة داخل الوحدة",
+          "status": "ACTIVE",
+          "spend": 23.45,
+          "impressions": 1278,
+          "results": 3,
+          "cpr": 7.82
+        }
+      ]
+    },
+    {
+      "platform": "meta",
+      "id": "120249517697240172",
+      "name": "ميتا · نسخة الاختبار",
+      "status": "PAUSED",
+      "spend": 72.9,
+      "impressions": 10631,
+      "results": 7,
+      "resultLabel": "محادثة",
+      "cpr": 10.41,
+      "ads": [
+        {
+          "name": "الملز · كأنك في بيتك",
+          "status": "ADSET_PAUSED",
+          "spend": 29.46,
+          "impressions": 6056,
+          "results": 4,
+          "cpr": 7.37
+        },
+        {
+          "name": "الرمال · فاتورتك كاملة وشاملة",
+          "status": "ADSET_PAUSED",
+          "spend": 23.97,
+          "impressions": 2543,
+          "results": 1,
+          "cpr": 23.97
+        },
+        {
+          "name": "الرمال · احسبها صح",
+          "status": "ADSET_PAUSED",
+          "spend": 11,
+          "impressions": 1275,
+          "results": 2,
+          "cpr": 5.5
+        },
+        {
+          "name": "الملز · كاروسيل-جولة داخل الوحدة",
+          "status": "ADSET_PAUSED",
+          "spend": 4.46,
+          "impressions": 385,
+          "results": 0,
+          "cpr": null
+        },
+        {
+          "name": "الملز · صالة لضيوفك",
+          "status": "ADSET_PAUSED",
+          "spend": 2.97,
+          "impressions": 296,
+          "results": 0,
+          "cpr": null
+        },
+        {
+          "name": "الرمال · كاروسيل-ليش الشهري",
+          "status": "ADSET_PAUSED",
+          "spend": 1.04,
+          "impressions": 76,
+          "results": 0,
+          "cpr": null
+        }
+      ]
+    }
+  ],
+  "campaignsRange": {
+    "from": "2026-10-01",
+    "to": "2026-10-14"
+  }
 }
