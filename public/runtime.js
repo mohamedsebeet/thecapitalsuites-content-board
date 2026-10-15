@@ -93,7 +93,7 @@
     });
   });
   sb.auth.onAuthStateChange(function (ev, session) {
-    if (ev === 'SIGNED_IN' && session && !SESSION) { start(session); if (location.hash) history.replaceState(null, '', location.pathname); }
+    if (ev === 'SIGNED_IN' && session && !SESSION) { start(session); if (/access_token=|error_description=|type=magiclink/.test(location.hash)) history.replaceState(null, '', location.pathname); }
     if (ev === 'SIGNED_OUT') location.reload();
   });
 
