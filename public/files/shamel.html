@@ -1,0 +1,1296 @@
+<title>خطة تسكين ذا كابيتال سويتس</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Reem+Kufi:wght@500;600;700&display=swap">
+<style>
+:root{
+  --bg:#F2F3EF; --surface:#FFFFFF; --surface-2:#E9ECE6; --ink:#15202B; --ink-2:#4A5560; --ink-3:#737D86;
+  --line:#D8DCD4; --brass:#8A672B; --brass-soft:#F0E6D0; --teal:#2C6664; --teal-soft:#D8E8E5;
+  --warn:#9A4A2F; --warn-soft:#F4E0D6; --good:#3F7250; --good-soft:#DDEBE0;
+  --side:#15202B; --side-ink:#ECE8DE; --side-2:#9AA4AC; --side-line:#2A3642; --side-hi:rgba(212,174,103,.14);
+  --f-body:'IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif;
+  --f-disp:'Reem Kufi','IBM Plex Sans Arabic',Tahoma,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F151B; --surface:#161E26; --surface-2:#1D2731; --ink:#ECE9E1; --ink-2:#B4BBC1; --ink-3:#848E96;
+    --line:#2A3540; --brass:#D4AE67; --brass-soft:#382E1B; --teal:#88C2BC; --teal-soft:#1C3432;
+    --warn:#E3977E; --warn-soft:#3A231B; --good:#8FC59F; --good-soft:#1C3123;
+    --side:#0A0F14; --side-line:#1E2932;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F151B; --surface:#161E26; --surface-2:#1D2731; --ink:#ECE9E1; --ink-2:#B4BBC1; --ink-3:#848E96;
+  --line:#2A3540; --brass:#D4AE67; --brass-soft:#382E1B; --teal:#88C2BC; --teal-soft:#1C3432;
+  --warn:#E3977E; --warn-soft:#3A231B; --good:#8FC59F; --good-soft:#1C3123;
+  --side:#0A0F14; --side-line:#1E2932;
+}
+*{box-sizing:border-box}
+html{direction:rtl}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.8;-webkit-font-smoothing:antialiased}
+.app{display:grid;grid-template-columns:290px minmax(0,1fr);min-height:100vh}
+/* sidebar */
+.side{background:var(--side);color:var(--side-ink);padding:28px 18px;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow-y:auto;border-left:1px solid var(--side-line)}
+.brand{font-family:var(--f-disp);font-size:24px;font-weight:700;letter-spacing:.01em;line-height:1.2}
+.brand b{color:#D4AE67;font-weight:700}
+.brand small{display:block;font-family:var(--f-body);font-size:12px;font-weight:400;color:var(--side-2);margin-top:8px;line-height:1.7}
+.tabs{display:flex;flex-direction:column;gap:4px;margin-top:24px}
+.tab{all:unset;cursor:pointer;display:flex;gap:10px;align-items:baseline;padding:11px 12px;border-radius:6px;border:1px solid transparent;color:#C6CBCF}
+.tab:hover{background:rgba(255,255,255,.04)}
+.tab:focus-visible{outline:2px solid #D4AE67;outline-offset:2px}
+.tab[aria-selected="true"]{background:var(--side-hi);border-color:rgba(212,174,103,.55);color:#fff}
+.tab .n{font-family:var(--f-mono);font-size:11px;color:#D4AE67;flex-shrink:0}
+.tab .t{font-size:14.5px;font-weight:600}
+.side-meta{margin-top:24px;padding-top:16px;border-top:1px solid var(--side-line);font-size:12px;color:var(--side-2);line-height:1.9}
+.rm-h{margin-top:20px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;color:#D4AE67;text-transform:uppercase}
+.rm{margin-top:8px}
+.rm div{display:flex;gap:8px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--side-line);font-size:12px;color:var(--side-2)}
+.rm div:last-child{border-bottom:0}
+.rm i{font-style:normal;font-family:var(--f-mono);font-size:10.5px;width:18px}
+.rm span{flex:1}
+.rm em{font-style:normal;font-size:10px;padding:1px 8px;border-radius:99px;background:rgba(255,255,255,.06)}
+.rm .done{color:var(--side-ink)} .rm .done em{background:rgba(212,174,103,.2);color:#F0D9A8} .rm .done i{color:#D4AE67}
+/* main */
+.main{min-width:0;padding-inline:clamp(16px,4vw,56px);padding-block:0 80px}
+.notice{margin-inline:calc(-1*clamp(16px,4vw,56px));padding:12px clamp(16px,4vw,56px);background:var(--brass-soft);color:var(--ink);font-size:13.5px;border-bottom:1px solid var(--line)}
+.notice b{color:var(--brass)}
+.panel{max-width:1020px}
+.hero{padding-block:44px 28px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;color:var(--brass);text-transform:uppercase}
+h1{font-family:var(--f-disp);font-weight:700;font-size:clamp(30px,4.6vw,48px);line-height:1.25;margin:10px 0 14px;text-wrap:balance}
+.lede{font-size:17px;color:var(--ink-2);max-width:66ch;margin:0}
+.byline{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:20px;font-size:13px;color:var(--ink-3)}
+.byline b{color:var(--ink);font-weight:600}
+section.s{padding-block:34px 6px}
+.s-h{display:flex;gap:14px;align-items:baseline;margin-bottom:6px}
+.s-h .k{font-family:var(--f-mono);font-size:12px;color:var(--brass);flex-shrink:0}
+h2{font-family:var(--f-disp);font-size:clamp(22px,2.8vw,28px);font-weight:600;line-height:1.35;margin:0;text-wrap:balance}
+h3{font-size:17px;font-weight:700;margin:22px 0 6px;text-wrap:balance}
+p{margin:0 0 12px;max-width:72ch}
+.intro{color:var(--ink-2);max-width:72ch;margin-bottom:18px}
+ul.clean{margin:0 0 12px;padding-inline-start:20px}
+ul.clean li{margin-bottom:6px;max-width:70ch}
+strong{font-weight:700}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+/* stat row */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:26px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.stat .v{font-family:var(--f-mono);font-size:26px;font-weight:600;color:var(--ink);line-height:1.2;font-variant-numeric:tabular-nums}
+.stat .l{font-size:12.5px;color:var(--ink-2);margin-top:6px;line-height:1.6}
+/* thesis */
+.thesis{margin:18px 0 22px;padding:20px 22px;background:var(--side);color:var(--side-ink);border-radius:8px}
+.thesis p{margin:0;font-size:17px;max-width:none}
+.thesis .q{font-family:var(--f-disp);font-size:clamp(19px,2.4vw,24px);line-height:1.5;color:#fff}
+.thesis .q b{color:#D4AE67;font-weight:600}
+/* grids */
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px}
+.card h4{margin:0 0 6px;font-size:15.5px;font-weight:700}
+.card p{font-size:14.5px;color:var(--ink-2);margin:0 0 8px}
+.card p:last-child{margin-bottom:0}
+.tag{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 10px;border-radius:99px;background:var(--surface-2);color:var(--ink-2);margin-bottom:8px}
+.tag.b{background:var(--brass-soft);color:var(--brass)}
+.tag.t{background:var(--teal-soft);color:var(--teal)}
+.tag.w{background:var(--warn-soft);color:var(--warn)}
+.tag.g{background:var(--good-soft);color:var(--good)}
+.card .fit{font-size:13px;color:var(--ink);border-top:1px dashed var(--line);padding-top:8px;margin-top:10px}
+.card .fit b{color:var(--teal)}
+/* callouts */
+.note{border:1px solid var(--line);border-right:3px solid var(--brass);background:var(--surface);padding:14px 16px;border-radius:6px;margin:16px 0;font-size:14.5px;color:var(--ink-2)}
+.note b{color:var(--ink)}
+.note.risk{border-right-color:var(--warn)}
+.note.ok{border-right-color:var(--good)}
+/* tables */
+.tw{overflow-x:auto;margin:10px 0 16px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:620px}
+th,td{text-align:right;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;font-weight:600;color:var(--ink-3);background:var(--surface-2);letter-spacing:.02em;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.k{font-weight:700;white-space:nowrap}
+td.m{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* timeline */
+.phases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.phase{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.phase .w{font-family:var(--f-mono);font-size:11.5px;color:var(--brass)}
+.phase h4{margin:4px 0 8px;font-size:15.5px}
+.phase ul{margin:0;padding-inline-start:18px;font-size:13.5px;color:var(--ink-2)}
+.phase li{margin-bottom:4px}
+/* flow */
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:12px 0 18px}
+.flow .st{flex:1 1 120px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px}
+.flow .st i{font-style:normal;font-family:var(--f-mono);font-size:11px;color:var(--brass)}
+.flow .st b{display:block;font-size:14.5px;margin:2px 0}
+.flow .st span{font-size:12.5px;color:var(--ink-2);line-height:1.6;display:block}
+/* scripts */
+.script{background:var(--surface);border:1px solid var(--line);border-radius:8px;margin:14px 0;overflow:hidden}
+.script header{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.script header h4{margin:0;font-size:15px}
+.script header .meta{font-size:12px;color:var(--ink-3)}
+.script ol{margin:0;padding:12px 16px 12px 16px;list-style:none;display:grid;gap:8px}
+.script li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:12px;font-size:14px}
+.script li .tc{font-family:var(--f-mono);font-size:12px;color:var(--brass);padding-top:2px}
+.script li q{quotes:none;font-weight:600;color:var(--ink)}
+.script .foot{padding:10px 16px;border-top:1px dashed var(--line);font-size:13px;color:var(--ink-2)}
+/* message templates */
+.msg{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:10px 0;position:relative}
+.msg .who{font-size:12px;font-weight:600;color:var(--teal);margin-bottom:4px}
+.msg pre{margin:0;white-space:pre-wrap;font-family:var(--f-body);font-size:14.5px;line-height:1.8;color:var(--ink)}
+.copy{all:unset;cursor:pointer;position:absolute;top:10px;left:12px;font-size:12px;padding:3px 10px;border:1px solid var(--line);border-radius:99px;color:var(--ink-2);background:var(--surface)}
+.copy:hover{border-color:var(--brass);color:var(--brass)}
+.copy:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+/* hooks list */
+.hooks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0 16px;padding:0;list-style:none}
+.hooks li{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 14px;font-size:14.5px;font-weight:500}
+.hooks li small{display:block;font-size:12px;color:var(--ink-3);font-weight:400}
+/* calculator */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);margin:14px 0}
+.calc .in{padding:18px;display:grid;gap:12px;border-left:1px solid var(--line)}
+.calc label{display:grid;grid-template-columns:minmax(0,1fr) 110px;gap:10px;align-items:center;font-size:13.5px;color:var(--ink-2)}
+.calc input{font-family:var(--f-mono);font-size:14px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);width:100%;text-align:left;direction:ltr}
+.calc input:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
+.calc .out{padding:18px;background:var(--surface-2);display:grid;gap:10px;align-content:start}
+.calc .row{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;color:var(--ink-2);border-bottom:1px dashed var(--line);padding-bottom:8px}
+.calc .row:last-child{border-bottom:0}
+.calc .row b{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);font-size:15px;direction:ltr}
+.calc .row.big b{font-size:20px;color:var(--brass)}
+.calc .ex{font-size:12px;color:var(--ink-3);grid-column:1/-1;padding:10px 18px;border-top:1px solid var(--line)}
+.split{display:flex;height:44px;border-radius:8px;overflow:hidden;margin:14px 0 6px;border:1px solid var(--line)}
+.split div{display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;white-space:nowrap}
+.split .sn{background:var(--brass);color:var(--surface)} .split .mt{background:var(--teal);color:var(--surface)} .split .tt{background:var(--ink);color:var(--bg)}
+tr.tot td{font-weight:700;background:var(--surface-2)}
+td small{display:block;color:var(--ink-3);font-size:12px;font-family:var(--f-body)}
+.vs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:640px){.vs{grid-template-columns:minmax(0,1fr)}}
+/* sources */
+.sources{font-size:13px;color:var(--ink-2)}
+.sources a{color:var(--teal)}
+a{color:var(--teal)}
+footer.pf{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3)}
+@media (max-width:980px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{position:sticky;top:env(safe-area-inset-top,0px);height:auto;z-index:5;padding:14px 16px 10px;border-left:0;border-bottom:1px solid var(--side-line)}
+  .brand{font-size:19px}
+  .brand small,.side-meta,.rm-h,.rm{display:none}
+  .tabs{flex-direction:row;overflow-x:auto;margin-top:10px;gap:6px;scrollbar-width:none}
+  .tab{flex-shrink:0;padding:7px 12px}
+  .tab .t{font-size:13.5px;white-space:nowrap}
+  .stats,.phases{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid3{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .phases,.grid2,.grid3,.hooks,.calc{grid-template-columns:minmax(0,1fr)}
+  .stat .v{font-size:21px}
+  .calc .in{border-left:0;border-bottom:1px solid var(--line)}
+  .script li{grid-template-columns:minmax(0,1fr);gap:2px}
+  .calc label{grid-template-columns:minmax(0,1fr) 96px}
+}
+</style>
+
+<div class="app">
+<aside class="side">
+  <div class="brand">The Capital <b>Suites</b><small>الملف الشامل: خطة تسكين الوحدات الشاغرة عبر الحملات الإعلانية<br>محمد سبيت × ذا كابيتال سويتس</small></div>
+  <nav class="tabs" role="tablist" aria-label="أقسام الملف">
+    <button class="tab" role="tab" id="t-plan" data-p="plan" aria-selected="true"><span class="n">01</span><span class="t">الخطة العامة</span></button>
+    <button class="tab" role="tab" id="t-aud" data-p="aud" aria-selected="false"><span class="n">02</span><span class="t">الجمهور والعروض</span></button>
+    <button class="tab" role="tab" id="t-paid" data-p="paid" aria-selected="false"><span class="n">03</span><span class="t">الحملات المدفوعة</span></button>
+    <button class="tab" role="tab" id="t-cre" data-p="cre" aria-selected="false"><span class="n">04</span><span class="t">الإبداع والنصوص</span></button>
+    <button class="tab" role="tab" id="t-funnel" data-p="funnel" aria-selected="false"><span class="n">05</span><span class="t">مسار التحويل</span></button>
+    <button class="tab" role="tab" id="t-sales" data-p="sales" aria-selected="false"><span class="n">06</span><span class="t">المبيعات والقياس</span></button>
+    <button class="tab" role="tab" id="t-next" data-p="next" aria-selected="false"><span class="n">07</span><span class="t">الخطوات التالية</span></button>
+    <button class="tab" role="tab" id="t-org" data-p="org" aria-selected="false"><span class="n">08</span><span class="t">استراتيجية المحتوى والبراند</span></button>
+  </nav>
+  <div class="side-meta">آخر تحديث: 6 أكتوبر 2026<br>8 أقسام — أُعيد بناء قسم استراتيجية المحتوى والبراند: ثلاثة مستويات، ركيزة Proof، منصات على مرحلتين، وسلّم مؤشرات</div>
+  <div class="rm-h">Full Roadmap — 8 Phases</div>
+  <div class="rm">
+    <div class="done"><i>01</i><span>Occupancy Strategy</span><em>مُجهّز هنا</em></div>
+    <div class="done"><i>02</i><span>Offers &amp; Audience</span><em>مُجهّز هنا</em></div>
+    <div class="done"><i>03</i><span>Paid Media Plan</span><em>مُجهّز هنا</em></div>
+    <div class="done"><i>04</i><span>Creative &amp; Scripts</span><em>مُجهّز هنا</em></div>
+    <div><i>05</i><span>Content Production</span><em>بعد الاعتماد</em></div>
+    <div><i>06</i><span>Landing Pages &amp; WhatsApp</span><em>بعد الاعتماد</em></div>
+    <div><i>07</i><span>Tracking &amp; Optimization</span><em>بعد الإطلاق</em></div>
+    <div class="done"><i>08</i><span>Content &amp; Brand Strategy</span><em>مُجهّز هنا</em></div>
+  </div>
+</aside>
+
+<main class="main">
+<div class="notice"><b>ملاحظة:</b> هذه النسخة مبنية على بحث خارجي في السوق والمنافسين وإعلانات الشركة المنشورة. أي رقم مكتوب بجانبه «افتراض» يُستبدل ببيانات ذا كابيتال سويتس الفعلية قبل الإطلاق، والقائمة الكاملة للمطلوب في قسم «الخطوات التالية».</div>
+
+<!-- ============ 01 PLAN ============ -->
+<div class="panel" id="p-plan" role="tabpanel" aria-labelledby="t-plan">
+  <header class="hero">
+    <div class="eyebrow">خطة تسكين · The Capital Suites · الرياض · Q4 2026</div>
+    <h1>كل شهر تبقى فيه الوحدة شاغرة هو إيراد لا يعود</h1>
+    <p class="lede">خطة تسكين مدفوعة لوحدات ذا كابيتال سويتس الفندقية المفروشة في خمسة أحياء بالرياض. تعتمد على سناب شات كمحرك رئيسي للعملاء المحتملين، وتيك توك لبناء الطلب بالفيديو الحقيقي، مع التقاط نية البحث من جوجل. الهدف تسكين الوحدات الشاغرة خلال 90 يوماً بتكلفة اكتساب لا تتجاوز جزءاً صغيراً من قيمة العقد الأول.</p>
+    <div class="byline"><span>إعداد <b>محمد سبيت</b></span><span>التاريخ <b>28 سبتمبر 2026</b></span><span>الأولوية <b>تسكين الشاغر الآن</b></span><span>المدة <b>90 يوماً</b></span></div>
+    <div class="stats">
+      <div class="stat"><div class="v">5</div><div class="l">أحياء تشغيل: القيروان، حطين، العارض، الرمال، الملز</div></div>
+      <div class="stat"><div class="v">105</div><div class="l">وحدة فندقية مكتملة في مشاريع القيروان الثلاثة وحدها</div></div>
+      <div class="stat"><div class="v">27–55 م²</div><div class="l">نطاق مساحات الوحدات في مشاريع ذا كابيتال</div></div>
+      <div class="stat"><div class="v">3,000</div><div class="l">ريال شهرياً، أقل سعر معلن حالياً (الملز)</div></div>
+    </div>
+  </header>
+
+  <section class="s">
+    <div class="s-h"><span class="k">1.1</span><h2>الخلاصة التنفيذية</h2></div>
+    <div class="thesis"><p class="q">الوحدة الشاغرة مخزون ينتهي كل يوم، مثل ليلة الفندق. لذلك نبيع <b>وحدة محددة في حي محدد بسعر شامل واضح</b>، ولا نبيع اسم الشركة بشكل عام.</p></div>
+    <p>ذا كابيتال سويتس هي ذراع التشغيل والتأجير لوحدات ذا كابيتال الفندقية المفروشة: استديوهات وشقق غرفة وغرفتين في القيروان وحطين والعارض والرمال والملز، بإيجار شهري. المطلوب الآن تسكين الوحدات غير المشغولة في كل الأحياء المتاحة بأسرع وقت عبر حملات مدفوعة، مع تركيز أكبر على الرمال والملز.</p>
+    <p>الاستراتيجية المقترحة تقوم على خمسة قرارات:</p>
+    <ul class="clean">
+      <li><strong>الإعلان يتبع المخزون.</strong> كل حملة مربوطة بوحدات شاغرة فعلاً (حي × نوع وحدة × سعر)، وتتوقف تلقائياً عند تسكينها.</li>
+      <li><strong>سناب شات محرك العملاء المحتملين</strong> عبر نماذج التسجيل الفورية والتحويل لواتساب، مع استهداف جغرافي حول مناطق العمل.</li>
+      <li><strong>تيك توك لبناء الطلب</strong> بجولات فيديو حقيقية داخل الوحدات، ثم إعادة استهداف من شاهدها.</li>
+      <li><strong>جوجل ومنصات الحجز لالتقاط النية الجاهزة</strong>: من يبحث اليوم عن «شقق مفروشة شهري حطين» جاهز للحجز هذا الأسبوع.</li>
+      <li><strong>التحويل يتم في واتساب خلال 15 دقيقة</strong>، بفيديو جولة ومعاينة في نفس اليوم أو اليوم التالي.</li>
+    </ul>
+    <div class="note"><b>لماذا الإشغال أهم من مجرد إيراد إيجار؟</b> نموذج ذا كابيتال يقوم على طرح منفعة الوحدات للمستثمرين وتوزيع عائد التشغيل عليهم. نسبة الإشغال هي ما يصنع هذا العائد، والعائد هو ما يقنع المستثمر القادم في مشاريع مثل «ذا كابيتال قرطبة» (49 وحدة، 2026). حملة التسكين الناجحة تتحول لاحقاً إلى إثبات يُستخدم في تسويق الاستثمار.</div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">1.2</span><h2>السوق: طلب قائم على السكن المرن</h2></div>
+    <p class="intro">الرياض تجذب يومياً موظفين منتقلين، وشركات تفتح مقرات إقليمية، وزواراً لفترات متوسطة. شريحة كبيرة منهم لا تريد عقداً سنوياً ولا تكلفة تأثيث.</p>
+    <div class="tw"><table>
+      <thead><tr><th>المؤشر</th><th>القيمة</th><th>ماذا يعني لنا</th></tr></thead>
+      <tbody>
+        <tr><td class="k">حجم سوق الشقق المخدومة في السعودية</td><td class="m">≈ 640 مليون $ (2025)</td><td>سوق ينمو بنحو 9.9% سنوياً حتى 2031، ومعظم النمو في الرياض</td></tr>
+        <tr><td class="k">إشغال الفنادق والشقق المخدومة (الرياض والدرعية)</td><td class="m">≈ 58% (النصف الأول 2025)</td><td>المنافسة على الضيف حقيقية؛ الفائز من يصل للعميل أولاً ويرد أسرع</td></tr>
+        <tr><td class="k">قرار إيقاف زيادة الإيجارات في الرياض</td><td class="m">5 سنوات من 25/09/2025</td><td>يثبّت الإيجار السنوي، لكنه لا يلغي عبء العقد السنوي والدفعات المقدمة والتأثيث. رسالتنا المرونة والجاهزية، لا المنافسة بالسعر مع العقد السنوي</td></tr>
+        <tr><td class="k">مستخدمو سناب شات في السعودية</td><td class="m">25.3 مليون</td><td>وصول إعلاني يعادل نحو 74% من مستخدمي الإنترنت؛ القناة الأوسع للوصول المحلي</td></tr>
+        <tr><td class="k">وصول تيك توك للبالغين</td><td class="m">الأعلى عالمياً</td><td>أقوى منصة للفيديو القصير لشريحة 18–34 التي تمثل أغلب مستأجري الاستديو</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">1.3</span><h2>المنافسون: أربعة أنماط</h2></div>
+    <p class="intro">المنافسة على المستأجر الشهري لا تأتي من شركات بنفس النموذج فقط، بل من كل بديل يمكن أن يختاره العميل بدلاً منا.</p>
+    <div class="grid2">
+      <div class="card"><span class="tag">منصات الحجز</span><h4>جاذر إن، Airbnb، Booking</h4><p>طلب ضخم وجاهز، وخيارات إيجار شهري واضحة. لكن الوحدة تصبح إعلاناً بين آلاف، والمقارنة بالسعر فقط، مع عمولة على كل حجز.</p><p class="fit"><b>موقعنا:</b> قناة مكمّلة لتسكين الوحدات المتأخرة، لا القناة الرئيسية.</p></div>
+      <div class="card"><span class="tag">مشغلون عالميون</span><h4>Blueground وأمثالها</h4><p>شقق مؤثثة بمعايير موحدة وتجربة حجز رقمية كاملة، موجهة للشركات والوافدين بأسعار مرتفعة وتواصل إنجليزي أساساً.</p><p class="fit"><b>موقعنا:</b> تجربة مشابهة بسعر أقرب للسوق المحلي ولغة سعودية.</p></div>
+      <div class="card"><span class="tag">ملاك أفراد ووسطاء</span><h4>حراج، عقار، ديل</h4><p>أسعار منخفضة وانتشار واسع، لكن جودة غير ثابتة، وصور ضعيفة، وخدمة شبه معدومة بعد التسكين. ذا كابيتال سويتس تعلن هناك حالياً بين هذه الإعلانات.</p><p class="fit"><b>موقعنا:</b> نبقى هناك لالتقاط الطلب، لكن الهوية والتجربة يجب أن تميزنا بوضوح.</p></div>
+      <div class="card"><span class="tag b">الأقرب لنموذجنا</span><h4>الشقق الفندقية التقليدية</h4><p>عروض شهرية متاحة، لكن أغلبها مبانٍ قديمة وموجهة للإقامة اليومية، وتسويقها يعتمد على البوابات لا على الفيديو.</p><p class="fit"><b>موقعنا:</b> وحدات أحدث، ومحتوى حقيقي من داخلها، وسعر شهري شامل.</p></div>
+    </div>
+    <div class="note"><b>الفجوة التي نستهدفها:</b> قلة من المشغلين تبيع «السكن الفندقي الشهري» كمنتج واضح: وحدة حقيقية بالفيديو، وسعر شامل مكتوب، ودخول خلال 24 ساعة، ورد فوري على واتساب. هذا ما يجب أن تملكه ذا كابيتال سويتس في ذهن العميل.</div>
+    <div class="note risk"><b>ملاحظة من الموقع الحالي:</b> صور المشاريع على موقع ذا كابيتال مأخوذة من مكتبات صور عامة (Pexels) وليست من الوحدات الفعلية. في إعلانات التسكين هذا يضعف الثقة مباشرة، ولن نستخدم أي صورة ليست من الوحدة نفسها.</div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">1.4</span><h2>التموضع</h2></div>
+    <div class="thesis"><p class="q">«وحدات فندقية مفروشة في أحياء الرياض، بإيجار شهري <b>شامل كل شيء</b>. تدخل بشنطتك فقط.»</p></div>
+    <div class="grid3">
+      <div class="card"><span class="tag t">جاهزية</span><h4>ادخل خلال 24 ساعة</h4><p>لا أثاث تشتريه، ولا عدادات توصلها، ولا انتظار.</p></div>
+      <div class="card"><span class="tag t">وضوح</span><h4>سعر واحد شامل</h4><p>الإيجار والكهرباء والماء والإنترنت في رقم واحد مكتوب في الإعلان.</p></div>
+      <div class="card"><span class="tag t">مرونة</span><h4>شهر، ثلاثة، ستة</h4><p>بدون التزام سنوي، وبسعر أفضل كلما طالت الإقامة.</p></div>
+    </div>
+    <p style="margin-top:14px">كل عنصر من هذه العناصر يحتاج تأكيد الشركة قبل استخدامه في الإعلانات، خاصة ما يشمله السعر ومدة التسكين الفعلية.</p>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">1.5</span><h2>أدوار القنوات</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>القناة</th><th>الدور</th><th>الحصة المبدئية</th><th>ما نقيسه</th></tr></thead>
+      <tbody>
+        <tr><td class="k">سناب شات</td><td>المحرك الرئيسي: نماذج تسجيل فورية وتحويل لواتساب، استهداف حول مناطق العمل وخارج الرياض للمنتقلين</td><td class="m">50%</td><td>تكلفة المعاينة</td></tr>
+        <tr><td class="k">ميتا (إنستغرام وفيسبوك)</td><td>تصاميم الفيد والكاروسيل، واختبار واتساب مقابل النماذج الفورية بأداة A/B الرسمية</td><td class="m">25%</td><td>تكلفة المعاينة</td></tr>
+        <tr><td class="k">تيك توك</td><td>جولات فيديو داخل الوحدات ونماذج تسجيل فورية</td><td class="m">25%</td><td>تكلفة العميل المؤهل</td></tr>
+        <tr><td class="k">بحث جوجل</td><td>التقاط من يبحث الآن باسم الحي ونوع الوحدة. خارج ميزانية الاختبار، يُفعَّل بعد قراءة النتائج</td><td class="m">مرحلة لاحقة</td><td>تكلفة المحادثة/الاتصال</td></tr>
+        <tr><td class="k">منصات الحجز والبوابات</td><td>جاذر إن للوحدات الشاغرة أكثر من 30 يوماً، وحراج وعقار وديل لالتقاط الطلب المجاني</td><td class="m">عمولة / مجاني</td><td>وحدات مسكّنة من كل منصة</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">1.6</span><h2>خطة 90 يوماً</h2></div>
+    <div class="phases">
+      <div class="phase"><div class="w">الأسبوع 0–1</div><h4>التأسيس</h4><ul><li>جدول مخزون الوحدات الشاغرة</li><li>اعتماد الأسعار والعروض</li><li>يوم تصوير لكل حي</li><li>واتساب بزنس + كتالوج الوحدات</li><li>تتبع المنصات وأكواد المصدر</li></ul></div>
+      <div class="phase"><div class="w">الأسبوع 2–4</div><h4>الاختبار</h4><ul><li>3 زوايا × 2 شكل لكل منصة</li><li>اختبار النموذج الفوري مقابل واتساب</li><li>قياس العميل المؤهل لا الخام</li><li>أول تقرير أسبوعي</li></ul></div>
+      <div class="phase"><div class="w">الأسبوع 5–8</div><h4>التحسين</h4><ul><li>إيقاف ما لا يجلب معاينات</li><li>إعادة استهداف المشاهدين</li><li>عروض سرعة للوحدات المتأخرة</li><li>تحسين ردود واتساب حسب الاعتراضات</li></ul></div>
+      <div class="phase"><div class="w">الأسبوع 9–12</div><h4>التوسيع والحفاظ</h4><ul><li>زيادة الميزانية على الرابح فقط</li><li>قائمة انتظار للوحدات القادمة</li><li>برنامج إحالة من السكان</li><li>حملات تجديد قبل نهاية العقود</li></ul></div>
+    </div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">1.7</span><h2>أولويات التنفيذ</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>الأولوية</th><th>البند</th><th>السبب</th></tr></thead>
+      <tbody>
+        <tr><td class="m">1</td><td class="k">جدول المخزون والأسعار</td><td>لا يمكن بناء حملة تتبع المخزون بدون معرفة الوحدات الشاغرة بدقة</td></tr>
+        <tr><td class="m">2</td><td class="k">تصوير الوحدات الحقيقية</td><td>الفيديو الحقيقي هو الإعلان، وهو أكبر فرق بيننا وبين البوابات</td></tr>
+        <tr><td class="m">3</td><td class="k">نقطة رد واتساب ثابتة</td><td>أغلب العملاء المحتملين يضيعون بعد أول رسالة إذا تأخر الرد</td></tr>
+        <tr><td class="m">4</td><td class="k">إطلاق سناب شات ثم تيك توك</td><td>سناب يجلب أول النتائج بسرعة، وتيك توك يبني الطلب بالتوازي</td></tr>
+        <tr><td class="m">5</td><td class="k">جوجل ومنصات الحجز</td><td>تكمل الصورة وتلتقط النية الجاهزة</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="s sources">
+    <div class="s-h"><span class="k">—</span><h2>المصادر</h2></div>
+    <ul class="clean">
+      <li><a href="https://www.thecapital.sa/projects" target="_blank" rel="noopener">ذا كابيتال — مشاريعنا (عدد الوحدات والمساحات)</a></li>
+      <li><a href="https://haraj.com.sa/users/%D8%B0%D8%A7%20%D9%83%D8%A7%D8%A8%D9%8A%D8%AA%D8%A7%D9%84%20%D8%B3%D9%88%D9%8A%D8%AA%D8%B3" target="_blank" rel="noopener">إعلانات ذا كابيتال سويتس على حراج (الأحياء والأسعار المعلنة)</a></li>
+      <li><a href="https://www.kenresearch.com/industry-reports/saudi-arabia-serviced-apartment-market" target="_blank" rel="noopener">Ken Research — سوق الشقق المخدومة في السعودية</a></li>
+      <li><a href="https://sandsofwealth.com/blogs/news/riyadh-real-estate-market" target="_blank" rel="noopener">Sands of Wealth — إشغال الضيافة في الرياض</a></li>
+      <li><a href="https://asharq.com/reports/154030/" target="_blank" rel="noopener">الشرق — إيقاف الزيادة السنوية للإيجارات في الرياض</a></li>
+      <li><a href="https://datareportal.com/reports/digital-2026-saudi-arabia" target="_blank" rel="noopener">DataReportal — Digital 2026: Saudi Arabia</a></li>
+      <li><a href="https://www.kolsquare.com/en/blog/influencer-marketing-in-the-middle-east-in-2026-high-stakes-high-spend-and-the-arabic-first-imperative" target="_blank" rel="noopener">Kolsquare — وصول تيك توك وسناب في الخليج 2026</a></li>
+      <li><a href="https://www.theblueground.com/furnished-apartments-riyadh-saudi-arabia" target="_blank" rel="noopener">Blueground — شقق مفروشة في الرياض</a></li>
+      <li><a href="https://gathern.co/property/apar-riyadh-month" target="_blank" rel="noopener">جاذر إن — شقق للإيجار الشهري في الرياض</a></li>
+    </ul>
+  </section>
+</div>
+
+<!-- ============ 02 AUDIENCE ============ -->
+<div class="panel" id="p-aud" role="tabpanel" aria-labelledby="t-aud" hidden>
+  <header class="hero">
+    <div class="eyebrow">02 · الجمهور والعروض</div>
+    <h1>من يسكن الوحدة، ولماذا يختارنا الآن</h1>
+    <p class="lede">المستأجر الشهري في الرياض ليس شريحة واحدة. لكل شريحة حي مناسب، ونوع وحدة، وسبب مختلف للحجز. الإعلان الذي يخاطب الجميع لا يقنع أحداً.</p>
+  </header>
+
+  <section class="s">
+    <div class="s-h"><span class="k">2.1</span><h2>الشرائح المستهدفة</h2></div>
+    <div class="grid2">
+      <div class="card"><span class="tag b">أولوية 1 · حجم</span><h4>موظف شاب يعمل شمال الرياض</h4><p>22–35 سنة، راتب جيد، يريد سكناً قريباً من عمله بدون عقد سنوي وتأثيث. يشمل الموظفات، وهي شريحة تنمو بسرعة وتهتم بالخصوصية والأمان والدخول الذكي.</p><p class="fit"><b>الوحدة:</b> استديو · <b>الأحياء:</b> القيروان، حطين، العارض</p></div>
+      <div class="card"><span class="tag b">أولوية 1 · نية عالية</span><h4>منتقل حديثاً للرياض</h4><p>موظف جديد أو منقول من مدينة أخرى أو وافد. يحتاج سكناً جاهزاً لشهر إلى ستة أشهر حتى يستقر. قراره سريع لأنه تحت ضغط موعد المباشرة.</p><p class="fit"><b>الوحدة:</b> استديو أو غرفة · <b>الأحياء:</b> حسب مكان العمل</p></div>
+      <div class="card"><span class="tag t">أولوية 2 · قيمة أعلى</span><h4>أسرة صغيرة في مرحلة انتقالية</h4><p>زوجان حديثاً، أو أسرة تنتظر استلام بيتها أو تجدده. الفندق مكلف لإقامة شهور، والعقد السنوي غير مناسب.</p><p class="fit"><b>الوحدة:</b> غرفة أو غرفتان · <b>الحي:</b> حطين</p></div>
+      <div class="card"><span class="tag t">أولوية 2 · حساس للسعر</span><h4>مقيم لفترة متوسطة</h4><p>مرافق مريض، متدرب في دورة، موظف مشروع مؤقت. يبحث عن سعر مناسب وموقع مركزي.</p><p class="fit"><b>الوحدة:</b> استديو أو غرفة · <b>الأحياء:</b> الملز، الرمال</p></div>
+      <div class="card"><span class="tag g">مسار موازٍ · تسكين جماعي</span><h4>الشركات والمقاولون</h4><p>جهات تسكّن موظفين أو فرق مشاريع. صفقة واحدة قد تملأ دوراً كاملاً. لا تأتي غالباً من تيك توك، بل من تواصل مباشر وLinkedIn.</p><p class="fit"><b>المباني:</b> الرمال، الملز · <b>العرض:</b> عقد 5 وحدات فأكثر</p></div>
+      <div class="card"><span class="tag">لا نستهدفها الآن</span><h4>الإقامة اليومية والسياحية</h4><p>تحتاج إدارة تشغيل يومية وتسعيراً ديناميكياً وقنوات حجز مختلفة. تُترك لمنصات الحجز فقط للوحدات المتأخرة.</p><p class="fit"><b>القرار:</b> التركيز على الإقامة الشهرية فأكثر</p></div>
+    </div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">2.2</span><h2>مصفوفة الأحياء</h2></div>
+    <p class="intro">كل حي يُسوّق كمنتج مستقل. الأسعار أدناه تُستكمل من جدول المخزون؛ المذكور فقط هو المعلن حالياً.</p>
+    <div class="tw"><table>
+      <thead><tr><th>الحي</th><th>ما نعرفه</th><th>الشريحة الأولى</th><th>الرسالة الرئيسية</th><th>السعر المعلن</th></tr></thead>
+      <tbody>
+        <tr><td class="k">القيروان</td><td>مشاريع نزل رفاه (33 وحدة، 45 م²) والقيروان النموذجي 1 و2 (72 وحدة، 40 م²)</td><td>موظف شاب</td><td>استديو فندقي حديث شمال الرياض، سعر شامل</td><td>يُستكمل</td></tr>
+        <tr><td class="k">حطين</td><td>استديوهات فاخرة، شقق غرفة وغرفتين، وحدات فندقية</td><td>أسرة صغيرة، موظف بدخل أعلى</td><td>سكن فندقي راقٍ بدون عقد سنوي</td><td>يُستكمل</td></tr>
+        <tr><td class="k">العارض</td><td>مشروع الجابرية (12 وحدة، 55 م²) قيد التنفيذ، وإعلانات قائمة في الحي</td><td>موظف شاب، زوجان</td><td>مساحة أكبر بسعر شمالي منافس</td><td>يُستكمل</td></tr>
+        <tr><td class="k">الرمال</td><td>مبنى شقق فندقية شرق الرياض</td><td>مقيم متوسط المدة، شركات</td><td>أفضل سعر شهري شامل في الشرق</td><td>يُستكمل</td></tr>
+        <tr><td class="k">الملز</td><td>شقق مفروشة شهري في موقع مركزي</td><td>مقيم متوسط المدة</td><td>قلب الرياض، من 3,000 ريال شهرياً</td><td class="m">من 3,000</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">2.3</span><h2>سلّم العروض</h2></div>
+    <p class="intro">الخصم لا يُعطى على السعر المعلن بشكل عام. يُعطى مقابل شيء: مدة أطول أو قرار أسرع. هكذا نملأ الوحدات دون أن نعلّم السوق أن سعرنا قابل للنزول دائماً.</p>
+    <div class="tw"><table>
+      <thead><tr><th>العرض</th><th>لمن</th><th>الآلية المقترحة</th><th>الشرط</th></tr></thead>
+      <tbody>
+        <tr><td class="k">شهري مرن</td><td>الجميع</td><td>السعر الأساسي الشامل، تجديد شهري</td><td>—</td></tr>
+        <tr><td class="k">باقة 3 أشهر</td><td>المنتقلون، المقيمون متوسطو المدة</td><td>خصم على الإجمالي أو أسبوع مجاني</td><td>دفع مقدم للشهر الأول</td></tr>
+        <tr><td class="k">باقة 6 أشهر</td><td>الأسر، الموظفون المستقرون</td><td>أفضل سعر شهري + تنظيف دوري</td><td>عقد 6 أشهر</td></tr>
+        <tr><td class="k">عرض الدخول السريع</td><td>الوحدات الشاغرة أكثر من 21 يوماً فقط</td><td>خصم على الشهر الأول عند الحجز خلال 7 أيام</td><td>مدة محددة ويختفي بعد التسكين</td></tr>
+        <tr><td class="k">أرسل صديقاً</td><td>السكان الحاليون</td><td>خصم للطرفين عند تسكين المُحال</td><td>بعد أول شهر للمُحال</td></tr>
+        <tr><td class="k">عقد شركات</td><td>الشركات والمقاولون</td><td>سعر خاص لـ5 وحدات فأكثر، فاتورة واحدة</td><td>عقد 3 أشهر فأكثر</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>يحتاج اعتماد الشركة:</b> نسب الخصم، والحد الأدنى للسعر لكل وحدة، وما يشمله السعر (كهرباء، ماء، إنترنت، تنظيف، صيانة، مواقف). لا يُكتب في أي إعلان شيء لا تستطيع الشركة تنفيذه في كل الوحدات المعلن عنها.</div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">2.4</span><h2>ما الذي يمنع العميل من الحجز؟</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>الاعتراض</th><th>الرد في الإعلان</th><th>الرد في واتساب</th></tr></thead>
+      <tbody>
+        <tr><td class="k">«العقد السنوي أرخص»</td><td>حسبة مكتوبة: إيجار + فواتير + تأثيث + دفعات مقدمة</td><td>مقارنة التكلفة الفعلية لأول 6 أشهر</td></tr>
+        <tr><td class="k">«الصور غير حقيقية»</td><td>فيديو من داخل الوحدة بدون مونتاج مبالغ فيه</td><td>فيديو جولة للوحدة نفسها برقمها</td></tr>
+        <tr><td class="k">«أبغى أشوفها قبل»</td><td>«معاينة اليوم أو بكرة»</td><td>موعد محدد أو مكالمة فيديو مباشرة</td></tr>
+        <tr><td class="k">«وش يشمل السعر بالضبط؟»</td><td>قائمة الشامل على الشاشة</td><td>رسالة ثابتة بالتفاصيل والرسوم إن وجدت</td></tr>
+        <tr><td class="k">«المكان بعيد عن شغلي»</td><td>اسم الحي والطرق القريبة على الشاشة</td><td>رابط الموقع ووقت الوصول لأقرب محور</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</div>
+
+<!-- ============ 03 PAID ============ -->
+<div class="panel" id="p-paid" role="tabpanel" aria-labelledby="t-paid" hidden>
+  <header class="hero">
+    <div class="eyebrow">03 · الحملات المدفوعة</div>
+    <h1>هيكل الحملات على سناب شات وميتا وتيك توك</h1>
+    <p class="lede">القاعدة الأساسية: الحملة تشتري معاينات وحجوزات، لا نقرات. وتُبنى بحيث يمكن إيقاف حي أو نوع وحدة في دقيقة واحدة عند تسكينه.</p>
+  </header>
+
+  <section class="s">
+    <div class="s-h"><span class="k">3.1</span><h2>كم نحتاج لتسكين الشاغر؟</h2></div>
+    <p class="intro">الحاسبة معبأة بمثال افتراضي. غيّر الأرقام بعد استلام جدول المخزون، ثم بعد أول 14 يوماً من البيانات الفعلية.</p>
+    <div class="calc">
+      <div class="in">
+        <label for="c-units">عدد الوحدات الشاغرة<input id="c-units" type="number" min="1" value="30"></label>
+        <label for="c-rent">متوسط الإيجار الشهري (ريال)<input id="c-rent" type="number" min="0" value="3800"></label>
+        <label for="c-stay">متوسط مدة الإقامة (شهر)<input id="c-stay" type="number" min="1" step="0.5" value="4"></label>
+        <label for="c-cpl">تكلفة العميل المحتمل (ريال)<input id="c-cpl" type="number" min="1" value="15"></label>
+        <label for="c-q">نسبة المؤهلين من العملاء %<input id="c-q" type="number" min="1" max="100" value="40"></label>
+        <label for="c-v">نسبة المعاينة من المؤهلين %<input id="c-v" type="number" min="1" max="100" value="50"></label>
+        <label for="c-c">نسبة الحجز من المعاينات %<input id="c-c" type="number" min="1" max="100" value="35"></label>
+      </div>
+      <div class="out" aria-live="polite">
+        <div class="row"><span>خسارة الشاغر شهرياً</span><b id="o-loss">—</b></div>
+        <div class="row"><span>نسبة التحويل من عميل إلى ساكن</span><b id="o-rate">—</b></div>
+        <div class="row"><span>عملاء محتملون مطلوبون</span><b id="o-leads">—</b></div>
+        <div class="row"><span>معاينات مطلوبة</span><b id="o-views">—</b></div>
+        <div class="row big"><span>الميزانية الإعلانية المطلوبة</span><b id="o-budget">—</b></div>
+        <div class="row"><span>تكلفة تسكين الوحدة الواحدة</span><b id="o-cac">—</b></div>
+        <div class="row"><span>التكلفة كنسبة من قيمة العقد</span><b id="o-pct">—</b></div>
+      </div>
+      <div class="ex">القيم الافتراضية تقديرات تخطيطية لسوق الرياض وليست بيانات ذا كابيتال سويتس. الهدف المقترح: ألا تتجاوز تكلفة تسكين الوحدة 50% من إيجار شهر واحد.</div>
+    </div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">3.2</span><h2>خطة صرف ميزانية الاختبار: 6,400 ريال على 20 يوماً</h2></div>
+    <p class="intro">الصرف تدريجي: يبدأ بميزانية ثابتة 7 أيام حتى تمر الحملات بمرحلة التعلّم ويكتمل اختبار واتساب مقابل النموذج، ثم يزيد مرتين بنسبة 20–30% في كل مرة. كل الأرقام اليومية مقرّبة. الفترة من الخميس 1 أكتوبر إلى الثلاثاء 20 أكتوبر 2026، بعد يومين إعداد (29 و30 سبتمبر).</p>
+    <div class="split" role="img" aria-label="توزيع الميزانية: سناب شات 50%، ميتا 25%، تيك توك 25%">
+      <div class="sn" style="width:50%">سناب شات 50%</div><div class="mt" style="width:25%">ميتا 25%</div><div class="tt" style="width:25%">تيك توك 25%</div>
+    </div>
+    <div class="stats" style="grid-template-columns:repeat(3,minmax(0,1fr))">
+      <div class="stat"><div class="v">3,200</div><div class="l">سناب شات · من 130 إلى 190 ريال يومياً</div></div>
+      <div class="stat"><div class="v">1,600</div><div class="l">ميتا · من 60 إلى 100 ريال يومياً</div></div>
+      <div class="stat"><div class="v">1,600</div><div class="l">تيك توك · 80 ريال يومياً ثابتة</div></div>
+    </div>
+
+    <h3>المراحل والتواريخ</h3>
+    <div class="phases">
+      <div class="phase"><div class="w">29–30 سبتمبر</div><h4>0 · الإعداد</h4><ul><li>تتبع المنصات (بدون بكسلات الموقع)</li><li>النماذج الفورية ورسالة واتساب الجاهزة</li><li>جدول العملاء الموحد</li><li>رفع التصاميم ومراجعة الترخيص</li></ul></div>
+      <div class="phase"><div class="w">1–7 أكتوبر · 7 أيام</div><h4>1 · التعلّم والاختبار</h4><ul><li>270 ريال يومياً ثابتة</li><li>واتساب مقابل النموذج الفوري</li><li>لا تعديل على الميزانية أو الإعلانات</li><li>قرار الفائز مساء 7 أكتوبر</li></ul></div>
+      <div class="phase"><div class="w">8–13 أكتوبر · 6 أيام</div><h4>2 · الزيادة الأولى</h4><ul><li>320 ريال يومياً</li><li>80% من ميزانية سناب وميتا للشكل الفائز</li><li>إيقاف أضعف تصميمين في كل منصة</li><li>إضافة تصاميم المرحلة الثانية</li></ul></div>
+      <div class="phase"><div class="w">14–20 أكتوبر · 7 أيام</div><h4>3 · الزيادة الثانية</h4><ul><li>370 ريال يومياً</li><li>الشكل والتصاميم الرابحة فقط</li><li>تصاميم جديدة بدل اللي تكررت كثيراً</li><li>تقرير نهائي يوم 21 أكتوبر</li></ul></div>
+    </div>
+
+    <h3>جدول الصرف</h3>
+    <div class="tw"><table>
+      <thead><tr><th>المرحلة</th><th>الفترة</th><th>سناب شات</th><th>ميتا</th><th>تيك توك</th><th>الإجمالي</th></tr></thead>
+      <tbody>
+        <tr><td class="k">0 · الإعداد</td><td>29–30 سبتمبر</td><td class="m">—</td><td class="m">—</td><td class="m">—</td><td class="m">0</td></tr>
+        <tr><td class="k">1 · التعلّم والاختبار</td><td>1–7 أكتوبر<small>7 أيام</small></td><td class="m">910<small>130 يومياً · 65 واتساب + 65 نموذج</small></td><td class="m">420<small>60 يومياً · 30 واتساب + 30 نموذج</small></td><td class="m">560<small>80 يومياً · نموذج فوري</small></td><td class="m">1,890<small>270 يومياً</small></td></tr>
+        <tr><td class="k">2 · الزيادة الأولى</td><td>8–13 أكتوبر<small>6 أيام</small></td><td class="m">960<small>160 يومياً · +23%</small></td><td class="m">480<small>80 يومياً · +33%</small></td><td class="m">480<small>80 يومياً</small></td><td class="m">1,920<small>320 يومياً</small></td></tr>
+        <tr><td class="k">3 · الزيادة الثانية</td><td>14–20 أكتوبر<small>7 أيام</small></td><td class="m">1,330<small>190 يومياً · +19%</small></td><td class="m">700<small>100 يومياً · +25%</small></td><td class="m">560<small>80 يومياً</small></td><td class="m">2,590<small>370 يومياً</small></td></tr>
+        <tr class="tot"><td class="k">الإجمالي</td><td>20 يوماً</td><td class="m">3,200</td><td class="m">1,600</td><td class="m">1,600</td><td class="m">6,400</td></tr>
+      </tbody>
+    </table></div>
+    <div class="grid2">
+      <div class="note" style="margin:0"><b>لماذا الزيادة على مرحلتين فقط؟</b> كل تغيير كبير في الميزانية قد يعيد الحملة لمرحلة التعلّم. زيادتان بين 19% و33%، مع 6–7 أيام استقرار بعد كل زيادة، تعطي الخوارزمية وقتاً لتثبت الأداء قبل الخطوة التالية.</div>
+      <div class="note" style="margin:0"><b>لماذا تيك توك ثابت؟</b> الحد الأدنى للمجموعة الإعلانية 20 دولاراً يومياً (حوالي 75 ريالاً)، فلا يمكن البدء بأقل من 80. التحسين في تيك توك يتم بنقل الصرف لأقوى فيديو داخل نفس المجموعة، وليس بزيادة الميزانية. ولا يدخل اختبار واتساب مقابل النموذج لأن تقسيمه ينزل كل مجموعة تحت الحد.</div>
+    </div>
+    <div class="note">الحاسبة أعلاه تعطي 6,435 ريالاً. الخطة مقرّبة إلى 6,400 ريال، ويبقى 35 ريالاً احتياطياً غير مخصص.</div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">3.3</span><h2>الحملات والمحتوى في فترة الاختبار</h2></div>
+    <p class="intro">كل التصاميم مرقّمة كما في لوحة التصميم. نفس التصاميم تعمل في مجموعتي واتساب والنموذج داخل المنصة الواحدة، حتى يكون الفرق الوحيد بينهما هو طريقة التواصل.</p>
+    <div class="tw"><table>
+      <thead><tr><th>المنصة</th><th>الحملة والهدف</th><th>المجموعات الإعلانية</th><th>الاستهداف</th><th>المحتوى في المرحلة 1</th></tr></thead>
+      <tbody>
+        <tr><td class="k">سناب شات</td><td>Leads</td><td>A: نموذج فوري<br>B: واتساب (رابط wa.me برسالة جاهزة)<br>ميزانية متساوية</td><td>الرياض · 21–45 سنة · طبقة إضافية بنطاق حول الرمال والملز</td><td>ستوري: 01 ادخل بشنطتك · 04 الرمال من 3,000 · 07 فاتورة شهرك · 08 أكثر سؤال يوصلنا</td></tr>
+        <tr><td class="k">ميتا</td><td>اختبار A/B من Experiments: Leads بنموذج فوري مقابل Click to WhatsApp</td><td>A: نموذج فوري<br>B: واتساب<br>ميزانية متساوية</td><td>الرياض · 22–45 سنة · Advantage+ Audience</td><td>فيد: 02 احسبها صح · 06 مفتاحك جاهز · 10 الرمال زي ما هي · كاروسيل 1 جولة الاستديو (ونسخ الستوري لمواضع Reels والستوري)</td></tr>
+        <tr><td class="k">تيك توك</td><td>Lead Generation · نموذج فوري</td><td>مجموعة واحدة</td><td>الرياض · 18–40 سنة</td><td>01 و05 و06 كفيديو 6–10 ثوانٍ + جولة 20 ثانية من فيديو استديو 205 (سكريبت T-01)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="grid2">
+      <div class="card"><span class="tag t">المرحلة 2 · 8–13 أكتوبر</span><h4>إضافات</h4><p>كاروسيل 2 (ليش الشهري) على ميتا، و03 استديو أو غرفتين على سناب شات، بدل أضعف تصميمين من المرحلة 1.</p></div>
+      <div class="card"><span class="tag b">المرحلة 3 · 14–20 أكتوبر</span><h4>تجديد المحتوى</h4><p>نفس جمهور الاكتساب بدون إعادة استهداف. التصاميم الرابحة تستمر، وأي تصميم تكرر ظهوره كثيراً (Frequency أعلى من 3) يُستبدل بـ 05 مباشرتك قريبة أو 06 مفتاحك جاهز.</p></div>
+    </div>
+    <div class="note risk"><b>خارج الاختبار:</b> تصميم 09 (ابدأ أكتوبر) مرتبط بيوم 1 أكتوبر، فلا يدخل فترة الاختبار. يُستخدم قبل بداية الشهر التالي بعد تعديل التاريخ.</div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">3.4</span><h2>اختبار: واتساب أم النموذج الفوري؟</h2></div>
+    <p class="intro">السؤال ليس أيهما أرخص للعميل الواحد، بل أيهما يوصل لمعاينات وحجوزات بتكلفة أقل. النموذج الفوري غالباً يجلب عدداً أكبر بتكلفة أقل، وواتساب غالباً يجلب نية أعلى. الاختبار يحسم هذا ببيانات ذا كابيتال سويتس نفسها.</p>
+    <div class="vs">
+      <div class="card"><span class="tag b">A · النموذج الفوري</span><h4>المتوقع</h4><p>تكلفة أقل للعميل وعدد أكبر، لكن جزء من الأرقام لا يرد، والتأهيل يحتاج اتصالاً سريعاً خلال 15 دقيقة.</p></div>
+      <div class="card"><span class="tag t">B · واتساب</span><h4>المتوقع</h4><p>تكلفة أعلى للمحادثة، لكن العميل بدأ الكلام بنفسه، والتأهيل وإرسال فيديو الوحدة يتمان في نفس المحادثة.</p></div>
+    </div>
+
+    <h3>شروط الاختبار العادل</h3>
+    <ul class="clean">
+      <li>نفس التصاميم ونفس الاستهداف ونفس الميزانية ونفس التواريخ في المجموعتين. الفرق الوحيد هو طريقة التواصل.</li>
+      <li>يعمل على سناب شات وميتا فقط. في ميتا نستخدم أداة A/B Test الرسمية حتى لا يتداخل الجمهور بين المجموعتين.</li>
+      <li>رقم واتساب الحملات: <span class="num" dir="ltr">050 307 0157</span> (دولياً <span class="num" dir="ltr">966503070157</span>). في سناب شات يُستخدم الرابط الجاهز: <span class="num" dir="ltr" style="word-break:break-all">https://wa.me/966503070157?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D8%8C%20%D8%A3%D8%A8%D8%BA%D9%89%20%D8%A3%D8%B9%D8%B1%D9%81%20%D8%B9%D9%86%20%D8%A7%D9%84%D9%88%D8%AD%D8%AF%D8%A7%D8%AA%20%D8%A7%D9%84%D9%85%D8%AA%D8%A7%D8%AD%D8%A9%20%5BSN%5D</span>. في ميتا يُربط الرقم بصفحة فيسبوك وحساب إنستغرام، وتُكتب الرسالة الجاهزة داخل إعداد إعلان Click to WhatsApp.</li>
+      <li>رسالة واتساب الجاهزة تحمل رمز المصدر: <span class="num">«مرحبا، أبغى أعرف عن الوحدات المتاحة [SN]»</span> لسناب شات و<span class="num">[MT]</span> لميتا، والنماذج تُسمّى بالمنصة: <span class="num">رمال-سناب-فورم</span> و<span class="num">رمال-ميتا-فورم</span>.</li>
+      <li>كل عميل يُسجَّل في جدول واحد بالحقول: المنصة، الطريقة (واتساب/نموذج)، تم التواصل، مؤهل، معاينة، حجز.</li>
+      <li>لا تعديل على الحملات قبل اليوم الخامس، حتى تخرج الخوارزميات من مرحلة التعلّم.</li>
+    </ul>
+
+    <h3>ما نقارنه</h3>
+    <div class="tw"><table>
+      <thead><tr><th>المؤشر</th><th>الحساب</th><th>وزنه في القرار</th></tr></thead>
+      <tbody>
+        <tr><td class="k">تكلفة العميل / المحادثة</td><td>الصرف ÷ النماذج المرسلة أو المحادثات المبدوءة</td><td>للمتابعة فقط</td></tr>
+        <tr><td class="k">نسبة التواصل الفعلي</td><td>من رد على الاتصال أو الرسالة ÷ الإجمالي</td><td>مهم</td></tr>
+        <tr><td class="k">نسبة المؤهلين</td><td>من أكمل الحي والنوع وموعد الدخول ÷ الإجمالي</td><td>مهم</td></tr>
+        <tr><td class="k">تكلفة المعاينة</td><td>الصرف ÷ المعاينات المنفذة (حضورياً أو فيديو)</td><td><b>المؤشر الحاسم</b></td></tr>
+        <tr><td class="k">الحجوزات</td><td>العدد وتكلفة الحجز الواحد</td><td>يرجّح عند التقارب</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>قاعدة القرار: مساء 7 أكتوبر</h3>
+    <div class="flow">
+      <div class="st"><i>1</i><b>الحد الأدنى</b><span>30 عميلاً على الأقل لكل طريقة (سناب شات وميتا معاً)</span></div>
+      <div class="st"><i>2</i><b>فائز واضح</b><span>تكلفة معاينة أقل بـ 20% أو أكثر: يأخذ 80% من ميزانية المرحلة 2</span></div>
+      <div class="st"><i>3</i><b>تقارب</b><span>فرق أقل من 20%: نختار بنسبة الحجز، ونكمل بالطريقتين 50/50</span></div>
+      <div class="st"><i>4</i><b>بيانات ناقصة</b><span>أقل من 30 عميلاً: نمد الاختبار 3 أيام بنفس الميزانية قبل أي زيادة</span></div>
+    </div>
+    <div class="note"><b>حجم العينة المتوقع:</b> بتكلفة 15 ريالاً للعميل، كل طريقة تحصل في 7 أيام على حوالي 30 عميلاً من سناب شات (455 ريالاً) و14 من ميتا (210 ريالات)، أي حوالي 44 عميلاً لكل طريقة. الرقم كافٍ لقرار اتجاه واضح، وليس يقيناً إحصائياً. لذلك تبقى 20% من الميزانية على الطريقة الأخرى في المرحلة 2 كمجموعة مقارنة.</div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">3.5</span><h2>سناب شات: المحرك الرئيسي</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>الحملة</th><th>الهدف</th><th>الاستهداف</th><th>الإعلان</th></tr></thead>
+      <tbody>
+        <tr><td class="k">S1 · الشمال</td><td>Leads (نموذج فوري)</td><td>القيروان، حطين، العارض: نطاق جغرافي حول الحي ومناطق العمل الكبرى في الشمال · 20–38 سنة</td><td>فيديو جولة استديو + السعر الشامل</td></tr>
+        <tr><td class="k">S2 · الوسط والشرق</td><td>Leads أو محادثة واتساب</td><td>الملز، الرمال: الرياض كاملة · 23–45 سنة</td><td>«من 3,000 ريال شهرياً شامل»</td></tr>
+        <tr><td class="k">S3 · المنتقلون</td><td>Leads</td><td>خارج الرياض (جدة، الشرقية، القصيم، الجنوب) + اهتمامات الوظائف والسفر</td><td>«انتقلت للرياض؟ سكنك جاهز»</td></tr>
+        <tr><td class="k">S4 · إعادة الاستهداف (لاحقاً)</td><td>Leads / Traffic · بعد زيادة الميزانية</td><td>مشاهدو الفيديو 50%+، من فتح النموذج ولم يرسله، المتفاعلون مع الحساب</td><td>عرض الدخول السريع + شهادة ساكن</td></tr>
+      </tbody>
+    </table></div>
+    <ul class="clean">
+      <li>النموذج الفوري قصير: الاسم، الجوال، الحي، نوع الوحدة، موعد الدخول. الأسئلة الإضافية تتم في واتساب.</li>
+      <li>مجموعة إعلانية مستقلة لكل نوع وحدة داخل الحي، حتى يمكن إيقافها وحدها عند التسكين.</li>
+      <li>التتبع من داخل المنصة: فتح النموذج وإرساله والسوايب لرابط واتساب. بكسل الموقع مؤجل لأن الحملات لا تستخدم الموقع.</li>
+    </ul>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">3.6</span><h2>تيك توك: الطلب بالفيديو</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>الحملة</th><th>الهدف</th><th>الاستهداف</th><th>المحتوى</th></tr></thead>
+      <tbody>
+        <tr><td class="k">T1 · الوصول</td><td>Video Views / Reach</td><td>الرياض · 18–35 · اهتمامات السكن والعمل ونمط الحياة</td><td>جولات 20–30 ثانية داخل الوحدات، «يوم في حياة ساكن»</td></tr>
+        <tr><td class="k">T2 · العملاء</td><td>Lead Generation (نموذج فوري)</td><td>الرياض + جمهور مشابه للمسجلين</td><td>أقوى 3 فيديوهات من T1</td></tr>
+        <tr><td class="k">T3 · Spark Ads</td><td>Lead Generation / Traffic</td><td>مشاهدو T1 + تفاعلات الحساب</td><td>تعزيز منشورات الحساب العضوية الناجحة</td></tr>
+      </tbody>
+    </table></div>
+    <p>تيك توك يحتاج كمية فيديو أكبر من سناب. الحد الأدنى للإطلاق 6 فيديوهات، مع إضافة 3 فيديوهات جديدة أسبوعياً لأن الإعلانات تستهلك بسرعة على المنصة.</p>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">3.7</span><h2>جوجل: التقاط النية الجاهزة (مرحلة لاحقة)</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>مجموعة الإعلانات</th><th>أمثلة كلمات البحث</th><th>الصفحة المستهدفة</th></tr></thead>
+      <tbody>
+        <tr><td class="k">حطين</td><td>شقق مفروشة شهري حطين · استديو فندقي حطين</td><td>صفحة حطين</td></tr>
+        <tr><td class="k">القيروان</td><td>استديو مفروش القيروان · شقق للإيجار الشهري القيروان</td><td>صفحة القيروان</td></tr>
+        <tr><td class="k">الملز والرمال</td><td>شقق مفروشة شهري الملز · شقق مفروشة شرق الرياض</td><td>صفحة الحي</td></tr>
+        <tr><td class="k">عام الرياض</td><td>شقق فندقية شهري الرياض · سكن شهري مفروش الرياض</td><td>صفحة كل الأحياء</td></tr>
+        <tr><td class="k">اسم العلامة</td><td>ذا كابيتال سويتس · the capital suites</td><td>الرئيسية</td></tr>
+      </tbody>
+    </table></div>
+    <p>كلمات سلبية من اليوم الأول: يومي، شاليه، استراحة، للبيع، وظائف، عزاب رخيص (حسب سياسة الشركة).</p>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">3.8</span><h2>قواعد الإدارة اليومية</h2></div>
+    <div class="grid2">
+      <div class="card"><h4>الإعلان يتبع المخزون</h4><p>تحديث يومي لجدول الوحدات الشاغرة. أي وحدة تُحجز تُوقف مجموعتها الإعلانية في نفس اليوم، وأي وحدة تفرغ تُضاف خلال 48 ساعة.</p></div>
+      <div class="card"><h4>الإيقاف</h4><p>مجموعة إعلانية تصرف 3 أضعاف تكلفة العميل المستهدفة دون عميل مؤهل واحد تُوقف. العميل الرخيص غير المؤهل لا يُعتبر نجاحاً.</p></div>
+      <div class="card"><h4>التوسيع</h4><p>زيادة 20% كل 3 أيام على المجموعات التي تجلب معاينات بتكلفة أقل من الهدف، وليس على التي تجلب نماذج فقط.</p></div>
+      <div class="card"><h4>الاختبار</h4><p>متغير واحد في كل اختبار: الزاوية، أو الشكل، أو العرض. 3 زوايا × شكلان لكل منصة في أول أسبوعين.</p></div>
+    </div>
+    <div class="note risk"><b>الامتثال:</b> الإعلانات العقارية في السعودية تتطلب رقم ترخيص إعلاني ساري من الهيئة العامة للعقار، والوحدات الفندقية قد تتطلب ترخيص وزارة السياحة. نحتاج أرقام التراخيص قبل الإطلاق لإضافتها في الإعلانات والصفحات.</div>
+  </section>
+</div>
+
+<!-- ============ 04 CREATIVE ============ -->
+<div class="panel" id="p-cre" role="tabpanel" aria-labelledby="t-cre" hidden>
+  <header class="hero">
+    <div class="eyebrow">04 · الإبداع والنصوص</div>
+    <h1>الإعلان هو الوحدة نفسها</h1>
+    <p class="lede">العميل يقرر خلال ثانيتين إن كانت الوحدة حقيقية ومناسبة لسعره. لذلك كل إعلان يبدأ بلقطة من داخل الوحدة، ويعرض الحي والسعر على الشاشة قبل أي كلمة.</p>
+  </header>
+
+  <section class="s">
+    <div class="s-h"><span class="k">4.1</span><h2>قواعد ثابتة لكل إعلان</h2></div>
+    <ul class="clean">
+      <li>عمودي 9:16، مصوّر بالجوال، إضاءة نهار طبيعية، بدون موسيقى صاخبة تغطي الصوت.</li>
+      <li>أول 1.5 ثانية: لقطة فتح باب الوحدة أو إدخال الشنطة أو منظر الغرفة كاملة.</li>
+      <li>نص على الشاشة دائماً: <strong>الحي + نوع الوحدة + «من X ريال شهرياً شامل»</strong>.</li>
+      <li>صور وفيديو من الوحدة المعلن عنها فقط. لا صور مكتبات، ولا تصاميم ثلاثية الأبعاد.</li>
+      <li>نبرة الإعلانات باللهجة السعودية البيضاء، ونبرة الموقع والعقود بالعربية الفصحى المبسطة.</li>
+      <li>رقم الترخيص الإعلاني ظاهر في الإعلان والصفحة.</li>
+    </ul>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">4.2</span><h2>خمس زوايا إبداعية</h2></div>
+    <div class="grid2">
+      <div class="card"><span class="tag b">الجاهزية</span><h4>«ادخل بشنطتك بس»</h4><p>لقطة شخص يدخل بشنطة واحدة، يفتح الثلاجة والمكيف والواي فاي يعمل. الرسالة: كل شيء جاهز من أول ليلة.</p></div>
+      <div class="card"><span class="tag b">السعر الشامل</span><h4>«الحسبة الكاملة»</h4><p>مقارنة مكتوبة على الشاشة بين العقد السنوي (إيجار + تأثيث + فواتير + دفعات) وسعرنا الشهري الشامل.</p></div>
+      <div class="card"><span class="tag t">الجولة</span><h4>«جولة 20 ثانية»</h4><p>جولة بمنظور الساكن داخل الوحدة: المدخل، الغرفة، المطبخ، دورة المياه، الإطلالة. مع السعر ورقم الوحدة.</p></div>
+      <div class="card"><span class="tag t">نمط الحياة</span><h4>«يوم في حياة ساكن»</h4><p>من الصباح للمساء: الخروج للعمل، الوقت للوصول، العودة، التنظيف جاهز. يناسب تيك توك أكثر.</p></div>
+      <div class="card"><span class="tag g">المقارنة</span><h4>«فندق أم شقة أم كابيتال؟»</h4><p>ثلاثة خيارات لإقامة 3 أشهر: الفندق مرتفع، الشقة تحتاج عقداً وتأثيثاً، الوحدة الفندقية الشهرية في المنتصف.</p></div>
+      <div class="card"><span class="tag w">الإلحاح الصادق</span><h4>«باقي 3 وحدات في القيروان»</h4><p>تُستخدم فقط عندما يكون العدد حقيقياً ويتم تحديثه. لا عدّ تنازلي وهمي.</p></div>
+    </div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">4.3</span><h2>بنك الجمل الافتتاحية (Hooks)</h2></div>
+    <ul class="hooks">
+      <li>«ادخل بشنطتك بس، والباقي جاهز»<small>الجاهزية · سناب وتيك توك</small></li>
+      <li>«استديو في حطين بدون عقد سنوي؟ إيه موجود»<small>المرونة · حطين</small></li>
+      <li>«انتقلت للرياض؟ لا تسكن فندق شهرين»<small>المنتقلون · سناب خارج الرياض</small></li>
+      <li>«هذا كل شي يشمله الإيجار… كل شي»<small>السعر الشامل</small></li>
+      <li>«حسبتها: العقد السنوي مو أرخص مثل ما تتوقع»<small>المقارنة</small></li>
+      <li>«جولة داخل استديو القيروان في 20 ثانية»<small>الجولة · القيروان</small></li>
+      <li>«من 3,000 ريال شهري في قلب الرياض»<small>السعر · الملز</small></li>
+      <li>«تبي تستقر قبل ما تلتزم سنة؟»<small>المرونة · موظف جديد</small></li>
+      <li>«مفتاحك جاهز اليوم»<small>السرعة · إعادة الاستهداف</small></li>
+      <li>«شركتك تبي تسكّن موظفين؟ عندنا دور كامل»<small>الشركات · LinkedIn وسناب</small></li>
+    </ul>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">4.4</span><h2>نصوص جاهزة للتصوير</h2></div>
+
+    <article class="script">
+      <header><h4>S-01 · ادخل بشنطتك بس</h4><span class="meta">سناب شات · 10 ثوانٍ · استديو القيروان</span></header>
+      <ol>
+        <li><span class="tc">0.0–1.5</span><span>لقطة من الممر: يد تفتح باب الوحدة وشنطة سفر تدخل. نص: <q>القيروان · استديو فندقي</q></span></li>
+        <li><span class="tc">1.5–4</span><span>لقطات سريعة: تشغيل المكيف، فتح الثلاجة، شاشة الواي فاي. نص: <q>مفروش · كهرباء وماء وإنترنت</q></span></li>
+        <li><span class="tc">4–7</span><span>لقطة الغرفة كاملة من الزاوية. صوت: <q>ادخل بشنطتك بس، والباقي علينا.</q></span></li>
+        <li><span class="tc">7–10</span><span>نص كبير: <q>من X ريال شهرياً شامل</q> + زر: <q>احجز معاينة</q></span></li>
+      </ol>
+      <div class="foot">الهدف: Leads · التعليق: «استديو فندقي في القيروان، شهري بدون عقد سنوي»</div>
+    </article>
+
+    <article class="script">
+      <header><h4>S-02 · الحسبة الكاملة</h4><span class="meta">تيك توك وسناب · 20 ثانية · حطين</span></header>
+      <ol>
+        <li><span class="tc">0–2</span><span>وجه مباشر للكاميرا: <q>تحسب العقد السنوي أرخص؟ خلني أحسبها معك.</q></span></li>
+        <li><span class="tc">2–10</span><span>نص يظهر بندًا بندًا: إيجار سنة مقدم، تأثيث، توصيل عدادات، إنترنت، فواتير. (الأرقام من الشركة)</span></li>
+        <li><span class="tc">10–16</span><span>قطع للوحدة في حطين: <q>هنا رقم واحد شهري، وكل هذا داخل فيه.</q></span></li>
+        <li><span class="tc">16–20</span><span>نص: <q>حطين · شهري شامل · معاينة اليوم</q></span></li>
+      </ol>
+      <div class="foot">ملاحظة: كل رقم في الحسبة يُعتمد من الشركة ويكون قابلاً للإثبات.</div>
+    </article>
+
+    <article class="script">
+      <header><h4>S-03 · انتقلت للرياض؟</h4><span class="meta">سناب شات · 8 ثوانٍ · استهداف خارج الرياض</span></header>
+      <ol>
+        <li><span class="tc">0–2</span><span>لقطة شنطة عند باب الوحدة. نص: <q>مباشرتك في الرياض قريبة؟</q></span></li>
+        <li><span class="tc">2–5</span><span>جولة سريعة للوحدة. نص: <q>سكن مفروش جاهز · شهر أو 3 أو 6</q></span></li>
+        <li><span class="tc">5–8</span><span>نص: <q>احجز قبل وصولك، بجولة فيديو على واتساب</q></span></li>
+      </ol>
+      <div class="foot">الهدف: Leads · يدعم الحجز عن بعد عبر جولة فيديو مباشرة.</div>
+    </article>
+
+    <article class="script">
+      <header><h4>T-01 · جولة 20 ثانية</h4><span class="meta">تيك توك · 20–25 ثانية · أي حي</span></header>
+      <ol>
+        <li><span class="tc">0–2</span><span>صوت: <q>هذا استديو في القيروان، تعال أوريك إيش فيه.</q> لقطة الباب.</span></li>
+        <li><span class="tc">2–15</span><span>جولة متصلة بلقطة واحدة: المدخل، السرير، الخزانة، ركن المطبخ، دورة المياه، النافذة. نص صغير بمساحة الوحدة بالمتر.</span></li>
+        <li><span class="tc">15–20</span><span>صوت: <q>السعر شهري وشامل الكهرباء والماء والنت.</q> نص بالسعر.</span></li>
+        <li><span class="tc">20–25</span><span>نص: <q>الرابط لواتساب مباشرة</q></span></li>
+      </ol>
+      <div class="foot">يُصوّر لكل نوع وحدة في كل حي، ويصلح عضوياً وكإعلان Spark.</div>
+    </article>
+
+    <article class="script">
+      <header><h4>T-02 · يوم في حياة ساكن</h4><span class="meta">تيك توك · 30 ثانية · موظف/ة شاب</span></header>
+      <ol>
+        <li><span class="tc">0–3</span><span>منبه الصباح داخل الوحدة. نص: <q>يومي وأنا ساكن شهري في الرياض</q></span></li>
+        <li><span class="tc">3–12</span><span>قهوة في ركن المطبخ، خروج للسيارة، لقطة الطريق. نص: <q>12 دقيقة للدوام</q> (رقم حقيقي فقط)</span></li>
+        <li><span class="tc">12–24</span><span>العودة مساءً، الغرفة مرتبة. نص: <q>ما أشيل هم فواتير ولا صيانة</q></span></li>
+        <li><span class="tc">24–30</span><span>نص: <q>ذا كابيتال سويتس · شهري بدون عقد سنوي</q></span></li>
+      </ol>
+      <div class="foot">يُفضّل تصويره مع ساكن حقيقي بموافقة مكتوبة، أو موظف من الشركة.</div>
+    </article>
+
+    <article class="script">
+      <header><h4>R-01 · مفتاحك جاهز اليوم</h4><span class="meta">إعادة استهداف (لاحقاً) · سناب وتيك توك · 6 ثوانٍ</span></header>
+      <ol>
+        <li><span class="tc">0–2</span><span>لقطة مفتاح أو بطاقة دخول على الطاولة. نص: <q>شفت الوحدة؟</q></span></li>
+        <li><span class="tc">2–6</span><span>نص: <q>احجز هذا الأسبوع وخصم على الشهر الأول</q> + زر واتساب</span></li>
+      </ol>
+      <div class="foot">فقط للوحدات الشاغرة أكثر من 21 يوماً، وبعرض معتمد.</div>
+    </article>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">4.5</span><h2>نصوص الإعلانات حسب المنصة</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>المنصة</th><th>الحقل</th><th>أمثلة</th></tr></thead>
+      <tbody>
+        <tr><td class="k">سناب شات</td><td>العنوان (34 حرفاً)</td><td>استديو مفروش شهري في القيروان · حطين بدون عقد سنوي · من 3,000 شهري شامل بالملز</td></tr>
+        <tr><td class="k">تيك توك</td><td>نص الإعلان (حتى 100 حرف)</td><td>استديو فندقي في حطين، شهري وشامل الكهرباء والماء والنت. معاينة اليوم 👇</td></tr>
+        <tr><td class="k">جوجل</td><td>العناوين (30 حرفاً)</td><td>شقق مفروشة شهري حطين · سعر شامل الكهرباء والماء · معاينة اليوم أو غداً · بدون عقد سنوي</td></tr>
+        <tr><td class="k">جوجل</td><td>الوصف (90 حرفاً)</td><td>وحدات فندقية مفروشة بالكامل في حطين. إيجار شهري بسعر واحد شامل. تواصل عبر واتساب الآن.</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">4.6</span><h2>قائمة التصوير لكل حي (يوم واحد)</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>اللقطة</th><th>العدد</th><th>الاستخدام</th></tr></thead>
+      <tbody>
+        <tr><td class="k">جولة متصلة لكل نوع وحدة</td><td class="m">1 لكل نوع</td><td>T-01، الصفحة، واتساب</td></tr>
+        <tr><td class="k">لقطات تفاصيل (مكيف، مطبخ، سرير، دورة مياه، نافذة)</td><td class="m">10–15</td><td>S-01، S-02، الكتالوج</td></tr>
+        <tr><td class="k">لقطة الدخول بالشنطة</td><td class="m">3 زوايا</td><td>S-01، S-03</td></tr>
+        <tr><td class="k">واجهة المبنى والمدخل والمواقف</td><td class="m">5</td><td>الثقة، الصفحة</td></tr>
+        <tr><td class="k">الطريق من المبنى لأقرب محور رئيسي</td><td class="m">1</td><td>T-02، إعلانات الموقع</td></tr>
+        <tr><td class="k">صور ثابتة أفقية وعمودية بإضاءة نهار</td><td class="m">20</td><td>جوجل، البوابات، جاذر إن</td></tr>
+        <tr><td class="k">شهادة ساكن حالي (بموافقة)</td><td class="m">1–2</td><td>إعادة الاستهداف</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</div>
+
+<!-- ============ 05 FUNNEL ============ -->
+<div class="panel" id="p-funnel" role="tabpanel" aria-labelledby="t-funnel" hidden>
+  <header class="hero">
+    <div class="eyebrow">05 · مسار التحويل</div>
+    <h1>من مشاهدة الإعلان إلى استلام المفتاح</h1>
+    <p class="lede">العميل الذي يبحث عن سكن شهري يتواصل مع عدة جهات في نفس اليوم. من يرد أولاً بفيديو الوحدة وسعرها وموعد معاينة، هو غالباً من يحجز.</p>
+  </header>
+
+  <section class="s">
+    <div class="s-h"><span class="k">5.1</span><h2>رحلة العميل</h2></div>
+    <div class="flow">
+      <div class="st"><i>1</i><b>الإعلان</b><span>سناب / تيك توك / جوجل</span></div>
+      <div class="st"><i>2</i><b>التواصل</b><span>نموذج فوري أو واتساب أو صفحة الحي</span></div>
+      <div class="st"><i>3</i><b>التأهيل</b><span>الحي، النوع، موعد الدخول، المدة، عدد الأشخاص</span></div>
+      <div class="st"><i>4</i><b>الجولة</b><span>فيديو الوحدة نفسها خلال 15 دقيقة</span></div>
+      <div class="st"><i>5</i><b>المعاينة</b><span>حضورية أو فيديو مباشر، نفس اليوم أو التالي</span></div>
+      <div class="st"><i>6</i><b>الحجز</b><span>عربون وعقد إلكتروني</span></div>
+      <div class="st"><i>7</i><b>التسكين</b><span>استلام المفتاح وتعريف بالخدمات</span></div>
+      <div class="st"><i>8</i><b>التجديد والإحالة</b><span>تقييم، ترشيح صديق، تمديد</span></div>
+    </div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">5.2</span><h2>صفحة الحي: بنية مقترحة</h2></div>
+    <p class="intro">لم نتمكن من مراجعة thecapitalsuites.sa آلياً لأنه يمنع أدوات الفحص؛ نحتاج مراجعته يدوياً مع الفريق. المقترح صفحة لكل حي، لأن الإعلان يَعِد بحي محدد والصفحة يجب أن تكمل نفس الوعد.</p>
+    <div class="tw"><table>
+      <thead><tr><th>القسم</th><th>المحتوى</th><th>الهدف</th></tr></thead>
+      <tbody>
+        <tr><td class="k">أعلى الصفحة</td><td>اسم الحي + فيديو جولة قصير + «من X ريال شهرياً شامل» + زر واتساب</td><td>تأكيد وعد الإعلان</td></tr>
+        <tr><td class="k">بطاقات الوحدات</td><td>النوع، المساحة بالمتر، الدور، السعر، الشامل، عدد المتاح فعلياً</td><td>الاختيار بدون سؤال</td></tr>
+        <tr><td class="k">ماذا يشمل السعر</td><td>قائمة واضحة + أي رسوم إضافية (تأمين، تنظيف نهائي)</td><td>إزالة أكبر اعتراض</td></tr>
+        <tr><td class="k">الموقع</td><td>خريطة + أوقات الوصول لأقرب المحاور ومناطق العمل</td><td>قرار الموقع</td></tr>
+        <tr><td class="k">المدد والأسعار</td><td>شهري / 3 أشهر / 6 أشهر</td><td>رفع مدة الإقامة</td></tr>
+        <tr><td class="k">خطوات الحجز</td><td>تواصل ← جولة ← معاينة ← عربون ← مفتاح</td><td>تقليل الغموض</td></tr>
+        <tr><td class="k">الأسئلة الشائعة</td><td>العقد، التأمين، الزوار، الإلغاء، الصيانة، المواقف</td><td>الرد قبل السؤال</td></tr>
+        <tr><td class="k">زر ثابت</td><td>واتساب في أسفل الشاشة على الجوال</td><td>التحويل من أي نقطة</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">5.3</span><h2>تدفق واتساب</h2></div>
+    <p class="intro">واتساب بزنس برقم واحد، مع كتالوج للوحدات مقسم حسب الحي، ورسائل جاهزة يرسلها الموظف بضغطة.</p>
+    <div class="msg"><button class="copy" type="button">نسخ</button><div class="who">رسالة الترحيب (تلقائية)</div><pre>أهلاً بك في ذا كابيتال سويتس 🔑
+عشان نرسل لك الوحدة المناسبة بسرعة:
+1) أي حي تفضّل؟ (القيروان · حطين · العارض · الرمال · الملز)
+2) استديو أو غرفة أو غرفتين؟
+3) متى تبي تسكن؟ وكم مدة تقريباً؟</pre></div>
+    <div class="msg"><button class="copy" type="button">نسخ</button><div class="who">بعد التأهيل (خلال 15 دقيقة)</div><pre>هذي جولة الوحدة [رقم الوحدة] في [الحي] 👆
+السعر الشهري: [السعر] ريال، شامل الكهرباء والماء والإنترنت.
+متاحة للدخول من [التاريخ].
+تحب تعاينها اليوم الساعة [وقت] أو بكرة [وقت]؟ أو نسوي لك جولة فيديو مباشرة الحين.</pre></div>
+    <div class="msg"><button class="copy" type="button">نسخ</button><div class="who">بعد المعاينة</div><pre>شكراً على وقتك اليوم 🙏
+عشان نحجز لك [رقم الوحدة] قبل ما تنحجز، يكفي عربون [المبلغ] ونرسل لك العقد إلكترونياً.
+تبي نرسل لك رابط الدفع؟</pre></div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">5.4</span><h2>أسئلة التأهيل</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>السؤال</th><th>لماذا</th><th>أين يُسأل</th></tr></thead>
+      <tbody>
+        <tr><td class="k">الحي المفضل</td><td>توجيه للوحدة الصحيحة</td><td>النموذج الفوري</td></tr>
+        <tr><td class="k">نوع الوحدة</td><td>تحديد السعر المتوقع</td><td>النموذج الفوري</td></tr>
+        <tr><td class="k">موعد الدخول</td><td>أولوية الرد (خلال 14 يوماً = ساخن)</td><td>النموذج الفوري</td></tr>
+        <tr><td class="k">مدة الإقامة</td><td>اختيار الباقة المناسبة</td><td>واتساب</td></tr>
+        <tr><td class="k">فرد أو أسرة أو شركة</td><td>مطابقة سياسة الوحدة</td><td>واتساب</td></tr>
+        <tr><td class="k">مكان العمل أو الدراسة</td><td>اقتراح أقرب حي</td><td>واتساب</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>يحتاج تأكيد:</b> نوع العقد المستخدم (حجز فندقي أم عقد إيجار موثق)، قيمة العربون والتأمين، المستندات المطلوبة، وإمكانية الدفع الإلكتروني. هذه التفاصيل تحدد نص الصفحة ورسائل واتساب.</div>
+  </section>
+</div>
+
+<!-- ============ 06 SALES ============ -->
+<div class="panel" id="p-sales" role="tabpanel" aria-labelledby="t-sales" hidden>
+  <header class="hero">
+    <div class="eyebrow">06 · المبيعات والقياس</div>
+    <h1>نقيس الوحدات المسكّنة، لا النقرات</h1>
+    <p class="lede">المؤشر الأهم هو نسبة الإشغال لكل حي، وعدد أيام الشغور لكل وحدة. كل رقم آخر في التقرير يخدم هذين الرقمين.</p>
+  </header>
+
+  <section class="s">
+    <div class="s-h"><span class="k">6.1</span><h2>مراحل العميل وزمن الاستجابة</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>المرحلة</th><th>الهدف</th><th>البيانات المطلوبة</th><th>زمن الاستجابة</th></tr></thead>
+      <tbody>
+        <tr><td class="k">جديد</td><td>أول رد</td><td>المصدر، الحي، النوع</td><td class="m">≤ 15 دقيقة (9ص–11م)</td></tr>
+        <tr><td class="k">مؤهل</td><td>إرسال جولة الوحدة</td><td>موعد الدخول، المدة، عدد الأشخاص</td><td class="m">نفس الساعة</td></tr>
+        <tr><td class="k">معاينة</td><td>تثبيت موعد</td><td>الوحدة، الوقت، حضوري أو فيديو</td><td class="m">خلال 24 ساعة</td></tr>
+        <tr><td class="k">حجز</td><td>عربون وعقد</td><td>الهوية، المدة، طريقة الدفع</td><td class="m">نفس يوم المعاينة</td></tr>
+        <tr><td class="k">مسكّن</td><td>تسليم وتعريف</td><td>تاريخ البداية والنهاية</td><td class="m">—</td></tr>
+        <tr><td class="k">متابعة</td><td>استعادة المتردد</td><td>الاعتراض، الخطوة التالية</td><td class="m">يوم 1 · 3 · 7</td></tr>
+        <tr><td class="k">مفقود</td><td>معرفة السبب</td><td>السعر، الموقع، التوقيت، المنافس</td><td class="m">—</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">6.2</span><h2>رسائل المتابعة والاعتراضات</h2></div>
+    <div class="msg"><button class="copy" type="button">نسخ</button><div class="who">متابعة اليوم الأول</div><pre>مساء الخير [الاسم] 👋
+حبيت أتأكد إن جولة [رقم الوحدة] وصلتك. عندك أي سؤال عن السعر أو الموقع؟ الوحدة للحين متاحة.</pre></div>
+    <div class="msg"><button class="copy" type="button">نسخ</button><div class="who">اعتراض: «العقد السنوي أرخص»</div><pre>معك حق إن الإيجار السنوي أقل على الورق. بس لو حسبناها لأول 6 أشهر: تأثيث + توصيل عدادات + إنترنت + دفعة مقدمة كبيرة.
+عندنا كل هذا داخل في [السعر] شهري، وتقدر تطلع بعد 3 أو 6 أشهر بدون التزام سنة. أرسل لك المقارنة بالأرقام؟</pre></div>
+    <div class="msg"><button class="copy" type="button">نسخ</button><div class="who">اعتراض: «ما عندي وقت أعاين»</div><pre>ولا يهمك، نسوي لك جولة فيديو مباشرة الحين من داخل الوحدة، تشوف كل زاوية وتسأل اللي تبيه. يناسبك بعد 10 دقائق؟</pre></div>
+    <div class="msg"><button class="copy" type="button">نسخ</button><div class="who">متابعة اليوم السابع</div><pre>[الاسم]، آخر تحديث: باقي [العدد] وحدات [النوع] في [الحي]. إذا لسا تدور سكن، أقدر أحجز لك موعد معاينة هذا الأسبوع.</pre></div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">6.3</span><h2>مؤشرات الأداء</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>المؤشر</th><th>التعريف</th><th>الهدف المبدئي</th></tr></thead>
+      <tbody>
+        <tr><td class="k">نسبة الإشغال</td><td>الوحدات المسكّنة ÷ الإجمالي، لكل حي</td><td>تُحدد بعد استلام المخزون (افتراض: 90%+ خلال 90 يوماً)</td></tr>
+        <tr><td class="k">أيام الشغور</td><td>من تاريخ إخلاء الوحدة حتى تسكينها</td><td>أقل من 14 يوماً (افتراض)</td></tr>
+        <tr><td class="k">تكلفة العميل المؤهل</td><td>الصرف ÷ العملاء المؤهلين</td><td>تُحدد بعد أسبوعين</td></tr>
+        <tr><td class="k">تكلفة المعاينة</td><td>الصرف ÷ المعاينات المنفذة</td><td>تُحدد بعد أسبوعين</td></tr>
+        <tr><td class="k">تكلفة التسكين</td><td>الصرف ÷ الوحدات المسكّنة</td><td>≤ 50% من إيجار شهر (افتراض)</td></tr>
+        <tr><td class="k">زمن أول رد</td><td>متوسط الدقائق حتى أول رد</td><td class="m">≤ 15 دقيقة</td></tr>
+        <tr><td class="k">متوسط مدة الإقامة</td><td>بالأشهر</td><td>رفعه عبر باقات 3 و6 أشهر</td></tr>
+        <tr><td class="k">نسبة التجديد</td><td>المجددون ÷ المنتهية عقودهم</td><td>تُحدد لاحقاً</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">6.4</span><h2>التتبع</h2></div>
+    <ul class="clean">
+      <li><strong>تتبع المنصات:</strong> النماذج الفورية ومحادثات واتساب تُقاس من داخل سناب شات وميتا وتيك توك. لا حاجة لبكسل الموقع في هذه المرحلة لأن الحملات لا توجّه للموقع.</li>
+      <li><strong>أكواد المصدر:</strong> رسالة واتساب الجاهزة تحمل <span class="num">[SN]</span> أو <span class="num">[MT]</span>، والنماذج تُسمّى باسم المنصة والطريقة.</li>
+      <li><strong>إعادة الاستهداف:</strong> خارج ميزانية الاختبار. تُفعَّل لاحقاً عند زيادة الميزانية.</li>
+      <li><strong>لاحقاً:</strong> بكسلات الموقع وروابط UTM عند إضافة صفحات هبوط أو حملات جوجل.</li>
+      <li><strong>الأحداث:</strong> الضغط على واتساب، إرسال النموذج، حجز معاينة، الحجز النهائي (يُرفع يدوياً أو من النظام).</li>
+      <li><strong>مصدر كل عميل:</strong> حقل إلزامي في جدول العملاء أو نظام CRM، يسجله الموظف من أول رسالة.</li>
+      <li><strong>تقرير أسبوعي:</strong> لكل حي: الصرف، العملاء، المؤهلون، المعاينات، الحجوزات، الإشغال، أيام الشغور.</li>
+    </ul>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">6.5</span><h2>الاجتماع الأسبوعي (30 دقيقة)</h2></div>
+    <div class="flow">
+      <div class="st"><i>1</i><b>المخزون</b><span>ما تسكّن، ما فرغ، ما يفرغ قريباً</span></div>
+      <div class="st"><i>2</i><b>الأرقام</b><span>التقرير الأسبوعي لكل حي</span></div>
+      <div class="st"><i>3</i><b>المبيعات</b><span>أكثر 3 اعتراضات وأسباب الفقد</span></div>
+      <div class="st"><i>4</i><b>الإبداع</b><span>أفضل وأسوأ إعلان، وماذا نصوّر</span></div>
+      <div class="st"><i>5</i><b>القرار</b><span>أين نزيد، أين نوقف، أي عرض نفعّل</span></div>
+    </div>
+  </section>
+</div>
+
+<!-- ============ 07 NEXT ============ -->
+<div class="panel" id="p-next" role="tabpanel" aria-labelledby="t-next" hidden>
+  <header class="hero">
+    <div class="eyebrow">07 · الخطوات التالية</div>
+    <h1>المطلوب من فريق ذا كابيتال سويتس</h1>
+    <p class="lede">هذه القائمة هي ما يفصل الخطة عن الإطلاق. البنود الأربعة الأولى تسمح بالإطلاق خلال أسبوع من استلامها.</p>
+  </header>
+
+  <section class="s">
+    <div class="s-h"><span class="k">7.1</span><h2>البيانات والقرارات</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>#</th><th>المطلوب</th><th>التفاصيل</th><th>الأولوية</th></tr></thead>
+      <tbody>
+        <tr><td class="m">01</td><td class="k">جدول المخزون</td><td>كل وحدة شاغرة: الرقم، الحي، النوع، المساحة، الدور، السعر الحالي، شاغرة منذ، حالة التأثيث</td><td><span class="tag w">قبل الإطلاق</span></td></tr>
+        <tr><td class="m">02</td><td class="k">الأسعار والعروض</td><td>السعر الشهري لكل نوع، أسعار 3 و6 أشهر، الحد الأدنى، نسب الخصم المسموحة</td><td><span class="tag w">قبل الإطلاق</span></td></tr>
+        <tr><td class="m">03</td><td class="k">ما يشمله السعر</td><td>كهرباء، ماء، إنترنت، تنظيف، صيانة، مواقف، دخول ذكي، وأي رسوم إضافية</td><td><span class="tag w">قبل الإطلاق</span></td></tr>
+        <tr><td class="m">04</td><td class="k">التراخيص</td><td>رقم الترخيص الإعلاني من الهيئة العامة للعقار، وترخيص السياحة إن وُجد</td><td><span class="tag w">قبل الإطلاق</span></td></tr>
+        <tr><td class="m">05</td><td class="k">إجراءات الحجز</td><td>نوع العقد، العربون، التأمين، المستندات، الدفع الإلكتروني، سياسة الإلغاء، الفئات المسموح لها في كل مبنى</td><td><span class="tag b">الأسبوع الأول</span></td></tr>
+        <tr><td class="m">06</td><td class="k">بيانات سابقة</td><td>استفسارات آخر 6 أشهر ومصادرها، متوسط مدة الإقامة، أسباب المغادرة</td><td><span class="tag b">الأسبوع الأول</span></td></tr>
+        <tr><td class="m">07</td><td class="k">المنافسون المباشرون</td><td>أسماء المباني والمشغلين الذين يخسر لهم الفريق عملاء في كل حي</td><td><span class="tag">لاحقاً</span></td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">7.2</span><h2>الحسابات والوصول</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>#</th><th>الحساب</th><th>المطلوب</th></tr></thead>
+      <tbody>
+        <tr><td class="m">01</td><td class="k">Snapchat Business</td><td>صلاحية مدير إعلانات + بيانات الفوترة</td></tr>
+        <tr><td class="m">02</td><td class="k">TikTok Business Center</td><td>صلاحية للحساب الإعلاني وحساب @thecapital.sa أو حساب مستقل لسويتس</td></tr>
+        <tr><td class="m">03</td><td class="k">Google Ads</td><td>حساب قائم أو إنشاء جديد</td></tr>
+        <tr><td class="m">04</td><td class="k">الموقع</td><td>صلاحية thecapitalsuites.sa، لاحقاً عند إضافة صفحات هبوط</td></tr>
+        <tr><td class="m">05</td><td class="k">واتساب بزنس</td><td>رقم الحملات <span class="num" dir="ltr">0503070157</span> على واتساب بزنس، مربوط بحساب ميتا للأعمال، والشخص المسؤول عن الرد</td></tr>
+        <tr><td class="m">06</td><td class="k">جاذر إن والبوابات</td><td>الحسابات الحالية على حراج وعقار وديل وجاذر إن</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">7.3</span><h2>الإنتاج والفريق</h2></div>
+    <div class="grid2">
+      <div class="card"><h4>يوم تصوير لكل حي</h4><p>وصول لوحدة نموذجية نظيفة وجاهزة من كل نوع، في وقت نهار، مع شخص يظهر في لقطات الدخول والجولة.</p></div>
+      <div class="card"><h4>شهادات السكان</h4><p>ساكن أو اثنان راضيان يقبلان الظهور أو كتابة تقييم، بموافقة مكتوبة.</p></div>
+      <div class="card"><h4>مسؤول رد ثابت</h4><p>شخص واحد على الأقل يغطي واتساب من 9 صباحاً حتى 11 مساءً، بمعدل رد خلال 15 دقيقة.</p></div>
+      <div class="card"><h4>صلاحية قرار سريع</h4><p>من يعتمد العروض والخصومات خلال نفس اليوم عند وجود عميل جاهز.</p></div>
+    </div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">7.4</span><h2>ما سنسلّمه بعد استلام ما سبق</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>التسليم</th><th>المدة</th></tr></thead>
+      <tbody>
+        <tr><td class="k">إعداد الحسابات وتتبع المنصات والجماهير</td><td class="m">3 أيام</td></tr>
+        <tr><td class="k">مونتاج أول 6–9 إعلانات من التصوير</td><td class="m">3–4 أيام</td></tr>
+        <tr><td class="k">صفحات الأحياء ورسائل واتساب النهائية</td><td class="m">5 أيام</td></tr>
+        <tr><td class="k">إطلاق سناب شات ثم تيك توك وجوجل</td><td class="m">اليوم 7–10</td></tr>
+        <tr><td class="k">أول تقرير أسبوعي وقرارات التحسين</td><td class="m">اليوم 14</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <footer class="pf">هذا الملف مُعد من محمد سبيت لذا كابيتال سويتس. الأرقام المصنفة «افتراض» تقديرات تخطيطية تُستبدل ببيانات الشركة الفعلية قبل الإطلاق.</footer>
+</div>
+
+
+<!-- ============ 08 BRAND & CONTENT ENGINE ============ -->
+<div class="panel" id="p-org" role="tabpanel" aria-labelledby="t-org" hidden>
+  <header class="hero">
+    <div class="eyebrow">08 · استراتيجية المحتوى والبراند · بناء الثقة حول المشغّل</div>
+    <h1>المستثمر ما يشتري وحدة، يشتري ثقة في من يشغّلها</h1>
+    <p class="lede">هذا القسم امتداد لخطة التسكين، لا قسم منفصل عنها. الحملات تملأ الوحدات اليوم، ونتائج التشغيل التي تصنعها هي أهم مادة يبني عليها البراند الثقة، ثم يحوّلها تدريجياً إلى طلبات من الملاك والمستثمرين والشركات.</p>
+  </header>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.1</span><h2>ثلاثة أهداف لمحرك واحد</h2></div>
+    <div class="grid3">
+      <div class="card"><span class="tag t">الهدف 1</span><h4>تسكين اليوم</h4><p>محتوى يدعم الإعلانات ويثبت جودة الوحدات. من يشوف إعلان سناب أو تيك توك ويفتح الحساب يلاقي تشغيلاً حقيقياً يطمّنه قبل ما يراسل.</p></div>
+      <div class="card"><span class="tag b">الهدف 2</span><h4>بناء الثقة</h4><p>إظهار التشغيل الحقيقي: المعايير، الفريق، وقبل كل شيء <b>النتائج</b>. «هذي النتيجة اللي حققناها» أقوى بكثير من «إحنا كويسين».</p></div>
+      <div class="card"><span class="tag g">الهدف 3</span><h4>خلق الطلب المستقبلي</h4><p>بناء علاقة مع الملاك والمستثمرين والشركات، تتحول مع الوقت إلى طلبات تقييم ولقاءات وشراكات.</p></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="v">3</div><div class="l">مستويات محتوى: ثقة، سلطة معرفية، تجاري</div></div>
+      <div class="stat"><div class="v">1</div><div class="l">ركيزة مستقلة تغذي الكل: Proof of Performance</div></div>
+      <div class="stat"><div class="v">2+1</div><div class="l">منصتان أساسيتان، وX بشكل خفيف في المرحلة الأولى</div></div>
+      <div class="stat"><div class="v">2</div><div class="l">قطعتان أساسيتان أسبوعياً، يُعاد تشكيلهما لكل منصة</div></div>
+    </div>
+    <div class="thesis"><p class="q">«ذا كابيتال سويتس: <b>شركة تشغيل حقيقية عندها نظام وبيانات</b>، مش مجرد شركة شقق مفروشة بتعمل سوشيال ميديا.»</p></div>
+    <p class="intro"><b>الجسر بين القسمين:</b> قسم التسكين يولّد الدليل (وحدات تسكّنت، مدة تسكين، إشغال)، وقسم البراند يعرضه. كل شهر تشغيل ناجح يتحول إلى مادة محتوى، وكل محتوى يثبت النتائج يسهّل التسكين القادم.</p>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.2</span><h2>الجمهور: ثلاث فئات وثلاثة أسئلة</h2></div>
+    <div class="grid3">
+      <div class="card"><span class="tag b">المستثمر</span><h4>موظف أو رجل أعمال عنده سيولة</h4><p>يبحث عن دخل منتظم من العقار بدون إدارة يومية.</p><p><b>سؤاله:</b> مين يشغّل، وكيف أعرف الأرقام الحقيقية؟</p><div class="fit"><b>نقدّم له:</b> نتائج تشغيل شهرية بنفس المؤشرات، ومعايير مكتوبة، ومشاريع قائمة يقدر يزورها.</div></div>
+      <div class="card"><span class="tag t">مالك العقار</span><h4>عمارة أو وحدات تؤجَّر سنوياً أو شاغرة</h4><p>يفكر في التحويل للمفروش الشهري لكنه يخاف من التكلفة والإدارة.</p><p><b>سؤاله:</b> هل التحويل يستاهل، وكم يكلف، ومين يدير؟</p><div class="fit"><b>نقدّم له:</b> حسبات واضحة، ودراسات حالة قبل وبعد، وزمن تجهيز وتسكين موثّق.</div></div>
+      <div class="card"><span class="tag g">الشركات ورجال الأعمال</span><h4>سكن موظفين وشراكات</h4><p>يحتاج مشغّلاً موثوقاً بعقود واضحة واستجابة سريعة.</p><p><b>سؤاله:</b> هل يقدرون يلتزمون بمستوى خدمة ثابت؟</p><div class="fit"><b>نقدّم له:</b> معايير الخدمة، وأزمنة الاستجابة، وعدد الشركات التي نخدمها.</div></div>
+    </div>
+    <div class="note risk"><b>قبل النشر:</b> أي محتوى يتكلم عن «عائد» أو «فرصة استثمارية» أو طرح وحدات للمستثمرين يحتاج مراجعة قانونية، لأن تسويق المنتجات الاستثمارية للعامة له أنظمة خاصة في السعودية. القاعدة في هذه الخطة: <b>نعرض أرقام التشغيل الفعلية، ولا نعد بعائد</b>. ومن جهة الخدمة: السجل التجاري للشركة يشمل نشاط <b>إدارة الأملاك</b> والوساطة والاستشارات والتحليل العقاري، لكن رخصة فال الحالية للشركة (<span class="num" dir="ltr">1200046434</span>، سارية حتى 21/12/2026) نشاطها <b>الوساطة والتسويق</b> فقط. يعني نقدر نسوّق ونؤجّر وحدات الملاك ونقدم الاستشارة، أما «إدارة أملاك الغير» كخدمة معلنة فتحتاج رخصة فال لإدارة الأملاك قبل أن تكون دعوة في المحتوى.</div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.3</span><h2>ثلاثة مستويات للمحتوى، وليس كل منشور يبيع</h2></div>
+    <p class="intro">كل منشور ينتمي لمستوى واحد واضح. محتوى الثقة والمعرفة لا يحاول بيع الاستثمار، وهذا بالضبط ما يجعل المحتوى التجاري مقنعاً حين يأتي.</p>
+    <div class="tw"><table>
+      <thead><tr><th>المستوى</th><th>الحصة</th><th>السؤال الذي يجاوبه</th><th>أمثلة</th><th>الدعوة</th></tr></thead>
+      <tbody>
+        <tr><td class="k">A · Brand Trust</td><td class="m">35%</td><td>مين إحنا؟ كيف نشتغل؟ معاييرنا؟ فريقنا؟</td><td>من الصفر للمفتاح، قائمة الفحص قبل التسكين، الفريق، الدخول الذكي، زمن الرد</td><td>تابعنا</td></tr>
+        <tr><td class="k">B · Market Authority</td><td class="m">35%</td><td>هل يفهمون الرياض والسكن المفروش أكثر من غيرهم؟</td><td>حي في دقيقة، أنواع المستأجرين، الأنظمة مشروحة ببساطة، دروس التشغيل، ما يهم المالك</td><td>احفظ، شارك</td></tr>
+        <tr><td class="k">C · Commercial / Investor</td><td class="m">30%</td><td>هل يستاهل أتعامل معهم؟</td><td>حسبة المالك، تقييم العقار، المشاريع الجديدة مثل «ذا كابيتال قرطبة»، فرص التعاون مع الشركات</td><td>اطلب تقييم عقارك، تواصل</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note"><b>أين يقع Proof؟</b> ليس مستوى رابعاً بل <b>المادة الخام</b> التي تغذي المستويات الثلاثة: رقم الإشغال يثبت الثقة (A)، وزمن التسكين في الملز يصنع محتوى عن الحي (B)، ودراسة حالة عمارة مالك هي أقوى محتوى تجاري (C). المستهدف أن <b>40% على الأقل</b> من المحتوى يقوم على نتيجة حقيقية موثّقة.</div>
+    <p class="intro">المحتوى التجاري (C) ينشر أساساً في LinkedIn، ويمر بالمراجعة القانونية قبل أي حديث عن الاستثمار.</p>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.4</span><h2>Proof of Performance: النتائج هي البراند</h2></div>
+    <p class="intro">ركيزة مستقلة لها مالك، ومصدر بيانات، وموعد ثابت كل شهر. من دونها يبقى المحتوى ادعاءً جميلاً، ومعها يصير سجلاً تشغيلياً يقدر أي مستثمر يراجعه.</p>
+    <div class="tw"><table>
+      <thead><tr><th>المؤشر</th><th>كيف يُحسب</th><th>المصدر</th><th>الوتيرة</th></tr></thead>
+      <tbody>
+        <tr><td class="k">نسبة الإشغال</td><td>الليالي المشغولة ÷ الليالي المتاحة، لكل حي وللمحفظة</td><td>نظام التشغيل</td><td class="m">شهري</td></tr>
+        <tr><td class="k">متوسط مدة التسكين</td><td>الأيام من خروج ساكن أو جاهزية الوحدة إلى توقيع الساكن التالي</td><td>CRM + نظام التشغيل</td><td class="m">شهري</td></tr>
+        <tr><td class="k">عدد الوحدات المشغّلة</td><td>الوحدات تحت التشغيل في نهاية الشهر</td><td>الإدارة</td><td class="m">شهري</td></tr>
+        <tr><td class="k">الوحدات التي تم تسكينها</td><td>عقود جديدة خلال الشهر، مع مصدرها (إعلان، عضوي، إحالة)</td><td>CRM</td><td class="m">شهري</td></tr>
+        <tr><td class="k">متوسط زمن تجهيز الوحدة</td><td>الأيام من الاستلام فارغة إلى جاهزة للتسكين</td><td>فريق التجهيز</td><td class="m">لكل وحدة</td></tr>
+        <tr><td class="k">العملاء والشركات</td><td>عدد الساكنين الحاليين، والشركات المتعاقدة لسكن موظفين</td><td>الإدارة</td><td class="m">ربع سنوي</td></tr>
+        <tr><td class="k">Before / After</td><td>نفس الزاوية ونفس الإضاءة قبل التجهيز وبعده</td><td>التصوير</td><td class="m">لكل وحدة</td></tr>
+        <tr><td class="k">Case Studies</td><td>مالك أو عمارة: الوضع قبل، ما فعلناه، النتيجة بالأرقام</td><td>الإدارة + موافقة المالك</td><td class="m">شهري</td></tr>
+        <tr><td class="k">مشكلة تشغيلية وحلها</td><td>مشكلة حقيقية حدثت، وكيف حُلّت، وكم استغرقت</td><td>فريق التشغيل</td><td class="m">كل أسبوعين</td></tr>
+      </tbody>
+    </table></div>
+    <div class="grid3">
+      <div class="card"><span class="tag b">قاعدة 1</span><h4>نفس المؤشرات كل شهر</h4><p>حتى لو نزل رقم في شهر ما. الثبات في العرض هو ما يجعل الأرقام قابلة للتصديق، والشهر الضعيف مع تفسيره يبني ثقة أكثر من إخفائه.</p></div>
+      <div class="card"><span class="tag t">قاعدة 2</span><h4>كل رقم مع أساسه</h4><p>«إشغال [X]% في أكتوبر على [Y] وحدة في الرمال والملز»، وليس «إشغال عالٍ». الفترة وعدد الوحدات يُذكران دائماً.</p></div>
+      <div class="card"><span class="tag g">قاعدة 3</span><h4>الموافقة قبل النشر</h4><p>المدير يعتمد الأرقام، والمالك أو الشركة يوافقون كتابياً قبل أي دراسة حالة باسمهم. بدون موافقة تُنشر الحالة بدون اسم.</p></div>
+    </div>
+    <div class="note ok"><b>من أين تأتي الأرقام بدون مجهود يدوي؟</b> نظام تتبّع العملاء (المرحلة الثالثة من القياس) يسجل كل محادثة ومصدرها ومراحلها حتى التوقيع، فيخرج منه تلقائياً: الوحدات التي تسكّنت، ومدة التسكين، والمصدر. ويبقى على التشغيل إرسال الإشغال وزمن التجهيز في ملف شهري واحد بحلول يوم 3 من كل شهر.</div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.5</span><h2>النبرة والقواعد الثابتة</h2></div>
+    <ul class="clean">
+      <li><strong>فصحى مبسطة بنبرة سعودية مهنية</strong> لمحتوى الملاك والمستثمرين، وتبقى اللهجة السعودية الدارجة لمحتوى السكان والإعلانات. ملخص إنجليزي قصير في LinkedIn.</li>
+      <li><strong>نتيجة قبل الوصف:</strong> متى أمكن، يبدأ المنشور برقم أو دليل، ثم يشرح كيف وصلنا له.</li>
+      <li><strong>بدون كلمات مبالغة:</strong> لا «فرصة لا تعوّض» ولا «عائد مضمون» ولا «الأفضل في الرياض». الهدوء والدقة هما البرستيج.</li>
+      <li><strong>صور حقيقية فقط</strong> من وحداتنا ومبانينا وفريقنا. لا صور مكتبات ولا تصاميم ثلاثية الأبعاد تُعرض كأنها واقع.</li>
+      <li><strong>شخص حقيقي:</strong> المدير أو المؤسس يظهر مرة أسبوعياً على الأقل. الثقة في هذا القطاع تُبنى مع أشخاص، لا مع شعار.</li>
+      <li><strong>رقم الترخيص الإعلاني</strong> في أي منشور فيه وحدة معروضة أو سعر.</li>
+    </ul>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.6</span><h2>المنصات على مرحلتين</h2></div>
+    <p class="intro">لا نفتح جبهات أكثر مما يقدر الفريق يغذيها بجودة ثابتة. نبدأ بمنصتين، ونضيف الباقي فقط بعد إثبات القدرة على الإنتاج.</p>
+    <h3>المرحلة الأولى: الآن</h3>
+    <div class="tw"><table>
+      <thead><tr><th>المنصة</th><th>الدور</th><th>الصيغ</th><th>الوتيرة</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Instagram</td><td>واجهة البراند وأول مكان يتحقق منه الساكن والمالك. يخدم التسكين والثقة معاً</td><td>ريلز خلف الكواليس، كاروسيل، ستوري يومية للتشغيل</td><td class="m">3 / أسبوع + ستوري</td></tr>
+        <tr><td class="k">LinkedIn</td><td>الملاك والمستثمرون والشركات. صفحة الشركة + حساب المدير، وبيت المحتوى التجاري (C)</td><td>كاروسيل PDF، منشور أرقام، مقال قصير للمدير</td><td class="m">2 / أسبوع</td></tr>
+        <tr><td class="k">X · خفيف</td><td>حضور في نقاش السوق العقاري، بإعادة تشكيل نفس القطع فقط بدون إنتاج خاص</td><td>ثريد من الكاروسيل، أرقام التقرير</td><td class="m">1–2 / أسبوع</td></tr>
+      </tbody>
+    </table></div>
+    <h3>المرحلة الثانية: بعد إثبات القدرة</h3>
+    <div class="grid3">
+      <div class="card"><span class="tag t">لاحقاً</span><h4>YouTube</h4><p>حلقات طويلة: جولة تشغيل، حوار مع مالك. تُفتح عندما تتراكم مادة دراسات الحالة.</p></div>
+      <div class="card"><span class="tag t">لاحقاً</span><h4>قناة واتساب</h4><p>القاعدة التي نملكها: التقرير الشهري وتنبيهات المشاريع الجديدة.</p></div>
+      <div class="card"><span class="tag t">لاحقاً</span><h4>النشرة البريدية</h4><p>«رسالة ذا كابيتال» للملاك والمستثمرين: ملخص الشهر ودراسة حالة.</p></div>
+    </div>
+    <div class="note ok"><b>شرط الانتقال للمرحلة الثانية:</b> 8 أسابيع متتالية بالوتيرة المتفق عليها بدون انقطاع، وتقريران شهريان صدرا في موعدهما، ودراستا حالة منشورتان. لو تحقق الشرط نضيف منصة واحدة كل شهر، لا الثلاث معاً.</div>
+    <p class="intro">سناب شات وتيك توك يبقون لإعلانات السكان.</p>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.7</span><h2>أربع سلاسل ثابتة في المرحلة الأولى</h2></div>
+    <div class="grid2">
+      <div class="card"><span class="tag b">Proof</span><h4>تقرير الشهر · The Capital Monthly</h4><p>كاروسيل 6 شرائح بنفس القالب كل شهر: الإشغال، الوحدات التي تسكّنت، مدة التسكين، زمن التجهيز، ملاحظة السوق، القادم. يُنشر في Instagram وLinkedIn.</p></div>
+      <div class="card"><span class="tag b">Proof · A</span><h4>من الصفر للمفتاح</h4><p>ريلز 30–45 ثانية لوحدة من الاستلام فارغة حتى تسليم المفتاح، قبل وبعد بنفس الزاوية، ومعها زمن التجهيز الحقيقي.</p></div>
+      <div class="card"><span class="tag g">B</span><h4>حي في دقيقة</h4><p>حي واحد كل حلقة: من يسكنه، نوع الطلب، أنواع الوحدات المطلوبة، ومدة التسكين الفعلية عندنا فيه. نبدأ بالرمال والملز.</p></div>
+      <div class="card"><span class="tag w">C</span><h4>حسبة المالك</h4><p>كاروسيل يقارن عمارة صغيرة سنوياً مقابل مفروش شهري، بأرقام افتراضية مكتوب أنها افتراضية، ويُستبدل تدريجياً بأرقام دراسات الحالة الحقيقية.</p></div>
+    </div>
+    <p class="intro">تضاف دراسة حالة شهرية ومنشور «مشكلة وحلها» كل أسبوعين ضمن هذه السلاسل. سلسلتا «سؤال المستثمر» و«المعيار» مؤجلتان للمرحلة الثانية.</p>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.8</span><h2>الهوية البصرية للمحتوى</h2></div>
+    <div class="grid2">
+      <div class="card"><h4>اللون والخط</h4><p>نفس لغة الإعلانات: فحمي وذهبي وعاجي. Alexandria للعناوين وIBM Plex Sans Arabic للنصوص. مساحة فارغة واسعة، وعنوان واحد كبير في كل تصميم.</p></div>
+      <div class="card"><h4>الشبكة</h4><p>مقاس 4:5 ثابت، وكل سلسلة لها قالب وختم صغير باسمها. من يتصفح الحساب يرى نظاماً متكرراً هادئاً، لا تصاميم متفرقة.</p></div>
+      <div class="card"><h4>التصوير</h4><p>تصوير معماري بإضاءة نهار، خطوط مستقيمة، لقطات قريبة للخامات. الأشخاص يظهرون وهم يعملون، لا وهم يقفون للكاميرا.</p></div>
+      <div class="card"><h4>الرقم كتصميم</h4><p>في محتوى Proof الرقم هو البطل: رقم كبير بالذهبي، وسطر واحد يشرحه، والفترة وعدد الوحدات أسفل التصميم.</p></div>
+    </div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.9</span><h2>من متابع إلى طلب</h2></div>
+    <div class="flow">
+      <div class="st"><i>01 · Awareness</i><b>يشوف</b><span>ريلز أو كاروسيل يوصله من Instagram أو LinkedIn</span></div>
+      <div class="st"><i>02 · Authority</i><b>يحفظ ويتابع</b><span>لأن السلسلة مفيدة ومتكررة وفيها أرقام حقيقية</span></div>
+      <div class="st"><i>03 · Intent</i><b>يحمّل أو يسأل</b><span>دليل المالك، أو رسالة يسأل فيها عن عقاره</span></div>
+      <div class="st"><i>04 · Business</i><b>يطلب</b><span>تقييم عقاره، لقاء، شراكة سكن موظفين</span></div>
+    </div>
+    <div class="grid3">
+      <div class="card"><span class="tag b">الشهر 2</span><h4>دليل المالك</h4><p>«تحويل عقارك لسكن مفروش شهري»: الجدوى والتجهيز والتشغيل والأنظمة، مع دراسة حالة حقيقية. مقابل الاسم والجوال.</p></div>
+      <div class="card"><span class="tag t">الشهر 3</span><h4>تقرير ربع سنوي</h4><p>«السكن المفروش في الرياض»: ملخص نتائج تشغيلنا وملاحظات السوق، يُرسل لمن طلبه عبر LinkedIn أو واتساب.</p></div>
+      <div class="card"><span class="tag g">المرحلة الثانية</span><h4>حاسبة سنوي أم مفروش</h4><p>صفحة على thecapitalsuites.sa يدخل فيها المالك أرقام عقاره ويشوف المقارنة، تُبنى بعد ثبات المرحلة الأولى.</p></div>
+    </div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.10</span><h2>خطة 90 يوماً · الانطلاق 15 أكتوبر 2026</h2></div>
+    <div class="phases">
+      <div class="phase"><div class="w">الشهر 1 · 15 أكتوبر – 14 نوفمبر</div><h4>التأسيس</h4><ul><li>توحيد الاسم والبايو والصور في Instagram وLinkedIn وX</li><li>9 منشورات تثبيت: من نحن، معاييرنا، فريقنا، أرقامنا</li><li>تصميم قوالب السلاسل مرة واحدة مع المصمم</li><li>تجهيز ملف Proof الشهري وأول تقرير شهر</li></ul></div>
+      <div class="phase"><div class="w">الشهر 2 · 15 نوفمبر – 14 ديسمبر</div><h4>السلطة المعرفية</h4><ul><li>إطلاق «من الصفر للمفتاح» و«حي في دقيقة»</li><li>أول دراسة حالة</li><li>ثاني تقرير شهر</li></ul></div>
+      <div class="phase"><div class="w">الشهر 3 · 15 ديسمبر – 14 يناير</div><h4>التحويل</h4><ul><li>إطلاق «حسبة المالك» ودليل المالك</li><li>محتوى تجاري (C) في LinkedIn</li><li>مراجعة النتائج وشرط الانتقال للمرحلة الثانية</li></ul></div>
+      <div class="phase"><div class="w">طوال الفترة</div><h4>القياس والتحسين</h4><ul><li>مراجعة أسبوعية لأكثر المنشورات حفظاً ومشاركة</li><li>تكرار الصيغ الرابحة وإيقاف الضعيفة</li><li>تقرير شهري للإدارة بسلّم المؤشرات</li></ul></div>
+    </div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.11</span><h2>أول أربعة أسابيع</h2></div>
+    <p class="intro">قطعتان أساسيتان كل أسبوع، وكل قطعة تتحول لصيغة كل منصة. الأرقام بين قوسين مربعين تُستبدل ببيانات التشغيل الفعلية.</p>
+    <div class="tw"><table>
+      <thead><tr><th>الأسبوع</th><th>المستوى</th><th>Instagram</th><th>LinkedIn</th><th>X · خفيف</th></tr></thead>
+      <tbody>
+        <tr><td class="m">1</td><td>A + Proof</td><td>منشورات التثبيت + ريلز «من الصفر للمفتاح #1: استديو الرمال في [X] أيام»</td><td>مقال المدير: «لماذا نشغّل السكن المفروش بمعايير فندقية»</td><td>تعريف بالشركة وأرقامها الأساسية</td></tr>
+        <tr><td class="m">2</td><td>B + Proof</td><td>كاروسيل «حي في دقيقة: الملز» + ريلز «48 ساعة بين ساكن وساكن»</td><td>كاروسيل «الملز بعين المشغّل: من يسكن ومدة التسكين»</td><td>ثريد الملز</td></tr>
+        <tr><td class="m">3</td><td>C + Proof</td><td>كاروسيل «حسبة المالك: عمارة من 8 شقق» + ريلز «من الصفر للمفتاح #2: الملز»</td><td>نفس الحسبة كـ PDF</td><td>ثريد الحسبة خطوة بخطوة</td></tr>
+        <tr><td class="m">4</td><td>Proof</td><td>كاروسيل «تقرير الشهر · أكتوبر» + منشور «مشكلة صارت وكيف حليناها»</td><td>تقرير الشهر + تعليق المدير على الأرقام</td><td>أرقام التقرير في منشور واحد</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.12</span><h2>بنك الجمل الافتتاحية</h2></div>
+    <ul class="hooks">
+      <li>«[X] يوم من استلام الوحدة فارغة إلى أول ساكن»<small>Proof · من الصفر للمفتاح</small></li>
+      <li>«تسكّنت [X] وحدة هذا الشهر، وهذا من أين جاء الساكنون»<small>Proof · تقرير الشهر</small></li>
+      <li>«مشكلة صارت هذا الأسبوع، وكيف حليناها في [X] ساعات»<small>Proof · مشكلة وحلها</small></li>
+      <li>«هذا اللي يصير في الـ 48 ساعة بين ساكن وساكن»<small>A · خلف الكواليس</small></li>
+      <li>«الملز بعين المشغّل: مين يسكن هنا ولماذا»<small>B · حي في دقيقة</small></li>
+      <li>«قبل ما تسلّم عقارك لأي مشغّل، اسأله هذي الأسئلة»<small>B · معرفة السوق</small></li>
+      <li>«الوحدة الشاغرة تكلّفك أكثر من إيجارها»<small>C · حسبة المالك</small></li>
+      <li>«سنوي أم مفروش؟ الجواب في ثلاثة أرقام»<small>C · حسبة المالك</small></li>
+    </ul>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.13</span><h2>ثلاثة نماذج جاهزة للتنفيذ</h2></div>
+    <article class="script">
+      <header><h4>O-01 · من الصفر للمفتاح #1</h4><span class="meta">Instagram Reels · 40 ثانية · استديو الرمال · Proof + A</span></header>
+      <ol>
+        <li><span class="tc">0–3</span><span>لقطة الوحدة فارغة من الباب. نص: <q>يوم 1 · استديو فارغ في الرمال</q></span></li>
+        <li><span class="tc">3–15</span><span>تسريع للتركيب: السرير، الستائر، الشاشة، الإضاءة. نص صغير: <q>أثاث · تكييف · إنترنت</q></span></li>
+        <li><span class="tc">15–25</span><span>فحص قبل التسكين بلقطات قريبة: يد تشيّك الماء والإضاءة والقفل الذكي. نص: <q>قائمة فحص قبل كل ساكن</q></span></li>
+        <li><span class="tc">25–35</span><span>نفس زاوية البداية والوحدة جاهزة. نص: <q>يوم [X] · جاهزة للسكن</q> (المدة الحقيقية من الفريق)</span></li>
+        <li><span class="tc">35–40</span><span>شعار ذا كابيتال سويتس وسطر: <q>تسكّنت بعد [X] أيام من جاهزيتها</q> إن توفر الرقم، وإلا <q>نشغّل السكن المفروش بمعايير فندقية</q></span></li>
+      </ol>
+      <div class="foot">التعليق: خطوات تجهيز وحدة عندنا قبل أول ساكن، بالأيام الحقيقية. تابعنا لسلسلة «من الصفر للمفتاح».</div>
+    </article>
+    <article class="script">
+      <header><h4>O-02 · حسبة المالك: عمارة من 8 شقق</h4><span class="meta">LinkedIn كاروسيل PDF و Instagram · 7 شرائح · C</span></header>
+      <ol>
+        <li><span class="tc">1</span><span>عنوان: <q>عندك عمارة 8 شقق تؤجّرها سنوي؟ خلنا نحسبها</q></span></li>
+        <li><span class="tc">2</span><span>السيناريو السنوي: الإيجار، فترات الشغور، التحصيل. (أرقام افتراضية مكتوب عليها افتراض)</span></li>
+        <li><span class="tc">3</span><span>سيناريو المفروش الشهري: الإيجار الشهري، والإشغال المبني على متوسط تشغيلنا الفعلي مع ذكر الفترة.</span></li>
+        <li><span class="tc">4</span><span>التكاليف اللي ينساها الناس: التجهيز، التنظيف، الصيانة، الإدارة.</span></li>
+        <li><span class="tc">5</span><span>نقطة التعادل: بعد كم شهر يغطي الفرق تكلفة التجهيز.</span></li>
+        <li><span class="tc">6</span><span>متى لا يناسبك التحويل: الحي، نوع المبنى، طبيعة الطلب. الصراحة هنا تبني الثقة.</span></li>
+        <li><span class="tc">7</span><span>دعوة: <q>حمّل دليل المالك</q> أو <q>اطلب تقييم عقارك</q>.</span></li>
+      </ol>
+      <div class="foot">مهم: الأرقام توضيحية ما عدا متوسط الإشغال المعلن، والشريحة الأخيرة لا تعد بعائد.</div>
+    </article>
+    <article class="script">
+      <header><h4>O-03 · دراسة حالة: عمارة مالك</h4><span class="meta">LinkedIn و Instagram كاروسيل · 6 شرائح · Proof → C</span></header>
+      <ol>
+        <li><span class="tc">1</span><span>عنوان بالنتيجة: <q>[X] وحدات في [الحي] · من شاغرة إلى مسكونة في [X] يوم</q></span></li>
+        <li><span class="tc">2</span><span>الوضع قبل: كم وحدة، وكم كانت شاغرة، ومن متى. صورة قبل.</span></li>
+        <li><span class="tc">3</span><span>المشكلة الحقيقية: الحالة، أو التجهيز، أو التسعير، أو الطلب في الحي.</span></li>
+        <li><span class="tc">4</span><span>ما فعلناه: التجهيز وزمنه، التسعير، القنوات التي جاء منها الساكنون.</span></li>
+        <li><span class="tc">5</span><span>النتيجة بالأرقام: الإشغال، مدة التسكين، الفترة. صورة بعد بنفس الزاوية.</span></li>
+        <li><span class="tc">6</span><span>دعوة: <q>عندك عقار في وضع مشابه؟ اطلب تقييمه</q>.</span></li>
+      </ol>
+      <div class="foot">بموافقة كتابية من المالك، أو بدون اسم وعنوان إن لم يوافق.</div>
+    </article>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.14</span><h2>القياس: سلّم من الوعي إلى الأعمال</h2></div>
+    <p class="intro">المتابعون والمشاهدات مؤشرات صحة، لا الهدف. الـ North Star هو طبقة <b>Business</b>: طلبات تقييم ولقاءات وشراكات خرجت من المحتوى. كل طلب من محتوى عضوي يُسجل في نظام تتبّع العملاء بمصدر «عضوي» واسم المنشور.</p>
+    <div class="tw"><table>
+      <thead><tr><th>الطبقة</th><th>المؤشرات</th><th>الشهر 1</th><th>الشهر 2</th><th>الشهر 3</th></tr></thead>
+      <tbody>
+        <tr><td class="k">Awareness</td><td>Reach و Views</td><td class="m">خط أساس</td><td class="m">+15%</td><td class="m">+30%</td></tr>
+        <tr><td class="k">Authority</td><td>معدل الحفظ والمشاركة، زيارات الملف</td><td class="m">≥ 1.5%</td><td class="m">≥ 2%</td><td class="m">≥ 2%</td></tr>
+        <tr><td class="k">Intent</td><td>تحميل الدليل، الاستفسارات المؤهلة من المحتوى، مشتركو واتساب (المرحلة الثانية)</td><td class="m">استفساران</td><td class="m">5 استفسارات</td><td class="m">20 تحميلاً · 8 استفسارات</td></tr>
+        <tr><td class="k">Business ★</td><td>تقييمات العقار، لقاءات الملاك، الشراكات، طلبات الاستثمار</td><td class="m">—</td><td class="m">—</td><td class="m">2</td></tr>
+      </tbody>
+    </table></div>
+    <p class="intro">تُراجع الأهداف بعد أول شهر من البيانات الفعلية.</p>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.15</span><h2>الفريق والإنتاج</h2></div>
+    <div class="grid2">
+      <div class="card"><h4>إيقاع الإنتاج</h4><p>نصف يوم تصوير كل أسبوعين يكفي لريلز السلاسل ولقطات قبل وبعد. قالب ثابت لكل سلسلة يُصمَّم مرة واحدة ثم يُعبّأ أسبوعياً.</p></div>
+      <div class="card"><h4>الأدوار</h4><p>مسؤول المحتوى يخطط ويكتب وينشر ويقيس، مع مصور ومصمم، والمدير لنصف ساعة تصوير أسبوعياً.</p></div>
+      <div class="card"><h4>مالك ملف Proof</h4><p>شخص واحد من التشغيل يرسل ملف الأرقام الشهري بحلول يوم 3، ويبلّغ عن أي وحدة جديدة قبل تجهيزها علشان تتصور «قبل».</p></div>
+      <div class="card"><h4>الاعتماد</h4><p>أرقام التشغيل ودراسات الحالة وأي محتوى عن الاستثمار يعتمدها المدير. الباقي يعتمده مدير المحتوى.</p></div>
+    </div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.16</span><h2>مراجع من السوق</h2></div>
+    <p class="intro">شركات تطبّق أجزاء من نفس النموذج. راجعنا مواقعها وتقاريرها المنشورة، لا نشاطها اليومي على السوشيال.</p>
+    <div class="tw"><table>
+      <thead><tr><th>الشركة</th><th>المكان</th><th>ما نأخذه منها</th></tr></thead>
+      <tbody>
+        <tr><td class="k"><a href="https://www.frankporter.com/">Frank Porter</a></td><td>دبي</td><td>مخاطبة الملاك بأرقام السوق، حاسبة دخل، شهادات ملاك حقيقيين</td></tr>
+        <tr><td class="k"><a href="https://arrived.com/blog/august-2026-performance">Arrived</a></td><td>أمريكا</td><td>تقرير أداء شهري بنفس القالب: الإشغال، العقود الجديدة، تقييم الضيوف</td></tr>
+        <tr><td class="k"><a href="https://bobw.co/about-bob-w">Bob W</a></td><td>أوروبا</td><td>شقق مخدومة تنشر عدد عقاراتها وتقييم ضيوفها لتثبت كلامها</td></tr>
+        <tr><td class="k"><a href="https://kasa.com/property-partners">Kasa</a></td><td>أمريكا</td><td>صفحة للملاك بالليالي المشغّلة وعدد الشركاء وشهادات شركات عقارية</td></tr>
+        <tr><td class="k"><a href="https://buffer.com/open">Buffer</a></td><td>مجال آخر</td><td>المرجع العالمي في بناء الثقة بنشر الأرقام علناً</td></tr>
+        <tr><td class="k"><a href="https://array.sa/">Array Hospitality</a></td><td>الرياض</td><td>تشغيل فنادق وشقق، حاضرة على كل المنصات بدون أرقام تشغيل منشورة</td></tr>
+        <tr><td class="k"><a href="https://www.merya-ops.com/">ميريا</a></td><td>السعودية</td><td>تشغيل فندقي يعد الملاك بأرباح شهرية، بدون أرقام أو دراسات حالة منشورة</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note ok"><b>الفرصة:</b> المشغّلون المحليون الذين راجعناهم يعدون الملاك بالأرباح ولا ينشرون أرقام تشغيل. الالتزام بتقرير شهري حقيقي يجعل ذا كابيتال سويتس أول مشغّل في الرياض يثبت كلامه بالأرقام.</div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">8.17</span><h2>المطلوب من الشركة لهذا القسم</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>#</th><th>المطلوب</th><th>التفاصيل</th></tr></thead>
+      <tbody>
+        <tr><td class="m">01</td><td class="k">بيانات Proof الشهرية</td><td>الإشغال، الوحدات المشغّلة، الوحدات التي تسكّنت، مدة التسكين، زمن التجهيز، وعدد الشركات، مع موافقة على ما يُنشر منها</td></tr>
+        <tr><td class="m">02</td><td class="k">إبلاغ مبكر بالوحدات الجديدة</td><td>قبل بدء التجهيز، لتصوير «قبل» من نفس الزاوية</td></tr>
+        <tr><td class="m">03</td><td class="k">دراسات حالة</td><td>ملاك أو شركات يوافقون على عرض حالتهم بأسمائهم أو بدونها</td></tr>
+        <tr><td class="m">04</td><td class="k">رخصة إدارة الأملاك</td><td>السجل التجاري يشمل إدارة الأملاك (682020)، لكن رخصة فال <span class="num" dir="ltr">1200046434</span> للوساطة والتسويق فقط. إلى حين إصدار رخصة إدارة الأملاك تكون الدعوة «سوّق وحدتك معنا» أو «اطلب استشارة لعقارك»، وبعدها «سلّمنا إدارة عقارك»</td></tr>
+        <tr><td class="m">05</td><td class="k">مراجعة قانونية</td><td>حدود الحديث عن الاستثمار والعائد وطرح الوحدات في المحتوى العام</td></tr>
+        <tr><td class="m">06</td><td class="k">ظهور المدير</td><td>موافقة على الظهور أسبوعياً، وحساب LinkedIn شخصي نشط</td></tr>
+        <tr><td class="m">07</td><td class="k">الحسابات</td><td>Instagram وصفحة LinkedIn وحساب X الآن. YouTube وقناة واتساب والنشرة بعد شرط الانتقال</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+</div>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  function show(id,push){
+    var ok=false;
+    tabs.forEach(function(t){var on=t.dataset.p===id;t.setAttribute('aria-selected',on?'true':'false');if(on)ok=true;});
+    if(!ok)return;
+    document.querySelectorAll('.panel').forEach(function(p){p.hidden=(p.id!=='p-'+id);});
+    if(push){try{history.replaceState(null,'','#'+id);}catch(e){}}
+    window.scrollTo(0,0);
+  }
+  tabs.forEach(function(t){t.addEventListener('click',function(){show(t.dataset.p,true);});});
+  var h=(location.hash||'').replace('#','');
+  if(h)show(h,false);
+
+  // calculator
+  var f=new Intl.NumberFormat('en-US',{maximumFractionDigits:0});
+  function v(id){var n=parseFloat(document.getElementById(id).value);return isFinite(n)?n:0;}
+  function calc(){
+    var units=v('c-units'),rent=v('c-rent'),stay=v('c-stay'),cpl=v('c-cpl');
+    var rate=(v('c-q')/100)*(v('c-v')/100)*(v('c-c')/100);
+    var set=function(id,t){document.getElementById(id).textContent=t;};
+    set('o-loss',f.format(units*rent)+' SAR');
+    set('o-rate',(rate*100).toFixed(1)+'%');
+    if(rate<=0||units<=0){['o-leads','o-views','o-budget','o-cac','o-pct'].forEach(function(i){set(i,'—');});return;}
+    var leads=Math.ceil(units/rate);
+    var views=Math.ceil(units/(v('c-c')/100));
+    var budget=leads*cpl, cac=budget/units, contract=rent*stay;
+    set('o-leads',f.format(leads));
+    set('o-views',f.format(views));
+    set('o-budget',f.format(budget)+' SAR');
+    set('o-cac',f.format(cac)+' SAR');
+    set('o-pct',contract>0?(cac/contract*100).toFixed(1)+'%':'—');
+  }
+  document.querySelectorAll('.calc input').forEach(function(i){i.addEventListener('input',calc);});
+  calc();
+
+  // copy
+  document.querySelectorAll('.copy').forEach(function(b){
+    b.addEventListener('click',function(){
+      var pre=b.parentNode.querySelector('pre');var txt=pre.textContent;
+      var done=function(){b.textContent='تم النسخ';setTimeout(function(){b.textContent='نسخ';},1600);};
+      var fallback=function(){try{var r=document.createRange();r.selectNodeContents(pre);var s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='حدد وانسخ';}catch(e){}};
+      try{navigator.clipboard.writeText(txt).then(done,fallback);}catch(e){fallback();}
+    });
+  });
+})();
+</script>

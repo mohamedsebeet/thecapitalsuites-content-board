@@ -27,6 +27,7 @@
     '#team-dlg input.e{direction:ltr;flex:2 1 200px}#team-dlg input.n{flex:1 1 120px}' +
     '#team-dlg button{padding:9px 14px;border:0;border-radius:8px;background:#1F2427;color:#fff;font:inherit;cursor:pointer}' +
     '#team-dlg button.x{background:none;color:#9A3B2E;padding:4px 8px}#team-dlg .close{background:#EEE8DA;color:#1F2427}' +
+    '#files-link{margin-inline-start:8px;padding:6px 12px;border:1px solid #C29B3C;border-radius:999px;font-size:13px;text-decoration:none;color:inherit;white-space:nowrap}#files-link:hover{background:rgba(194,155,60,.15)}' +
     '#team-btn{margin-inline-start:8px;padding:6px 12px;border:1px solid #CFC6B2;border-radius:999px;background:transparent;font:inherit;font-size:13px;cursor:pointer;color:inherit}';
   document.head.appendChild(css);
 
@@ -80,7 +81,7 @@
     }).then(function (role) {
       if (!role) { domReady(function () { showDenied(email); }); return; }
       ROLE = role;
-      return loadMembers().then(function () { domReady(function () { closeGate(); readyResolve(); addTeamButton(); }); });
+      return loadMembers().then(function () { domReady(function () { closeGate(); readyResolve(); addFilesLink(); addTeamButton(); }); });
     });
   }
 
@@ -188,6 +189,12 @@
 
   /* ---------- إدارة الفريق (مدير المحتوى فقط) ---------- */
   var ROLE_AR = { owner: 'مدير المحتوى', team: 'فريق التنفيذ', viewer: 'اطلاع فقط' };
+  function addFilesLink() {
+    var who = document.getElementById('who');
+    if (!who || document.getElementById('files-link') || /files\.html$/.test(location.pathname)) return;
+    var a = document.createElement('a'); a.id = 'files-link'; a.href = 'files.html'; a.textContent = 'ملفات المشروع';
+    who.parentNode.insertBefore(a, who.nextSibling);
+  }
   function addTeamButton() {
     if (ROLE !== 'owner') return;
     var who = document.getElementById('who');

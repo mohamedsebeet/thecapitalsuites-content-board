@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>اعتماد ميزانية الحملات</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Reem+Kufi:wght@500;600;700&display=swap">
+<style>
+:root{
+  --bg:#F2F3EF; --surface:#FFFFFF; --surface-2:#E9ECE6; --ink:#15202B; --ink-2:#4A5560; --ink-3:#737D86;
+  --line:#D8DCD4; --brass:#8A672B; --brass-soft:#F0E6D0; --teal:#2C6664; --teal-soft:#D8E8E5;
+  --warn:#9A4A2F; --warn-soft:#F4E0D6; --good:#3F7250; --good-soft:#DDEBE0;
+  --side:#15202B; --side-ink:#ECE8DE; --side-2:#9AA4AC; --side-line:#2A3642; --side-hi:rgba(212,174,103,.14);
+  --f-body:'IBM Plex Sans Arabic','Segoe UI',Tahoma,sans-serif;
+  --f-disp:'Reem Kufi','IBM Plex Sans Arabic',Tahoma,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F151B; --surface:#161E26; --surface-2:#1D2731; --ink:#ECE9E1; --ink-2:#B4BBC1; --ink-3:#848E96;
+    --line:#2A3540; --brass:#D4AE67; --brass-soft:#382E1B; --teal:#88C2BC; --teal-soft:#1C3432;
+    --warn:#E3977E; --warn-soft:#3A231B; --good:#8FC59F; --good-soft:#1C3123;
+    --side:#0A0F14; --side-line:#1E2932;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F151B; --surface:#161E26; --surface-2:#1D2731; --ink:#ECE9E1; --ink-2:#B4BBC1; --ink-3:#848E96;
+  --line:#2A3540; --brass:#D4AE67; --brass-soft:#382E1B; --teal:#88C2BC; --teal-soft:#1C3432;
+  --warn:#E3977E; --warn-soft:#3A231B; --good:#8FC59F; --good-soft:#1C3123;
+  --side:#0A0F14; --side-line:#1E2932;
+}
+*{box-sizing:border-box}
+html{direction:rtl}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.8;-webkit-font-smoothing:antialiased}
+.app{display:grid;grid-template-columns:290px minmax(0,1fr);min-height:100vh}
+/* sidebar */
+.side{background:var(--side);color:var(--side-ink);padding:28px 18px;position:sticky;top:env(safe-area-inset-top,0px);height:100vh;overflow-y:auto;border-left:1px solid var(--side-line)}
+.brand{font-family:var(--f-disp);font-size:24px;font-weight:700;letter-spacing:.01em;line-height:1.2}
+.brand b{color:#D4AE67;font-weight:700}
+.brand small{display:block;font-family:var(--f-body);font-size:12px;font-weight:400;color:var(--side-2);margin-top:8px;line-height:1.7}
+.tabs{display:flex;flex-direction:column;gap:4px;margin-top:24px}
+.tab{all:unset;cursor:pointer;display:flex;gap:10px;align-items:baseline;padding:11px 12px;border-radius:6px;border:1px solid transparent;color:#C6CBCF}
+.tab:hover{background:rgba(255,255,255,.04)}
+.tab:focus-visible{outline:2px solid #D4AE67;outline-offset:2px}
+.tab[aria-selected="true"]{background:var(--side-hi);border-color:rgba(212,174,103,.55);color:#fff}
+.tab .n{font-family:var(--f-mono);font-size:11px;color:#D4AE67;flex-shrink:0}
+.tab .t{font-size:14.5px;font-weight:600}
+.side-meta{margin-top:24px;padding-top:16px;border-top:1px solid var(--side-line);font-size:12px;color:var(--side-2);line-height:1.9}
+.rm-h{margin-top:20px;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;color:#D4AE67;text-transform:uppercase}
+.rm{margin-top:8px}
+.rm div{display:flex;gap:8px;align-items:center;padding:7px 0;border-bottom:1px dashed var(--side-line);font-size:12px;color:var(--side-2)}
+.rm div:last-child{border-bottom:0}
+.rm i{font-style:normal;font-family:var(--f-mono);font-size:10.5px;width:18px}
+.rm span{flex:1}
+.rm em{font-style:normal;font-size:10px;padding:1px 8px;border-radius:99px;background:rgba(255,255,255,.06)}
+.rm .done{color:var(--side-ink)} .rm .done em{background:rgba(212,174,103,.2);color:#F0D9A8} .rm .done i{color:#D4AE67}
+/* main */
+.main{min-width:0;padding-inline:clamp(16px,4vw,56px);padding-block:0 80px}
+.notice{margin-inline:calc(-1*clamp(16px,4vw,56px));padding:12px clamp(16px,4vw,56px);background:var(--brass-soft);color:var(--ink);font-size:13.5px;border-bottom:1px solid var(--line)}
+.notice b{color:var(--brass)}
+.panel{max-width:1020px}
+.hero{padding-block:44px 28px;border-bottom:1px solid var(--line);margin-bottom:8px}
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.1em;color:var(--brass);text-transform:uppercase}
+h1{font-family:var(--f-disp);font-weight:700;font-size:clamp(30px,4.6vw,48px);line-height:1.25;margin:10px 0 14px;text-wrap:balance}
+.lede{font-size:17px;color:var(--ink-2);max-width:66ch;margin:0}
+.byline{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:20px;font-size:13px;color:var(--ink-3)}
+.byline b{color:var(--ink);font-weight:600}
+section.s{padding-block:34px 6px}
+.s-h{display:flex;gap:14px;align-items:baseline;margin-bottom:6px}
+.s-h .k{font-family:var(--f-mono);font-size:12px;color:var(--brass);flex-shrink:0}
+h2{font-family:var(--f-disp);font-size:clamp(22px,2.8vw,28px);font-weight:600;line-height:1.35;margin:0;text-wrap:balance}
+h3{font-size:17px;font-weight:700;margin:22px 0 6px;text-wrap:balance}
+p{margin:0 0 12px;max-width:72ch}
+.intro{color:var(--ink-2);max-width:72ch;margin-bottom:18px}
+ul.clean{margin:0 0 12px;padding-inline-start:20px}
+ul.clean li{margin-bottom:6px;max-width:70ch}
+strong{font-weight:700}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+/* stat row */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:26px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.stat .v{font-family:var(--f-mono);font-size:26px;font-weight:600;color:var(--ink);line-height:1.2;font-variant-numeric:tabular-nums}
+.stat .l{font-size:12.5px;color:var(--ink-2);margin-top:6px;line-height:1.6}
+/* thesis */
+.thesis{margin:18px 0 22px;padding:20px 22px;background:var(--side);color:var(--side-ink);border-radius:8px}
+.thesis p{margin:0;font-size:17px;max-width:none}
+.thesis .q{font-family:var(--f-disp);font-size:clamp(19px,2.4vw,24px);line-height:1.5;color:#fff}
+.thesis .q b{color:#D4AE67;font-weight:600}
+/* grids */
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px}
+.card h4{margin:0 0 6px;font-size:15.5px;font-weight:700}
+.card p{font-size:14.5px;color:var(--ink-2);margin:0 0 8px}
+.card p:last-child{margin-bottom:0}
+.tag{display:inline-block;font-size:11.5px;font-weight:600;padding:2px 10px;border-radius:99px;background:var(--surface-2);color:var(--ink-2);margin-bottom:8px}
+.tag.b{background:var(--brass-soft);color:var(--brass)}
+.tag.t{background:var(--teal-soft);color:var(--teal)}
+.tag.w{background:var(--warn-soft);color:var(--warn)}
+.tag.g{background:var(--good-soft);color:var(--good)}
+.card .fit{font-size:13px;color:var(--ink);border-top:1px dashed var(--line);padding-top:8px;margin-top:10px}
+.card .fit b{color:var(--teal)}
+/* callouts */
+.note{border:1px solid var(--line);border-right:3px solid var(--brass);background:var(--surface);padding:14px 16px;border-radius:6px;margin:16px 0;font-size:14.5px;color:var(--ink-2)}
+.note b{color:var(--ink)}
+.note.risk{border-right-color:var(--warn)}
+.note.ok{border-right-color:var(--good)}
+/* tables */
+.tw{overflow-x:auto;margin:10px 0 16px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:620px}
+th,td{text-align:right;padding:11px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;font-weight:600;color:var(--ink-3);background:var(--surface-2);letter-spacing:.02em;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.k{font-weight:700;white-space:nowrap}
+td.m{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+/* timeline */
+.phases{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.phase{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px}
+.phase .w{font-family:var(--f-mono);font-size:11.5px;color:var(--brass)}
+.phase h4{margin:4px 0 8px;font-size:15.5px}
+.phase ul{margin:0;padding-inline-start:18px;font-size:13.5px;color:var(--ink-2)}
+.phase li{margin-bottom:4px}
+/* flow */
+.flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:12px 0 18px}
+.flow .st{flex:1 1 120px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px}
+.flow .st i{font-style:normal;font-family:var(--f-mono);font-size:11px;color:var(--brass)}
+.flow .st b{display:block;font-size:14.5px;margin:2px 0}
+.flow .st span{font-size:12.5px;color:var(--ink-2);line-height:1.6;display:block}
+/* scripts */
+.script{background:var(--surface);border:1px solid var(--line);border-radius:8px;margin:14px 0;overflow:hidden}
+.script header{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--surface-2);border-bottom:1px solid var(--line)}
+.script header h4{margin:0;font-size:15px}
+.script header .meta{font-size:12px;color:var(--ink-3)}
+.script ol{margin:0;padding:12px 16px 12px 16px;list-style:none;display:grid;gap:8px}
+.script li{display:grid;grid-template-columns:78px minmax(0,1fr);gap:12px;font-size:14px}
+.script li .tc{font-family:var(--f-mono);font-size:12px;color:var(--brass);padding-top:2px}
+.script li q{quotes:none;font-weight:600;color:var(--ink)}
+.script .foot{padding:10px 16px;border-top:1px dashed var(--line);font-size:13px;color:var(--ink-2)}
+/* message templates */
+.msg{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;margin:10px 0;position:relative}
+.msg .who{font-size:12px;font-weight:600;color:var(--teal);margin-bottom:4px}
+.msg pre{margin:0;white-space:pre-wrap;font-family:var(--f-body);font-size:14.5px;line-height:1.8;color:var(--ink)}
+.copy{all:unset;cursor:pointer;position:absolute;top:10px;left:12px;font-size:12px;padding:3px 10px;border:1px solid var(--line);border-radius:99px;color:var(--ink-2);background:var(--surface)}
+.copy:hover{border-color:var(--brass);color:var(--brass)}
+.copy:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+/* hooks list */
+.hooks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0 16px;padding:0;list-style:none}
+.hooks li{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:10px 14px;font-size:14.5px;font-weight:500}
+.hooks li small{display:block;font-size:12px;color:var(--ink-3);font-weight:400}
+/* calculator */
+.calc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface);margin:14px 0}
+.calc .in{padding:18px;display:grid;gap:12px;border-left:1px solid var(--line)}
+.calc label{display:grid;grid-template-columns:minmax(0,1fr) 110px;gap:10px;align-items:center;font-size:13.5px;color:var(--ink-2)}
+.calc input{font-family:var(--f-mono);font-size:14px;padding:7px 9px;border:1px solid var(--line);border-radius:6px;background:var(--bg);color:var(--ink);width:100%;text-align:left;direction:ltr}
+.calc input:focus-visible{outline:2px solid var(--brass);outline-offset:1px}
+.calc .out{padding:18px;background:var(--surface-2);display:grid;gap:10px;align-content:start}
+.calc .row{display:flex;justify-content:space-between;gap:10px;font-size:13.5px;color:var(--ink-2);border-bottom:1px dashed var(--line);padding-bottom:8px}
+.calc .row:last-child{border-bottom:0}
+.calc .row b{font-family:var(--f-mono);font-variant-numeric:tabular-nums;color:var(--ink);font-size:15px;direction:ltr}
+.calc .row.big b{font-size:20px;color:var(--brass)}
+.calc .ex{font-size:12px;color:var(--ink-3);grid-column:1/-1;padding:10px 18px;border-top:1px solid var(--line)}
+.split{display:flex;height:44px;border-radius:8px;overflow:hidden;margin:14px 0 6px;border:1px solid var(--line)}
+.split div{display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;white-space:nowrap}
+.split .sn{background:var(--brass);color:var(--surface)} .split .mt{background:var(--teal);color:var(--surface)} .split .tt{background:var(--ink);color:var(--bg)}
+tr.tot td{font-weight:700;background:var(--surface-2)}
+td small{display:block;color:var(--ink-3);font-size:12px;font-family:var(--f-body)}
+.vs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:640px){.vs{grid-template-columns:minmax(0,1fr)}}
+/* sources */
+.sources{font-size:13px;color:var(--ink-2)}
+.sources a{color:var(--teal)}
+a{color:var(--teal)}
+footer.pf{margin-top:40px;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3)}
+@media (max-width:980px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .side{position:sticky;top:env(safe-area-inset-top,0px);height:auto;z-index:5;padding:14px 16px 10px;border-left:0;border-bottom:1px solid var(--side-line)}
+  .brand{font-size:19px}
+  .brand small,.side-meta,.rm-h,.rm{display:none}
+  .tabs{flex-direction:row;overflow-x:auto;margin-top:10px;gap:6px;scrollbar-width:none}
+  .tab{flex-shrink:0;padding:7px 12px}
+  .tab .t{font-size:13.5px;white-space:nowrap}
+  .stats,.phases{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid3{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .phases,.grid2,.grid3,.hooks,.calc{grid-template-columns:minmax(0,1fr)}
+  .stat .v{font-size:21px}
+  .calc .in{border-left:0;border-bottom:1px solid var(--line)}
+  .script li{grid-template-columns:minmax(0,1fr);gap:2px}
+  .calc label{grid-template-columns:minmax(0,1fr) 96px}
+}
+
+/* management page */
+.topbar{background:var(--side);color:var(--side-ink);display:flex;justify-content:space-between;align-items:center;gap:16px;padding:calc(18px + env(safe-area-inset-top,0px)) clamp(16px,4vw,56px) 18px;border-bottom:1px solid var(--side-line)}
+.topbar .brand small{display:block}
+.tb-meta{font-family:var(--f-mono);font-size:12px;color:#D4AE67;white-space:nowrap}
+main.doc{max-width:980px;margin:0 auto;padding-inline:clamp(16px,4vw,56px);padding-block:0 72px}
+table.kv td.k{width:30%;white-space:nowrap}
+table.kv tr:first-child td{border-top:0}
+.num{font-family:var(--f-mono);font-weight:600;unicode-bidi:isolate}
+ul.checks{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+ul.checks li{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 50px 14px 16px;font-weight:500}
+ul.checks li::before{content:"";position:absolute;right:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid var(--brass);border-radius:4px}
+@media (max-width:980px){.topbar .brand small{display:none}}
+@media (max-width:640px){table.kv td.k{white-space:normal;width:38%}}
+@media print{.topbar{-webkit-print-color-adjust:exact;print-color-adjust:exact} main.doc{max-width:none}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="brand">The Capital <b>Suites</b><small>طلب اعتماد الميزانية الإعلانية · محمد سبيت × ذا كابيتال سويتس</small></div>
+  <div class="tb-meta">29 سبتمبر 2026</div>
+</div>
+
+<main class="doc">
+  <header class="hero">
+    <div class="eyebrow">الحملات المدفوعة · كل الأحياء المتاحة · أكتوبر 2026</div>
+    <h1>خطة الحملات المدفوعة: ذا كابيتال سويتس</h1>
+    <p class="lede">نطلب اعتماد ميزانية إعلانية قدرها <b>6,400 ريال</b> لمدة <b>20 يوماً</b>، من 1 إلى 20 أكتوبر 2026، على سناب شات وميتا وتيك توك، لتسكين الوحدات الشاغرة في كل الأحياء المتاحة، مع تركيز أكبر على حيَّي الرمال والملز.</p>
+    <div class="stats">
+      <div class="stat"><div class="v">6,400</div><div class="l">ريال · الميزانية المطلوبة</div></div>
+      <div class="stat"><div class="v">20</div><div class="l">يوماً · 1–20 أكتوبر</div></div>
+      <div class="stat"><div class="v">~30</div><div class="l">حجزاً متوقعاً بالافتراضات الحالية</div></div>
+      <div class="stat"><div class="v">213</div><div class="l">ريالاً · تكلفة الحجز المتوقعة</div></div>
+    </div>
+  </header>
+
+  <section class="s">
+    <div class="s-h"><span class="k">01</span><h2>ملخص الطلب</h2></div>
+    <div class="tw"><table class="kv">
+      <tbody>
+        <tr><td class="k">الميزانية المطلوبة</td><td>6,400 ريال (غير شاملة ضريبة القيمة المضافة إن وُجدت)</td></tr>
+        <tr><td class="k">المدة</td><td>20 يوماً: من الخميس 1 أكتوبر إلى الثلاثاء 20 أكتوبر 2026</td></tr>
+        <tr><td class="k">المنصات</td><td>سناب شات 50% · ميتا (إنستغرام وفيسبوك) 25% · تيك توك 25%</td></tr>
+        <tr><td class="k">الأحياء</td><td>كل الأحياء المتاحة، والتركيز الأكبر في الميزانية والمحتوى على الرمال والملز</td></tr>
+        <tr><td class="k">الهدف</td><td>عملاء مهتمون بالسكن الشهري المفروش، وصولاً إلى معاينات وحجوزات</td></tr>
+        <tr><td class="k">التواصل مع العملاء</td><td>واتساب الحملات <span class="num" dir="ltr">0503070157</span> والنماذج الفورية داخل المنصات</td></tr>
+        <tr><td class="k">موعد أول قرار</td><td>مساء 7 أكتوبر، بعد أسبوع الاختبار</td></tr>
+      </tbody>
+    </table></div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">02</span><h2>توزيع الميزانية</h2></div>
+    <p class="intro">الصرف تدريجي: أسبوع بميزانية ثابتة حتى تمر الحملات بمرحلة التعلّم، ثم زيادتان محسوبتان بعد قراءة النتائج. الأرقام بالريال.</p>
+    <div class="split" role="img" aria-label="توزيع الميزانية: سناب شات 50%، ميتا 25%، تيك توك 25%">
+      <div class="sn" style="width:50%">سناب شات 3,200</div><div class="mt" style="width:25%">ميتا 1,600</div><div class="tt" style="width:25%">تيك توك 1,600</div>
+    </div>
+    <div class="tw"><table>
+      <thead><tr><th>المرحلة</th><th>الفترة</th><th>سناب شات</th><th>ميتا</th><th>تيك توك</th><th>اليومي</th><th>الإجمالي</th></tr></thead>
+      <tbody>
+        <tr><td class="k">1 · التعلّم والاختبار</td><td>1–7 أكتوبر<small>7 أيام</small></td><td class="m">130<small>يومياً</small></td><td class="m">60<small>يومياً</small></td><td class="m">80<small>يومياً</small></td><td class="m">270</td><td class="m">1,890</td></tr>
+        <tr><td class="k">2 · الزيادة الأولى</td><td>8–13 أكتوبر<small>6 أيام</small></td><td class="m">160<small>يومياً</small></td><td class="m">80<small>يومياً</small></td><td class="m">80<small>يومياً</small></td><td class="m">320</td><td class="m">1,920</td></tr>
+        <tr><td class="k">3 · الزيادة الثانية</td><td>14–20 أكتوبر<small>7 أيام</small></td><td class="m">190<small>يومياً</small></td><td class="m">100<small>يومياً</small></td><td class="m">80<small>يومياً</small></td><td class="m">370</td><td class="m">2,590</td></tr>
+        <tr class="tot"><td class="k">الإجمالي</td><td>20 يوماً</td><td class="m">3,200</td><td class="m">1,600</td><td class="m">1,600</td><td class="m">—</td><td class="m">6,400</td></tr>
+      </tbody>
+    </table></div>
+    <div class="note">تيك توك ثابت على 80 ريالاً لأن الحد الأدنى للمجموعة الإعلانية فيه حوالي 75 ريالاً يومياً. <b>أي زيادة في المرحلتين 2 و3 تتم فقط إذا حققت المرحلة السابقة النتائج المستهدفة</b>، وإلا تُثبّت الميزانية ويُوفّر الباقي.</div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">03</span><h2>ماذا سننفذ</h2></div>
+    <div class="tw"><table>
+      <thead><tr><th>المنصة</th><th>نوع الحملة</th><th>الجمهور</th><th>المحتوى</th></tr></thead>
+      <tbody>
+        <tr><td class="k">سناب شات</td><td>جمع عملاء عبر واتساب والنموذج الفوري</td><td>الرياض، 21–45 سنة</td><td>تصاميم ستوري: السعر، الفاتورة الشاملة، الجاهزية، المحادثة</td></tr>
+        <tr><td class="k">ميتا</td><td>اختبار رسمي بين واتساب والنموذج الفوري</td><td>الرياض، 22–45 سنة</td><td>تصاميم الفيد وكاروسيل جولة داخل الاستديو</td></tr>
+        <tr><td class="k">تيك توك</td><td>جمع عملاء عبر النموذج الفوري</td><td>الرياض، 18–40 سنة</td><td>فيديو جولة 20 ثانية داخل استديو في الرمال</td></tr>
+      </tbody>
+    </table></div>
+    <p>كل المحتوى من صور الوحدات الحقيقية وبهوية الشركة، بدءاً بوحدات الرمال ثم الملز، وعليه رقم ترخيص الإعلان <span class="num" dir="ltr">الرمال 7201040429 · الملز 7201060412</span> ورخصة فال <span class="num" dir="ltr">1200046434</span>. لا تشمل هذه المرحلة إعادة استهداف أو حملات بحث جوجل.</p>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">04</span><h2>الاختبار: واتساب أم النموذج الفوري؟</h2></div>
+    <p class="intro">أول 7 أيام تحدد أي طريقة تواصل تجلب معاينات بتكلفة أقل، لنوجّه باقي الميزانية لها.</p>
+    <div class="grid2">
+      <div class="card"><span class="tag b">طريقة الاختبار</span><p>نفس التصاميم والجمهور والميزانية في الطريقتين، على سناب شات وميتا.</p></div>
+      <div class="card"><span class="tag t">المؤشر الحاسم</span><p>تكلفة المعاينة، وليس تكلفة العميل المحتمل.</p></div>
+      <div class="card"><span class="tag g">إذا ظهر فائز</span><p>الفائز بفارق 20% أو أكثر يأخذ 80% من ميزانية المرحلتين 2 و3.</p></div>
+      <div class="card"><span class="tag">إذا تقاربت النتائج</span><p>نستمر بالطريقتين. وإذا قلّ العدد عن 30 عميلاً لكل طريقة يُمدّ الاختبار 3 أيام بنفس الميزانية.</p></div>
+    </div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">05</span><h2>النتائج المتوقعة</h2></div>
+    <p class="intro">بالافتراضات الحالية، تصل الحملة إلى حوالي <b>30 حجزاً</b> بتكلفة <b>213 ريالاً</b> للحجز، أي 7% من إيجار شهر واحد بسعر 3,000 ريال.</p>
+    <div class="tw"><table>
+      <thead><tr><th>المؤشر</th><th>الافتراض</th><th>السيناريو المتوقع</th><th>سيناريو حذر (التكلفة الضعف)</th></tr></thead>
+      <tbody>
+        <tr><td class="k">تكلفة العميل المحتمل</td><td>—</td><td class="m">15 ريالاً</td><td class="m">30 ريالاً</td></tr>
+        <tr><td class="k">عملاء محتملون</td><td>—</td><td class="m">427</td><td class="m">213</td></tr>
+        <tr><td class="k">عملاء مؤهلون</td><td>40% من العملاء</td><td class="m">171</td><td class="m">85</td></tr>
+        <tr><td class="k">معاينات</td><td>50% من المؤهلين</td><td class="m">85</td><td class="m">43</td></tr>
+        <tr><td class="k">حجوزات</td><td>35% من المعاينات</td><td class="m">30</td><td class="m">15</td></tr>
+        <tr class="tot"><td class="k">تكلفة الحجز الواحد</td><td>—</td><td class="m">213 ريالاً</td><td class="m">427 ريالاً</td></tr>
+      </tbody>
+    </table></div>
+    <p>هذه تقديرات تخطيطية لسوق الرياض، تُستبدل بالأرقام الفعلية في تقرير 7 أكتوبر. حتى في سيناريو الحذر، تكلفة الحجز أقل من 15% من إيجار الشهر الأول.</p>
+    <h3>تقارير للإدارة</h3>
+    <div class="flow">
+      <div class="st"><i>7 أكتوبر</i><b>نتيجة الاختبار</b><span>واتساب أم النموذج، وقرار المرحلة 2</span></div>
+      <div class="st"><i>14 أكتوبر</i><b>منتصف الحملة</b><span>الأداء بعد الزيادة الأولى</span></div>
+      <div class="st"><i>21 أكتوبر</i><b>التقرير النهائي</b><span>النتائج وتوصية الشهر التالي</span></div>
+    </div>
+  </section>
+
+  <section class="s">
+    <div class="s-h"><span class="k">06</span><h2>المطلوب لبدء الحملات يوم 1 أكتوبر</h2></div>
+    <ul class="checks">
+      <li>اعتماد الميزانية الإعلانية: 6,400 ريال</li>
+      <li>تأكيد أن سعر الرمال يبدأ من 3,000 ريال شهرياً شاملاً الكهرباء والماء</li>
+      <li>مسؤول رد على واتساب <span class="num" dir="ltr">0503070157</span> يرد خلال 15 دقيقة</li>
+      <li>وسيلة دفع مفعّلة على حسابات سناب شات وميتا وتيك توك الإعلانية</li>
+    </ul>
+  </section>
+
+  <footer class="pf">إعداد محمد سبيت لذا كابيتال سويتس · 29 سبتمبر 2026. التفاصيل الكاملة في الملف الشامل لخطة التسكين.</footer>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,351 @@
+<title>تقويم المحتوى · أول 30 يوماً</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
+<style>
+/* Layout: a printed-feeling plan for management — charcoal masthead, then a short brief (goal, rhythm, pre-launch), then the week-by-week calendar as a quiet list. */
+:root{
+  --bg:#F5F2EA; --surface:#FFFDF8; --sunk:#EDE8DC; --ink:#1F2427; --muted:#5F6569; --line:#E0D8C6;
+  --gold:#C29B3C; --gold-ink:#8C6A1E; --gold-soft:#F3E8C9; --charcoal:#1F2427; --on-charcoal:#F7F4EC;
+  --lvA:#3F6FA8; --lvB:#3D8B5A; --lvC:#B4483A; --lvP:#C29B3C;
+  --f-display:'Alexandria','IBM Plex Sans Arabic',Tahoma,sans-serif;
+  --f-body:'IBM Plex Sans Arabic',Tahoma,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#141719; --surface:#1D2124; --sunk:#252A2E; --ink:#EFEBE1; --muted:#A2A7AA; --line:#33393D;
+  --gold:#E2C466; --gold-ink:#E2C466; --gold-soft:#3A3322; --charcoal:#0F1112; --on-charcoal:#F7F4EC;
+  --lvA:#7FA6D6; --lvB:#6FC08C; --lvC:#E07A6C; --lvP:#E2C466; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#141719; --surface:#1D2124; --sunk:#252A2E; --ink:#EFEBE1; --muted:#A2A7AA; --line:#33393D;
+  --gold:#E2C466; --gold-ink:#E2C466; --gold-soft:#3A3322; --charcoal:#0F1112; --on-charcoal:#F7F4EC;
+  --lvA:#7FA6D6; --lvB:#6FC08C; --lvC:#E07A6C; --lvP:#E2C466; color-scheme:dark}
+html,body{direction:rtl}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15.5px;line-height:1.7;margin:0}
+.wrap{max-width:980px;margin:0 auto;padding-inline:20px}
+h1,h2,h3,h4{font-family:var(--f-display);margin:0;text-wrap:balance}
+.num{font-variant-numeric:tabular-nums}
+.top{background:var(--charcoal);color:var(--on-charcoal);padding-block:40px 34px}
+.eyebrow{font-family:var(--f-display);font-weight:600;font-size:13px;letter-spacing:.06em;color:#E2C466}
+.top h1{font-size:clamp(28px,4.4vw,44px);font-weight:800;color:#fff;margin-top:6px;line-height:1.25}
+.top .sub{color:rgba(247,244,236,.78);font-size:17px;margin:6px 0 0}
+.stats{display:flex;flex-wrap:wrap;gap:10px 28px;margin-top:22px;font-size:14px;color:rgba(247,244,236,.8)}
+.stats b{display:block;font-family:var(--f-display);font-size:28px;color:#fff;line-height:1.2}
+main{padding-block:28px 60px}
+.brief{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media (max-width:760px){.brief{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px}
+.card h2{font-size:18px;font-weight:700;margin-bottom:8px}
+.card p{margin:0 0 8px}
+.lvbar{display:flex;height:12px;border-radius:6px;overflow:hidden;margin:12px 0 10px;gap:2px}
+.lvbar i{display:block}
+.legend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.lvb-A{background:var(--lvA)}.lvb-B{background:var(--lvB)}.lvb-C{background:var(--lvC)}.lvb-P{background:var(--lvP)}
+table.rhythm{width:100%;border-collapse:collapse;font-size:14.5px}
+.rhythm th,.rhythm td{text-align:right;padding:7px 4px;border-bottom:1px solid var(--line)}
+.rhythm th{font-weight:600;color:var(--muted);font-size:13px}
+.off{margin-top:10px;font-size:14px;color:var(--gold-ink);font-weight:600}
+.setup{margin-bottom:28px}
+.howto{margin-bottom:16px;border-inline-start:4px solid var(--gold)}
+.setup .cols{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:10px}
+@media (max-width:760px){.setup .cols{grid-template-columns:1fr}}
+.sgroup h4{font-size:14px;color:var(--gold-ink);font-weight:600;margin-bottom:4px}
+.sgroup ul{list-style:none;margin:0;padding:0}
+.sgroup li{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;padding:6px 0;border-top:1px solid var(--line);font-size:14px}
+.sgroup li span:first-child{flex:1 1 140px;min-width:0}
+.due{font-size:12.5px;color:var(--muted)}
+.pl.small{font-size:11.5px;padding:0 6px}
+.cal-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin:8px 0 14px}
+.cal-h h2{font-size:22px;font-weight:700}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:5px 13px;font:inherit;font-size:13.5px;color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--charcoal);color:var(--on-charcoal);border-color:var(--charcoal)}
+.chip:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.week{margin-bottom:26px}
+.week-h{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;padding-bottom:8px;border-bottom:2px solid var(--gold)}
+.week-h h3{font-size:17px;font-weight:700}
+.week-h span{font-size:13.5px;color:var(--muted)}
+.post{display:grid;grid-template-columns:86px minmax(0,1fr);gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.when{display:flex;flex-direction:column;line-height:1.35;font-size:12.5px;color:var(--muted)}
+.when b{font-family:var(--f-display);font-size:26px;color:var(--ink);font-weight:700}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:6px}
+.pl,.lv,.rp{font-size:12px;font-weight:600;border-radius:5px;padding:1px 8px;line-height:1.7}
+.pl{background:var(--sunk);color:var(--ink)}
+.lv{border:1px solid currentColor}
+.lv-A{color:var(--lvA)}.lv-B{color:var(--lvB)}.lv-C{color:var(--lvC)}.lv-P{color:var(--gold-ink)}
+.rp{background:var(--gold-soft);color:var(--gold-ink)}
+.post h4{font-size:16.5px;font-weight:600;line-height:1.5}
+.meta{margin:2px 0 0;font-size:13.5px;color:var(--muted)}
+.soft{font-style:italic}
+details{margin-top:8px}
+summary{cursor:pointer;font-size:13.5px;font-weight:600;color:var(--gold-ink)}
+.cap{white-space:pre-wrap;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-top:6px;font-size:14.5px;line-height:1.8}
+mark{background:var(--gold-soft);color:var(--gold-ink);border-radius:3px;padding:0 2px}
+.cta{margin:6px 0 0;font-size:13.5px}
+.note{font-size:13.5px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;margin-top:10px}
+@media (max-width:520px){.post{grid-template-columns:62px minmax(0,1fr);gap:12px}}
+@media print{.chips{display:none}details{display:block}details>summary{display:none}details:not([open])>.cap{display:block}.post{break-inside:avoid}.week-h{break-after:avoid}}
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="eyebrow">ذا كابيتال سويتس · تقويم المحتوى</div>
+    <h1>أول 30 يوماً: مرحلة التأسيس</h1>
+    <p class="sub">التجهيز يبدأ الأحد 11 أكتوبر، والنشر من الخميس 15 أكتوبر إلى السبت 14 نوفمبر 2026</p>
+    <div class="stats">
+      <span><b class="num">26</b>منشوراً</span>
+      <span><b class="num">14</b>Instagram</span>
+      <span><b class="num">8</b>LinkedIn</span>
+      <span><b class="num">4</b>X</span>
+      <span><b class="num">19</b>فكرة أصلية، والباقي إعادة توزيع</span>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="card howto">
+    <h2>كيف نقرأ هذا التقويم</h2>
+    <p>هذا التقويم هو الحد الأعلى لما يمكن تنفيذه في أول 30 يوماً، وليس قائمة التزام حرفية. بعض المنشورات يعتمد على بيانات من التشغيل أو موافقات أو جلسات تصوير، وقد يتغير توقيتها أو تُستبدل بحسب الجاهزية. نعتبر المرحلة ناجحة عند تنفيذ <b class="num"><bdi dir="ltr">60–70%</bdi></b> من المحتوى بجودة عالية وانتظام في النشر.</p>
+  </section>
+  <div class="brief">
+    <section class="card">
+      <h2>هدف المرحلة</h2>
+      <p>نعرّف السوق على ذا كابيتال سويتس كمشغّل له معايير واضحة وفريق حقيقي، ونبدأ ننشر أرقام التشغيل من أول تقرير شهري في 5 نوفمبر.</p>
+      <div class="lvbar" aria-hidden="true"><i class="lvb-A" style="flex:9" title="الثقة"></i><i class="lvb-P" style="flex:6" title="إثبات الأداء"></i><i class="lvb-B" style="flex:3" title="المعرفة"></i><i class="lvb-C" style="flex:1" title="التجاري"></i></div>
+      <div class="legend"><span><i class="dot lvb-A"></i>الثقة <b class="num">9</b></span><span><i class="dot lvb-P"></i>إثبات الأداء <b class="num">6</b></span><span><i class="dot lvb-B"></i>المعرفة <b class="num">3</b></span><span><i class="dot lvb-C"></i>التجاري <b class="num">1</b></span></div>
+    </section>
+    <section class="card">
+      <h2>الإيقاع الأسبوعي</h2>
+      <table class="rhythm">
+        <tr><th>المنصة</th><th>الأيام</th><th>الوقت</th></tr>
+        <tr><td>Instagram</td><td>الأحد · الثلاثاء · الخميس</td><td class="num">9:00 مساءً</td></tr>
+        <tr><td>LinkedIn</td><td>الأحد · الأربعاء</td><td class="num">9:30 صباحاً</td></tr>
+        <tr><td>X</td><td>الأربعاء</td><td class="num">8:00 مساءً</td></tr>
+      </table>
+    </section>
+  </div>
+
+  <section class="card setup">
+    <h2>قبل الانطلاق</h2>
+    <p class="meta">تجهيز الحسابات والهايلايتس والقوالب قبل أول منشور</p>
+    <div class="cols"><div class="sgroup"><h4>الإنتاج</h4><ul><li><span>موافقات الإدارة</span><span class="pl small">كل المنصات</span><span class="num due">الأحد 11 أكتوبر</span></li><li><span>بيانات من التشغيل</span><span class="pl small">كل المنصات</span><span class="num due">الأحد 11 أكتوبر</span></li><li><span>جلسة تصوير ما قبل الإطلاق</span><span class="pl small">كل المنصات</span><span class="num due">الأحد 11 أكتوبر</span></li><li><span>قوالب السلاسل الثابتة</span><span class="pl small">كل المنصات</span><span class="num due">الثلاثاء 13 أكتوبر</span></li></ul></div><div class="sgroup"><h4>الحسابات</h4><ul><li><span>صورة البروفايل لكل الحسابات</span><span class="pl small">كل المنصات</span><span class="num due">الأحد 11 أكتوبر</span></li><li><span>بايو Instagram</span><span class="pl small">Instagram</span><span class="num due">الأحد 11 أكتوبر</span></li><li><span>رابط البايو وأزرار التواصل</span><span class="pl small">Instagram</span><span class="num due">الأحد 11 أكتوبر</span></li><li><span>اسم الحساب واليوزر في Instagram</span><span class="pl small">Instagram</span><span class="num due">الأحد 11 أكتوبر</span></li><li><span>صفحة الشركة على LinkedIn</span><span class="pl small">LinkedIn</span><span class="num due">الأحد 11 أكتوبر</span></li><li><span>غلاف صفحة LinkedIn وغلاف حساب المدير</span><span class="pl small">LinkedIn</span><span class="num due">الاثنين 12 أكتوبر</span></li><li><span>تحديث حساب المدير على LinkedIn</span><span class="pl small">LinkedIn</span><span class="num due">الاثنين 12 أكتوبر</span></li><li><span>ملف واتساب بزنس</span><span class="pl small">واتساب</span><span class="num due">الاثنين 12 أكتوبر</span></li><li><span>بايو X والهيدر</span><span class="pl small">X</span><span class="num due">الاثنين 12 أكتوبر</span></li></ul></div><div class="sgroup"><h4>الهايلايتس</h4><ul><li><span>أغلفة الهايلايتس (5)</span><span class="pl small">Instagram</span><span class="num due">الثلاثاء 13 أكتوبر</span></li><li><span>هايلايت «من نحن»</span><span class="pl small">Instagram</span><span class="num due">الأربعاء 14 أكتوبر</span></li><li><span>هايلايت «الأحياء»</span><span class="pl small">Instagram</span><span class="num due">الأربعاء 14 أكتوبر</span></li><li><span>هايلايت «أسئلة»</span><span class="pl small">Instagram</span><span class="num due">الأربعاء 14 أكتوبر</span></li><li><span>هايلايت «التقارير»</span><span class="pl small">Instagram</span><span class="num due">الأربعاء 14 أكتوبر</span></li><li><span>هايلايت «المعايير»</span><span class="pl small">Instagram</span><span class="num due">الأربعاء 14 أكتوبر</span></li></ul></div></div>
+  </section>
+
+  <div class="cal-h">
+    <h2>التقويم</h2>
+    <div class="chips" role="group" aria-label="المنصة">
+      <button class="chip" id="f-all" data-p="" aria-pressed="true">الكل</button>
+      <button class="chip" id="f-ig" data-p="IG" aria-pressed="false">Instagram</button>
+      <button class="chip" id="f-li" data-p="LI" aria-pressed="false">LinkedIn</button>
+      <button class="chip" id="f-x" data-p="X" aria-pressed="false">X</button>
+    </div>
+  </div>
+  <div id="cal"><section class="week" data-week="1"><header class="week-h"><h3>الأسبوع 1</h3><span>15 أكتوبر – 21 أكتوبر · 7 منشورات</span></header><article class="post" data-p="IG"><div class="when"><b class="num">15</b><span>أكتوبر</span><span>الخميس</span><span class="num">9:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-IG">Instagram</span><span class="lv lv-A">الثقة</span></div><h4>إطلاق الحساب: صف التعريف (3 منشورات تُثبّت)</h4><p class="meta">التعريف · 3 منشورات ثابتة 4:5 تُنشر معاً وتُثبّت أعلى الحساب</p><details><summary>نص المنشور</summary><div class="cap">المنشور 1 · من نحن
+هذي ذا كابيتال سويتس.
+نشغّل وحدات سكنية مفروشة بالشهر في الرياض، بنفس معايير الفندق: تنظيف، صيانة، دخول ذكي، وفريق يرد عليك.
+من اليوم بنشارككم كيف نشتغل من الداخل: التجهيز، المعايير، والأرقام.
+
+المنشور 2 · معاييرنا
+قبل ما نسلّم أي وحدة، تمر على قائمة فحص كاملة: <mark>[بنود قائمة الفحص]</mark>.
+هذا معيارنا مع كل ساكن، مو مع الساكن الأول بس.
+
+المنشور 3 · وين نشغّل
+نشغّل اليوم في <mark>[الأحياء المشغّلة حالياً]</mark>.
+كل حي له طبيعته وسكانه، وبنعرّفكم عليهم حي حي.
+
+#الرياض #سكن_شهري #شقق_مفروشة</div></details></div></article><article class="post" data-p="IG"><div class="when"><b class="num">15</b><span>أكتوبر</span><span>الخميس</span><span class="num">9:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-IG">Instagram</span><span class="lv lv-A">الثقة</span></div><h4>الهايلايتس</h4><p class="meta">القصص المثبتة تحت وصف الصفحة</p><p class="meta soft">النص يُكتب من الفكرة قبل موعد النشر</p></div></article><article class="post" data-p="IG"><div class="when"><b class="num">18</b><span>أكتوبر</span><span>الأحد</span><span class="num">9:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-IG">Instagram</span><span class="lv lv-A">الثقة</span></div><h4>الدخول الذكي: من وصولك لين تفتح باب وحدتك</h4><p class="meta">خلف الكواليس · ريلز 25 ثانية</p><details><summary>نص المنشور</summary><div class="cap">توصل، تفتح الباب من جوالك، وتلقى وحدتك جاهزة.
+بدون مفاتيح ولا انتظار استقبال.
+هذا الدخول الذكي في وحداتنا، خطوة بخطوة.
+
+#الرياض #سكن_شهري #شقق_مفروشة</div></details></div></article><article class="post" data-p="LI"><div class="when"><b class="num">18</b><span>أكتوبر</span><span>الأحد</span><span class="num">9:30 ص</span></div><div class="body"><div class="tags"><span class="pl pl-LI">LinkedIn</span><span class="lv lv-A">الثقة</span></div><h4>لماذا نشغّل السكن المفروش بمعايير فندقية؟</h4><p class="meta">صوت المدير · منشور نصي من حساب المدير + صورة</p><details><summary>نص المنشور</summary><div class="cap">في السوق شقق مفروشة كثيرة، وقليل منها يُدار كمنتج له معايير.
+
+في ذا كابيتال سويتس بدأنا من سؤال بسيط: ما الذي يجعل الساكن يجدد، والمالك يطمئن؟
+
+لم تكن الإجابة في الأثاث وحده، بل في التشغيل:
+· تجهيز موحّد لكل وحدة
+· فحص قبل كل تسليم
+· صيانة بزمن استجابة معروف
+· أرقام نقيسها كل شهر
+
+خلال الأشهر القادمة سأشارك هنا ما نتعلمه من تشغيل وحداتنا في الرياض، بالأرقام الفعلية.
+
+#الرياض #العقار #السكن_المفروش #التشغيل_العقاري</div></details></div></article><article class="post" data-p="IG"><div class="when"><b class="num">20</b><span>أكتوبر</span><span>الثلاثاء</span><span class="num">9:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-IG">Instagram</span><span class="lv lv-A">الثقة</span></div><h4>فاتورة واحدة: وش يشمل إيجارك الشهري عندنا؟</h4><p class="meta">التعريف · كاروسيل 5 شرائح</p><details><summary>نص المنشور</summary><div class="cap">أكثر سؤال يوصلنا: الإيجار يشمل وش؟
+
+في وحداتنا الإيجار الشهري يشمل: <mark>[الخدمات المؤكدة لكل وحدة]</mark>.
+تدخل بشنطتك، والباقي علينا.
+
+للاستفسار عن الوحدات المتاحة: واتساب: 0503070157
+
+#الرياض #سكن_شهري #شقق_مفروشة</div></details></div></article><article class="post" data-p="LI"><div class="when"><b class="num">21</b><span>أكتوبر</span><span>الأربعاء</span><span class="num">9:30 ص</span></div><div class="body"><div class="tags"><span class="pl pl-LI">LinkedIn</span><span class="lv lv-A">الثقة</span></div><h4>معاييرنا التشغيلية في 7 نقاط</h4><p class="meta">المعايير · كاروسيل PDF 8 صفحات</p><details><summary>نص المنشور</summary><div class="cap">نشارك المعايير التي نلتزم بها في كل وحدة نشغّلها:
+
+1. <mark>[المعيار]</mark>
+2. <mark>[المعيار]</mark>
+3. <mark>[المعيار]</mark>
+4. <mark>[المعيار]</mark>
+5. <mark>[المعيار]</mark>
+6. <mark>[المعيار]</mark>
+7. <mark>[المعيار]</mark>
+
+المعيار المكتوب هو ما يجعل الجودة لا تعتمد على اجتهاد شخص واحد، ولا تتغير من ساكن لآخر.
+
+#الرياض #العقار #السكن_المفروش #التشغيل_العقاري</div></details></div></article><article class="post" data-p="X"><div class="when"><b class="num">21</b><span>أكتوبر</span><span>الأربعاء</span><span class="num">8:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-X">X</span><span class="lv lv-A">الثقة</span><span class="rp">إعادة توزيع</span></div><h4>ثريد: معاييرنا التشغيلية في 7 نقاط</h4><p class="meta">المعايير · ثريد 8 تغريدات</p><p class="meta">نفس فكرة «معاييرنا التشغيلية في 7 نقاط» على LinkedIn، بصياغة تناسب المنصة</p><details><summary>نص المنشور</summary><div class="cap">كيف نشغّل وحداتنا المفروشة في الرياض؟ 7 معايير نلتزم بها مع كل ساكن 🧵
+
+(تغريدة لكل معيار من منشور LinkedIn، والأخيرة: تابعنا لأرقام التشغيل الشهرية)</div></details></div></article></section><section class="week" data-week="2"><header class="week-h"><h3>الأسبوع 2</h3><span>22 أكتوبر – 28 أكتوبر · 6 منشورات</span></header><article class="post" data-p="IG"><div class="when"><b class="num">22</b><span>أكتوبر</span><span>الخميس</span><span class="num">9:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-IG">Instagram</span><span class="lv lv-A">الثقة</span></div><h4>الفريق اللي يشغّل وحدتك</h4><p class="meta">الفريق · كاروسيل صور 4 شرائح</p><details><summary>نص المنشور</summary><div class="cap">ورا كل وحدة جاهزة فريق:
+<mark>[الاسم · الدور]</mark>
+<mark>[الاسم · الدور]</mark>
+<mark>[الاسم · الدور]</mark>
+
+هم اللي يجهّزون، يفحصون، ويردون عليك إذا احتجت شي.
+تعرّف عليهم في الصور.
+
+#الرياض #سكن_شهري #شقق_مفروشة</div></details></div></article><article class="post" data-p="IG"><div class="when"><b class="num">25</b><span>أكتوبر</span><span>الأحد</span><span class="num">9:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-IG">Instagram</span><span class="lv lv-P">إثبات الأداء</span></div><h4>48 ساعة بين ساكن وساكن</h4><p class="meta">خلف الكواليس · ريلز 30 ثانية (تايم لابس)</p><details><summary>نص المنشور</summary><div class="cap">ساكن يطلع… وش يصير بعدها؟
+
+تنظيف عميق، فحص كامل، تبديل المفارش، صيانة أي ملاحظة، وتصوير الوحدة من جديد.
+كل هذا خلال <mark>[X]</mark> ساعة قبل ما نستقبل الساكن الجاي.
+
+#الرياض #سكن_شهري #شقق_مفروشة</div></details></div></article><article class="post" data-p="LI"><div class="when"><b class="num">25</b><span>أكتوبر</span><span>الأحد</span><span class="num">9:30 ص</span></div><div class="body"><div class="tags"><span class="pl pl-LI">LinkedIn</span><span class="lv lv-P">إثبات الأداء</span><span class="rp">إعادة توزيع</span></div><h4>أكثر ما يكلّف المالك: الأيام الشاغرة</h4><p class="meta">إثبات الأداء · منشور نصي + صورة</p><p class="meta">نفس فكرة «48 ساعة بين ساكن وساكن» على Instagram، بصياغة تناسب المنصة</p><details><summary>نص المنشور</summary><div class="cap">أكثر ما يكلّف مالك العقار ليس الصيانة، بل الأيام التي تبقى فيها الوحدة شاغرة.
+
+لذلك نقيس زمن الانتقال بين ساكن وآخر. هدفنا <mark>[X]</mark> ساعة، ومتوسطنا الفعلي في <mark>[الشهر]</mark> كان <mark>[X]</mark>.
+
+ما يحدث في تلك الساعات:
+· تنظيف عميق
+· فحص كامل بقائمة مكتوبة
+· صيانة أي ملاحظة
+· تصوير الوحدة وتحديث الإعلان
+
+كل يوم نختصره هنا هو دخل للمالك وسكن جاهز لعميل ينتظر.
+
+#الرياض #العقار #السكن_المفروش #التشغيل_العقاري</div></details></div></article><article class="post" data-p="IG"><div class="when"><b class="num">27</b><span>أكتوبر</span><span>الثلاثاء</span><span class="num">9:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-IG">Instagram</span><span class="lv lv-B">المعرفة</span></div><h4>شهري مفروش أو سنوي؟ 5 أسئلة قبل ما تقرر</h4><p class="meta">معرفة السكن · كاروسيل 7 شرائح</p><details><summary>نص المنشور</summary><div class="cap">قبل ما توقّع إيجار سنوي، اسأل نفسك:
+1. كم مدة بقائك الفعلية في الرياض؟
+2. عندك أثاث أو بتشتري من الصفر؟
+3. الفواتير والإنترنت على مين؟
+4. لو تغيّرت ظروفك، وش شروط الخروج؟
+5. كم يوم بتضيع في التأسيس والتركيب؟
+
+الشهري المفروش مو دايم الأرخص، بس كثير مرات يكون الأوفر لك. احسبها صح.
+
+احفظ المنشور لين تحتاجه.
+
+#الرياض #سكن_شهري #شقق_مفروشة</div></details></div></article><article class="post" data-p="LI"><div class="when"><b class="num">28</b><span>أكتوبر</span><span>الأربعاء</span><span class="num">9:30 ص</span></div><div class="body"><div class="tags"><span class="pl pl-LI">LinkedIn</span><span class="lv lv-P">إثبات الأداء</span></div><h4>من يطلب السكن المفروش الشهري في الرياض؟ من واقع استفساراتنا</h4><p class="meta">من بيانات التشغيل · منشور نصي</p><details><summary>نص المنشور</summary><div class="cap">من واقع الاستفسارات التي وصلتنا خلال <mark>[الفترة]</mark>
+
+أكثر الشرائح طلباً: <mark>[الشرائح من بيانات الاستفسارات]</mark>
+أكثر ما يسألون عنه: <mark>[المدة، ما يشمله الإيجار، الموقع]</mark>
+متوسط مدة الإقامة المطلوبة: <mark>[X]</mark> أشهر
+
+ما يعنيه ذلك لمالك يفكر في التحويل للمفروش الشهري: الطلب الحقيقي يأتي من <mark>[الشريحة]</mark>، وهؤلاء يبحثون عن <mark>[الأولوية]</mark> أكثر من السعر.
+
+#الرياض #العقار #السكن_المفروش #التشغيل_العقاري</div></details></div></article><article class="post" data-p="X"><div class="when"><b class="num">28</b><span>أكتوبر</span><span>الأربعاء</span><span class="num">8:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-X">X</span><span class="lv lv-B">المعرفة</span><span class="rp">إعادة توزيع</span></div><h4>ثريد: شهري مفروش أو سنوي؟</h4><p class="meta">معرفة السكن · ثريد 6 تغريدات</p><p class="meta">نفس فكرة «شهري مفروش أو سنوي؟ 5 أسئلة قبل ما تقرر» على Instagram، بصياغة تناسب المنصة</p><details><summary>نص المنشور</summary><div class="cap">شهري مفروش أو إيجار سنوي؟ 5 أسئلة اسألها لنفسك قبل ما توقّع 🧵
+
+(تغريدة لكل سؤال من كاروسيل Instagram)</div></details></div></article></section><section class="week" data-week="3"><header class="week-h"><h3>الأسبوع 3</h3><span>29 أكتوبر – 4 نوفمبر · 6 منشورات</span></header><article class="post" data-p="IG"><div class="when"><b class="num">29</b><span>أكتوبر</span><span>الخميس</span><span class="num">9:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-IG">Instagram</span><span class="lv lv-P">إثبات الأداء</span></div><h4>مشكلة صارت وكيف حليناها #1</h4><p class="meta">مشكلة وحلها · منشور ثابت بالقالب + ستوري</p><details><summary>نص المنشور</summary><div class="cap">الأسبوع هذا: <mark>[المشكلة باختصار]</mark>.
+وش سوّينا: <mark>[الإجراء]</mark>.
+الوقت من البلاغ للحل: <mark>[X]</mark> ساعة.
+
+ننشر هالقصص لأن التشغيل الحقيقي فيه مشاكل، والفرق في سرعة الحل.
+
+#الرياض #سكن_شهري #شقق_مفروشة</div></details></div></article><article class="post" data-p="IG"><div class="when"><b class="num">1</b><span>نوفمبر</span><span>الأحد</span><span class="num">9:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-IG">Instagram</span><span class="lv lv-A">الثقة</span></div><h4>قائمة الفحص: وش نشيّك قبل ما نسلّمك المفتاح</h4><p class="meta">المعايير · ريلز 20 ثانية</p><details><summary>نص المنشور</summary><div class="cap">قبل ما نسلّمك المفتاح، نمر على <mark>[X]</mark> نقطة:
+الماء الحار، التكييف، الإضاءة، القفل الذكي، الإنترنت، نظافة الأسطح… والقائمة تكمل.
+
+ما نسلّم وحدة ما عدّت القائمة كاملة.
+
+#الرياض #سكن_شهري #شقق_مفروشة</div></details></div></article><article class="post" data-p="LI"><div class="when"><b class="num">1</b><span>نوفمبر</span><span>الأحد</span><span class="num">9:30 ص</span></div><div class="body"><div class="tags"><span class="pl pl-LI">LinkedIn</span><span class="lv lv-P">إثبات الأداء</span><span class="rp">إعادة توزيع</span></div><h4>مشكلة تشغيلية وكيف حُلّت</h4><p class="meta">مشكلة وحلها · منشور نصي</p><p class="meta">نفس فكرة «مشكلة صارت وكيف حليناها #1» على Instagram، بصياغة تناسب المنصة</p><details><summary>نص المنشور</summary><div class="cap">في التشغيل اليومي لا توجد وحدة بلا ملاحظات. الفرق في سرعة الاستجابة ووضوح الإجراء.
+
+هذا الأسبوع: <mark>[المشكلة]</mark>.
+الإجراء: <mark>[الخطوات]</mark>.
+الزمن من البلاغ إلى الحل: <mark>[X]</mark> ساعة.
+ما غيّرناه حتى لا تتكرر: <mark>[التعديل]</mark>.
+
+ننشر هذه الحالات لأن المالك يستحق أن يعرف كيف يُدار عقاره عند المشاكل، لا عند الصور الجميلة فقط.
+
+#الرياض #العقار #السكن_المفروش #التشغيل_العقاري</div></details></div></article><article class="post" data-p="IG"><div class="when"><b class="num">3</b><span>نوفمبر</span><span>الثلاثاء</span><span class="num">9:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-IG">Instagram</span><span class="lv lv-B">المعرفة</span></div><h4>أكثر 6 أسئلة توصلنا على الواتساب</h4><p class="meta">أسئلة السكان · كاروسيل 7 شرائح</p><details><summary>نص المنشور</summary><div class="cap">جمعنا أكثر 6 أسئلة توصلنا وجاوبناها:
+· أقل مدة للعقد؟ <mark>[الإجابة]</mark>
+· فيه تأمين؟ <mark>[الإجابة]</mark>
+· وش يشمل الإيجار؟ <mark>[الإجابة]</mark>
+· فيه مواقف؟ <mark>[الإجابة]</mark>
+· الصيانة على مين؟ <mark>[الإجابة]</mark>
+· أقدر أعاين قبل ما أحجز؟ <mark>[الإجابة]</mark>
+
+احفظ المنشور لو تدوّر سكن شهري.
+واتساب: 0503070157
+
+#الرياض #سكن_شهري #شقق_مفروشة</div></details></div></article><article class="post" data-p="LI"><div class="when"><b class="num">4</b><span>نوفمبر</span><span>الأربعاء</span><span class="num">9:30 ص</span></div><div class="body"><div class="tags"><span class="pl pl-LI">LinkedIn</span><span class="lv lv-B">المعرفة</span></div><h4>8 أسئلة اسألها لأي مشغّل قبل أن تسلّمه عقارك</h4><p class="meta">معرفة السوق · كاروسيل PDF 9 صفحات</p><details><summary>نص المنشور</summary><div class="cap">قبل أن تسلّم عقارك لأي جهة تشغيل، اسألها:
+
+1. كيف تقيسون نسبة الإشغال، وكم كانت آخر 3 أشهر؟
+2. كم يستغرق تجهيز الوحدة قبل أول ساكن؟
+3. كم يوماً تبقى الوحدة شاغرة بين ساكنين في المتوسط؟
+4. من يتحمل الصيانة، وما زمن الاستجابة للبلاغ؟
+5. كيف يُحدد السعر، ومن يعتمده؟
+6. كيف ومتى تصلني التقارير؟
+7. ما شروط إنهاء الاتفاق؟
+8. هل تنشرون أرقام تشغيلكم؟
+
+نحن نجيب عن هذه الأسئلة علناً كل شهر.
+
+#الرياض #العقار #السكن_المفروش #التشغيل_العقاري</div></details></div></article><article class="post" data-p="X"><div class="when"><b class="num">4</b><span>نوفمبر</span><span>الأربعاء</span><span class="num">8:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-X">X</span><span class="lv lv-B">المعرفة</span><span class="rp">إعادة توزيع</span></div><h4>ثريد: 8 أسئلة قبل ما تسلّم عقارك لمشغّل</h4><p class="meta">معرفة السوق · ثريد 9 تغريدات</p><p class="meta">نفس فكرة «8 أسئلة اسألها لأي مشغّل قبل أن تسلّمه عقارك» على LinkedIn، بصياغة تناسب المنصة</p><details><summary>نص المنشور</summary><div class="cap">عندك عقار وتفكر تسلّمه لشركة تشغيل؟ اسألها هذي الأسئلة الثمانية قبل ما توقّع 🧵</div></details></div></article></section><section class="week" data-week="4"><header class="week-h"><h3>الأسبوع 4</h3><span>5 نوفمبر – 11 نوفمبر · 6 منشورات</span></header><article class="post" data-p="IG"><div class="when"><b class="num">5</b><span>نوفمبر</span><span>الخميس</span><span class="num">9:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-IG">Instagram</span><span class="lv lv-P">إثبات الأداء</span></div><h4>تقرير أكتوبر · The Capital Monthly #1</h4><p class="meta">تقرير الشهر · كاروسيل 6 شرائح بقالب التقرير</p><details><summary>نص المنشور</summary><div class="cap">أول تقرير شهري لنا. بننشر أرقام تشغيلنا كل شهر بنفس القالب:
+
+الإشغال: <mark>[X]</mark>% على <mark>[Y]</mark> وحدة
+وحدات تسكّنت هذا الشهر: <mark>[X]</mark>
+متوسط مدة التسكين: <mark>[X]</mark> يوم
+متوسط زمن تجهيز الوحدة: <mark>[X]</mark> يوم
+
+ليش ننشرها؟ لأن الأرقام أصدق من أي كلام عن أنفسنا.
+
+#الرياض #سكن_شهري #شقق_مفروشة</div></details></div></article><article class="post" data-p="IG"><div class="when"><b class="num">8</b><span>نوفمبر</span><span>الأحد</span><span class="num">9:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-IG">Instagram</span><span class="lv lv-A">الثقة</span></div><h4>يوم مع مدير التشغيل</h4><p class="meta">الفريق · ريلز 40 ثانية</p><details><summary>نص المنشور</summary><div class="cap"><mark>[الاسم]</mark>، مدير التشغيل.
+يومه يبدأ <mark>[الساعة]</mark> وما يخلص إلا لما تكون كل وحدة جاهزة وكل بلاغ له رد.
+تابع معانا يوم كامل من التشغيل.
+
+#الرياض #سكن_شهري #شقق_مفروشة</div></details></div></article><article class="post" data-p="LI"><div class="when"><b class="num">8</b><span>نوفمبر</span><span>الأحد</span><span class="num">9:30 ص</span></div><div class="body"><div class="tags"><span class="pl pl-LI">LinkedIn</span><span class="lv lv-P">إثبات الأداء</span><span class="rp">إعادة توزيع</span></div><h4>تقرير أكتوبر + تعليق المدير</h4><p class="meta">تقرير الشهر · كاروسيل PDF + منشور نصي</p><p class="meta">نفس فكرة «تقرير أكتوبر · The Capital Monthly #1» على Instagram، بصياغة تناسب المنصة</p><details><summary>نص المنشور</summary><div class="cap">ننشر من هذا الشهر تقريراً شهرياً بأرقام تشغيلنا، بنفس المؤشرات كل مرة:
+
+الإشغال: <mark>[X]</mark>% على <mark>[Y]</mark> وحدة
+الوحدات التي تسكّنت: <mark>[X]</mark>
+متوسط مدة التسكين: <mark>[X]</mark> يوماً
+متوسط زمن التجهيز: <mark>[X]</mark> يوماً
+
+ملاحظتي على الشهر: <mark>[قراءة المدير في سطرين]</mark>.
+
+التقرير الكامل في الملف المرفق.
+
+#الرياض #العقار #السكن_المفروش #التشغيل_العقاري</div></details></div></article><article class="post" data-p="IG"><div class="when"><b class="num">10</b><span>نوفمبر</span><span>الثلاثاء</span><span class="num">9:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-IG">Instagram</span><span class="lv lv-P">إثبات الأداء</span></div><h4>مشكلة صارت وكيف حليناها #2</h4><p class="meta">مشكلة وحلها · منشور ثابت بالقالب + ستوري</p><details><summary>نص المنشور</summary><div class="cap">الأسبوع هذا: <mark>[المشكلة باختصار]</mark>.
+وش سوّينا: <mark>[الإجراء]</mark>.
+الوقت من البلاغ للحل: <mark>[X]</mark> ساعة.
+
+#الرياض #سكن_شهري #شقق_مفروشة</div></details></div></article><article class="post" data-p="LI"><div class="when"><b class="num">11</b><span>نوفمبر</span><span>الأربعاء</span><span class="num">9:30 ص</span></div><div class="body"><div class="tags"><span class="pl pl-LI">LinkedIn</span><span class="lv lv-C">التجاري</span></div><h4>متى يناسب عقارك التحويل للمفروش الشهري، ومتى لا يناسب؟</h4><p class="meta">حسابات المالك · منشور نصي</p><details><summary>نص المنشور</summary><div class="cap">ليس كل عقار يناسبه التحويل إلى سكن مفروش شهري.
+
+يناسبك غالباً إذا:
+· الحي عليه طلب من موظفين ومنتقلين
+· الوحدات صغيرة أو متوسطة
+· تعاني من شغور طويل أو تحصيل متعثر
+
+قد لا يناسبك إذا:
+· المبنى يحتاج ترميماً كبيراً قبل التشغيل
+· الطلب في الحي سنوي عائلي بالأساس
+· لا تريد تحمّل تكلفة التجهيز الأولى
+
+إذا عندك وحدات وتريد قراءة أولية لعقارك، تواصل معنا لاستشارة.
+
+#الرياض #العقار #السكن_المفروش #التشغيل_العقاري</div></details><p class="cta"><b>الدعوة:</b> إذا عندك وحدات وتريد قراءة أولية لعقارك، راسلنا</p></div></article><article class="post" data-p="X"><div class="when"><b class="num">11</b><span>نوفمبر</span><span>الأربعاء</span><span class="num">8:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-X">X</span><span class="lv lv-P">إثبات الأداء</span><span class="rp">إعادة توزيع</span></div><h4>أرقام أكتوبر في منشور واحد</h4><p class="meta">تقرير الشهر · تغريدة + صورة</p><p class="meta">نفس فكرة «تقرير أكتوبر · The Capital Monthly #1» على Instagram، بصياغة تناسب المنصة</p><details><summary>نص المنشور</summary><div class="cap">أرقام تشغيلنا في أكتوبر:
+الإشغال <mark>[X]</mark>% على <mark>[Y]</mark> وحدة
+تسكّنت <mark>[X]</mark> وحدات
+متوسط مدة التسكين <mark>[X]</mark> يوم
+
+ننشرها كل شهر.</div></details></div></article></section><section class="week" data-week="5"><header class="week-h"><h3>الأسبوع 5</h3><span>12 نوفمبر – 14 نوفمبر · 1 منشورات</span></header><article class="post" data-p="IG"><div class="when"><b class="num">12</b><span>نوفمبر</span><span>الخميس</span><span class="num">9:00 م</span></div><div class="body"><div class="tags"><span class="pl pl-IG">Instagram</span><span class="lv lv-P">إثبات الأداء</span></div><h4>الموظف المنتقل للرياض: وش يدوّر في السكن؟ من واقع استفساراتنا</h4><p class="meta">من بيانات التشغيل · كاروسيل 5 شرائح</p><details><summary>نص المنشور</summary><div class="cap">يوصلنا كل أسبوع موظفين منتقلين للرياض لوظيفة أو مشروع.
+أكثر الأسباب اللي يذكرونها لاختيار الشهري المفروش:
+<mark>[الأسباب من بيانات الاستفسارات]</mark>
+
+لو أنت منهم، وش أهم شي تدوّره في السكن؟ قولنا بالتعليقات.
+
+#الرياض #سكن_شهري #شقق_مفروشة</div></details></div></article></section></div>
+
+  <p class="note">الأجزاء المظللة بين [ ] تُستكمل من بيانات التشغيل قبل النشر.</p>
+</main>
+
+<script>
+(function(){
+  var chips=document.querySelectorAll('.chip');
+  chips.forEach(function(c){c.addEventListener('click',function(){
+    var p=c.getAttribute('data-p');
+    chips.forEach(function(x){x.setAttribute('aria-pressed',x===c?'true':'false')});
+    document.querySelectorAll('.post').forEach(function(a){a.hidden=!!p&&a.getAttribute('data-p')!==p});
+    document.querySelectorAll('.week').forEach(function(w){w.hidden=!w.querySelector('.post:not([hidden])')});
+  })});
+})();
+</script>
