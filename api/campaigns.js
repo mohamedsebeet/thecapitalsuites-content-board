@@ -10,13 +10,17 @@ module.exports = async (req, res) => {
   if (!url || !key) return res.status(500).json({ error: 'config' });
   if (!/^Bearer \S+/.test(auth)) return res.status(401).json({ error: 'login' });
   try {
-    const r = await fetch(url.replace(/\/$/, '') + '/rest/v1/rpc/my_role', {
+    const base = url.replace(/\/$/, '') + '/rest/v1/rpc/';
+    const call = (fn, body) => fetch(base + fn, {
       method: 'POST',
       headers: { apikey: key, Authorization: auth, 'Content-Type': 'application/json' },
-      body: '{}'
+      body: JSON.stringify(body || {})
     });
-    const role = r.ok ? await r.json() : null;
-    if (!role) return res.status(403).json({ error: 'not a member' });
+    // صلاحية «الحملات والصرف»، ولو ملف الصلاحيات لسه ما اتشغّلش نكتفي بإنه عضو
+    let r = await call('has_perm', { p: 'view.campaigns' });
+    let ok = r.ok ? await r.json() : null;
+    if (!r.ok && r.status === 404) { r = await call('my_role'); ok = r.ok ? !!(await r.json()) : false; }
+    if (!ok) return res.status(403).json({ error: 'no access' });
     return res.status(200).json(data);
   } catch (e) {
     return res.status(502).json({ error: 'auth check failed' });

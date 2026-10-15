@@ -443,7 +443,7 @@ function renderSheet(){
   var h='<div class="sh-head"><div style="min-width:0;flex:1"><div class="meta"><span class="pl">'+esc(PSHORT[p.p]||p.p)+' <small>'+esc(PL[p.p]||'')+'</small></span>'+(isSetup(p)?'<span class="lv">تأسيس · '+esc(p.s)+'</span><span>آخر موعد: '+DAYS[d.getDay()]+' '+d.getDate()+' '+MON[d.getMonth()]+'</span>':'<span class="lv '+esc(p.lv)+'">'+esc(p.lv==='P'?'إثبات الأداء':p.lv+' · '+LV[p.lv])+'</span><span>'+DAYS[d.getDay()]+' '+d.getDate()+' '+MON[d.getMonth()]+' · '+tmOf(p)+'</span>')+'</div><h2 id="sh-title">'+esc(p.t)+'</h2>'+(canEditPost()?'<div class="row-btns"><button class="btn pri" id="ed-post">'+(isSetup(p)?'تعديل العنصر بالكامل':'تعديل المنشور بالكامل')+'</button></div>':'')+'</div><button class="x" id="sh-x" aria-label="إغلاق">×</button></div>';
   h+='<div class="sh-body">';
   // status
-  h+='<div class="blk"><h4>الحالة</h4><div class="stepper" id="stepper">'+ST.map(function(s){return '<button data-k="'+s.k+'" style="--sc:var(--st-'+s.k+')" aria-pressed="'+(p.status===s.k?'true':'false')+'"'+(can?'':' disabled')+'>'+s.l+'</button>'}).join('')+'</div>'+
+  h+='<div class="blk"><h4>الحالة</h4><div class="stepper" id="stepper">'+ST.map(function(s){return '<button data-k="'+s.k+'" style="--sc:var(--st-'+s.k+')" aria-pressed="'+(p.status===s.k?'true':'false')+'"'+(can&&canSt(p.status,s.k)?'':' disabled')+'>'+s.l+'</button>'}).join('')+'</div>'+
     '<p class="updated" id="upd" style="margin-top:6px"></p></div>';
   // dates
   if(isSetup(p)) h+='<div class="blk"><dl class="kv"><dt>آخر موعد</dt><dd class="num">'+fmtD(p.d)+'</dd><dt>القسم</dt><dd>'+esc(p.s)+'</dd>'+(p.f?'<dt>المواصفات</dt><dd>'+esc(p.f)+'</dd>':'')+'</dl></div>';
@@ -452,11 +452,11 @@ function renderSheet(){
   if(p.im&&p.im.length) h+='<div class="blk"><h4>التصميم المقترح ('+p.im.length+')</h4><div class="imgs">'+p.im.map(function(s){return '<a href="'+esc(s)+'" target="_blank" rel="noopener"><img src="'+esc(s)+'" alt="تصميم مقترح" loading="lazy"></a>'}).join('')+'</div></div>';
   // uploaded designs
   var ds=p.designs||[];
-  h+='<div class="blk"><h4>التصاميم المرفوعة'+(ds.length?' ('+ds.length+')':'')+'</h4>'+(ds.length?'<div class="imgs ups">'+ds.map(function(x,i){return dThumb(x,i,can)}).join('')+'</div>':'<p class="updated">'+(can?'ارفع التصميم هنا وهيظهر لوحده في صفحات المحتوى، والمنشور يتحول «للمراجعة».':'لم يُرفع تصميم بعد.')+'</p>')+
-    (can&&window.capital?'<div class="row-btns" style="margin-top:8px"><label class="btn pri up-btn"><input type="file" id="in-up" accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/quicktime,application/pdf" multiple hidden>رفع تصميم</label><span class="updated" id="up-m"></span></div>':'')+'</div>';
+  h+='<div class="blk"><h4>التصاميم المرفوعة'+(ds.length?' ('+ds.length+')':'')+'</h4>'+(ds.length?'<div class="imgs ups">'+ds.map(function(x,i){return dThumb(x,i,C('designs.delete'))}).join('')+'</div>':'<p class="updated">'+(C('designs.upload')?'ارفع التصميم هنا وهيظهر لوحده في صفحات المحتوى، والمنشور يتحول «للمراجعة».':'لم يُرفع تصميم بعد.')+'</p>')+
+    (C('designs.upload')&&window.capital?'<div class="row-btns" style="margin-top:8px"><label class="btn pri up-btn"><input type="file" id="in-up" accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/quicktime,application/pdf" multiple hidden>رفع تصميم</label><span class="updated" id="up-m"></span></div>':'')+'</div>';
   // design link
   var dl=safeUrl(p.designLink),pl=safeUrl(p.pubLink);
-  h+='<div class="blk"><h4>رابط ملف المصدر (اختياري)</h4>'+(can?'<div class="field"><input id="in-dl" type="url" dir="ltr" placeholder="رابط Drive أو Canva أو Figma" value="'+esc(p.designLink)+'"><button class="btn" id="sv-dl">حفظ</button></div>':'')+(dl?'<p style="margin-top:6px"><a class="link-out" href="'+esc(dl)+'" target="_blank" rel="noopener">'+esc(dl)+'</a></p>':(can?'':'<p class="updated">لم يُرفع بعد.</p>'))+'</div>';
+  h+='<div class="blk"><h4>رابط ملف المصدر (اختياري)</h4>'+(C('designs.upload')?'<div class="field"><input id="in-dl" type="url" dir="ltr" placeholder="رابط Drive أو Canva أو Figma" value="'+esc(p.designLink)+'"><button class="btn" id="sv-dl">حفظ</button></div>':'')+(dl?'<p style="margin-top:6px"><a class="link-out" href="'+esc(dl)+'" target="_blank" rel="noopener">'+esc(dl)+'</a></p>':(C('designs.upload')?'':'<p class="updated">لم يُرفع بعد.</p>'))+'</div>';
   // caption
   h+='<div class="blk"><h4>'+(isSetup(p)?'المحتوى المعتمد (البايو / النص)':'نص المنشور')+'</h4>';
   if(p.c){h+='<div class="cap" id="cap">'+capHTML(p.c)+'</div>'+(hasPH(p)?'<p class="updated" style="margin-top:6px">الأجزاء المظللة بين [ ] تُستبدل ببيانات حقيقية قبل النشر.</p>':'')}
@@ -469,9 +469,9 @@ function renderSheet(){
   if(!isSetup(p)){var TG=p.targets||({IG:['IG'],FB:['FB'],LI:['LI'],X:['X'],ALL:['IG','FB','LI','X']}[p.p]||[]),PB=p.pub||{};
     h+='<div class="blk"><h4>النشر على المنصات</h4>'+(TG.length?'<p>'+TG.map(function(k){return '<span class="pl" style="margin-inline-end:6px">'+esc(PL[k]||k)+(PB[k]&&PB[k].done?' ✓':'')+'</span>'}).join('')+'</p>':'<p class="updated">مفيش منصات محددة.</p>')+'<p style="margin-top:6px"><a class="link-out" href="files.html#publish">افتح جدول النشر ←</a></p></div>';}
   // published link
-  h+='<div class="blk"><h4>رابط المنشور بعد النشر</h4>'+(can?'<div class="field"><input id="in-pl" type="url" dir="ltr" placeholder="https://www.instagram.com/p/…" value="'+esc(p.pubLink)+'"><button class="btn" id="sv-pl">حفظ</button></div>':'')+(pl?'<p style="margin-top:6px"><a class="link-out" href="'+esc(pl)+'" target="_blank" rel="noopener">'+esc(pl)+'</a></p>':(can?'':'<p class="updated">لم يُنشر بعد.</p>'))+'</div>';
+  h+='<div class="blk"><h4>رابط المنشور بعد النشر</h4>'+(C('publish.mark')?'<div class="field"><input id="in-pl" type="url" dir="ltr" placeholder="https://www.instagram.com/p/…" value="'+esc(p.pubLink)+'"><button class="btn" id="sv-pl">حفظ</button></div>':'')+(pl?'<p style="margin-top:6px"><a class="link-out" href="'+esc(pl)+'" target="_blank" rel="noopener">'+esc(pl)+'</a></p>':(C('publish.mark')?'':'<p class="updated">لم يُنشر بعد.</p>'))+'</div>';
   // notes
-  h+='<div class="blk"><h4>الملاحظات والتواصل</h4><div class="thread" id="thread"></div>'+(can?'<div class="field" style="margin-top:10px"><textarea id="in-note" rows="2" placeholder="اكتب ملاحظة للمصمم أو للإدارة"></textarea><button class="btn pri" id="sv-note">إرسال</button></div>':'')+'</div>';
+  h+='<div class="blk"><h4>الملاحظات والتواصل</h4><div class="thread" id="thread"></div>'+(C('notes.write')?'<div class="field" style="margin-top:10px"><textarea id="in-note" rows="2" placeholder="اكتب ملاحظة للمصمم أو للإدارة"></textarea><button class="btn pri" id="sv-note">إرسال</button></div>':'')+'</div>';
   h+='</div>';
   sheet.innerHTML=h;
   document.getElementById('sh-x').onclick=closeSheet;
@@ -600,10 +600,12 @@ var tt;function toast(m){var t=document.getElementById('toast');t.textContent=m;
 
 
 /* ---------- full edit ---------- */
-function canEditPost(){return !readOnly&&ME.isOwner}
+function C(k){return !readOnly&&(window.capital&&capital.can?capital.can(k):ME.isOwner)}
+function canSt(from,to){var D={approved:1,scheduled:1,published:1};if(to==='approved'||to==='changes')return C('posts.approve');if(to==='scheduled'||to==='published')return C('posts.approve')||(C('publish.mark')&&!!D[from]);if(D[from])return C('posts.approve');return C('posts.status')||C('posts.approve')}
+function canEditPost(){return C('posts.edit')}
 function opt(v,l,cur){return '<option value="'+esc(v)+'"'+(v===cur?' selected':'')+'>'+esc(l)+'</option>'}
 function renderEdit(id,newKind){
-  if(!canEditPost())return;
+  if(!(id?canEditPost():C('posts.create')))return;
   var isNew=!id,p=isNew?{kind:newKind||'post',d:iso(nextWork(newKind==='setup'?addD(START,-2):(TODAY>START?TODAY:START))),p:newKind==='setup'?'ALL':'IG',lv:'A',s:'',t:'',f:'',c:'',b:'',n:'',cta:'',r:'',im:[],status:'idea',tm:''}:BY[id];
   if(!p)return;
   EDITING=true;OPEN=id;if(unNotes){unNotes();unNotes=null}
@@ -619,7 +621,7 @@ function renderEdit(id,newKind){
     '<label class="fl">النوع<select id="e-kind">'+opt('post','منشور في التقويم',p.kind||'post')+opt('setup','عنصر تأسيسي (بايو، هايلايت، صفحة…)',p.kind||'post')+'</select></label>'+
     '<label class="fl">المستوى<select id="e-lv">'+opt('A','A · الثقة',p.lv)+opt('B','B · المعرفة',p.lv)+opt('C','C · التجاري',p.lv)+opt('P','إثبات الأداء',p.lv)+'</select></label>'+
     '<label class="fl">السلسلة<input type="text" id="e-s" list="dl-series" value="'+esc(p.s)+'"></label>'+
-    '<label class="fl">الحالة<select id="e-st">'+ST.map(function(x){return opt(x.k,x.l,p.status)}).join('')+'</select></label>'+
+    '<label class="fl">الحالة<select id="e-st">'+ST.map(function(x){var o=opt(x.k,x.l,p.status);return x.k===p.status||canSt(p.status,x.k)?o:o.replace('<option','<option disabled')}).join('')+'</select></label>'+
   '</div>'+
   '<datalist id="dl-series">'+Object.keys(series).map(function(x){return '<option value="'+esc(x)+'">'}).join('')+'</datalist>'+
   '<label class="fl">العنوان / الفكرة<input type="text" id="e-t" value="'+esc(p.t)+'" required></label>'+
@@ -631,7 +633,7 @@ function renderEdit(id,newKind){
   '<label class="fl">إعادة توزيع من<select id="e-r">'+opt('','بدون (منشور أصلي)',p.r||'')+others.map(function(x){return opt(x.id,x.p+' · '+fmtD(x.d)+' · '+x.t,p.r||'')}).join('')+'</select></label>'+
   '<label class="fl">صور مرجعية<textarea class="full sm" id="e-im" rows="3" dir="ltr" placeholder="رابط صورة في كل سطر">'+esc((p.im||[]).join('\n'))+'</textarea><small>رابط https لكل صورة في سطر مستقل.</small></label>'+
   '<p class="err" id="e-err" hidden></p>'+
-  '<div class="row-btns"><button type="submit" class="btn pri" id="e-save">'+(isNew?'إضافة للتقويم':'حفظ التعديلات')+'</button><button type="button" class="btn" id="e-cancel">إلغاء</button>'+(isNew?'':'<button type="button" class="btn danger" id="e-del">حذف المنشور</button>')+'</div>'+
+  '<div class="row-btns"><button type="submit" class="btn pri" id="e-save">'+(isNew?'إضافة للتقويم':'حفظ التعديلات')+'</button><button type="button" class="btn" id="e-cancel">إلغاء</button>'+(isNew||!C('posts.delete')?'':'<button type="button" class="btn danger" id="e-del">حذف المنشور</button>')+'</div>'+
   '<div id="e-confirm" hidden class="confirm"><p>حذف «'+esc(p.t)+'» نهائياً من التقويم؟ ملاحظاته هتفضل محفوظة بس مش هتظهر.</p><div class="row-btns"><button type="button" class="btn danger" id="e-del-yes">نعم، احذف</button><button type="button" class="btn" id="e-del-no">تراجع</button></div></div>';
   h+='</form>';
   sheet.innerHTML=h;
@@ -688,10 +690,10 @@ function boot(){
       return u.can('data.write').then(function(c){ME.canWrite=c;if(c===false)readOnly=true});
     }).then(function(){
       var w=document.getElementById('who');
-      var role=ME.isOwner?'مدير المحتوى':(ME.canWrite===false?'اطلاع فقط':'فريق التنفيذ');
+      var role=window.capital&&capital.roleLabel?capital.roleLabel():(ME.isOwner?'مدير المحتوى':(ME.canWrite===false?'اطلاع فقط':'فريق التنفيذ'));
       w.innerHTML='';var img=document.createElement('img');img.alt='';img.src=ME.avatar;var n=document.createElement('span');n.textContent=ME.name||'أنت';var r=document.createElement('span');r.className='role';r.textContent=role;
       w.appendChild(img);w.appendChild(n);w.appendChild(r);
-      document.getElementById('new-post').hidden=!canEditPost();document.getElementById('new-setup').hidden=!canEditPost();document.getElementById('new-setup').onclick=function(){renderEdit(null,'setup')};document.getElementById('new-post').onclick=function(){renderEdit(null)};if(OPEN&&!EDITING)renderSheet();
+      document.getElementById('new-post').hidden=!C('posts.create');document.getElementById('new-setup').hidden=!C('posts.create');document.getElementById('new-setup').onclick=function(){renderEdit(null,'setup')};document.getElementById('new-post').onclick=function(){renderEdit(null)};if(OPEN&&!EDITING)renderSheet();
     });
   }).catch(function(){});
   claude.use('db').then(function(d){

@@ -255,6 +255,14 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
 
   /* ---------- القائمة ---------- */
   var side=document.getElementById('side'),pick=document.getElementById('pick'),page=document.getElementById('page');
+  var NEED_I={'ads-live':'view.campaigns',ads:'view.campaigns','ads-archive':'view.campaigns',publish:'view.publish'};
+  var NEED_G={'الخطط':'view.plans','العروض للإدارة':'view.decks'};
+  function CAN(k){return !window.capital||!capital.can||capital.can(k)}
+  function applyAccess(){
+    GROUPS=GROUPS.map(function(g){if(NEED_G[g.g]&&!CAN(NEED_G[g.g]))return null;return {g:g.g,items:g.items.filter(function(i){return !NEED_I[i.id]||CAN(NEED_I[i.id])})}}).filter(function(g){return g&&g.items.length});
+    BY={};GROUPS.forEach(function(g){g.items.forEach(function(i){BY[i.id]=i})});buildNav();
+  }
+  function buildNav(){
   var nav='',opts='';
   GROUPS.forEach(function(g){
     nav+='<div class="grp">'+esc(g.g)+'</div>';opts+='<optgroup label="'+esc(g.g)+'">';
@@ -266,6 +274,8 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     opts+='</optgroup>';
   });
   side.innerHTML=nav;pick.innerHTML=opts;
+  }
+  buildNav();
   pick.onchange=function(){var i=BY[pick.value];if(!i)return;if(i.self){location.href=i.href;return}if(i.ext){window.open(i.href,'_blank','noopener');route();return}location.hash=i.id};
 
   /* ---------- البيانات ---------- */
@@ -278,7 +288,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
         POSTS=ALL.filter(function(p){return !isSetup(p)});LOADED=true;rerender();
       },function(){});
     });
-    capital.api('campaigns').then(function(d){CAMP=d;rerender()}).catch(function(){CAMP_ERR=true;rerender()});
+    if(CAN('view.campaigns'))capital.api('campaigns').then(function(d){CAMP=d;rerender()}).catch(function(){CAMP_ERR=true;rerender()});
     capital.kpis().then(function(rows){KPI={};(rows||[]).forEach(function(r){KPI[r.id]=r.data||{}});rerender()}).catch(function(){});
   }
   function rerender(){if(BY[CUR]&&BY[CUR].live)renderLive(CUR)}
@@ -299,12 +309,12 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       '<a class="tile" href="#content"><span class="k">منشورات الأسبوع</span><span class="v num">'+pub+' / '+inWeek.length+'</span><span class="s">اتنشر من المخطط هذا الأسبوع</span></a>'+
       '<a class="tile'+(review.length?' gold':'')+'" href="#content"><span class="k">بانتظار المراجعة</span><span class="v num">'+review.length+'</span><span class="s">تصاميم مرفوعة محتاجة اعتماد</span></a>'+
       '<div class="tile'+(late.length?' warn':'')+'"><span class="k">متأخر عن موعد التسليم</span><span class="v num">'+late.length+'</span><span class="s">'+(late.length?'محتاج متابعة مع المصمم':'كل شيء في موعده')+'</span></div>'+
-      (last?'<a class="tile" href="#ads-live"><span class="k">صرف الحملات · '+esc(last.label||'')+'</span><span class="v num">'+n2(last.spend)+'</span><span class="s">ريال · '+fmtD(last.from)+' – '+fmtD(last.to)+'</span></a>':'<a class="tile" href="#ads-live"><span class="k">الحملات</span><span class="v">—</span><span class="s">'+(CAMP_ERR?'تعذّر التحميل':'جارِ التحميل…')+'</span></a>')+
+      (!CAN('view.campaigns')?'':last?'<a class="tile" href="#ads-live"><span class="k">صرف الحملات · '+esc(last.label||'')+'</span><span class="v num">'+n2(last.spend)+'</span><span class="s">ريال · '+fmtD(last.from)+' – '+fmtD(last.to)+'</span></a>':'<a class="tile" href="#ads-live"><span class="k">الحملات</span><span class="v">—</span><span class="s">'+(CAMP_ERR?'تعذّر التحميل':'جارِ التحميل…')+'</span></a>')+
     '</div>';
-    var mineFirst=ROLE==='team';
+    var mineFirst=CAN('designs.upload')&&!CAN('posts.approve');
     var pTodo='<div class="panel"><h4>'+(mineFirst?'مطلوب منك':'مطلوب من المصمم')+' <span class="c">خلال 7 أيام</span></h4>'+(todo.length?todo.slice(0,10).map(function(p){var dd=isSetup(p)?p.d:due(p.d);return li(p,'التسليم <span class="'+(dd<T?'late':'')+'">'+dayD(dd)+(dd<T?' · متأخر':'')+'</span>')}).join(''):'<p class="empty">مفيش تسليمات قريبة.</p>')+'</div>';
-    var pRev='<div class="panel"><h4>'+(ROLE==='owner'?'بانتظار مراجعتك':'عند المراجعة')+' <span class="c">'+review.length+'</span></h4>'+(review.length?review.slice(0,10).map(function(p){return li(p)}).join(''):'<p class="empty">مفيش حاجة مستنية مراجعة.</p>')+'</div>';
-    var pSoon='<div class="panel"><h4>النشر خلال يومين <a href="#publish" style="margin-inline-start:auto;font-size:12.5px;color:var(--gold-ink);text-decoration:none">جدول النشر ←</a></h4>'+(pubSoon.length?pubSoon.map(function(p){return li(p)}).join(''):'<p class="empty">مفيش نشر خلال اليومين الجايين.</p>')+'</div>';
+    var pRev='<div class="panel"><h4>'+(CAN('posts.approve')?'بانتظار مراجعتك':'عند المراجعة')+' <span class="c">'+review.length+'</span></h4>'+(review.length?review.slice(0,10).map(function(p){return li(p)}).join(''):'<p class="empty">مفيش حاجة مستنية مراجعة.</p>')+'</div>';
+    var pSoon='<div class="panel"><h4>النشر خلال يومين <a href="#publish"'+(CAN('view.publish')?'':' hidden')+' style="margin-inline-start:auto;font-size:12.5px;color:var(--gold-ink);text-decoration:none">جدول النشر ←</a></h4>'+(pubSoon.length?pubSoon.map(function(p){return li(p)}).join(''):'<p class="empty">مفيش نشر خلال اليومين الجايين.</p>')+'</div>';
     h+='<div class="sec"><h3>المطلوب الآن</h3></div><div class="cols">'+pTodo+pRev+pSoon+'</div>';
     // آخر التصاميم المرفوعة
     var ups=[];ALL.forEach(function(p){(p.designs||[]).forEach(function(x){ups.push({p:p,x:x})})});
@@ -381,7 +391,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       // قمع المبيعات
       h+='<div class="sec"><h3>نتائج المبيعات</h3><small>اللي حصل بعد المحادثة: يدخلها مدير المحتوى من أرقام فريق المبيعات</small></div>';
       h+='<div class="tiles"><div class="tile"><span class="k">محادثات وصلت فعلاً</span><span class="v num">'+(k.chats!=null&&k.chats!==''?n0(k.chats):'—')+'</span></div><div class="tile"><span class="k">معاينات</span><span class="v num">'+(k.viewings!=null&&k.viewings!==''?n0(k.viewings):'—')+'</span></div><div class="tile"><span class="k">حجوزات</span><span class="v num">'+(k.bookings!=null&&k.bookings!==''?n0(k.bookings):'—')+'</span></div></div>';
-      if(ROLE==='owner')h+='<form class="kpi" id="kf"><label>محادثات وصلت فعلاً<input type="number" min="0" name="chats" value="'+esc(k.chats==null?'':k.chats)+'"></label><label>معاينات<input type="number" min="0" name="viewings" value="'+esc(k.viewings==null?'':k.viewings)+'"></label><label>حجوزات<input type="number" min="0" name="bookings" value="'+esc(k.bookings==null?'':k.bookings)+'"></label><button class="pbtn">حفظ أرقام المبيعات</button></form><p class="empty" id="kf-m" style="padding:6px 0"></p>';
+      if(CAN('kpis.edit'))h+='<form class="kpi" id="kf"><label>محادثات وصلت فعلاً<input type="number" min="0" name="chats" value="'+esc(k.chats==null?'':k.chats)+'"></label><label>معاينات<input type="number" min="0" name="viewings" value="'+esc(k.viewings==null?'':k.viewings)+'"></label><label>حجوزات<input type="number" min="0" name="bookings" value="'+esc(k.bookings==null?'':k.bookings)+'"></label><button class="pbtn">حفظ أرقام المبيعات</button></form><p class="empty" id="kf-m" style="padding:6px 0"></p>';
       if(per.learnings&&per.learnings.length)h+='<div class="cols" style="margin-top:22px"><div class="panel" style="padding:10px 16px"><h4 style="margin:0">ما تعلمناه</h4><ul class="plain">'+per.learnings.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div>'+(per.next&&per.next.length?'<div class="panel" style="padding:10px 16px"><h4 style="margin:0">الخطوة الجاية</h4><ul class="plain">'+per.next.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div>':'')+'</div>';
     }
     // الحملات والإعلانات
@@ -452,6 +462,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   function tm24(p){var t=String(p.tm||{IG:'9:00 م',FB:'9:00 م',LI:'9:30 ص',X:'8:00 م'}[p.p]||'').trim(),m=/(\d{1,2})(?::(\d{2}))?\s*(ص|م)?/.exec(t);if(!m)return '12:00';var h=+m[1],mi=+(m[2]||0);if(m[3]==='م'&&h<12)h+=12;if(m[3]==='ص'&&h===12)h=0;return ('0'+h).slice(-2)+':'+('0'+mi).slice(-2)}
   function tmAr(hhmm){var a=hhmm.split(':'),h=+a[0],ap=h>=12?'م':'ص';h=h%12||12;return h+':'+a[1]+' '+ap}
   function when(p){return p.d+'T'+tm24(p)}
+  function canMark(k){if(!CAN('publish.mark'))return false;var pl=window.capital&&capital.platforms?capital.platforms():null;return !pl||pl.indexOf(k)>=0}
   function txt(p,k){var o=(p.pub||{})[k];return o&&o.text!=null?o.text:(p.c||'')}
   function hasPH(t){return /\[[^\]]+\]/.test(t||'')}
   function files(p){var d=(p.designs||[]).filter(function(x){return safeUrl(x.url)}).map(function(x){return {u:x.url,n:x.name||'design'}});if(d.length)return d;return (p.im||[]).map(function(u,i){return {u:u,n:(p.t||'design')+'-'+(i+1)}})}
@@ -475,7 +486,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     return h;
   }
   function pubCard(p){
-    var tg=targets(p),pb=p.pub||{},own=ROLE==='owner',ready=DONE[p.status],fl=files(p),open=PUBOPEN[p.id];
+    var tg=targets(p),pb=p.pub||{},own=CAN('publish.schedule')||CAN('posts.edit'),ready=DONE[p.status],fl=files(p),open=PUBOPEN[p.id];
     var allDone=tg.length&&tg.every(function(k){return pb[k]&&pb[k].done});
     var h='<div class="pubc'+(allDone?' done':'')+'" data-id="'+esc(p.id)+'"><div class="pubh">'+thumb(p)+'<div class="pubm"><b>'+esc(p.t)+'</b><span class="m">'+dayD(p.d)+' · '+tmAr(tm24(p))+' · '+esc(p.f||'')+'</span><span class="m">'+stTag(p.status)+(ready?'':' <span style="color:var(--warn)">لسه مش معتمد</span>')+(hasPH(p.c)?' <span style="color:var(--warn)">في النص بيانات [ ] لازم تتملي</span>':'')+'</span></div>';
     h+='<div class="tgs">'+PLAT.map(function(x){var on=tg.indexOf(x.k)>=0,dn=pb[x.k]&&pb[x.k].done;return '<button class="tg'+(on?' on':'')+(dn?' dn':'')+'" data-tg="'+x.k+'"'+(own?'':' disabled')+' title="'+(on?'شيل':'ضيف')+' '+x.n+'">'+x.n+(dn?' ✓':'')+'</button>'}).join('')+'</div>';
@@ -486,9 +497,9 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       h+='<div class="fl">'+(fl.length?fl.map(function(f,i){return '<a href="'+esc(f.u)+'" download="'+esc(f.n)+'" target="_blank" rel="noopener">⬇ التصميم'+(fl.length>1?' '+(i+1):'')+'</a>'}).join(''):'<span class="m">لسه مفيش تصميم مرفوع</span>')+'</div>';
       h+=tg.map(function(k){var x=PLK[k];if(!x)return '';var t=txt(p,k),o=pb[k]||{},over=t.length>x.lim;
         return '<div class="plr"><div class="plh"><b>'+x.n+'</b><span class="m num'+(over?' late':'')+'">'+t.length+' / '+x.lim+(over?' · النص أطول من المسموح':'')+'</span>'+(o.done?'<span class="st" style="--sc:var(--ok)">اتنشر'+(o.at?' '+fmtD(o.at.slice(0,10)):'')+'</span>':'')+'</div>'+
-          '<textarea data-tx="'+k+'" rows="'+(k==='X'?3:5)+'"'+(own?'':' readonly')+'>'+esc(t)+'</textarea>'+
+          '<textarea data-tx="'+k+'" rows="'+(k==='X'?3:5)+'"'+(canMark(k)?'':' readonly')+'>'+esc(t)+'</textarea>'+
           '<div class="plb"><button class="pbtn sm ghost" data-copy="'+k+'">نسخ النص</button><a class="pbtn sm ghost" data-go="'+k+'" href="'+esc(x.open(t))+'" target="_blank" rel="noopener">افتح '+x.n+' ↗</a>'+
-          (own?(o.done?'<input type="url" dir="ltr" placeholder="رابط المنشور" data-lk="'+k+'" value="'+esc(o.link||'')+'"><button class="pbtn sm ghost" data-undo="'+k+'">تراجع</button>':'<button class="pbtn sm" data-done="'+k+'">✓ اتنشر</button>'):'')+'</div></div>'}).join('');
+          (canMark(k)?(o.done?'<input type="url" dir="ltr" placeholder="رابط المنشور" data-lk="'+k+'" value="'+esc(o.link||'')+'"><button class="pbtn sm ghost" data-undo="'+k+'">تراجع</button>':'<button class="pbtn sm" data-done="'+k+'">✓ اتنشر</button>'):'')+'</div></div>'}).join('');
       h+='</div>';
     }
     return h+'</div>';
@@ -509,7 +520,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
         t.onchange=function(){var o=pb[k]||{};o.text=t.value===(p.c||'')?null:t.value;pb[k]=o;save(p.id,{pub:pb},'اتحفظ النص لـ'+PLK[k].n)};
       });
       c.querySelectorAll('[data-copy]').forEach(function(b){b.onclick=function(){var t=c.querySelector('[data-tx="'+b.dataset.copy+'"]').value;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){ptoast('اتنسخ النص')}).catch(function(){var ta=c.querySelector('[data-tx="'+b.dataset.copy+'"]');ta.select();document.execCommand('copy');ptoast('اتنسخ النص')})}});
-      c.querySelectorAll('[data-done]').forEach(function(b){b.onclick=function(){var k=b.dataset.done,o=pb[k]||{};o.done=true;o.at=new Date().toISOString();o.by=ME;pb[k]=o;var patch={pub:pb},tg=targets(p);if(tg.every(function(x){return pb[x]&&pb[x].done}))patch.status='published';save(p.id,patch,'تمام: اتنشر على '+PLK[k].n)}});
+      c.querySelectorAll('[data-done]').forEach(function(b){b.onclick=function(){var k=b.dataset.done,o=pb[k]||{};o.done=true;o.at=new Date().toISOString();o.by=ME;pb[k]=o;var patch={pub:pb},tg=targets(p);if(DONE[p.status]&&tg.every(function(x){return pb[x]&&pb[x].done}))patch.status='published';save(p.id,patch,'تمام: اتنشر على '+PLK[k].n)}});
       c.querySelectorAll('[data-undo]').forEach(function(b){b.onclick=function(){var k=b.dataset.undo;if(pb[k]){pb[k].done=false;delete pb[k].at}var patch={pub:pb};if(p.status==='published')patch.status='scheduled';save(p.id,patch,'اترجع')}});
       c.querySelectorAll('[data-lk]').forEach(function(i){i.onchange=function(){var k=i.dataset.lk,v=i.value.trim();if(v&&!safeUrl(v)){ptoast('الرابط لازم يبدأ بـ https://');return}pb[k]=pb[k]||{};pb[k].link=v;var patch={pub:pb};if(v&&!p.pubLink)patch.pubLink=v;save(p.id,patch,'اتحفظ الرابط')}});
     });
@@ -561,7 +572,8 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   addEventListener('hashchange',route);
   claude.use('user').then(function(u){return u.me()}).then(function(m){
     var w=document.getElementById('who');w.innerHTML='';var img=document.createElement('img');img.alt='';img.src=m.avatarUrl;var n=document.createElement('span');n.textContent=m.name;w.appendChild(img);w.appendChild(n);
-    document.getElementById('app').hidden=false;load();route();
+    var rl=document.createElement('span');rl.className='role';rl.textContent=capital.roleLabel?capital.roleLabel():'';rl.style.cssText='font-size:12px;color:var(--ink-3)';w.appendChild(rl);
+    applyAccess();document.getElementById('app').hidden=false;load();route();
   });
 })();
 </script>

@@ -7,7 +7,54 @@
   var sb = window.supabase.createClient(CFG.url, CFG.anonKey, {
     auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
   });
-  var SESSION = null, ROLE = null, MEMBERS = {};
+  var SESSION = null, ROLE = null, MEMBERS = {}, ACCESS = { perms: [], platforms: null };
+
+  /* ---------- الصلاحيات (نفس اللي في قاعدة البيانات: supabase/04-permissions.sql) ---------- */
+  var PERMS = [
+    { g: 'غرفة التشغيل: إيه اللي يشوفه', items: [
+      ['view.campaigns', 'الحملات والصرف ونتائج المبيعات والإعلانات'],
+      ['view.plans', 'الخطط والميديا بلان والميزانية'],
+      ['view.decks', 'العروض والتقارير للإدارة'],
+      ['view.publish', 'جدول النشر']] },
+    { g: 'لوحة النشر: المحتوى', items: [
+      ['posts.create', 'إضافة منشورات وعناصر جديدة'],
+      ['posts.edit', 'تعديل المنشور بالكامل (النص والبريف والمعاد)'],
+      ['posts.delete', 'حذف المنشورات والملاحظات'],
+      ['posts.status', 'تحريك الحالة (فكرة، نص، تصميم، مراجعة)'],
+      ['posts.approve', 'الاعتماد وطلب التعديلات'],
+      ['notes.write', 'كتابة ملاحظات']] },
+    { g: 'التصاميم', items: [
+      ['designs.upload', 'رفع التصاميم وروابط ملفات المصدر'],
+      ['designs.delete', 'حذف التصاميم المرفوعة']] },
+    { g: 'النشر', items: [
+      ['publish.schedule', 'اختيار المنصات وتغيير مواعيد النشر'],
+      ['publish.mark', 'تعديل نص كل منصة وتعليم «اتنشر» وروابط المنشورات']] },
+    { g: 'الإدارة', items: [
+      ['kpis.edit', 'إدخال أرقام المبيعات (محادثات، معاينات، حجوزات)'],
+      ['team.manage', 'إضافة أعضاء وتعديل صلاحياتهم']] }
+  ];
+  var ALL_PERMS = []; PERMS.forEach(function (g) { g.items.forEach(function (i) { ALL_PERMS.push(i[0]); }); });
+  var PRESETS = {
+    owner: ALL_PERMS.slice(),
+    manager: ALL_PERMS.filter(function (k) { return k !== 'team.manage'; }),
+    writer: ['view.publish', 'posts.create', 'posts.edit', 'posts.status', 'notes.write'],
+    designer: ['posts.status', 'designs.upload', 'designs.delete', 'notes.write'],
+    publisher: ['view.publish', 'publish.mark', 'notes.write'],
+    reviewer: ['view.campaigns', 'view.plans', 'view.decks', 'view.publish', 'posts.approve', 'notes.write'],
+    viewer: ['view.campaigns', 'view.plans', 'view.decks', 'view.publish']
+  };
+  PRESETS.team = PRESETS.designer;
+  var PLATS = [['IG', 'إنستغرام'], ['FB', 'فيسبوك'], ['LI', 'لينكدإن'], ['X', 'X']];
+  var WRITE_PERMS = ['posts.create', 'posts.edit', 'posts.status', 'posts.approve', 'designs.upload', 'designs.delete', 'notes.write', 'publish.schedule', 'publish.mark'];
+  function can(p) { return ROLE === 'owner' || ACCESS.perms.indexOf(p) >= 0; }
+  function canAny(list) { return list.some(can); }
+  function permsOf(m) { return m.role === 'owner' ? PRESETS.owner : (Array.isArray(m.perms) ? m.perms : (PRESETS[m.role] || [])); }
+  function loadAccess() {
+    return sb.rpc('my_access').then(function (r) {
+      if (!r.error && r.data) { ACCESS = { perms: r.data.perms || [], platforms: r.data.platforms || null, custom: !!r.data.custom }; if (r.data.role) ROLE = r.data.role; }
+      else ACCESS = { perms: (PRESETS[ROLE] || []).slice(), platforms: null };
+    }, function () { ACCESS = { perms: (PRESETS[ROLE] || []).slice(), platforms: null }; });
+  }
 
   /* ---------- شاشة الدخول ---------- */
   var css = document.createElement('style');
@@ -20,7 +67,7 @@
     '#gate button[disabled]{opacity:.6}#gate .msg{margin-top:14px;font-size:14px;color:#8C6A1E;line-height:1.7}' +
     '#gate .bar{height:3px;background:#C29B3C;width:48px;border-radius:2px;margin-bottom:18px}' +
     '#team-dlg{position:fixed;inset:0;z-index:9998;background:rgba(31,36,39,.45);display:flex;align-items:center;justify-content:center;padding:16px;direction:rtl}' +
-    '#team-dlg .card{width:100%;max-width:520px;max-height:85vh;overflow:auto;background:#fff;border-radius:14px;padding:22px}' +
+    '#team-dlg .card{width:100%;max-width:760px;max-height:85vh;overflow:auto;background:#fff;border-radius:14px;padding:22px}' +
     '#team-dlg h2{margin:0 0 12px;font-size:18px}#team-dlg table{width:100%;border-collapse:collapse;font-size:14px}' +
     '#team-dlg td{padding:8px 4px;border-bottom:1px solid #EEE8DA}#team-dlg input.nm{width:100%;box-sizing:border-box;border:1px solid transparent;background:#FBF8F1;padding:6px 8px}#team-dlg input.nm:focus{border-color:#C29B3C;outline:0;background:#fff}#team-dlg td.e{direction:ltr;text-align:left}' +
     '#team-dlg .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}#team-dlg input,#team-dlg select{padding:9px 10px;border:1px solid #CFC6B2;border-radius:8px;font:inherit;font-size:14px}' +
@@ -28,6 +75,7 @@
     '#team-dlg button{padding:9px 14px;border:0;border-radius:8px;background:#1F2427;color:#fff;font:inherit;cursor:pointer}' +
     '#team-dlg button.x{background:none;color:#9A3B2E;padding:4px 8px}#team-dlg .close{background:#EEE8DA;color:#1F2427}' +
     '#files-link{margin-inline-start:8px;padding:6px 12px;border:1px solid #C29B3C;border-radius:999px;font-size:13px;text-decoration:none;color:inherit;white-space:nowrap}#files-link:hover{background:rgba(194,155,60,.15)}' +
+    '#team-dlg .hint{font-size:13px;color:#5A6166;line-height:1.7;margin:0 0 12px}#team-dlg .mb{border:1px solid #EEE8DA;border-radius:10px;padding:10px 12px;margin-bottom:8px}#team-dlg .mh{display:flex;gap:8px;align-items:center;flex-wrap:wrap}#team-dlg .mh .nm{flex:1 1 140px;width:auto}#team-dlg .mh .e{direction:ltr;font-size:13px;color:#5A6166;flex:1 1 160px}#team-dlg .rb{font-size:13px;color:#8C6A1E;font-weight:600}#team-dlg .sum{display:block;font-size:12.5px;color:#5A6166;margin-top:6px}#team-dlg .sum b{color:#8C6A1E}#team-dlg button.tg{background:#F4EFE3;color:#1F2427;border:1px solid #E5DFD0}#team-dlg .pp{margin-top:10px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}#team-dlg fieldset{border:1px solid #EEE8DA;border-radius:8px;padding:8px 10px;margin:0}#team-dlg legend{font-size:12.5px;font-weight:700;color:#8C6A1E;padding:0 4px}#team-dlg fieldset label{display:flex;gap:6px;align-items:flex-start;font-size:13px;line-height:1.6;padding:3px 0}#team-dlg fieldset input{padding:0;margin-top:4px}#team-dlg .pp .row{grid-column:1/-1;margin-top:0;align-items:center}#team-dlg .sv{font-size:13px;color:#2E7D4F}#team-dlg select:disabled,#team-dlg input:disabled{opacity:.7}#team-dlg form.add select{flex:1 1 100%}' +
     '#team-btn{margin-inline-start:8px;padding:6px 12px;border:1px solid #CFC6B2;border-radius:999px;background:transparent;font:inherit;font-size:13px;cursor:pointer;color:inherit}';
   document.head.appendChild(css);
 
@@ -66,7 +114,7 @@
   var ready = new Promise(function (r) { readyResolve = r; });
 
   function loadMembers() {
-    return sb.from('members').select('email,role,name').then(function (r) {
+    return sb.from('members').select('*').then(function (r) {
       MEMBERS = {}; (r.data || []).forEach(function (m) { MEMBERS[m.email.toLowerCase()] = m; });
       return MEMBERS;
     });
@@ -81,7 +129,7 @@
     }).then(function (role) {
       if (!role) { domReady(function () { showDenied(email); }); return; }
       ROLE = role;
-      return loadMembers().then(function () { domReady(function () { closeGate(); readyResolve(); addFilesLink(); addTeamButton(); }); });
+      return loadAccess().then(loadMembers).then(function () { domReady(function () { closeGate(); readyResolve(); addFilesLink(); addTeamButton(); }); });
     });
   }
 
@@ -107,9 +155,9 @@
     me: function () {
       var email = SESSION.user.email.toLowerCase(), m = MEMBERS[email] || {};
       var name = m.name || email.split('@')[0];
-      return Promise.resolve({ id: email, name: name, isOwner: ROLE === 'owner', canEdit: ROLE !== 'viewer', avatarUrl: avatar(name) });
+      return Promise.resolve({ id: email, name: name, isOwner: can('posts.edit'), canEdit: canAny(WRITE_PERMS), avatarUrl: avatar(name) });
     },
-    can: function (what) { return Promise.resolve(what === 'data.write' ? ROLE !== 'viewer' : true); },
+    can: function (what) { return Promise.resolve(what === 'data.write' ? canAny(WRITE_PERMS) : true); },
     profiles: function (ids) {
       var out = {};
       (ids || []).forEach(function (id) {
@@ -188,7 +236,17 @@
   };
 
   /* ---------- إدارة الفريق (مدير المحتوى فقط) ---------- */
-  var ROLE_AR = { owner: 'مدير المحتوى', team: 'فريق التنفيذ', viewer: 'اطلاع فقط' };
+  var ROLE_AR = { owner: 'مدير المحتوى', manager: 'مشرف', writer: 'كاتب محتوى', designer: 'مصمم', team: 'مصمم', publisher: 'مسؤول النشر', reviewer: 'اعتماد (الإدارة)', viewer: 'اطلاع فقط' };
+  var ROLE_HINT = {
+    manager: 'كل حاجة ما عدا إدارة الفريق',
+    writer: 'يضيف ويعدّل المنشورات ويحرّك الحالة',
+    designer: 'يرفع التصاميم ويحوّلها للمراجعة',
+    publisher: 'ينشر ويعلّم «اتنشر» ويضيف الروابط',
+    reviewer: 'يعتمد أو يطلب تعديلات، ويشوف الحملات والعروض',
+    viewer: 'يشوف بس، من غير أي تعديل'
+  };
+  var ROLE_ORDER = ['manager', 'writer', 'designer', 'publisher', 'reviewer', 'viewer'];
+  function roleLabel() { return (ROLE_AR[ROLE] || '') + (ACCESS.custom ? ' · مخصص' : ''); }
   function addFilesLink() {
     var who = document.getElementById('who');
     if (!who || document.getElementById('files-link') || /files\.html$/.test(location.pathname)) return;
@@ -196,10 +254,10 @@
     who.parentNode.insertBefore(a, who.nextSibling);
   }
   function addTeamButton() {
-    if (ROLE !== 'owner') return;
+    if (!can('team.manage')) return;
     var who = document.getElementById('who');
     if (!who || document.getElementById('team-btn')) return;
-    var b = document.createElement('button'); b.id = 'team-btn'; b.type = 'button'; b.textContent = 'الفريق';
+    var b = document.createElement('button'); b.id = 'team-btn'; b.type = 'button'; b.textContent = 'الفريق والصلاحيات';
     b.onclick = openTeam; who.parentNode.insertBefore(b, who.nextSibling);
   }
   function refreshWho() {
@@ -212,27 +270,79 @@
     d.onclick = function (e) { if (e.target === d) d.remove(); };
     document.body.appendChild(d); drawTeam(d);
   }
+  var OPEN_M = {};
+  function sameSet(a, b) { a = (a || []).slice().sort(); b = (b || []).slice().sort(); return a.join() === b.join(); }
+  function editable(m, me) { return ROLE === 'owner' ? m.role !== 'owner' : (can('team.manage') && m.role !== 'owner' && m.email !== me); }
+  function permPanel(m, ed) {
+    var have = permsOf(m), pl = m.platforms || [];
+    var h = '<div class="pp">' + PERMS.map(function (g) {
+      return '<fieldset><legend>' + esc(g.g) + '</legend>' + g.items.map(function (i) {
+        var lock = i[0] === 'team.manage' && ROLE !== 'owner';
+        return '<label><input type="checkbox" data-pk="' + i[0] + '"' + (have.indexOf(i[0]) >= 0 ? ' checked' : '') + (ed && !lock ? '' : ' disabled') + '> ' + esc(i[1]) + '</label>';
+      }).join('') + '</fieldset>';
+    }).join('');
+    h += '<fieldset class="plf"><legend>المنصات اللي ينشر عليها</legend><p class="hint">لو ما اخترتش ولا منصة، يقدر ينشر على كل المنصات.</p>' + PLATS.map(function (x) {
+      return '<label><input type="checkbox" data-pl="' + x[0] + '"' + (pl.indexOf(x[0]) >= 0 ? ' checked' : '') + (ed ? '' : ' disabled') + '> ' + x[1] + '</label>';
+    }).join('') + '</fieldset>';
+    if (ed) h += '<div class="row"><button type="button" data-save="' + esc(m.email) + '">حفظ الصلاحيات</button>' + (Array.isArray(m.perms) || (m.platforms && m.platforms.length) ? '<button type="button" class="close" data-reset="' + esc(m.email) + '">رجوع لصلاحيات «' + esc(ROLE_AR[m.role]) + '»</button>' : '') + '<span class="sv" data-sv="' + esc(m.email) + '"></span></div>';
+    return h + '</div>';
+  }
   function drawTeam(d) {
     loadMembers().then(function () {
       var me = SESSION.user.email.toLowerCase();
-      var rows = Object.keys(MEMBERS).sort().map(function (k) {
-        var m = MEMBERS[k];
-        return '<tr><td><input class="nm" data-nm="' + esc(m.email) + '" value="' + esc(m.name || '') + '" placeholder="اكتب الاسم" title="عدّل الاسم واضغط Enter"></td><td class="e">' + esc(m.email) + '</td><td>' + ROLE_AR[m.role] + '</td><td>' +
-          (k === me ? '' : '<button class="x" data-del="' + esc(m.email) + '">إزالة</button>') + '</td></tr>';
+      var list = Object.keys(MEMBERS).sort(function (a, b) {
+        var x = MEMBERS[a], y = MEMBERS[b]; if ((x.role === 'owner') !== (y.role === 'owner')) return x.role === 'owner' ? -1 : 1; return a < b ? -1 : 1;
+      });
+      var rows = list.map(function (k) {
+        var m = MEMBERS[k], ed = editable(m, me), custom = Array.isArray(m.perms) && m.role !== 'owner', n = permsOf(m).length;
+        var sel = m.role === 'owner' ? '<span class="rb">مدير المحتوى · كل الصلاحيات</span>' :
+          '<select data-role="' + esc(m.email) + '"' + (ed ? '' : ' disabled') + '>' + ROLE_ORDER.map(function (r) {
+            return '<option value="' + r + '"' + ((m.role === r || (m.role === 'team' && r === 'designer')) ? ' selected' : '') + '>' + ROLE_AR[r] + '</option>';
+          }).join('') + '</select>';
+        var sum = m.role === 'owner' ? '' : '<span class="sum">' + n + ' من ' + ALL_PERMS.length + ' صلاحية' + (custom ? ' · <b>مخصص</b>' : '') + (m.platforms && m.platforms.length ? ' · ينشر على: ' + m.platforms.map(function (p) { return (PLATS.filter(function (x) { return x[0] === p; })[0] || [p, p])[1]; }).join('، ') : '') + '</span>';
+        return '<div class="mb"><div class="mh">' +
+          '<input class="nm" data-nm="' + esc(m.email) + '" value="' + esc(m.name || '') + '" placeholder="اكتب الاسم"' + (ed || k === me ? '' : ' disabled') + '>' +
+          '<span class="e">' + esc(m.email) + '</span>' + sel +
+          (m.role === 'owner' ? '' : '<button type="button" class="tg" data-tog="' + esc(m.email) + '">' + (OPEN_M[k] ? 'إخفاء' : 'الصلاحيات') + '</button>') +
+          (ed ? '<button class="x" data-del="' + esc(m.email) + '">إزالة</button>' : '') + '</div>' + sum +
+          (OPEN_M[k] && m.role !== 'owner' ? permPanel(m, ed) : '') + '</div>';
       }).join('');
-      d.innerHTML = '<div class="card"><h2>فريق اللوحة</h2><table>' + rows + '</table>' +
-        '<form class="row" id="tm-f"><input class="n" id="tm-n" placeholder="الاسم"><input class="e" id="tm-e" type="email" required placeholder="email@example.com">' +
-        '<select id="tm-r"><option value="team">فريق التنفيذ (المصمم)</option><option value="viewer">اطلاع فقط (الإدارة)</option><option value="owner">مدير المحتوى</option></select>' +
-        '<button>إضافة</button></form><p style="font-size:13px;color:#5A6166;line-height:1.7;margin:12px 0 0">الشخص يفتح رابط اللوحة ويكتب نفس الإيميل، وهيوصله رابط دخول.</p>' +
+      d.innerHTML = '<div class="card"><h2>الفريق والصلاحيات</h2><p class="hint">اختار دور جاهز لكل شخص، أو افتح «الصلاحيات» وحدد بالظبط يقدر يعمل إيه ويشوف إيه، وعلى أنهي منصات ينشر.</p>' + rows +
+        '<form class="row add" id="tm-f"><input class="n" id="tm-n" placeholder="الاسم"><input class="e" id="tm-e" type="email" required placeholder="email@example.com">' +
+        '<select id="tm-r">' + ROLE_ORDER.map(function (r) { return '<option value="' + r + '"' + (r === 'designer' ? ' selected' : '') + '>' + ROLE_AR[r] + ': ' + ROLE_HINT[r] + '</option>'; }).join('') + (ROLE === 'owner' ? '<option value="owner">مدير المحتوى: كل الصلاحيات</option>' : '') + '</select>' +
+        '<button>إضافة</button></form><p class="hint">الشخص يفتح رابط اللوحة ويكتب نفس الإيميل، وهيوصله رابط دخول. الصلاحيات بتتطبق فوراً من قاعدة البيانات نفسها.</p>' +
         '<div class="row"><button type="button" class="close" id="tm-c">إغلاق</button></div></div>';
       d.querySelector('#tm-c').onclick = function () { d.remove(); };
+      function done(r, what) { if (r.error) alert('ما اتحفظ ' + what + ': ' + (/permission|security|cannot|only/i.test(r.error.message) ? 'مالكش صلاحية على ده.' : r.error.message)); drawTeam(d); }
       d.querySelector('#tm-f').onsubmit = function (ev) {
         ev.preventDefault();
         var e = d.querySelector('#tm-e').value.trim().toLowerCase();
-        if (e === me && d.querySelector('#tm-r').value !== 'owner') { alert('ده إيميلك. عدّل اسمك من الجدول فوق، ودورك يفضل مدير المحتوى.'); return; }
-        sb.from('members').upsert({ email: e, role: d.querySelector('#tm-r').value, name: d.querySelector('#tm-n').value.trim() || null })
-          .then(function (r) { if (r.error) alert('ما تمت الإضافة: ' + r.error.message); drawTeam(d); });
+        if (MEMBERS[e]) { alert('الإيميل ده موجود في الفريق. عدّل دوره من الجدول.'); return; }
+        sb.from('members').insert({ email: e, role: d.querySelector('#tm-r').value, name: d.querySelector('#tm-n').value.trim() || null })
+          .then(function (r) { done(r, 'العضو'); });
       };
+      d.querySelectorAll('[data-role]').forEach(function (x) {
+        x.onchange = function () {
+          var em = x.getAttribute('data-role'), m = MEMBERS[em];
+          if (Array.isArray(m.perms) && !confirm('الصلاحيات المخصصة لـ' + (m.name || em) + ' هتترجع لصلاحيات الدور الجديد. تكمل؟')) { x.value = m.role === 'team' ? 'designer' : m.role; return; }
+          sb.from('members').update({ role: x.value, perms: null }).eq('email', em).then(function (r) { done(r, 'الدور'); });
+        };
+      });
+      d.querySelectorAll('[data-tog]').forEach(function (x) { x.onclick = function () { var k = x.getAttribute('data-tog'); OPEN_M[k] = !OPEN_M[k]; drawTeam(d); }; });
+      d.querySelectorAll('[data-save]').forEach(function (x) {
+        x.onclick = function () {
+          var em = x.getAttribute('data-save'), m = MEMBERS[em], box = x.closest('.mb');
+          var ps = [].map.call(box.querySelectorAll('[data-pk]:checked'), function (c) { return c.getAttribute('data-pk'); });
+          if (ROLE !== 'owner') { var had = permsOf(m).indexOf('team.manage') >= 0; ps = ps.filter(function (p) { return p !== 'team.manage'; }); if (had) ps.push('team.manage'); }
+          var pl = [].map.call(box.querySelectorAll('[data-pl]:checked'), function (c) { return c.getAttribute('data-pl'); });
+          var preset = PRESETS[m.role] || [];
+          sb.from('members').update({ perms: sameSet(ps, preset) ? null : ps, platforms: pl.length && pl.length < PLATS.length ? pl : null }).eq('email', em)
+            .then(function (r) { done(r, 'الصلاحيات'); });
+        };
+      });
+      d.querySelectorAll('[data-reset]').forEach(function (x) {
+        x.onclick = function () { sb.from('members').update({ perms: null, platforms: null }).eq('email', x.getAttribute('data-reset')).then(function (r) { done(r, 'الصلاحيات'); }); };
+      });
       d.querySelectorAll('[data-nm]').forEach(function (x) {
         var save = function () {
           var em = x.getAttribute('data-nm'), v = x.value.trim();
@@ -248,7 +358,9 @@
       });
       d.querySelectorAll('[data-del]').forEach(function (x) {
         x.onclick = function () {
-          sb.from('members').delete().eq('email', x.getAttribute('data-del')).then(function () { drawTeam(d); });
+          var em = x.getAttribute('data-del');
+          if (!confirm('إزالة ' + ((MEMBERS[em] || {}).name || em) + ' من الفريق؟ مش هيقدر يفتح اللوحة تاني.')) return;
+          sb.from('members').delete().eq('email', em).then(function (r) { done(r, 'الإزالة'); });
         };
       });
     });
@@ -259,6 +371,9 @@
   window.capital = {
     ready: ready,
     role: function () { return ROLE; },
+    can: can,
+    platforms: function () { return ROLE === 'owner' ? null : ACCESS.platforms; },
+    roleLabel: roleLabel,
     email: function () { return SESSION ? SESSION.user.email.toLowerCase() : ''; },
     names: function () { var o = {}; Object.keys(MEMBERS).forEach(function (k) { o[k] = MEMBERS[k].name || k.split('@')[0]; }); return o; },
     token: function () { return sb.auth.getSession().then(function (r) { return r.data && r.data.session ? r.data.session.access_token : ''; }); },
