@@ -44,6 +44,8 @@ main{min-width:0;display:flex;flex-direction:column;min-height:0}
 .bar h1{font-family:'Alexandria',Tahoma,sans-serif;font-size:17px;margin:0;flex:1;min-width:180px}
 .bar .meta{font-size:12.5px;color:var(--ink-3)}
 .bar a{font-size:13px;color:var(--gold-ink);font-weight:600;text-decoration:none}
+.dls{display:flex;gap:8px;flex-wrap:wrap}.dls a,a.dlb{display:inline-flex;align-items:center;gap:6px;background:var(--char);color:var(--char-ink)!important;border-radius:999px;padding:5px 14px;font-size:13px;font-weight:600;text-decoration:none}.dls a:hover,a.dlb:hover{background:var(--gold-ink)}
+.card .dlr{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.card .dlr a{font-size:12.5px;color:var(--gold-ink);font-weight:600;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:3px 10px}
 iframe{flex:1;width:100%;border:0;background:var(--bg)}
 .page{padding:26px clamp(16px,3vw,40px) 70px;overflow-y:auto;flex:1}
 .page h2{font-family:'Alexandria',Tahoma,sans-serif;font-size:clamp(22px,3vw,28px);margin:0 0 4px}
@@ -140,7 +142,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
 <div class="app" id="app" hidden>
   <nav class="side" id="side" aria-label="أقسام غرفة التشغيل"></nav>
   <main>
-    <div class="bar" id="bar" hidden><h1 id="doc-t"></h1><span class="meta" id="doc-m"></span><a id="doc-o" href="#" target="_blank" rel="noopener">فتح في نافذة جديدة ↗</a></div>
+    <div class="bar" id="bar" hidden><h1 id="doc-t"></h1><span class="meta" id="doc-m"></span><span id="doc-dl" class="dls"></span><a id="doc-o" href="#" target="_blank" rel="noopener">فتح في نافذة جديدة ↗</a></div>
     <iframe id="view" title="عرض الملف" hidden></iframe>
     <div class="page" id="page"></div>
   </main>
@@ -156,24 +158,24 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       {id:'board',t:'لوحة النشر',d:'التقويم الكامل: الحالات والتسليمات والملاحظات ورفع التصاميم',m:'مباشر',href:'./',self:true}
     ]},
     {g:'الخطط',items:[
-      {id:'shamel',t:'الملف الشامل',d:'خطة تسكين الوحدات: 8 أقسام من الخطة العامة إلى المحتوى والبراند',m:'آخر تحديث 6 أكتوبر',href:'files/shamel.html'},
-      {id:'campaigns',t:'مخطط تنفيذ الحملات',d:'هيكل الحملات والمجموعات والإعلانات في سناب وميتا وتيك توك مع معاينة الجوال',m:'آخر تحديث 5 أكتوبر',href:'files/campaigns.html'},
-      {id:'media',t:'الميديا بلان',d:'توزيع ميزانية الاختبار على المنصات والمراحل',m:'1 أكتوبر',href:'files/media-plan.html'},
-      {id:'budget',t:'اعتماد ميزانية الحملات',d:'نموذج اعتماد الميزانية للإدارة',m:'5 أكتوبر',href:'files/budget.html'}
+      {id:'shamel',dl:["الملف-الشامل.pdf"],t:'الملف الشامل',d:'خطة تسكين الوحدات: 8 أقسام من الخطة العامة إلى المحتوى والبراند',m:'آخر تحديث 6 أكتوبر',href:'files/shamel.html'},
+      {id:'campaigns',dl:["مخطط-تنفيذ-الحملات.pdf"],t:'مخطط تنفيذ الحملات',d:'هيكل الحملات والمجموعات والإعلانات في سناب وميتا وتيك توك مع معاينة الجوال',m:'آخر تحديث 5 أكتوبر',href:'files/campaigns.html'},
+      {id:'media',dl:["الميديا-بلان.pdf"],t:'الميديا بلان',d:'توزيع ميزانية الاختبار على المنصات والمراحل',m:'1 أكتوبر',href:'files/media-plan.html'},
+      {id:'budget',dl:["اعتماد-ميزانية-الحملات.pdf"],t:'اعتماد ميزانية الحملات',d:'نموذج اعتماد الميزانية للإدارة',m:'5 أكتوبر',href:'files/budget.html'}
     ]},
     {g:'المحتوى المعتمد',items:[
-      {id:'cal30',t:'تقويم المحتوى · أول 30 يوماً',d:'صفحة الإدارة: المنشورات من 15 أكتوبر إلى 14 نوفمبر',m:'آخر تحديث 8 أكتوبر',href:'files/cal30.html'},
-      {id:'week1',t:'محتوى الأسبوع الأول (التسليم الأصلي)',d:'تصاميم أول أسبوع نشر وملف النصوص والتعليمات',m:'7 أكتوبر',href:'files/week1.html'},
-      {id:'where',t:'منشور «وين نشغّل»',d:'ثلاث اتجاهات لتصميم المنشور الثالث',m:'11 أكتوبر',href:'files/where.html'}
+      {id:'cal30',dl:["تقويم-المحتوى-أول-30-يوماً.pdf"],t:'تقويم المحتوى · أول 30 يوماً',d:'صفحة الإدارة: المنشورات من 15 أكتوبر إلى 14 نوفمبر',m:'آخر تحديث 8 أكتوبر',href:'files/cal30.html'},
+      {id:'week1',dl:["محتوى-الأسبوع-الأول.zip"],t:'محتوى الأسبوع الأول (التسليم الأصلي)',d:'تصاميم أول أسبوع نشر وملف النصوص والتعليمات',m:'7 أكتوبر',href:'files/week1.html'},
+      {id:'where',dl:["منشور-وين-نشغل.zip"],t:'منشور «وين نشغّل»',d:'ثلاث اتجاهات لتصميم المنشور الثالث',m:'11 أكتوبر',href:'files/where.html'}
     ]},
     {g:'العروض للإدارة',items:[
-      {id:'d-brand',t:'استراتيجية المحتوى والبراند',d:'عرض 10 شرائح',m:'6 أكتوبر',href:'files/decks/brand.html'},
-      {id:'d-cal30',t:'تقويم أول 30 يوماً (عرض)',d:'نسخة مختصرة في 6 شرائح',m:'10 أكتوبر',href:'files/decks/cal30.html'},
-      {id:'d-weekly2',t:'تقرير الحملات · الأسبوع الثاني',d:'8 إلى 14 أكتوبر · 5 شرائح مع مقارنة بأسبوع الإطلاق',m:'15 أكتوبر',href:'files/decks/weekly2.html'},
-      {id:'d-weekly',t:'تقرير الحملات · أسبوع الإطلاق',d:'1 إلى 7 أكتوبر · 5 شرائح',m:'8 أكتوبر',href:'files/decks/weekly.html'}
+      {id:'d-brand',dl:["استراتيجية-المحتوى-والبراند.pdf"],t:'استراتيجية المحتوى والبراند',d:'عرض 10 شرائح',m:'6 أكتوبر',href:'files/decks/brand.html'},
+      {id:'d-cal30',dl:["تقويم-أول-30-يوماً-عرض.pdf"],t:'تقويم أول 30 يوماً (عرض)',d:'نسخة مختصرة في 6 شرائح',m:'10 أكتوبر',href:'files/decks/cal30.html'},
+      {id:'d-weekly2',dl:["تقرير-الحملات-الأسبوع-الثاني.pdf"],t:'تقرير الحملات · الأسبوع الثاني',d:'8 إلى 14 أكتوبر · 5 شرائح مع مقارنة بأسبوع الإطلاق',m:'15 أكتوبر',href:'files/decks/weekly2.html'},
+      {id:'d-weekly',dl:["تقرير-الحملات-أسبوع-الإطلاق.pdf"],t:'تقرير الحملات · أسبوع الإطلاق',d:'1 إلى 7 أكتوبر · 5 شرائح',m:'8 أكتوبر',href:'files/decks/weekly.html'}
     ]},
     {g:'الإعلانات',items:[
-      {id:'ads',t:'تصاميم إعلانات الحملة',d:'الفيد والستوري والكاروسيل والفيديوهات للرمال والملز',m:'5 أكتوبر',href:'files/ads.html'}
+      {id:'ads',dl:["تصاميم-إعلانات-الحملة.zip", "فيديوهات-الحملة.zip"],t:'تصاميم إعلانات الحملة',d:'الفيد والستوري والكاروسيل والفيديوهات للرمال والملز',m:'5 أكتوبر',href:'files/ads.html'}
     ]},
     {g:'الموقع',items:[
       {id:'site',t:'الموقع الجديد',d:'thecapitalsuites-new.vercel.app',m:'منشور',href:'https://thecapitalsuites-new.vercel.app',ext:true}
@@ -193,6 +195,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   var DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
   var MON=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
   var DESIGN_LEAD=3;
+  function dlLinks(i){return (i.dl||[]).map(function(f){var z=/\.zip$/.test(f);return '<a href="files/pdf/'+encodeURIComponent(f)+'?v='+V+'" download="'+esc(f)+'">⬇ تحميل '+(z?(/فيديو/.test(f)?'الفيديوهات (ZIP)':'التصاميم (ZIP)'):'PDF')+'</a>'}).join('')}
   function esc(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML}
   function pd(s){var a=String(s).slice(0,10).split('-');return new Date(+a[0],+a[1]-1,+a[2])}
   function iso(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
@@ -382,7 +385,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       var items=g.items.filter(function(i){return i.id!=='library'});if(!items.length)return;
       h+='<div class="sec"><h3>'+esc(g.g)+'</h3></div><div class="lib">'+items.map(function(i){
         var href=i.self||i.ext?i.href:'#'+i.id,tgt=i.ext?' target="_blank" rel="noopener"':'';
-        return '<a class="card" href="'+href+'"'+tgt+'><span class="k">'+esc(g.g)+'</span><b>'+esc(i.t)+(i.ext?' ↗':'')+'</b><span>'+esc(i.d)+'</span><i>'+esc(i.m)+'</i></a>';
+        return '<div class="card"><a href="'+href+'"'+tgt+' style="text-decoration:none;display:flex;flex-direction:column;gap:4px"><span class="k">'+esc(g.g)+'</span><b>'+esc(i.t)+(i.ext?' ↗':'')+'</b><span>'+esc(i.d)+'</span><i>'+esc(i.m)+'</i></a>'+(i.dl?'<span class="dlr">'+dlLinks(i).replace(/⬇ /g,'')+'</span>':'')+'</div>';
       }).join('')+'</div>';
     });
     return h;
@@ -403,7 +406,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     pick.value=id;document.title=i.t+' · ذا كابيتال سويتس';
     if(i.live){view.hidden=true;bar.hidden=true;page.hidden=false;view.removeAttribute('src');if(changed)page.scrollTop=0;renderLive(id);return}
     page.hidden=true;bar.hidden=false;view.hidden=false;
-    document.getElementById('doc-t').textContent=i.t;document.getElementById('doc-m').textContent=i.m;document.getElementById('doc-o').href=i.href;
+    document.getElementById('doc-t').textContent=i.t;document.getElementById('doc-m').textContent=i.m;document.getElementById('doc-o').href=i.href;document.getElementById('doc-dl').innerHTML=dlLinks(i);
     var src=i.href+(i.href.indexOf('?')<0?'?v='+V:'');if(view.getAttribute('src')!==src)view.setAttribute('src',src);
   }
   addEventListener('hashchange',route);
