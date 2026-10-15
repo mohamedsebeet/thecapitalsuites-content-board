@@ -84,6 +84,15 @@ a.pc:hover{border-color:var(--gold)}
 .pc .bd{padding:9px 11px 11px;display:flex;flex-direction:column;gap:4px}
 .pc .bd .m{font-size:12px;color:var(--ink-3)}
 .pc .bd b{font-size:13.5px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.grid.ads{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
+button.pc{font:inherit;text-align:start;cursor:pointer;padding:0;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;color:inherit}
+button.pc:hover{border-color:var(--gold)}
+.pc .ph.tall{aspect-ratio:9/16}
+.lb{position:fixed;inset:0;z-index:50;background:rgba(10,14,18,.82);display:flex;align-items:center;justify-content:center;padding:16px}
+.lb-in{background:var(--surface);border-radius:14px;max-width:min(1100px,100%);max-height:92vh;display:flex;flex-direction:column;overflow:hidden}
+.lb-h{display:flex;gap:12px;align-items:baseline;padding:12px 16px;border-bottom:1px solid var(--line)}.lb-h span{color:var(--ink-3);font-size:13px;flex:1}
+.lb-x{border:0;background:none;font-size:26px;line-height:1;cursor:pointer;color:var(--ink)}
+.lb-row{display:flex;gap:10px;overflow-x:auto;padding:14px}.lb-row img{height:min(70vh,560px);width:auto;border-radius:8px;flex:0 0 auto}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
 .chips button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer}
 .chips button[aria-pressed="true"]{background:var(--char);color:var(--char-ink);border-color:var(--char)}
@@ -175,7 +184,8 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       {id:'d-weekly',dl:["تقرير-الحملات-أسبوع-الإطلاق.pdf"],t:'تقرير الحملات · أسبوع الإطلاق',d:'1 إلى 7 أكتوبر · 5 شرائح',m:'8 أكتوبر',href:'files/decks/weekly.html'}
     ]},
     {g:'الإعلانات',items:[
-      {id:'ads',dl:["تصاميم-إعلانات-الحملة.zip", "فيديوهات-الحملة.zip"],t:'تصاميم إعلانات الحملة',d:'الفيد والستوري والكاروسيل والفيديوهات للرمال والملز',m:'5 أكتوبر',href:'files/ads.html'}
+      {id:'ads',dl:["الإعلانات-الشغالة-الآن.zip"],t:'الإعلانات الشغالة الآن',d:'التصميم الفعلي لكل إعلان شغال في ميتا وسناب مع صرفه ونتايجه',m:'مباشر',live:true},
+      {id:'ads-archive',dl:["تصاميم-إعلانات-الحملة.zip", "فيديوهات-الحملة.zip"],t:'أرشيف تصاميم الحملة',d:'كل التصاميم والفيديوهات اللي اتسلّمت للحملة (5 أكتوبر)، شغالة أو لا',m:'5 أكتوبر',href:'files/ads.html'}
     ]},
     {g:'الموقع',items:[
       {id:'site',t:'الموقع الجديد',d:'thecapitalsuites-new.vercel.app',m:'منشور',href:'https://thecapitalsuites-new.vercel.app',ext:true}
@@ -195,7 +205,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   var DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
   var MON=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
   var DESIGN_LEAD=3;
-  function dlLinks(i){return (i.dl||[]).map(function(f){var z=/\.zip$/.test(f);return '<a href="files/pdf/'+encodeURIComponent(f)+'?v='+V+'" download="'+esc(f)+'">⬇ تحميل '+(z?(/فيديو/.test(f)?'الفيديوهات (ZIP)':'التصاميم (ZIP)'):'PDF')+'</a>'}).join('')}
+  function dlLinks(i){return (i.dl||[]).map(function(f){var z=/\.zip$/.test(f);return '<a href="files/pdf/'+encodeURIComponent(f)+'?v='+V+'" download="'+esc(f)+'">⬇ تحميل '+(z?(/فيديو/.test(f)?'الفيديوهات (ZIP)':/الشغالة/.test(f)?'تصاميم الإعلانات الشغالة (ZIP)':'التصاميم (ZIP)'):'PDF')+'</a>'}).join('')}
   function esc(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML}
   function pd(s){var a=String(s).slice(0,10).split('-');return new Date(+a[0],+a[1]-1,+a[2])}
   function iso(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
@@ -358,7 +368,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     }
     // الحملات والإعلانات
     var C=CAMP.campaigns||[];
-    var CR=CAMP.campaignsRange;h+='<div class="sec"><h3>الحملات والإعلانات</h3>'+(C.length?'<small>'+C.length+' حملة'+(CR?' · الأرقام من '+fmtD(CR.from)+' لحد '+fmtD(CR.to):'')+'</small>':'')+'<a class="more" href="#d-weekly2">تقرير الأسبوع الثاني ←</a></div>';
+    var CR=CAMP.campaignsRange;h+='<div class="sec"><h3>الحملات والإعلانات</h3>'+(C.length?'<small>'+C.length+' حملة'+(CR?' · الأرقام من '+fmtD(CR.from)+' لحد '+fmtD(CR.to):'')+'</small>':'')+'<a class="more" href="#ads">الإعلانات الشغالة بتصاميمها ←</a></div>';
     if(C.length){
       h+='<table class="t"><thead><tr><th>الحملة / الإعلان</th><th>الحالة</th><th>الصرف</th><th>النتائج</th><th>تكلفة النتيجة</th><th>الظهور</th></tr></thead><tbody>'+C.map(function(c){
         var on=c.status==='ACTIVE';
@@ -378,6 +388,41 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     };
   }
 
+  /* ---------- الإعلانات الشغالة ---------- */
+  var AF={all:false,pl:''};
+  function renderLiveAds(){
+    if(CAMP_ERR)return '<h2>الإعلانات الشغالة</h2><p class="note">تعذّر تحميل البيانات. حدّث الصفحة.</p>';
+    if(!CAMP)return '<p class="loading">جارِ تحميل الإعلانات…</p>';
+    var list=[];(CAMP.campaigns||[]).forEach(function(c){(c.ads||[]).forEach(function(a){list.push({a:a,c:c})})});
+    var act=list.filter(function(x){return x.a.status==='ACTIVE'&&x.c.status==='ACTIVE'});
+    var show=(AF.all?list:act).filter(function(x){return !AF.pl||x.c.platform===AF.pl});
+    show.sort(function(x,y){return (y.a.spend||0)-(x.a.spend||0)});
+    var CR=CAMP.campaignsRange,upd=CAMP.updatedAt?new Date(CAMP.updatedAt):null;
+    var h='<h2>الإعلانات الشغالة الآن</h2><p class="lede">التصميم الفعلي لكل إعلان زي ما هو مرفوع على المنصة، وحالته وصرفه ونتايجه'+(CR?' من '+fmtD(CR.from)+' لحد '+fmtD(CR.to):'')+'. بيتحدث كل يوم مع الحملات'+(upd?' · آخر تحديث '+upd.getDate()+' '+MON[upd.getMonth()]:'')+'.</p>';
+    var nm=act.filter(function(x){return x.c.platform==='meta'}).length,ns=act.length-nm;
+    h+='<div class="tiles"><div class="tile"><span class="k">إعلانات شغالة</span><span class="v num">'+act.length+'</span><span class="s">ميتا '+nm+' · سناب '+ns+'</span></div><div class="tile"><span class="k">إعلانات متوقفة</span><span class="v num">'+(list.length-act.length)+'</span><span class="s">اضغط «الكل» عشان تشوفها</span></div></div>';
+    h+='<div class="chips" id="af" style="margin-top:16px"><button data-a="0" aria-pressed="'+!AF.all+'">الشغالة بس</button><button data-a="1" aria-pressed="'+AF.all+'">الكل</button><span style="width:12px"></span><button data-p="" aria-pressed="'+(AF.pl==='')+'">كل المنصات</button><button data-p="meta" aria-pressed="'+(AF.pl==='meta')+'">ميتا</button><button data-p="snap" aria-pressed="'+(AF.pl==='snap')+'">سناب</button></div>';
+    h+=show.length?'<div class="grid ads">'+show.map(function(x,i){
+      var a=x.a,c=x.c,im=a.img||[],on=a.status==='ACTIVE'&&c.status==='ACTIVE';
+      var ph=im.length?'<img src="'+esc(im[0])+'" alt="'+esc(a.title||a.name)+'" loading="lazy">':'<span>التصميم مش متاح</span>';
+      return '<button class="pc ad" data-i="'+i+'" type="button"><span class="ph'+(c.platform==='snap'?' tall':'')+'">'+ph+'<span class="badge">'+(c.platform==='meta'?'ميتا':'سناب')+(im.length>1?' · '+im.length+' صور':'')+'</span></span><span class="bd"><span class="m">'+esc(a.hood||'')+' · '+esc(a.format||'')+'</span><b>'+esc(a.title||a.name)+'</b><span class="st" style="--sc:'+(on?'var(--ok)':'var(--ink-3)')+'">'+(on?'شغال':(c.status!=='ACTIVE'?'الحملة متوقفة':'متوقف'))+'</span><span class="m num">صرف '+n2(a.spend)+' · '+n0(a.results)+' '+(c.platform==='meta'?'محادثة':'ضغطة')+(a.cpr!=null?' · '+n2(a.cpr)+' للنتيجة':'')+'</span></span></button>';
+    }).join('')+'</div>':'<p class="empty">مفيش إعلانات بالفلتر ده.</p>';
+    h+='<div id="lb" class="lb" hidden></div>';
+    AF._show=show;
+    return h;
+  }
+  function bindLiveAds(){
+    var f=document.getElementById('af');if(!f)return;
+    f.querySelectorAll('[data-a]').forEach(function(b){b.onclick=function(){AF.all=b.dataset.a==='1';rerender()}});
+    f.querySelectorAll('[data-p]').forEach(function(b){b.onclick=function(){AF.pl=b.dataset.p;rerender()}});
+    var lb=document.getElementById('lb');
+    page.querySelectorAll('.pc.ad').forEach(function(b){b.onclick=function(){
+      var x=AF._show[+b.dataset.i],im=x.a.img||[];if(!im.length)return;
+      lb.innerHTML='<div class="lb-in"><div class="lb-h"><b>'+esc(x.a.title||x.a.name)+'</b><span>'+(x.c.platform==='meta'?'ميتا':'سناب')+' · '+esc(x.a.hood||'')+'</span><button type="button" class="lb-x" aria-label="إغلاق">×</button></div><div class="lb-row">'+im.map(function(u){return '<img src="'+esc(u)+'" alt="">'}).join('')+'</div></div>';
+      lb.hidden=false;lb.querySelector('.lb-x').onclick=function(){lb.hidden=true};lb.onclick=function(e){if(e.target===lb)lb.hidden=true};
+    }});
+  }
+
   /* ---------- الأرشيف ---------- */
   function renderLibrary(){
     var h='<h2>كل الملفات</h2><p class="lede">آخر نسخة معتمدة من كل ملف. اختر من القائمة، أو افتح أي ملف في نافذة مستقلة.</p>';
@@ -395,9 +440,9 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   var view=document.getElementById('view'),bar=document.getElementById('bar');
   function renderLive(id){
     var sc=page.scrollTop;
-    page.innerHTML=id==='today'?renderToday():id==='content'?renderContent():id==='ads-live'?renderAds():renderLibrary();
+    page.innerHTML=id==='today'?renderToday():id==='content'?renderContent():id==='ads-live'?renderAds():id==='ads'?renderLiveAds():renderLibrary();
     page.scrollTop=sc;
-    if(id==='content')bindContent();if(id==='ads-live')bindAds();
+    if(id==='content')bindContent();if(id==='ads-live')bindAds();if(id==='ads')bindLiveAds();
   }
   function route(){
     var id=location.hash.slice(1);if(!BY[id]||BY[id].self||BY[id].ext)id='today';
