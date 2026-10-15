@@ -192,7 +192,7 @@
   function addFilesLink() {
     var who = document.getElementById('who');
     if (!who || document.getElementById('files-link') || /files\.html$/.test(location.pathname)) return;
-    var a = document.createElement('a'); a.id = 'files-link'; a.href = 'files.html'; a.textContent = 'ملفات المشروع';
+    var a = document.createElement('a'); a.id = 'files-link'; a.href = 'files.html'; a.textContent = 'غرفة التشغيل';
     who.parentNode.insertBefore(a, who.nextSibling);
   }
   function addTeamButton() {
@@ -253,6 +253,35 @@
       });
     });
   }
+
+  /* ---------- التصاميم والبيانات المحمية ---------- */
+  var MIME_OK = /^(image\/(png|jpeg|webp|gif)|video\/(mp4|quicktime)|application\/pdf)$/;
+  window.capital = {
+    ready: ready,
+    role: function () { return ROLE; },
+    email: function () { return SESSION ? SESSION.user.email.toLowerCase() : ''; },
+    names: function () { var o = {}; Object.keys(MEMBERS).forEach(function (k) { o[k] = MEMBERS[k].name || k.split('@')[0]; }); return o; },
+    token: function () { return sb.auth.getSession().then(function (r) { return r.data && r.data.session ? r.data.session.access_token : ''; }); },
+    // ترفع ملف تصميم وترجع بياناته عشان تتحفظ على المنشور
+    upload: function (postId, file) {
+      if (!MIME_OK.test(file.type || '')) return Promise.reject(new Error('نوع الملف غير مدعوم: ' + file.name + ' (صور PNG/JPG/WebP أو فيديو MP4 أو PDF)'));
+      if (file.size > 50 * 1024 * 1024) return Promise.reject(new Error('الملف أكبر من 50 ميجا: ' + file.name));
+      var ext = ((file.name.split('.').pop() || '') + '').toLowerCase().replace(/[^a-z0-9]/g, '') || 'bin';
+      var path = String(postId).replace(/[^\w-]/g, '_') + '/' + rid() + rid() + '.' + ext;
+      return sb.storage.from('designs').upload(path, file, { contentType: file.type, upsert: false, cacheControl: '31536000' }).then(function (r) {
+        if (r.error) throw err(r.error);
+        return { path: path, url: sb.storage.from('designs').getPublicUrl(path).data.publicUrl, name: file.name, type: file.type, size: file.size, at: new Date().toISOString(), by: SESSION.user.email.toLowerCase() };
+      });
+    },
+    kpis: function () { return sb.from('kpis').select('id,data,updated_at').order('id', { ascending: false }).then(unwrap); },
+    saveKpi: function (id, data) { return sb.from('kpis').upsert({ id: id, data: data, updated_at: new Date().toISOString() }).then(unwrap); },
+    removeFile: function (path) { return sb.storage.from('designs').remove([path]).then(unwrap); },
+    api: function (name) {
+      return window.capital.token().then(function (t) {
+        return fetch('api/' + name, { headers: { Authorization: 'Bearer ' + t }, cache: 'no-store' });
+      }).then(function (r) { if (!r.ok) throw new Error('api ' + r.status); return r.json(); });
+    }
+  };
 
   /* ---------- الواجهة اللي اللوحة بتستخدمها ---------- */
   window.claude = {

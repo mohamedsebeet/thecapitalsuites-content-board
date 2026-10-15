@@ -4,17 +4,21 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex">
-<title>ملفات المشروع · ذا كابيتال سويتس</title>
+<title>غرفة التشغيل · ذا كابيتال سويتس</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@500;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap">
 <style>
 [hidden]{display:none!important}
-:root{--bg:#F3F2EE;--surface:#FFFFFF;--soft:#ECEAE3;--ink:#1F2427;--ink-2:#4B5560;--ink-3:#77808A;--line:#D9D8D1;--gold:#C29B3C;--gold-ink:#8C6A1E;--char:#1F2427;--char-ink:#F7F4EC}
-@media (prefers-color-scheme:dark){:root{--bg:#10161C;--surface:#172029;--soft:#1E2933;--ink:#ECE9E1;--ink-2:#B5BCC3;--ink-3:#86909A;--line:#2A3540;--gold-ink:#D4AE67;--char:#0B1015}}
+:root{--bg:#F3F2EE;--surface:#FFFFFF;--soft:#ECEAE3;--ink:#1F2427;--ink-2:#4B5560;--ink-3:#77808A;--line:#D9D8D1;--gold:#C29B3C;--gold-ink:#8C6A1E;--gold-soft:#F3E8C9;--char:#1F2427;--char-ink:#F7F4EC;--ok:#2E7D4F;--warn:#B4483A;
+--st-idea:#8A8F93;--st-copy:#3F6FA8;--st-design:#7A5BA6;--st-review:#B7791F;--st-changes:#B4483A;--st-approved:#3D8B5A;--st-scheduled:#2C8288;--st-published:#24603C}
+@media (prefers-color-scheme:dark){:root{--bg:#10161C;--surface:#172029;--soft:#1E2933;--ink:#ECE9E1;--ink-2:#B5BCC3;--ink-3:#86909A;--line:#2A3540;--gold-ink:#D4AE67;--gold-soft:#2C2616;--char:#0B1015;--ok:#6FC08C;--warn:#E07A6C;
+--st-idea:#9AA0A4;--st-copy:#7FA6D6;--st-design:#A98BD3;--st-review:#E0A64A;--st-changes:#E07A6C;--st-approved:#6FC08C;--st-scheduled:#5DBDC2;--st-published:#8FD3A6}}
 *{box-sizing:border-box}
 html,body{direction:rtl;height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:'IBM Plex Sans Arabic',Tahoma,sans-serif;font-size:15px;line-height:1.6;display:flex;flex-direction:column}
 a{color:inherit}
+button{font:inherit;color:inherit}
+.num{font-variant-numeric:tabular-nums}
 .top{background:var(--char);color:var(--char-ink);display:flex;align-items:center;gap:16px;padding:12px 20px;flex-wrap:wrap}
 .brand{display:flex;flex-direction:column;line-height:1.3}
 .brand small{color:#E2C466;font-size:12px;font-weight:600;letter-spacing:.02em}
@@ -25,8 +29,7 @@ a.btn{display:inline-flex;align-items:center;gap:6px;text-decoration:none;border
 a.btn:hover{border-color:#E2C466;color:#E2C466}
 #who{display:flex;align-items:center;gap:8px}
 #who img{width:26px;height:26px;border-radius:50%}
-#who .role{font-size:12px;color:#E2C466;border:1px solid rgba(226,196,102,.5);border-radius:999px;padding:1px 9px}
-.app{flex:1;display:grid;grid-template-columns:290px minmax(0,1fr);min-height:0}
+.app{flex:1;display:grid;grid-template-columns:270px minmax(0,1fr);min-height:0}
 nav.side{background:var(--surface);border-left:1px solid var(--line);overflow-y:auto;padding:16px 12px 40px}
 .grp{font-size:12px;font-weight:600;color:var(--gold-ink);margin:18px 10px 6px;letter-spacing:.02em}
 .grp:first-child{margin-top:4px}
@@ -35,24 +38,82 @@ nav.side a b{display:block;font-weight:600;font-size:14.5px}
 nav.side a span{display:block;font-size:12px;color:var(--ink-3)}
 nav.side a:hover{background:var(--soft)}
 nav.side a[aria-current="page"]{background:var(--soft);border-color:var(--gold)}
-nav.side a:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
-main{min-width:0;display:flex;flex-direction:column}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+main{min-width:0;display:flex;flex-direction:column;min-height:0}
 .bar{display:flex;align-items:center;gap:12px;padding:10px 18px;border-bottom:1px solid var(--line);background:var(--surface);flex-wrap:wrap}
 .bar h1{font-family:'Alexandria',Tahoma,sans-serif;font-size:17px;margin:0;flex:1;min-width:180px}
 .bar .meta{font-size:12.5px;color:var(--ink-3)}
 .bar a{font-size:13px;color:var(--gold-ink);font-weight:600;text-decoration:none}
 iframe{flex:1;width:100%;border:0;background:var(--bg)}
-.home{padding:28px clamp(16px,3vw,40px) 60px;overflow-y:auto}
-.home h2{font-family:'Alexandria',Tahoma,sans-serif;font-size:clamp(22px,3vw,30px);margin:0 0 6px}
-.home p.lede{color:var(--ink-2);margin:0 0 22px;max-width:70ch}
-.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:26px}
+.page{padding:26px clamp(16px,3vw,40px) 70px;overflow-y:auto;flex:1}
+.page h2{font-family:'Alexandria',Tahoma,sans-serif;font-size:clamp(22px,3vw,28px);margin:0 0 4px}
+.lede{color:var(--ink-2);margin:0 0 22px;max-width:75ch}
+.sec{margin:28px 0 12px;display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.sec h3{font-family:'Alexandria',Tahoma,sans-serif;font-size:17px;margin:0}
+.sec .more{font-size:13px;color:var(--gold-ink);font-weight:600;text-decoration:none;margin-inline-start:auto}
+.sec small{color:var(--ink-3);font-size:13px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:2px;text-decoration:none}
+.tile .k{font-size:12.5px;color:var(--ink-3)}
+.tile .v{font-family:'Alexandria',Tahoma,sans-serif;font-size:26px;font-weight:700;line-height:1.25}
+.tile .s{font-size:12.5px;color:var(--ink-2)}
+.tile.warn .v{color:var(--warn)}.tile.gold{border-color:var(--gold);background:var(--gold-soft)}
+a.tile:hover{border-color:var(--gold)}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:6px 0}
+.panel h4{margin:8px 16px 4px;font-size:14px;display:flex;gap:8px;align-items:center}
+.panel h4 .c{font-size:12px;color:var(--ink-3);font-weight:500}
+.empty{padding:10px 16px 14px;color:var(--ink-3);font-size:13.5px}
+a.li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 16px;text-decoration:none;border-top:1px solid var(--line)}
+a.li:first-of-type{border-top:0}
+a.li:hover{background:var(--soft)}
+.th{width:44px;height:55px;border-radius:6px;background:var(--soft);object-fit:cover;display:block;border:1px solid var(--line)}
+div.th{display:flex;align-items:center;justify-content:center;font-size:11px;color:var(--ink-3)}
+.li b{display:block;font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.li span.m{display:block;font-size:12px;color:var(--ink-3)}
+.li .late{color:var(--warn);font-weight:600}
+.st{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;color:var(--sc);border:1px solid var(--sc);white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+a.pc{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;text-decoration:none}
+a.pc:hover{border-color:var(--gold)}
+.pc .ph{position:relative;aspect-ratio:4/5;background:var(--soft);display:flex;align-items:center;justify-content:center;color:var(--ink-3);font-size:12.5px;text-align:center;padding:0}
+.pc .ph img,.pc .ph video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pc .ph .badge{position:absolute;top:8px;inset-inline-start:8px;background:rgba(31,36,39,.82);color:#F7F4EC;font-size:11.5px;border-radius:999px;padding:1px 8px}
+.pc .bd{padding:9px 11px 11px;display:flex;flex-direction:column;gap:4px}
+.pc .bd .m{font-size:12px;color:var(--ink-3)}
+.pc .bd b{font-size:13.5px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
+.chips button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:13px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--char);color:var(--char-ink);border-color:var(--char)}
+.wk{margin:22px 0 10px;display:flex;gap:10px;align-items:baseline}
+.wk h3{margin:0;font-size:16px;font-family:'Alexandria',Tahoma,sans-serif}
+.wk span{font-size:13px;color:var(--ink-3)}
+.bars{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--soft);margin-top:8px}
+.bars i{display:block;height:100%}
+.note{background:var(--surface);border:1px dashed var(--gold);border-radius:12px;padding:12px 16px;font-size:13.5px;color:var(--ink-2)}
+.note b{color:var(--ink)}
+.plat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.plat .n{font-size:13px;color:var(--ink-3)}
+.plat .v{font-family:'Alexandria',Tahoma,sans-serif;font-size:24px;font-weight:700}
+.plat .s{font-size:13px;color:var(--ink-2)}
+table.t{width:100%;border-collapse:collapse;font-size:13.5px;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+table.t th,table.t td{padding:9px 12px;text-align:start;border-bottom:1px solid var(--line)}
+table.t th{font-size:12px;color:var(--ink-3);font-weight:600;background:var(--soft)}
+table.t tr.ad td{font-size:12.5px;color:var(--ink-2);padding-inline-start:28px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-inline-end:6px;vertical-align:middle}
+ul.plain{margin:6px 0 0;padding-inline-start:20px;color:var(--ink-2);font-size:14px}
+form.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;align-items:end;margin-top:10px}
+form.kpi label{font-size:12.5px;color:var(--ink-3);display:flex;flex-direction:column;gap:4px}
+form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.pbtn{border:0;background:var(--char);color:var(--char-ink);border-radius:8px;padding:9px 14px;cursor:pointer;font-weight:600}
+.lib{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-bottom:22px}
 .card{display:flex;flex-direction:column;gap:4px;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
 .card:hover{border-color:var(--gold)}
 .card .k{font-size:12px;color:var(--gold-ink);font-weight:600}
 .card b{font-size:16px}
 .card span{font-size:13.5px;color:var(--ink-2)}
 .card i{font-style:normal;font-size:12px;color:var(--ink-3);margin-top:auto;padding-top:6px}
-.home h3{font-size:14px;color:var(--ink-3);font-weight:600;margin:0 0 10px}
+.loading{color:var(--ink-3);padding:30px 0}
 .pick{display:none}
 @media (max-width:900px){
   .app{grid-template-columns:minmax(0,1fr)}
@@ -60,6 +121,8 @@ iframe{flex:1;width:100%;border:0;background:var(--bg)}
   .pick{display:block;padding:10px 16px;background:var(--surface);border-bottom:1px solid var(--line)}
   .pick select{width:100%;font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
   .top{padding:10px 16px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  table.t{display:block;overflow-x:auto}
 }
 </style>
 <script src="supabase.js"></script>
@@ -68,25 +131,29 @@ iframe{flex:1;width:100%;border:0;background:var(--bg)}
 </head>
 <body>
 <header class="top">
-  <div class="brand"><small>THE CAPITAL SUITES · ذا كابيتال سويتس</small><b>ملفات المشروع</b></div>
+  <div class="brand"><small>THE CAPITAL SUITES · ذا كابيتال سويتس</small><b>غرفة التشغيل</b></div>
   <div class="sp"></div>
-  <a class="btn" href="./">← لوحة النشر</a>
+  <a class="btn" href="./">لوحة النشر ←</a>
   <div id="who"></div>
 </header>
-<div class="pick"><label for="pick" hidden>اختر ملفاً</label><select id="pick" aria-label="اختر ملفاً"></select></div>
+<div class="pick"><select id="pick" aria-label="اختر صفحة"></select></div>
 <div class="app" id="app" hidden>
-  <nav class="side" id="side" aria-label="ملفات المشروع"></nav>
+  <nav class="side" id="side" aria-label="أقسام غرفة التشغيل"></nav>
   <main>
     <div class="bar" id="bar" hidden><h1 id="doc-t"></h1><span class="meta" id="doc-m"></span><a id="doc-o" href="#" target="_blank" rel="noopener">فتح في نافذة جديدة ↗</a></div>
     <iframe id="view" title="عرض الملف" hidden></iframe>
-    <div class="home" id="home"></div>
+    <div class="page" id="page"></div>
   </main>
 </div>
 <script>
 (function(){
+  /* ---------- الأقسام ---------- */
   var GROUPS=[
-    {g:'التشغيل اليومي',items:[
-      {id:'board',t:'لوحة النشر',d:'تقويم المحتوى الحي: الحالات والتسليمات والملاحظات',m:'مباشر',href:'./',self:true}
+    {g:'التشغيل',items:[
+      {id:'today',t:'اليوم',d:'المطلوب الآن: التسليمات والمراجعات والنشر والحملات',m:'مباشر',live:true},
+      {id:'content',t:'المحتوى',d:'كل منشورات التقويم بتصاميمها المرفوعة وحالتها',m:'مباشر',live:true},
+      {id:'ads-live',t:'الحملات',d:'الصرف والنتائج والإعلانات الشغالة ونتائج المبيعات',m:'مباشر',live:true},
+      {id:'board',t:'لوحة النشر',d:'التقويم الكامل: الحالات والتسليمات والملاحظات ورفع التصاميم',m:'مباشر',href:'./',self:true}
     ]},
     {g:'الخطط',items:[
       {id:'shamel',t:'الملف الشامل',d:'خطة تسكين الوحدات: 8 أقسام من الخطة العامة إلى المحتوى والبراند',m:'آخر تحديث 6 أكتوبر',href:'files/shamel.html'},
@@ -94,9 +161,9 @@ iframe{flex:1;width:100%;border:0;background:var(--bg)}
       {id:'media',t:'الميديا بلان',d:'توزيع ميزانية الاختبار على المنصات والمراحل',m:'1 أكتوبر',href:'files/media-plan.html'},
       {id:'budget',t:'اعتماد ميزانية الحملات',d:'نموذج اعتماد الميزانية للإدارة',m:'5 أكتوبر',href:'files/budget.html'}
     ]},
-    {g:'المحتوى',items:[
-      {id:'cal30',t:'تقويم المحتوى · أول 30 يوماً',d:'صفحة الإدارة: المنشورات من 15 أكتوبر إلى 14 نوفمبر، والتجهيز من 11 أكتوبر',m:'آخر تحديث 8 أكتوبر',href:'files/cal30.html'},
-      {id:'week1',t:'محتوى الأسبوع الأول',d:'تصاميم أول أسبوع نشر وملف النصوص والتعليمات',m:'7 أكتوبر',href:'files/week1.html'},
+    {g:'المحتوى المعتمد',items:[
+      {id:'cal30',t:'تقويم المحتوى · أول 30 يوماً',d:'صفحة الإدارة: المنشورات من 15 أكتوبر إلى 14 نوفمبر',m:'آخر تحديث 8 أكتوبر',href:'files/cal30.html'},
+      {id:'week1',t:'محتوى الأسبوع الأول (التسليم الأصلي)',d:'تصاميم أول أسبوع نشر وملف النصوص والتعليمات',m:'7 أكتوبر',href:'files/week1.html'},
       {id:'where',t:'منشور «وين نشغّل»',d:'ثلاث اتجاهات لتصميم المنشور الثالث',m:'11 أكتوبر',href:'files/where.html'}
     ]},
     {g:'العروض للإدارة',items:[
@@ -105,44 +172,240 @@ iframe{flex:1;width:100%;border:0;background:var(--bg)}
       {id:'d-weekly',t:'تقرير الحملات الأسبوعي',d:'أسبوع 1 إلى 7 أكتوبر · 5 شرائح',m:'8 أكتوبر',href:'files/decks/weekly.html'}
     ]},
     {g:'الإعلانات',items:[
-      {id:'ads',t:'إعلانات الحملة الحالية',d:'تصاميم الفيد والستوري والكاروسيل والفيديوهات للرمال والملز',m:'5 أكتوبر',href:'files/ads.html'}
+      {id:'ads',t:'تصاميم إعلانات الحملة',d:'الفيد والستوري والكاروسيل والفيديوهات للرمال والملز',m:'5 أكتوبر',href:'files/ads.html'}
     ]},
     {g:'الموقع',items:[
       {id:'site',t:'الموقع الجديد',d:'thecapitalsuites-new.vercel.app',m:'منشور',href:'https://thecapitalsuites-new.vercel.app',ext:true}
+    ]},
+    {g:'الأرشيف',items:[
+      {id:'library',t:'كل الملفات',d:'فهرس كل ملفات المشروع',m:'',live:true}
     ]}
   ];
   var BY={};GROUPS.forEach(function(g){g.items.forEach(function(i){BY[i.id]=i})});
-  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML}
-  var side=document.getElementById('side'),pick=document.getElementById('pick'),home=document.getElementById('home');
-  var nav='',opts='<option value="">الصفحة الرئيسية للملفات</option>',cards='<h2>كل ملفات ذا كابيتال سويتس في مكان واحد</h2><p class="lede">آخر نسخة معتمدة من كل ملف. اختر من القائمة، أو افتح أي ملف في نافذة مستقلة.</p>';
+
+  /* ---------- أدوات ---------- */
+  var ST=[{k:'idea',l:'فكرة / بريف'},{k:'copy',l:'النص جاهز'},{k:'design',l:'عند المصمم'},{k:'review',l:'للمراجعة'},{k:'changes',l:'تعديلات مطلوبة'},{k:'approved',l:'معتمد'},{k:'scheduled',l:'مجدول'},{k:'published',l:'منشور'}];
+  var STL={};ST.forEach(function(s){STL[s.k]=s.l});
+  var DONE={approved:1,scheduled:1,published:1},TODO={idea:1,copy:1,design:1,changes:1};
+  var PSHORT={IG:'إنستغرام',LI:'لينكدإن',X:'X',ALL:'عام',WA:'واتساب'};
+  var DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+  var MON=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+  var DESIGN_LEAD=3;
+  function esc(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML}
+  function pd(s){var a=String(s).slice(0,10).split('-');return new Date(+a[0],+a[1]-1,+a[2])}
+  function iso(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
+  function addD(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x}
+  var START=pd('2026-10-15'),TODAY=pd(iso(new Date())),T=iso(TODAY);
+  function weekOf(s){return Math.floor((pd(s)-START)/864e5/7)+1}
+  function weekRange(w){var a=addD(START,(w-1)*7),b=addD(a,6);return a.getDate()+' '+MON[a.getMonth()]+' – '+b.getDate()+' '+MON[b.getMonth()]}
+  function fmtD(s){var d=pd(s);return d.getDate()+' '+MON[d.getMonth()]}
+  function dayD(s){var d=pd(s);return DAYS[d.getDay()]+' '+d.getDate()+' '+MON[d.getMonth()]}
+  function workday(d){while(d.getDay()===5)d=addD(d,-1);return d}
+  function due(s){return iso(workday(addD(pd(s),-DESIGN_LEAD)))}
+  function safeUrl(u){u=String(u||'').trim();return /^https?:\/\//i.test(u)?u:''}
+  function stTag(k){return '<span class="st" style="--sc:var(--st-'+k+')">'+esc(STL[k]||k)+'</span>'}
+  function n0(x){return x==null||x===''?'—':Number(x).toLocaleString('en-US')}
+  function n2(x){return x==null||x===''?'—':Number(x).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+  function isSetup(p){return p.kind==='setup'}
+  function media(p){
+    var d=(p.designs||[]).filter(function(x){return safeUrl(x.url)});
+    var img=d.filter(function(x){return /^image\//.test(x.type||'')})[0];
+    if(img)return {type:'img',url:img.url,up:d.length};
+    var vid=d.filter(function(x){return /^video\//.test(x.type||'')})[0];
+    if(vid)return {type:'vid',url:vid.url,up:d.length};
+    if(p.im&&p.im.length)return {type:'img',url:p.im[0],up:0,draft:true};
+    return null;
+  }
+  function thumb(p){var m=media(p);if(m&&m.type==='img')return '<img class="th" src="'+esc(m.url)+'" alt="" loading="lazy">';if(m)return '<div class="th">فيديو</div>';return '<div class="th">—</div>'}
+  function postHref(p){return './#p='+encodeURIComponent(p.id)}
+  function li(p,extra){return '<a class="li" href="'+postHref(p)+'">'+thumb(p)+'<span style="min-width:0"><b>'+esc(p.t)+'</b><span class="m">'+esc(PSHORT[p.p]||p.p)+' · '+(extra||dayD(p.d))+'</span></span>'+stTag(p.status)+'</a>'}
+
+  /* ---------- القائمة ---------- */
+  var side=document.getElementById('side'),pick=document.getElementById('pick'),page=document.getElementById('page');
+  var nav='',opts='';
   GROUPS.forEach(function(g){
     nav+='<div class="grp">'+esc(g.g)+'</div>';opts+='<optgroup label="'+esc(g.g)+'">';
-    cards+='<h3>'+esc(g.g)+'</h3><div class="cards">';
     g.items.forEach(function(i){
       var href=i.self||i.ext?i.href:'#'+i.id, tgt=i.ext?' target="_blank" rel="noopener"':'';
-      nav+='<a href="'+href+'"'+tgt+' data-id="'+i.id+'"><b>'+esc(i.t)+(i.ext?' ↗':'')+'</b><span>'+esc(i.m)+'</span></a>';
+      nav+='<a href="'+href+'"'+tgt+' data-id="'+i.id+'"><b>'+esc(i.t)+(i.ext?' ↗':'')+'</b>'+(i.m?'<span>'+esc(i.m)+'</span>':'')+'</a>';
       opts+='<option value="'+i.id+'">'+esc(i.t)+'</option>';
-      cards+='<a class="card" href="'+href+'"'+tgt+'><span class="k">'+esc(g.g)+'</span><b>'+esc(i.t)+(i.ext?' ↗':'')+'</b><span>'+esc(i.d)+'</span><i>'+esc(i.m)+'</i></a>';
     });
-    opts+='</optgroup>';cards+='</div>';
+    opts+='</optgroup>';
   });
-  side.innerHTML=nav;pick.innerHTML=opts;home.innerHTML=cards;
-  pick.onchange=function(){var i=BY[pick.value];if(!i){location.hash='';return}if(i.self){location.href=i.href;return}if(i.ext){window.open(i.href,'_blank','noopener');pick.value='';return}location.hash=i.id};
+  side.innerHTML=nav;pick.innerHTML=opts;
+  pick.onchange=function(){var i=BY[pick.value];if(!i)return;if(i.self){location.href=i.href;return}if(i.ext){window.open(i.href,'_blank','noopener');route();return}location.hash=i.id};
+
+  /* ---------- البيانات ---------- */
+  var POSTS=[],ALL=[],LOADED=false,CAMP=null,CAMP_ERR=false,KPI={},ROLE='',ME='',NAMES={},CUR='';
+  function load(){
+    ROLE=capital.role();ME=capital.email();NAMES=capital.names();
+    claude.use('db').then(function(db){
+      db.collection('posts').limit(1000).onSnapshot(function(s){
+        ALL=s.docs.map(function(x){var o=Object.assign({},x.data());o.id=x.id;return o}).sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:0});
+        POSTS=ALL.filter(function(p){return !isSetup(p)});LOADED=true;rerender();
+      },function(){});
+    });
+    capital.api('campaigns').then(function(d){CAMP=d;rerender()}).catch(function(){CAMP_ERR=true;rerender()});
+    capital.kpis().then(function(rows){KPI={};(rows||[]).forEach(function(r){KPI[r.id]=r.data||{}});rerender()}).catch(function(){});
+  }
+  function rerender(){if(BY[CUR]&&BY[CUR].live)renderLive(CUR)}
+
+  /* ---------- اليوم ---------- */
+  function renderToday(){
+    if(!LOADED)return '<p class="loading">جارِ تحميل التقويم…</p>';
+    var wk=Math.max(weekOf(T),1),inWeek=POSTS.filter(function(p){return weekOf(p.d)===wk});
+    var pub=inWeek.filter(function(p){return p.status==='published'}).length;
+    var review=ALL.filter(function(p){return p.status==='review'});
+    var todo=ALL.filter(function(p){return TODO[p.status]&&(isSetup(p)?p.d:due(p.d))<=iso(addD(TODAY,7))}).sort(function(a,b){var x=isSetup(a)?a.d:due(a.d),y=isSetup(b)?b.d:due(b.d);return x<y?-1:x>y?1:0});
+    var late=todo.filter(function(p){return (isSetup(p)?p.d:due(p.d))<T});
+    var pubSoon=POSTS.filter(function(p){return p.d>=T&&p.d<=iso(addD(TODAY,2))&&p.status!=='published'});
+    var last=CAMP&&CAMP.periods&&CAMP.periods[CAMP.periods.length-1];
+    var name=NAMES[ME]||'';
+    var h='<h2>'+(name?'أهلاً '+esc(name):'أهلاً')+'</h2><p class="lede">'+dayD(T)+' · الأسبوع '+wk+' من خطة المحتوى ('+weekRange(wk)+'). كل اللي على الصفحة دي بيتحدث لوحده من اللوحة والحملات.</p>';
+    h+='<div class="tiles">'+
+      '<a class="tile" href="#content"><span class="k">منشورات الأسبوع</span><span class="v num">'+pub+' / '+inWeek.length+'</span><span class="s">اتنشر من المخطط هذا الأسبوع</span></a>'+
+      '<a class="tile'+(review.length?' gold':'')+'" href="#content"><span class="k">بانتظار المراجعة</span><span class="v num">'+review.length+'</span><span class="s">تصاميم مرفوعة محتاجة اعتماد</span></a>'+
+      '<div class="tile'+(late.length?' warn':'')+'"><span class="k">متأخر عن موعد التسليم</span><span class="v num">'+late.length+'</span><span class="s">'+(late.length?'محتاج متابعة مع المصمم':'كل شيء في موعده')+'</span></div>'+
+      (last?'<a class="tile" href="#ads-live"><span class="k">صرف الحملات · '+esc(last.label||'')+'</span><span class="v num">'+n2(last.spend)+'</span><span class="s">ريال · '+fmtD(last.from)+' – '+fmtD(last.to)+'</span></a>':'<a class="tile" href="#ads-live"><span class="k">الحملات</span><span class="v">—</span><span class="s">'+(CAMP_ERR?'تعذّر التحميل':'جارِ التحميل…')+'</span></a>')+
+    '</div>';
+    var mineFirst=ROLE==='team';
+    var pTodo='<div class="panel"><h4>'+(mineFirst?'مطلوب منك':'مطلوب من المصمم')+' <span class="c">خلال 7 أيام</span></h4>'+(todo.length?todo.slice(0,10).map(function(p){var dd=isSetup(p)?p.d:due(p.d);return li(p,'التسليم <span class="'+(dd<T?'late':'')+'">'+dayD(dd)+(dd<T?' · متأخر':'')+'</span>')}).join(''):'<p class="empty">مفيش تسليمات قريبة.</p>')+'</div>';
+    var pRev='<div class="panel"><h4>'+(ROLE==='owner'?'بانتظار مراجعتك':'عند المراجعة')+' <span class="c">'+review.length+'</span></h4>'+(review.length?review.slice(0,10).map(function(p){return li(p)}).join(''):'<p class="empty">مفيش حاجة مستنية مراجعة.</p>')+'</div>';
+    var pSoon='<div class="panel"><h4>النشر خلال يومين</h4>'+(pubSoon.length?pubSoon.map(function(p){return li(p)}).join(''):'<p class="empty">مفيش نشر خلال اليومين الجايين.</p>')+'</div>';
+    h+='<div class="sec"><h3>المطلوب الآن</h3></div><div class="cols">'+pTodo+pRev+pSoon+'</div>';
+    // آخر التصاميم المرفوعة
+    var ups=[];ALL.forEach(function(p){(p.designs||[]).forEach(function(x){ups.push({p:p,x:x})})});
+    ups.sort(function(a,b){return (b.x.at||'')<(a.x.at||'')?-1:1});
+    h+='<div class="sec"><h3>آخر التصاميم المرفوعة</h3><small>من المصمم على اللوحة مباشرة</small><a class="more" href="#content">كل المحتوى ←</a></div>';
+    h+=ups.length?'<div class="grid">'+ups.slice(0,8).map(function(u){return card(u.p,u.x)}).join('')+'</div>':'<p class="note">لسه مفيش تصاميم مرفوعة على اللوحة. أول ما المصمم يفتح المنشور ويضغط <b>«رفع تصميم»</b> هيظهر هنا وفي صفحة المحتوى، والمنشور يتحول للمراجعة.</p>';
+    // الأسبوع
+    h+='<div class="sec"><h3>منشورات الأسبوع '+wk+'</h3><small>'+weekRange(wk)+'</small></div>'+(inWeek.length?'<div class="grid">'+inWeek.map(function(p){return card(p)}).join('')+'</div>':'<p class="empty">مفيش منشورات هذا الأسبوع.</p>');
+    return h;
+  }
+
+  /* ---------- المحتوى ---------- */
+  var CF={w:'',up:false};
+  function card(p,x){
+    var m=x?{type:/^video\//.test(x.type||'')?'vid':/^image\//.test(x.type||'')?'img':'pdf',url:x.url,up:1}:media(p),ph;
+    if(m&&m.type==='img')ph='<img src="'+esc(m.url)+'" alt="" loading="lazy">';
+    else if(m&&m.type==='vid')ph='<video src="'+esc(m.url)+'#t=0.1" muted playsinline preload="metadata"></video>';
+    else if(m)ph='PDF';
+    else ph='لسه مفيش تصميم';
+    var badge=m?(m.draft?'مقترح':(p.designs||[]).length>1?(p.designs.length+' تصاميم'):'مرفوع'):'';
+    return '<a class="pc" href="'+postHref(p)+'"><span class="ph">'+ph+(badge?'<span class="badge">'+badge+'</span>':'')+'</span><span class="bd"><span class="m">'+dayD(p.d)+' · '+esc(PSHORT[p.p]||p.p)+'</span><b>'+esc(p.t)+'</b>'+stTag(p.status)+'</span></a>';
+  }
+  function renderContent(){
+    if(!LOADED)return '<p class="loading">جارِ تحميل التقويم…</p>';
+    var weeks={};POSTS.forEach(function(p){weeks[weekOf(p.d)]=1});
+    var wl=Object.keys(weeks).map(Number).sort(function(a,b){return a-b});
+    var cw=Math.max(weekOf(T),1);if(CF.w===''&&weeks[cw])CF.w=String(cw);
+    var list=POSTS.filter(function(p){return (!CF.w||CF.w==='all'||weekOf(p.d)===+CF.w)&&(!CF.up||(p.designs||[]).length)});
+    var cnt={};ST.forEach(function(s){cnt[s.k]=0});POSTS.forEach(function(p){cnt[p.status]=(cnt[p.status]||0)+1});
+    var up=POSTS.filter(function(p){return (p.designs||[]).length}).length;
+    var h='<h2>المحتوى</h2><p class="lede">كل منشور بآخر تصميم رفعه المصمم على اللوحة وحالته الحالية. اضغط أي منشور لفتحه في اللوحة.</p>';
+    h+='<div class="tiles"><div class="tile"><span class="k">إجمالي المنشورات</span><span class="v num">'+POSTS.length+'</span><span class="s">'+up+' منها عليه تصميم مرفوع</span></div>'+
+      '<div class="tile"><span class="k">معتمد أو مجدول أو منشور</span><span class="v num">'+(cnt.approved+cnt.scheduled+cnt.published)+'</span><span class="s">منها '+cnt.published+' منشور</span></div>'+
+      '<div class="tile"><span class="k">عند المصمم أو تعديلات</span><span class="v num">'+(cnt.design+cnt.changes)+'</span><span class="s">'+cnt.review+' للمراجعة</span></div></div>';
+    h+='<div class="bars" aria-hidden="true">'+ST.map(function(s){return cnt[s.k]?'<i style="width:'+(cnt[s.k]/POSTS.length*100)+'%;background:var(--st-'+s.k+')" title="'+s.l+'"></i>':''}).join('')+'</div>';
+    h+='<div class="sec"><h3>الأسابيع</h3></div><div class="chips" id="cf">'+
+      wl.map(function(w){return '<button data-w="'+w+'" aria-pressed="'+(CF.w===String(w))+'">الأسبوع '+w+'</button>'}).join('')+
+      '<button data-w="all" aria-pressed="'+(CF.w==='all')+'">الكل</button><button data-up="1" aria-pressed="'+CF.up+'">بتصاميم مرفوعة فقط</button></div>';
+    var groups={},order=[];list.forEach(function(p){var w=weekOf(p.d);if(!groups[w]){groups[w]=[];order.push(w)}groups[w].push(p)});
+    h+=order.length?order.map(function(w){return '<div class="wk"><h3>الأسبوع '+w+'</h3><span>'+weekRange(w)+' · '+groups[w].length+' منشورات</span></div><div class="grid">'+groups[w].map(function(p){return card(p)}).join('')+'</div>'}).join(''):'<p class="empty">مفيش منشورات بالفلتر ده.</p>';
+    return h;
+  }
+  function bindContent(){
+    var c=document.getElementById('cf');if(!c)return;
+    c.querySelectorAll('[data-w]').forEach(function(b){b.onclick=function(){CF.w=b.dataset.w;rerender()}});
+    c.querySelectorAll('[data-up]').forEach(function(b){b.onclick=function(){CF.up=!CF.up;rerender()}});
+  }
+
+  /* ---------- الحملات ---------- */
+  var SEL='';
+  var PCOL={meta:'#3F6FA8',snap:'#C29B3C',snapform:'#8A8F93',tiktok:'#2C8288'};
+  function renderAds(){
+    if(CAMP_ERR)return '<h2>الحملات</h2><p class="note">تعذّر تحميل بيانات الحملات. حدّث الصفحة.</p>';
+    if(!CAMP)return '<p class="loading">جارِ تحميل الحملات…</p>';
+    var P=CAMP.periods||[];if(!SEL&&P.length)SEL=P[P.length-1].id;
+    var per=P.filter(function(x){return x.id===SEL})[0]||P[P.length-1];
+    var upd=CAMP.updatedAt?new Date(CAMP.updatedAt):null;
+    var h='<h2>الحملات</h2><p class="lede">'+esc(CAMP.sourceNote||'')+(upd?' آخر تحديث: '+upd.getDate()+' '+MON[upd.getMonth()]+'.':'')+'</p>';
+    var pend=Object.keys(CAMP.sync||{}).filter(function(k){return CAMP.sync[k].state!=='live'});
+    if(pend.length)h+='<p class="note"><b>التحديث التلقائي:</b> '+pend.map(function(k){return esc(CAMP.sync[k].label)+' (في انتظار الربط)'}).join('، ')+'. لحد ما يتربط، الأرقام هنا من آخر تقرير معتمد.</p>';
+    if(P.length>1)h+='<div class="chips" id="pf" style="margin-top:16px">'+P.map(function(x){return '<button data-p="'+esc(x.id)+'" aria-pressed="'+(x.id===per.id)+'">'+esc(x.label||fmtD(x.from))+'</button>'}).join('')+'</div>';
+    if(per){
+      var k=KPI[per.id]||{};
+      var bookings=+k.bookings||0;
+      h+='<div class="sec"><h3>'+esc(per.label||'')+'</h3><small>'+fmtD(per.from)+' – '+fmtD(per.to)+'</small></div>';
+      h+='<div class="tiles"><div class="tile"><span class="k">إجمالي الصرف</span><span class="v num">'+n2(per.spend)+'</span><span class="s">ريال على كل المنصات</span></div>'+
+        '<div class="tile"><span class="k">مرات الظهور</span><span class="v num">'+n0(per.impressions)+'</span><span class="s">في كل المنصات</span></div>'+
+        '<div class="tile"><span class="k">الحجوزات</span><span class="v num">'+(k.bookings!=null&&k.bookings!==''?n0(k.bookings):'—')+'</span><span class="s">'+(bookings?'تكلفة الحجز '+n2(per.spend/bookings)+' ريال':'من فريق المبيعات')+'</span></div></div>';
+      h+='<div class="sec"><h3>حسب المنصة</h3></div><div class="tiles">'+(per.platforms||[]).map(function(x){
+        return '<div class="plat" style="border-top:3px solid '+(PCOL[x.key]||'#8A8F93')+'"><div class="n">'+esc(x.name)+'</div><div class="v num">'+n0(x.results)+'</div><div class="s">'+esc(x.resultLabel)+(x.cpr!=null?' · '+n2(x.cpr)+' ريال للنتيجة':'')+(x.spend!=null?' · صرف '+n2(x.spend):'')+'</div>'+(x.best?'<div class="s">أقوى حي: '+esc(x.best)+'</div>':'')+'</div>';
+      }).join('')+'</div>';
+      // قمع المبيعات
+      h+='<div class="sec"><h3>نتائج المبيعات</h3><small>اللي حصل بعد المحادثة: يدخلها مدير المحتوى من أرقام فريق المبيعات</small></div>';
+      h+='<div class="tiles"><div class="tile"><span class="k">محادثات وصلت فعلاً</span><span class="v num">'+(k.chats!=null&&k.chats!==''?n0(k.chats):'—')+'</span></div><div class="tile"><span class="k">معاينات</span><span class="v num">'+(k.viewings!=null&&k.viewings!==''?n0(k.viewings):'—')+'</span></div><div class="tile"><span class="k">حجوزات</span><span class="v num">'+(k.bookings!=null&&k.bookings!==''?n0(k.bookings):'—')+'</span></div></div>';
+      if(ROLE==='owner')h+='<form class="kpi" id="kf"><label>محادثات وصلت فعلاً<input type="number" min="0" name="chats" value="'+esc(k.chats==null?'':k.chats)+'"></label><label>معاينات<input type="number" min="0" name="viewings" value="'+esc(k.viewings==null?'':k.viewings)+'"></label><label>حجوزات<input type="number" min="0" name="bookings" value="'+esc(k.bookings==null?'':k.bookings)+'"></label><button class="pbtn">حفظ أرقام المبيعات</button></form><p class="empty" id="kf-m" style="padding:6px 0"></p>';
+      if(per.learnings&&per.learnings.length)h+='<div class="cols" style="margin-top:22px"><div class="panel" style="padding:10px 16px"><h4 style="margin:0">ما تعلمناه</h4><ul class="plain">'+per.learnings.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div>'+(per.next&&per.next.length?'<div class="panel" style="padding:10px 16px"><h4 style="margin:0">الخطوة الجاية</h4><ul class="plain">'+per.next.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div>':'')+'</div>';
+    }
+    // الحملات والإعلانات
+    var C=CAMP.campaigns||[];
+    h+='<div class="sec"><h3>الحملات والإعلانات</h3>'+(C.length?'<small>'+C.length+' حملة</small>':'')+'<a class="more" href="#ads">تصاميم الإعلانات ←</a></div>';
+    if(C.length){
+      h+='<table class="t"><thead><tr><th>الحملة / الإعلان</th><th>الحالة</th><th>الصرف</th><th>النتائج</th><th>تكلفة النتيجة</th><th>الظهور</th></tr></thead><tbody>'+C.map(function(c){
+        var on=/active|نشط/i.test(c.status||'');
+        var row='<tr><td><span class="dot" style="background:'+(PCOL[c.platform]||'#8A8F93')+'"></span><b>'+esc(c.name)+'</b></td><td>'+(on?'<span style="color:var(--ok)">شغالة</span>':esc(c.statusAr||c.status||''))+'</td><td class="num">'+n2(c.spend)+'</td><td class="num">'+n0(c.results)+' '+esc(c.resultLabel||'')+'</td><td class="num">'+n2(c.cpr)+'</td><td class="num">'+n0(c.impressions)+'</td></tr>';
+        return row+(c.ads||[]).map(function(a){return '<tr class="ad"><td>'+esc(a.name)+'</td><td>'+(/active|نشط/i.test(a.status||'')?'شغال':esc(a.status||''))+'</td><td class="num">'+n2(a.spend)+'</td><td class="num">'+n0(a.results)+'</td><td class="num">'+n2(a.cpr)+'</td><td class="num">'+n0(a.impressions)+'</td></tr>'}).join('');
+      }).join('')+'</tbody></table>';
+    } else h+='<p class="note">تفاصيل كل حملة وإعلان (الحالة والصرف والنتائج) هتظهر هنا تلقائياً أول ما حسابات سناب وميتا تتربط. لحد كده: <a href="#campaigns">مخطط تنفيذ الحملات</a> فيه الهيكل، و<a href="#d-weekly">التقرير الأسبوعي</a> فيه آخر نتائج معتمدة.</p>';
+    return h;
+  }
+  function bindAds(){
+    var pf=document.getElementById('pf');if(pf)pf.querySelectorAll('[data-p]').forEach(function(b){b.onclick=function(){SEL=b.dataset.p;rerender()}});
+    var f=document.getElementById('kf');if(!f)return;
+    f.onsubmit=function(e){
+      e.preventDefault();var o={};['chats','viewings','bookings'].forEach(function(k){var v=f.elements[k].value;if(v!=='')o[k]=Math.max(0,parseInt(v,10)||0)});
+      var id=SEL,m=document.getElementById('kf-m');m.textContent='جارِ الحفظ…';
+      capital.saveKpi(id,o).then(function(){KPI[id]=o;rerender();var mm=document.getElementById('kf-m');if(mm)mm.textContent='اتحفظت أرقام المبيعات.'}).catch(function(){m.textContent='ما اتحفظش، حاول تاني.'});
+    };
+  }
+
+  /* ---------- الأرشيف ---------- */
+  function renderLibrary(){
+    var h='<h2>كل الملفات</h2><p class="lede">آخر نسخة معتمدة من كل ملف. اختر من القائمة، أو افتح أي ملف في نافذة مستقلة.</p>';
+    GROUPS.forEach(function(g){
+      var items=g.items.filter(function(i){return i.id!=='library'});if(!items.length)return;
+      h+='<div class="sec"><h3>'+esc(g.g)+'</h3></div><div class="lib">'+items.map(function(i){
+        var href=i.self||i.ext?i.href:'#'+i.id,tgt=i.ext?' target="_blank" rel="noopener"':'';
+        return '<a class="card" href="'+href+'"'+tgt+'><span class="k">'+esc(g.g)+'</span><b>'+esc(i.t)+(i.ext?' ↗':'')+'</b><span>'+esc(i.d)+'</span><i>'+esc(i.m)+'</i></a>';
+      }).join('')+'</div>';
+    });
+    return h;
+  }
+
+  /* ---------- التوجيه ---------- */
   var view=document.getElementById('view'),bar=document.getElementById('bar');
+  function renderLive(id){
+    var sc=page.scrollTop;
+    page.innerHTML=id==='today'?renderToday():id==='content'?renderContent():id==='ads-live'?renderAds():renderLibrary();
+    page.scrollTop=sc;
+    if(id==='content')bindContent();if(id==='ads-live')bindAds();
+  }
   function route(){
-    var id=location.hash.slice(1),i=BY[id];
-    side.querySelectorAll('a').forEach(function(a){a.toggleAttribute('aria-current',a.getAttribute('data-id')===id);if(a.getAttribute('data-id')===id)a.setAttribute('aria-current','page')});
-    if(!i||i.self||i.ext){view.hidden=true;bar.hidden=true;home.hidden=false;view.removeAttribute('src');pick.value='';document.title='ملفات المشروع · ذا كابيتال سويتس';return}
-    home.hidden=true;bar.hidden=false;view.hidden=false;pick.value=id;
-    document.getElementById('doc-t').textContent=i.t;document.getElementById('doc-m').textContent=i.m;
-    document.getElementById('doc-o').href=i.href;
+    var id=location.hash.slice(1);if(!BY[id]||BY[id].self||BY[id].ext)id='today';
+    var i=BY[id],changed=id!==CUR;CUR=id;
+    side.querySelectorAll('a').forEach(function(a){if(a.getAttribute('data-id')===id)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+    pick.value=id;document.title=i.t+' · ذا كابيتال سويتس';
+    if(i.live){view.hidden=true;bar.hidden=true;page.hidden=false;view.removeAttribute('src');if(changed)page.scrollTop=0;renderLive(id);return}
+    page.hidden=true;bar.hidden=false;view.hidden=false;
+    document.getElementById('doc-t').textContent=i.t;document.getElementById('doc-m').textContent=i.m;document.getElementById('doc-o').href=i.href;
     if(view.getAttribute('src')!==i.href)view.setAttribute('src',i.href);
-    document.title=i.t+' · ذا كابيتال سويتس';
   }
   addEventListener('hashchange',route);
   claude.use('user').then(function(u){return u.me()}).then(function(m){
     var w=document.getElementById('who');w.innerHTML='';var img=document.createElement('img');img.alt='';img.src=m.avatarUrl;var n=document.createElement('span');n.textContent=m.name;w.appendChild(img);w.appendChild(n);
-    document.getElementById('app').hidden=false;route();
+    document.getElementById('app').hidden=false;load();route();
   });
 })();
 </script>
