@@ -169,7 +169,8 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     {g:'العروض للإدارة',items:[
       {id:'d-brand',t:'استراتيجية المحتوى والبراند',d:'عرض 10 شرائح',m:'6 أكتوبر',href:'files/decks/brand.html'},
       {id:'d-cal30',t:'تقويم أول 30 يوماً (عرض)',d:'نسخة مختصرة في 6 شرائح',m:'10 أكتوبر',href:'files/decks/cal30.html'},
-      {id:'d-weekly',t:'تقرير الحملات الأسبوعي',d:'أسبوع 1 إلى 7 أكتوبر · 5 شرائح',m:'8 أكتوبر',href:'files/decks/weekly.html'}
+      {id:'d-weekly2',t:'تقرير الحملات · الأسبوع الثاني',d:'8 إلى 14 أكتوبر · 5 شرائح مع مقارنة بأسبوع الإطلاق',m:'15 أكتوبر',href:'files/decks/weekly2.html'},
+      {id:'d-weekly',t:'تقرير الحملات · أسبوع الإطلاق',d:'1 إلى 7 أكتوبر · 5 شرائح',m:'8 أكتوبر',href:'files/decks/weekly.html'}
     ]},
     {g:'الإعلانات',items:[
       {id:'ads',t:'تصاميم إعلانات الحملة',d:'الفيد والستوري والكاروسيل والفيديوهات للرمال والملز',m:'5 أكتوبر',href:'files/ads.html'}
@@ -181,6 +182,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       {id:'library',t:'كل الملفات',d:'فهرس كل ملفات المشروع',m:'',live:true}
     ]}
   ];
+  var V='3';
   var BY={};GROUPS.forEach(function(g){g.items.forEach(function(i){BY[i.id]=i})});
 
   /* ---------- أدوات ---------- */
@@ -353,7 +355,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     }
     // الحملات والإعلانات
     var C=CAMP.campaigns||[];
-    var CR=CAMP.campaignsRange;h+='<div class="sec"><h3>الحملات والإعلانات</h3>'+(C.length?'<small>'+C.length+' حملة'+(CR?' · الأرقام من '+fmtD(CR.from)+' لحد '+fmtD(CR.to):'')+'</small>':'')+'<a class="more" href="#ads">تصاميم الإعلانات ←</a></div>';
+    var CR=CAMP.campaignsRange;h+='<div class="sec"><h3>الحملات والإعلانات</h3>'+(C.length?'<small>'+C.length+' حملة'+(CR?' · الأرقام من '+fmtD(CR.from)+' لحد '+fmtD(CR.to):'')+'</small>':'')+'<a class="more" href="#d-weekly2">تقرير الأسبوع الثاني ←</a></div>';
     if(C.length){
       h+='<table class="t"><thead><tr><th>الحملة / الإعلان</th><th>الحالة</th><th>الصرف</th><th>النتائج</th><th>تكلفة النتيجة</th><th>الظهور</th></tr></thead><tbody>'+C.map(function(c){
         var on=c.status==='ACTIVE';
@@ -402,7 +404,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     if(i.live){view.hidden=true;bar.hidden=true;page.hidden=false;view.removeAttribute('src');if(changed)page.scrollTop=0;renderLive(id);return}
     page.hidden=true;bar.hidden=false;view.hidden=false;
     document.getElementById('doc-t').textContent=i.t;document.getElementById('doc-m').textContent=i.m;document.getElementById('doc-o').href=i.href;
-    if(view.getAttribute('src')!==i.href)view.setAttribute('src',i.href);
+    var src=i.href+(i.href.indexOf('?')<0?'?v='+V:'');if(view.getAttribute('src')!==src)view.setAttribute('src',src);
   }
   addEventListener('hashchange',route);
   claude.use('user').then(function(u){return u.me()}).then(function(m){
