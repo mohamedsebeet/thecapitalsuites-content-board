@@ -218,7 +218,7 @@ textarea.full{width:100%;min-height:200px;line-height:1.7}
   <section id="v-tbl" hidden>
     <div class="bar">
       <select id="f-week" aria-label="الأسبوع"></select>
-      <select id="f-pl" aria-label="المنصة"><option value="">كل المنصات</option><option value="IG">Instagram</option><option value="LI">LinkedIn</option><option value="X">X</option></select>
+      <select id="f-pl" aria-label="المنصة"><option value="">كل المنصات</option><option value="IG">Instagram</option><option value="FB">Facebook</option><option value="LI">LinkedIn</option><option value="X">X</option></select>
       <select id="f-st" aria-label="الحالة"></select>
       <button class="chip" id="f-design" aria-pressed="false">مطلوب من المصمم</button>
       <button class="chip" id="f-review" aria-pressed="false">بانتظار الاعتماد</button>
@@ -242,13 +242,13 @@ var ST=[
 var STL={};ST.forEach(function(s){STL[s.k]=s.l});
 var DONE={approved:1,scheduled:1,published:1};
 var LV={A:'الثقة',B:'المعرفة',C:'التجاري',P:'إثبات الأداء'};
-var PL={IG:'Instagram',LI:'LinkedIn',X:'X',ALL:'كل المنصات',WA:'واتساب'};
-var PSHORT={IG:'IG',LI:'LI',X:'X',ALL:'عام',WA:'واتساب'};
-var TIME={IG:'9:00 م',LI:'9:30 ص',X:'8:00 م'};
+var PL={IG:'Instagram',FB:'Facebook',LI:'LinkedIn',X:'X',ALL:'كل المنصات',WA:'واتساب'};
+var PSHORT={IG:'IG',FB:'FB',LI:'LI',X:'X',ALL:'عام',WA:'واتساب'};
+var TIME={IG:'9:00 م',FB:'9:00 م',LI:'9:30 ص',X:'8:00 م'};
 var DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
 var MON=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 var PHASES=[{n:'التأسيس',a:'2026-10-15',b:'2026-11-14'},{n:'المعرفة',a:'2026-11-15',b:'2026-12-14'},{n:'التحويل',a:'2026-12-15',b:'2027-01-14'}];
-var PO={ALL:0,IG:1,LI:2,X:3,WA:4};
+var PO={ALL:0,IG:1,FB:2,LI:3,X:4,WA:5};
 var DESIGN_LEAD=3; // أيام قبل النشر لتسليم التصميم
 function pd(s){var a=s.split('-');return new Date(+a[0],+a[1]-1,+a[2])}
 function iso(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
@@ -465,6 +465,9 @@ function renderSheet(){
   if(src) h+='<div class="blk"><h4>إعادة توزيع من</h4><p><button class="btn" id="go-src">'+esc(src.p)+' · '+fmtD(src.d)+' · '+esc(src.t)+'</button></p></div>';
   if(p.b) h+='<div class="blk"><h4>البريف للمصمم</h4><p style="white-space:pre-wrap">'+esc(p.b)+'</p></div>';
   if(p.n) h+='<div class="blk"><h4>المطلوب تجهيزه</h4><p style="white-space:pre-wrap">'+esc(p.n)+'</p></div>';
+  // publishing schedule summary
+  if(!isSetup(p)){var TG=p.targets||({IG:['IG'],FB:['FB'],LI:['LI'],X:['X'],ALL:['IG','FB','LI','X']}[p.p]||[]),PB=p.pub||{};
+    h+='<div class="blk"><h4>النشر على المنصات</h4>'+(TG.length?'<p>'+TG.map(function(k){return '<span class="pl" style="margin-inline-end:6px">'+esc(PL[k]||k)+(PB[k]&&PB[k].done?' ✓':'')+'</span>'}).join('')+'</p>':'<p class="updated">مفيش منصات محددة.</p>')+'<p style="margin-top:6px"><a class="link-out" href="files.html#publish">افتح جدول النشر ←</a></p></div>';}
   // published link
   h+='<div class="blk"><h4>رابط المنشور بعد النشر</h4>'+(can?'<div class="field"><input id="in-pl" type="url" dir="ltr" placeholder="https://www.instagram.com/p/…" value="'+esc(p.pubLink)+'"><button class="btn" id="sv-pl">حفظ</button></div>':'')+(pl?'<p style="margin-top:6px"><a class="link-out" href="'+esc(pl)+'" target="_blank" rel="noopener">'+esc(pl)+'</a></p>':(can?'':'<p class="updated">لم يُنشر بعد.</p>'))+'</div>';
   // notes
@@ -612,7 +615,7 @@ function renderEdit(id,newKind){
   h+='<div class="grid2">'+
     '<label class="fl">تاريخ النشر / آخر موعد<input type="date" id="e-d" value="'+esc(p.d)+'" required></label>'+
     '<label class="fl">وقت النشر<input type="text" id="e-tm" value="'+esc(p.tm||'')+'" placeholder="الافتراضي: '+esc(TIME[p.p]||'—')+'"></label>'+
-    '<label class="fl">المنصة<select id="e-p">'+opt('IG','Instagram',p.p)+opt('LI','LinkedIn',p.p)+opt('X','X',p.p)+opt('WA','واتساب',p.p)+opt('ALL','كل المنصات',p.p)+'</select></label>'+
+    '<label class="fl">المنصة<select id="e-p">'+opt('IG','Instagram',p.p)+opt('FB','Facebook',p.p)+opt('LI','LinkedIn',p.p)+opt('X','X',p.p)+opt('WA','واتساب',p.p)+opt('ALL','كل المنصات',p.p)+'</select></label>'+
     '<label class="fl">النوع<select id="e-kind">'+opt('post','منشور في التقويم',p.kind||'post')+opt('setup','عنصر تأسيسي (بايو، هايلايت، صفحة…)',p.kind||'post')+'</select></label>'+
     '<label class="fl">المستوى<select id="e-lv">'+opt('A','A · الثقة',p.lv)+opt('B','B · المعرفة',p.lv)+opt('C','C · التجاري',p.lv)+opt('P','إثبات الأداء',p.lv)+'</select></label>'+
     '<label class="fl">السلسلة<input type="text" id="e-s" list="dl-series" value="'+esc(p.s)+'"></label>'+

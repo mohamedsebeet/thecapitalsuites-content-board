@@ -84,6 +84,23 @@ a.pc:hover{border-color:var(--gold)}
 .pc .bd{padding:9px 11px 11px;display:flex;flex-direction:column;gap:4px}
 .pc .bd .m{font-size:12px;color:var(--ink-3)}
 .pc .bd b{font-size:13.5px;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pubc{background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:10px}
+.pubc.done{opacity:.72}
+.pubh{display:flex;gap:12px;align-items:center;padding:10px 14px;flex-wrap:wrap}
+.pubm{flex:1 1 220px;min-width:0;display:flex;flex-direction:column;gap:2px}.pubm b{font-size:14.5px}.pubm .m{font-size:12.5px;color:var(--ink-3)}
+.tgs{display:flex;gap:6px;flex-wrap:wrap}
+.tg{border:1px dashed var(--line);background:transparent;border-radius:999px;padding:4px 11px;font-size:12.5px;cursor:pointer;color:var(--ink-3)}
+.tg.on{border-style:solid;border-color:var(--ink-2);color:var(--ink);font-weight:600}.tg.dn{border-color:var(--ok);color:var(--ok)}.tg:disabled{cursor:default}
+.pbtn.sm{padding:6px 12px;font-size:13px;text-decoration:none;display:inline-flex;align-items:center}
+.pbtn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.pubb{border-top:1px solid var(--line);padding:12px 14px;display:flex;flex-direction:column;gap:12px}
+.pubb .rs{font-size:13px;color:var(--ink-3);display:flex;gap:8px;align-items:center}.pubb input,.pubb textarea{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.pubb .fl{display:flex;gap:8px;flex-wrap:wrap}.pubb .fl a{font-size:13px;color:var(--gold-ink);font-weight:600;text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:4px 12px}
+.plr{border:1px solid var(--line);border-radius:10px;padding:10px}
+.plh{display:flex;gap:10px;align-items:baseline;margin-bottom:6px;flex-wrap:wrap}.plh .m{font-size:12px;color:var(--ink-3)}.plh .late{color:var(--warn);font-weight:600}
+.plr textarea{width:100%;resize:vertical;line-height:1.6}
+.plb{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center}.plb input{flex:1 1 200px}
+#ptoast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--char);color:var(--char-ink);padding:9px 16px;border-radius:999px;font-size:14px;z-index:60}
 .grid.ads{grid-template-columns:repeat(auto-fill,minmax(190px,1fr))}
 button.pc{font:inherit;text-align:start;cursor:pointer;padding:0;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;color:inherit}
 button.pc:hover{border-color:var(--gold)}
@@ -164,6 +181,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       {id:'today',t:'اليوم',d:'المطلوب الآن: التسليمات والمراجعات والنشر والحملات',m:'مباشر',live:true},
       {id:'content',t:'المحتوى',d:'كل منشورات التقويم بتصاميمها المرفوعة وحالتها',m:'مباشر',live:true},
       {id:'ads-live',t:'الحملات',d:'الصرف والنتائج والإعلانات الشغالة ونتائج المبيعات',m:'مباشر',live:true},
+      {id:'publish',t:'جدول النشر',d:'مواعيد النشر لكل منصة: انسخ النص، نزّل التصميم، وعلّم إنه اتنشر',m:'مباشر',live:true},
       {id:'board',t:'لوحة النشر',d:'التقويم الكامل: الحالات والتسليمات والملاحظات ورفع التصاميم',m:'مباشر',href:'./',self:true}
     ]},
     {g:'الخطط',items:[
@@ -201,7 +219,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   var ST=[{k:'idea',l:'فكرة / بريف'},{k:'copy',l:'النص جاهز'},{k:'design',l:'عند المصمم'},{k:'review',l:'للمراجعة'},{k:'changes',l:'تعديلات مطلوبة'},{k:'approved',l:'معتمد'},{k:'scheduled',l:'مجدول'},{k:'published',l:'منشور'}];
   var STL={};ST.forEach(function(s){STL[s.k]=s.l});
   var DONE={approved:1,scheduled:1,published:1},TODO={idea:1,copy:1,design:1,changes:1};
-  var PSHORT={IG:'إنستغرام',LI:'لينكدإن',X:'X',ALL:'عام',WA:'واتساب'};
+  var PSHORT={IG:'إنستغرام',FB:'فيسبوك',LI:'لينكدإن',X:'X',ALL:'عام',WA:'واتساب'};
   var DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
   var MON=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
   var DESIGN_LEAD=3;
@@ -251,10 +269,10 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   pick.onchange=function(){var i=BY[pick.value];if(!i)return;if(i.self){location.href=i.href;return}if(i.ext){window.open(i.href,'_blank','noopener');route();return}location.hash=i.id};
 
   /* ---------- البيانات ---------- */
-  var POSTS=[],ALL=[],LOADED=false,CAMP=null,CAMP_ERR=false,KPI={},ROLE='',ME='',NAMES={},CUR='';
+  var DB=null,POSTS=[],ALL=[],LOADED=false,CAMP=null,CAMP_ERR=false,KPI={},ROLE='',ME='',NAMES={},CUR='';
   function load(){
     ROLE=capital.role();ME=capital.email();NAMES=capital.names();
-    claude.use('db').then(function(db){
+    claude.use('db').then(function(db){DB=db;
       db.collection('posts').limit(1000).onSnapshot(function(s){
         ALL=s.docs.map(function(x){var o=Object.assign({},x.data());o.id=x.id;return o}).sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:0});
         POSTS=ALL.filter(function(p){return !isSetup(p)});LOADED=true;rerender();
@@ -286,7 +304,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     var mineFirst=ROLE==='team';
     var pTodo='<div class="panel"><h4>'+(mineFirst?'مطلوب منك':'مطلوب من المصمم')+' <span class="c">خلال 7 أيام</span></h4>'+(todo.length?todo.slice(0,10).map(function(p){var dd=isSetup(p)?p.d:due(p.d);return li(p,'التسليم <span class="'+(dd<T?'late':'')+'">'+dayD(dd)+(dd<T?' · متأخر':'')+'</span>')}).join(''):'<p class="empty">مفيش تسليمات قريبة.</p>')+'</div>';
     var pRev='<div class="panel"><h4>'+(ROLE==='owner'?'بانتظار مراجعتك':'عند المراجعة')+' <span class="c">'+review.length+'</span></h4>'+(review.length?review.slice(0,10).map(function(p){return li(p)}).join(''):'<p class="empty">مفيش حاجة مستنية مراجعة.</p>')+'</div>';
-    var pSoon='<div class="panel"><h4>النشر خلال يومين</h4>'+(pubSoon.length?pubSoon.map(function(p){return li(p)}).join(''):'<p class="empty">مفيش نشر خلال اليومين الجايين.</p>')+'</div>';
+    var pSoon='<div class="panel"><h4>النشر خلال يومين <a href="#publish" style="margin-inline-start:auto;font-size:12.5px;color:var(--gold-ink);text-decoration:none">جدول النشر ←</a></h4>'+(pubSoon.length?pubSoon.map(function(p){return li(p)}).join(''):'<p class="empty">مفيش نشر خلال اليومين الجايين.</p>')+'</div>';
     h+='<div class="sec"><h3>المطلوب الآن</h3></div><div class="cols">'+pTodo+pRev+pSoon+'</div>';
     // آخر التصاميم المرفوعة
     var ups=[];ALL.forEach(function(p){(p.designs||[]).forEach(function(x){ups.push({p:p,x:x})})});
@@ -423,6 +441,92 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     }});
   }
 
+  /* ---------- جدول النشر ---------- */
+  var PLAT=[{k:'IG',n:'إنستغرام',lim:2200,open:function(){return 'https://www.instagram.com/'}},
+            {k:'FB',n:'فيسبوك',lim:63206,open:function(){return 'https://business.facebook.com/latest/composer'}},
+            {k:'LI',n:'لينكدإن',lim:3000,open:function(){return 'https://www.linkedin.com/feed/'}},
+            {k:'X',n:'X',lim:280,open:function(t){return 'https://x.com/intent/post?text='+encodeURIComponent(t||'')}}];
+  var PLK={};PLAT.forEach(function(x){PLK[x.k]=x});
+  var PF={pl:''},PUBOPEN={};
+  function targets(p){return p.targets||({IG:['IG'],FB:['FB'],LI:['LI'],X:['X'],ALL:['IG','FB','LI','X']}[p.p]||[])}
+  function tm24(p){var t=String(p.tm||{IG:'9:00 م',FB:'9:00 م',LI:'9:30 ص',X:'8:00 م'}[p.p]||'').trim(),m=/(\d{1,2})(?::(\d{2}))?\s*(ص|م)?/.exec(t);if(!m)return '12:00';var h=+m[1],mi=+(m[2]||0);if(m[3]==='م'&&h<12)h+=12;if(m[3]==='ص'&&h===12)h=0;return ('0'+h).slice(-2)+':'+('0'+mi).slice(-2)}
+  function tmAr(hhmm){var a=hhmm.split(':'),h=+a[0],ap=h>=12?'م':'ص';h=h%12||12;return h+':'+a[1]+' '+ap}
+  function when(p){return p.d+'T'+tm24(p)}
+  function txt(p,k){var o=(p.pub||{})[k];return o&&o.text!=null?o.text:(p.c||'')}
+  function hasPH(t){return /\[[^\]]+\]/.test(t||'')}
+  function files(p){var d=(p.designs||[]).filter(function(x){return safeUrl(x.url)}).map(function(x){return {u:x.url,n:x.name||'design'}});if(d.length)return d;return (p.im||[]).map(function(u,i){return {u:u,n:(p.t||'design')+'-'+(i+1)}})}
+  function renderPublish(){
+    if(!LOADED)return '<p class="loading">جارِ تحميل التقويم…</p>';
+    var now=new Date(),nowS=iso(now)+'T'+('0'+now.getHours()).slice(-2)+':'+('0'+now.getMinutes()).slice(-2);
+    var list=POSTS.filter(function(p){return targets(p).length&&(!PF.pl||targets(p).indexOf(PF.pl)>=0)});
+    function pending(p){var pb=p.pub||{};return targets(p).filter(function(k){return !(pb[k]&&pb[k].done)&&(!PF.pl||k===PF.pl)})}
+    var late=list.filter(function(p){return when(p)<nowS&&pending(p).length}).sort(function(a,b){return when(a)<when(b)?-1:1});
+    var horizon=iso(addD(TODAY,14));
+    var up=list.filter(function(p){return when(p)>=nowS&&p.d<=horizon}).sort(function(a,b){return when(a)<when(b)?-1:1});
+    var todayN=list.filter(function(p){return p.d===T}).length,doneN=0,totN=0;
+    list.filter(function(p){return weekOf(p.d)===Math.max(weekOf(T),1)}).forEach(function(p){targets(p).forEach(function(k){totN++;if((p.pub||{})[k]&&p.pub[k].done)doneN++})});
+    var h='<h2>جدول النشر</h2><p class="lede">كل منشور بميعاده والمنصات اللي هينزل عليها. في الميعاد: انسخ النص، نزّل التصميم، افتح المنصة وانشر، وبعدين علّم «اتنشر». اللوحة بتتحدث لوحدها.</p>';
+    h+='<div class="tiles"><div class="tile'+(late.length?' warn':'')+'"><span class="k">فات ميعادها ولسه ما اتنشرتش</span><span class="v num">'+late.length+'</span></div><div class="tile"><span class="k">منشورات النهارده</span><span class="v num">'+todayN+'</span></div><div class="tile"><span class="k">اتنشر هذا الأسبوع</span><span class="v num">'+doneN+' / '+totN+'</span><span class="s">على كل المنصات</span></div><a class="tile gold" href="#" id="ics"><span class="k">تذكير على موبايلك</span><span class="v" style="font-size:18px">⬇ أضف المواعيد لتقويمك</span><span class="s">ملف تقويم فيه تنبيه قبل كل منشور بـ15 دقيقة</span></a></div>';
+    h+='<div class="chips" id="pf" style="margin-top:16px"><button data-p="" aria-pressed="'+(PF.pl==='')+'">كل المنصات</button>'+PLAT.map(function(x){return '<button data-p="'+x.k+'" aria-pressed="'+(PF.pl===x.k)+'">'+x.n+'</button>'}).join('')+'</div>';
+    if(late.length)h+='<div class="wk"><h3 style="color:var(--warn)">فات ميعادها</h3><span>'+late.length+' منشورات</span></div>'+late.map(pubCard).join('');
+    var g={},ord=[];up.forEach(function(p){if(!g[p.d]){g[p.d]=[];ord.push(p.d)}g[p.d].push(p)});
+    var tmr=iso(addD(TODAY,1));
+    h+=ord.length?ord.map(function(d){return '<div class="wk"><h3>'+(d===T?'النهارده':d===tmr?'بكرة':DAYS[pd(d).getDay()])+'</h3><span>'+fmtD(d)+' · '+g[d].length+' منشورات</span></div>'+g[d].map(pubCard).join('')}).join(''):'<p class="empty">مفيش منشورات في الأسبوعين الجايين.</p>';
+    return h;
+  }
+  function pubCard(p){
+    var tg=targets(p),pb=p.pub||{},own=ROLE==='owner',ready=DONE[p.status],fl=files(p),open=PUBOPEN[p.id];
+    var allDone=tg.length&&tg.every(function(k){return pb[k]&&pb[k].done});
+    var h='<div class="pubc'+(allDone?' done':'')+'" data-id="'+esc(p.id)+'"><div class="pubh">'+thumb(p)+'<div class="pubm"><b>'+esc(p.t)+'</b><span class="m">'+dayD(p.d)+' · '+tmAr(tm24(p))+' · '+esc(p.f||'')+'</span><span class="m">'+stTag(p.status)+(ready?'':' <span style="color:var(--warn)">لسه مش معتمد</span>')+(hasPH(p.c)?' <span style="color:var(--warn)">في النص بيانات [ ] لازم تتملي</span>':'')+'</span></div>';
+    h+='<div class="tgs">'+PLAT.map(function(x){var on=tg.indexOf(x.k)>=0,dn=pb[x.k]&&pb[x.k].done;return '<button class="tg'+(on?' on':'')+(dn?' dn':'')+'" data-tg="'+x.k+'"'+(own?'':' disabled')+' title="'+(on?'شيل':'ضيف')+' '+x.n+'">'+x.n+(dn?' ✓':'')+'</button>'}).join('')+'</div>';
+    h+='<button class="pbtn sm" data-open="1">'+(open?'إخفاء':'انشر')+'</button></div>';
+    if(open){
+      h+='<div class="pubb">';
+      if(own)h+='<label class="rs">الميعاد <input type="datetime-local" data-when value="'+when(p)+'"></label>';
+      h+='<div class="fl">'+(fl.length?fl.map(function(f,i){return '<a href="'+esc(f.u)+'" download="'+esc(f.n)+'" target="_blank" rel="noopener">⬇ التصميم'+(fl.length>1?' '+(i+1):'')+'</a>'}).join(''):'<span class="m">لسه مفيش تصميم مرفوع</span>')+'</div>';
+      h+=tg.map(function(k){var x=PLK[k];if(!x)return '';var t=txt(p,k),o=pb[k]||{},over=t.length>x.lim;
+        return '<div class="plr"><div class="plh"><b>'+x.n+'</b><span class="m num'+(over?' late':'')+'">'+t.length+' / '+x.lim+(over?' · النص أطول من المسموح':'')+'</span>'+(o.done?'<span class="st" style="--sc:var(--ok)">اتنشر'+(o.at?' '+fmtD(o.at.slice(0,10)):'')+'</span>':'')+'</div>'+
+          '<textarea data-tx="'+k+'" rows="'+(k==='X'?3:5)+'"'+(own?'':' readonly')+'>'+esc(t)+'</textarea>'+
+          '<div class="plb"><button class="pbtn sm ghost" data-copy="'+k+'">نسخ النص</button><a class="pbtn sm ghost" data-go="'+k+'" href="'+esc(x.open(t))+'" target="_blank" rel="noopener">افتح '+x.n+' ↗</a>'+
+          (own?(o.done?'<input type="url" dir="ltr" placeholder="رابط المنشور" data-lk="'+k+'" value="'+esc(o.link||'')+'"><button class="pbtn sm ghost" data-undo="'+k+'">تراجع</button>':'<button class="pbtn sm" data-done="'+k+'">✓ اتنشر</button>'):'')+'</div></div>'}).join('');
+      h+='</div>';
+    }
+    return h+'</div>';
+  }
+  var toastT;function ptoast(m){var t=document.getElementById('ptoast');if(!t){t=document.createElement('div');t.id='ptoast';document.body.appendChild(t)}t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(function(){t.hidden=true},2400)}
+  function save(id,patch,msg){if(!DB)return;patch.updatedBy=ME;patch.updatedAt=new Date().toISOString();DB.doc('posts/'+id).update(patch).then(function(){ptoast(msg)}).catch(function(){ptoast('ما اتحفظش، حاول تاني.')})}
+  function bindPublish(){
+    var f=document.getElementById('pf');if(f)f.querySelectorAll('[data-p]').forEach(function(b){b.onclick=function(){PF.pl=b.dataset.p;rerender()}});
+    var ic=document.getElementById('ics');if(ic)ic.onclick=function(e){e.preventDefault();downloadIcs()};
+    page.querySelectorAll('.pubc').forEach(function(c){
+      var p=null;ALL.forEach(function(x){if(x.id===c.dataset.id)p=x});if(!p)return;
+      var pb=JSON.parse(JSON.stringify(p.pub||{}));
+      c.querySelector('[data-open]').onclick=function(){PUBOPEN[p.id]=!PUBOPEN[p.id];rerender()};
+      c.querySelectorAll('[data-tg]').forEach(function(b){b.onclick=function(){var tg=targets(p).slice(),k=b.dataset.tg,i=tg.indexOf(k);if(i>=0)tg.splice(i,1);else tg.push(k);save(p.id,{targets:tg},(i>=0?'اتشالت ':'اتضافت ')+PLK[k].n)}});
+      var wi=c.querySelector('[data-when]');if(wi)wi.onchange=function(){var v=wi.value;if(!v)return;var d=v.slice(0,10);if(pd(d).getDay()===5){ptoast('الجمعة إجازة، اختار يوم تاني.');wi.value=when(p);return}save(p.id,{d:d,tm:tmAr(v.slice(11,16))},'اتغيّر الميعاد')};
+      c.querySelectorAll('[data-tx]').forEach(function(t){
+        var k=t.dataset.tx;t.oninput=function(){var go=c.querySelector('[data-go="'+k+'"]');if(go)go.href=PLK[k].open(t.value)};
+        t.onchange=function(){var o=pb[k]||{};o.text=t.value===(p.c||'')?null:t.value;pb[k]=o;save(p.id,{pub:pb},'اتحفظ النص لـ'+PLK[k].n)};
+      });
+      c.querySelectorAll('[data-copy]').forEach(function(b){b.onclick=function(){var t=c.querySelector('[data-tx="'+b.dataset.copy+'"]').value;(navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(function(){ptoast('اتنسخ النص')}).catch(function(){var ta=c.querySelector('[data-tx="'+b.dataset.copy+'"]');ta.select();document.execCommand('copy');ptoast('اتنسخ النص')})}});
+      c.querySelectorAll('[data-done]').forEach(function(b){b.onclick=function(){var k=b.dataset.done,o=pb[k]||{};o.done=true;o.at=new Date().toISOString();o.by=ME;pb[k]=o;var patch={pub:pb},tg=targets(p);if(tg.every(function(x){return pb[x]&&pb[x].done}))patch.status='published';save(p.id,patch,'تمام: اتنشر على '+PLK[k].n)}});
+      c.querySelectorAll('[data-undo]').forEach(function(b){b.onclick=function(){var k=b.dataset.undo;if(pb[k]){pb[k].done=false;delete pb[k].at}var patch={pub:pb};if(p.status==='published')patch.status='scheduled';save(p.id,patch,'اترجع')}});
+      c.querySelectorAll('[data-lk]').forEach(function(i){i.onchange=function(){var k=i.dataset.lk,v=i.value.trim();if(v&&!safeUrl(v)){ptoast('الرابط لازم يبدأ بـ https://');return}pb[k]=pb[k]||{};pb[k].link=v;var patch={pub:pb};if(v&&!p.pubLink)patch.pubLink=v;save(p.id,patch,'اتحفظ الرابط')}});
+    });
+  }
+  function downloadIcs(){
+    var now=new Date(),L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//The Capital Suites//Publishing//AR','CALSCALE:GREGORIAN','X-WR-CALNAME:نشر ذا كابيتال سويتس'];
+    function z(n){return ('0'+n).slice(-2)}
+    function utc(d){return d.getUTCFullYear()+z(d.getUTCMonth()+1)+z(d.getUTCDate())+'T'+z(d.getUTCHours())+z(d.getUTCMinutes())+'00Z'}
+    function e(t){return String(t).replace(/\\/g,'\\\\').replace(/\n/g,'\\n').replace(/([,;])/g,'\\$1')}
+    var n=0;POSTS.forEach(function(p){var tg=targets(p),pb=p.pub||{};var left=tg.filter(function(k){return !(pb[k]&&pb[k].done)});if(!left.length)return;
+      var st=new Date(when(p)+':00+03:00');if(st<now||st>addD(now,90))return;var en=new Date(st.getTime()+30*60000);n++;
+      L.push('BEGIN:VEVENT','UID:'+p.id+'@thecapitalsuites','DTSTAMP:'+utc(now),'DTSTART:'+utc(st),'DTEND:'+utc(en),'SUMMARY:'+e('نشر: '+p.t+' ('+left.map(function(k){return PLK[k]?PLK[k].n:k}).join('، ')+')'),'DESCRIPTION:'+e('افتح جدول النشر: '+location.origin+location.pathname+'#publish'),'URL:'+location.origin+location.pathname+'#publish','BEGIN:VALARM','TRIGGER:-PT15M','ACTION:DISPLAY','DESCRIPTION:'+e('نشر: '+p.t),'END:VALARM','END:VEVENT')});
+    L.push('END:VCALENDAR');
+    var b=new Blob([L.join('\r\n')],{type:'text/calendar;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='نشر-ذا-كابيتال-سويتس.ics';document.body.appendChild(a);a.click();a.remove();
+    ptoast(n+' ميعاد اتضاف للملف. افتحه على موبايلك عشان يتضاف للتقويم.');
+  }
+
   /* ---------- الأرشيف ---------- */
   function renderLibrary(){
     var h='<h2>كل الملفات</h2><p class="lede">آخر نسخة معتمدة من كل ملف. اختر من القائمة، أو افتح أي ملف في نافذة مستقلة.</p>';
@@ -440,9 +544,9 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   var view=document.getElementById('view'),bar=document.getElementById('bar');
   function renderLive(id){
     var sc=page.scrollTop;
-    page.innerHTML=id==='today'?renderToday():id==='content'?renderContent():id==='ads-live'?renderAds():id==='ads'?renderLiveAds():renderLibrary();
+    page.innerHTML=id==='today'?renderToday():id==='content'?renderContent():id==='ads-live'?renderAds():id==='ads'?renderLiveAds():id==='publish'?renderPublish():renderLibrary();
     page.scrollTop=sc;
-    if(id==='content')bindContent();if(id==='ads-live')bindAds();if(id==='ads')bindLiveAds();
+    if(id==='content')bindContent();if(id==='ads-live')bindAds();if(id==='ads')bindLiveAds();if(id==='publish')bindPublish();
   }
   function route(){
     var id=location.hash.slice(1);if(!BY[id]||BY[id].self||BY[id].ext)id='today';
