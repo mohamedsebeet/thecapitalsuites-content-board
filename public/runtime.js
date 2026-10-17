@@ -252,6 +252,7 @@
     if (!who || document.getElementById('files-link') || /files\.html$/.test(location.pathname)) return;
     var a = document.createElement('a'); a.id = 'files-link'; a.href = 'files.html'; a.textContent = 'غرفة التشغيل';
     who.parentNode.insertBefore(a, who.nextSibling);
+    if (!/simple\.html$/.test(location.pathname)) { var sa = document.createElement('a'); sa.id = 'simple-link'; sa.href = 'simple.html'; sa.textContent = 'اللوحة المبسطة'; sa.style.cssText = 'margin-inline-start:8px;padding:6px 12px;border:1px solid #C29B3C;border-radius:999px;font-size:13px;text-decoration:none;color:inherit;white-space:nowrap'; who.parentNode.insertBefore(sa, a.nextSibling); }
   }
   function addTeamButton() {
     if (!can('team.manage')) return;
