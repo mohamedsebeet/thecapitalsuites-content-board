@@ -50,6 +50,12 @@ button{cursor:pointer}
 .card .mt b{display:block;font-size:14px;line-height:1.45;font-weight:600}
 .card .mt span{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
 .card .mt .late{color:var(--warn);font-weight:600}
+@media (hover:hover) and (pointer:fine){.card[draggable="true"]{cursor:grab}}
+.card.drag{opacity:.4}
+.cols.dragging .col{transition:outline-color .15s,background .15s;outline:2px dashed transparent;outline-offset:-2px}
+.cols.dragging .col.can{outline-color:color-mix(in srgb,var(--c) 60%,transparent)}
+.cols.dragging .col.can.over{background:color-mix(in srgb,var(--c) 14%,var(--sunk))}
+.cols.dragging .col.no{opacity:.45}
 .card .act{display:flex;gap:6px;padding:0 10px 10px}
 .btn{border:1px solid var(--line);background:var(--surface);border-radius:9px;padding:8px 12px;font-size:13.5px;font-weight:600;flex:1;text-align:center}
 .btn.pri{background:var(--charcoal);color:var(--on);border-color:var(--charcoal)}
@@ -105,7 +111,7 @@ label.btn{display:block;cursor:pointer}
     <button class="chip" id="today">الأسبوع ده</button>
     <button class="chip" id="mine" aria-pressed="false">اللي عليّا بس</button>
     <span class="sp"></span>
-    <span class="hint" id="sum"></span>
+    <span class="hint" id="dnd" hidden>اسحب المنشور للخانة اللي عايزها ·</span><span class="hint" id="sum"></span>
   </div>
   <div class="tabs" id="tabs"></div>
   <div class="cols" id="cols"></div>
@@ -177,7 +183,7 @@ function inWeek(p){var a=iso(WS),b=iso(addD(WS,6));return p.d>=a&&p.d<=b}
 function render(){
   var a=WS,b=addD(WS,5),cur=iso(WS)===iso(weekStart(TODAY));
   document.getElementById('wkl').textContent=(cur?'الأسبوع ده · ':'')+a.getDate()+' '+MON[a.getMonth()]+' – '+b.getDate()+' '+MON[b.getMonth()];
-  document.getElementById('today').hidden=cur;
+  document.getElementById('today').hidden=cur;document.getElementById('dnd').hidden=!FINE;
   var mb=document.getElementById('mine');mb.setAttribute('aria-pressed',MINE?'true':'false');
   // المنشورات المتأخرة من أسابيع فاتت بتظهر في الأسبوع الحالي
   var list=POSTS.filter(function(p){if(inWeek(p))return true;return cur&&p.d<iso(WS)&&p.status!=='published'});
@@ -189,14 +195,15 @@ function render(){
   document.getElementById('tabs').innerHTML=STAGES.map(function(s){return '<button data-tab="'+s.k+'" aria-pressed="'+(TAB===s.k)+'">'+s.t+' ('+groups[s.k].length+')</button>'}).join('');
   document.getElementById('cols').innerHTML=STAGES.map(function(s){
     var g=groups[s.k];
-    return '<section class="col'+(TAB===s.k?' on':'')+'" style="--c:'+s.c+'"><h2>'+s.t+'<span class="n">'+g.length+'</span></h2>'+(g.length?g.map(card).join(''):'<p class="empty">'+(MINE?'مفيش حاجة مطلوبة منك هنا.':s.e)+'</p>')+'</section>';
+    return '<section class="col'+(TAB===s.k?' on':'')+'" data-k="'+s.k+'" style="--c:'+s.c+'"><h2>'+s.t+'<span class="n">'+g.length+'</span></h2>'+(g.length?g.map(card).join(''):'<p class="empty">'+(MINE?'مفيش حاجة مطلوبة منك هنا.':s.e)+'</p>')+'</section>';
   }).join('');
 }
 function card(p){
   var th=thumb(p),late=lateOf(p),s=(STAGE_OF[p.status]||STAGES[0]).k;
   var sub=s==='work'?'التسليم '+fmtS(dueOf(p))+' · النشر '+fmtS(p.d):fmt(p.d)+((p.tm||TIME[p.p])?' · '+(p.tm||TIME[p.p]):'');
   var a=actions(p);
-  return '<div class="card"><button class="open" data-open="'+esc(p.id)+'"><span class="th"'+(th?' style="background-image:url(\''+esc(th)+'\')"':'')+'>'+(th?'':esc(p.p||''))+'</span><span class="mt"><b>'+esc(p.t||'بدون عنوان')+'</b><span>'+esc(PLN[p.p]||p.p||'')+' · '+esc(STL[p.status]||'')+'</span><span'+(late?' class="late"':'')+'>'+(late||esc(sub))+'</span></span></button>'+(a?'<div class="act">'+a+'</div>':'')+'</div>';
+  var dg=FINE&&STAGES.some(function(x){return x.k!==s&&moveTo(p,x.k)});
+  return '<div class="card"'+(dg?' draggable="true"':'')+' data-card="'+esc(p.id)+'"><button class="open" data-open="'+esc(p.id)+'"><span class="th"'+(th?' style="background-image:url(\''+esc(th)+'\')"':'')+'>'+(th?'':esc(p.p||''))+'</span><span class="mt"><b>'+esc(p.t||'بدون عنوان')+'</b><span>'+esc(PLN[p.p]||p.p||'')+' · '+esc(STL[p.status]||'')+'</span><span'+(late?' class="late"':'')+'>'+(late||esc(sub))+'</span></span></button>'+(a?'<div class="act">'+a+'</div>':'')+'</div>';
 }
 
 /* ---------- التفاصيل ---------- */
@@ -231,7 +238,7 @@ function drawNotes(list){var el=document.getElementById('notes');if(!el)return;
 
 /* ---------- الإجراءات ---------- */
 function setStatus(id,k){var p=BY[id];if(!p||p.status===k)return;
-  var msg={review:'اتبعت للمراجعة',approved:'اتعتمد ✓',changes:'اتطلبت تعديلات',scheduled:'رجع «جاهز للنشر»'}[k]||'اتحدثت الحالة';
+  var msg={review:'اتنقل للمراجعة',approved:'اتعتمد ✓',changes:'اتطلبت تعديلات',scheduled:'رجع «جاهز للنشر»'}[k]||'اتحدثت الحالة';
   if(k==='changes'){var why=prompt('إيه التعديل المطلوب؟ (اختياري)');if(why===null)return;
     write(id,{status:k},msg,'طلب تعديلات'+(why.trim()?': '+why.trim():''));return}
   write(id,{status:k},msg,'غيّر الحالة من «'+(STL[p.status]||p.status)+'» إلى «'+STL[k]+'»');
@@ -247,6 +254,30 @@ function upload(id,files){files=[].slice.call(files||[]);if(!files.length)return
     write(id,patch,toR?'اترفع التصميم واتبعت للمراجعة':'اترفع التصميم','رفع '+(done.length===1?'تصميم':done.length+' تصاميم')+(toR?' وحوّله للمراجعة':''));
   }).catch(function(e){toast((e&&e.message)||'ما اترفعش الملف');if(done.length)write(id,{designs:(p.designs||[]).concat(done)},'اترفع جزء من الملفات','رفع '+done.length+' تصميم')});
 }
+/* ---------- السحب والإفلات (كمبيوتر) ---------- */
+var FINE=window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches;
+// يرجع الخطوة لو الشخص يقدر ينقل المنشور للخانة دي، أو null
+function moveTo(p,to){
+  var from=(STAGE_OF[p.status]||STAGES[0]).k;if(from===to)return null;
+  if(to==='done')return from==='ready'&&canPublishAll(p)?{pub:1}:null;
+  if(to==='ready')return C('posts.approve')?{st:from==='done'?'scheduled':'approved'}:null;
+  if(to==='review'){if(from==='work')return (C('posts.status')||C('posts.approve'))?{st:'review'}:null;return C('posts.approve')?{st:'review'}:null}
+  if(to==='work')return C('posts.approve')?{st:'changes'}:null;
+  return null;
+}
+var DRAG=null;
+document.addEventListener('dragstart',function(e){var c=e.target.closest&&e.target.closest('.card[draggable]');if(!c)return;
+  DRAG=c.dataset.card;e.dataTransfer.effectAllowed='move';try{e.dataTransfer.setData('text/plain',DRAG)}catch(x){}
+  setTimeout(function(){c.classList.add('drag');var cols=document.getElementById('cols');cols.classList.add('dragging');
+    cols.querySelectorAll('.col').forEach(function(col){var ok=!!moveTo(BY[DRAG],col.dataset.k);col.classList.toggle('can',ok);col.classList.toggle('no',!ok&&col.dataset.k!==(STAGE_OF[BY[DRAG].status]||STAGES[0]).k)})},0)});
+function endDrag(){DRAG=null;var cols=document.getElementById('cols');cols.classList.remove('dragging');cols.querySelectorAll('.col').forEach(function(c){c.classList.remove('can','no','over')});cols.querySelectorAll('.card.drag').forEach(function(c){c.classList.remove('drag')})}
+document.addEventListener('dragend',endDrag);
+document.addEventListener('dragover',function(e){if(!DRAG)return;var col=e.target.closest&&e.target.closest('.col.can');if(!col)return;e.preventDefault();e.dataTransfer.dropEffect='move';
+  document.querySelectorAll('.col.over').forEach(function(c){if(c!==col)c.classList.remove('over')});col.classList.add('over')});
+document.addEventListener('dragleave',function(e){var col=e.target.closest&&e.target.closest('.col');if(col&&!col.contains(e.relatedTarget))col.classList.remove('over')});
+document.addEventListener('drop',function(e){if(!DRAG)return;var col=e.target.closest&&e.target.closest('.col.can');var id=DRAG;endDrag();if(!col)return;e.preventDefault();
+  var m=moveTo(BY[id],col.dataset.k);if(!m)return;if(m.pub)publishAll(id);else setStatus(id,m.st)});
+
 document.addEventListener('click',function(e){
   var t=e.target.closest('[data-open],[data-go],[data-pub],[data-tab]');if(!t)return;
   if(t.dataset.open){openSheet(t.dataset.open);return}
