@@ -129,8 +129,9 @@ var STAGES=[
   {k:'done',t:'اتنشر',c:'var(--done)',st:['published'],e:'لسه ما اتنشرش حاجة الأسبوع ده.'}];
 var STL={idea:'فكرة',copy:'النص جاهز',design:'عند المصمم',changes:'تعديلات مطلوبة',review:'للمراجعة',approved:'معتمد',scheduled:'مجدول',published:'منشور'};
 var STAGE_OF={};STAGES.forEach(function(s){s.st.forEach(function(x){STAGE_OF[x]=s})});
-var PLN={IG:'إنستغرام',FB:'فيسبوك',LI:'لينكدإن',X:'X',ALL:'كل المنصات',WA:'واتساب'};
-var TIME={IG:'9:00 م',FB:'9:00 م',LI:'9:30 ص',X:'8:00 م'};
+var PLN={IG:'إنستغرام',FB:'فيسبوك',TT:'تيك توك',X:'X',LI:'لينكدإن (متوقف)',ALL:'كل المنصات',WA:'واتساب'};
+var PAUSED={LI:1}; // لينكدإن متوقف مؤقتاً
+var TIME={IG:'9:00 م',FB:'9:00 م',TT:'9:00 م',X:'8:00 م'};
 var DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
 var MON=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
 var LEAD=3;
@@ -143,7 +144,7 @@ function fmt(s){var d=pd(s);return DAYS[d.getDay()]+' '+d.getDate()+' '+MON[d.ge
 function fmtS(s){var d=pd(s);return d.getDate()+' '+MON[d.getMonth()]}
 function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function safeUrl(u){u=String(u||'').trim();return /^https?:\/\//i.test(u)?u:''}
-function targets(p){return p.targets||({IG:['IG'],FB:['FB'],LI:['LI'],X:['X'],ALL:['IG','FB','LI','X']}[p.p]||[])}
+function targets(p){return (p.targets||({IG:['IG'],FB:['FB'],TT:['TT'],X:['X'],ALL:['IG','FB','TT','X']}[p.p]||[])).filter(function(k){return !PAUSED[k]})}
 function isImg(x){return /^image\//.test(x.type||'')}
 function thumb(p){var d=(p.designs||[]).filter(isImg)[0];if(d&&safeUrl(d.url))return d.url;var i=(p.im||[])[0];return i?(safeUrl(i)||(/^img\/[\w.-]+$/.test(i)?i:'')):''}
 function C(k){return window.capital&&capital.can?capital.can(k):false}
@@ -300,7 +301,7 @@ claude.use('user').then(function(u){return u.me()}).then(function(m){
   return claude.use('db');
 }).then(function(d){db=d;
   d.collection('posts').limit(1000).onSnapshot(function(s){
-    POSTS=s.docs.map(function(x){var o=Object.assign({},x.data());o.id=x.id;return o}).filter(function(p){return p.kind!=='setup'&&p.d}).sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:((a.tm||'')<(b.tm||'')?-1:1)});
+    POSTS=s.docs.map(function(x){var o=Object.assign({},x.data());o.id=x.id;return o}).filter(function(p){return p.kind!=='setup'&&p.d&&!PAUSED[p.p]}).sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:((a.tm||'')<(b.tm||'')?-1:1)});
     BY={};POSTS.forEach(function(p){BY[p.id]=p});
     document.getElementById('loading').hidden=true;document.getElementById('app').hidden=false;
     render();if(OPEN)renderSheet();

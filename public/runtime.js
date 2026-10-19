@@ -44,7 +44,8 @@
     viewer: ['view.campaigns', 'view.plans', 'view.decks', 'view.publish']
   };
   PRESETS.team = PRESETS.designer;
-  var PLATS = [['IG', 'إنستغرام'], ['FB', 'فيسبوك'], ['LI', 'لينكدإن'], ['X', 'X']];
+  // لينكدإن متوقف مؤقتاً (مشكلة في الحساب)، ويرجع بإضافته هنا تاني
+  var PLATS = [['IG', 'إنستغرام'], ['FB', 'فيسبوك'], ['TT', 'تيك توك'], ['X', 'X']];
   var WRITE_PERMS = ['posts.create', 'posts.edit', 'posts.status', 'posts.approve', 'designs.upload', 'designs.delete', 'notes.write', 'publish.schedule', 'publish.mark'];
   function can(p) { return ROLE === 'owner' || ACCESS.perms.indexOf(p) >= 0; }
   function canAny(list) { return list.some(can); }

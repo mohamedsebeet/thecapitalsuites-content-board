@@ -32,7 +32,9 @@ function fontCss(url) {
 }
 (async () => {
   const b = await chromium.launch();
+  const ONLY = process.env.ONLY ? process.env.ONLY.split(',') : null; // مثال: ONLY=shamel.html,cal30.html
   for (const [src, out, kind] of JOBS) {
+    if (ONLY && ONLY.indexOf(src) < 0) continue;
     const p = await b.newPage({ viewport: kind === 'deck' ? { width: 1920, height: 1080 } : { width: 1200, height: 1600 }, deviceScaleFactor: 1.5 });
     await p.route('**/*', r => {
       const u = new URL(r.request().url());
