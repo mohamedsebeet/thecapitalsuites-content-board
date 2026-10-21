@@ -120,6 +120,21 @@ button.pc:hover{border-color:var(--gold)}
 .adrow{display:flex;gap:10px;flex-wrap:wrap}.adup .m{font-size:12.5px;color:var(--ink-3)}
 .adv{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px}.adn{font-size:13.5px;margin:6px 0;color:var(--ink-2)}.adn.rv{color:var(--warn)}
 .adrn{display:flex;gap:8px;margin-top:8px;align-items:flex-start}.adrn textarea{flex:1;font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
+.pcbar{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin:16px 0 10px}
+.pcnav{display:flex;gap:8px;align-items:center}.pcnav b{font-size:17px;min-width:120px;text-align:center}.pcnav button{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;height:32px;min-width:32px;font-size:18px;cursor:pointer}.pcnav .tdy{font-size:13px;padding:0 10px}
+.pcal{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--surface)}
+.pchd,.pcg{display:grid;grid-template-columns:repeat(6,minmax(0,1fr)) 64px}
+.pchd span{font-size:12.5px;font-weight:600;color:var(--ink-3);padding:8px;border-bottom:1px solid var(--line);text-align:center}
+.pcd{min-height:112px;border-inline-start:1px solid var(--line);border-bottom:1px solid var(--line);padding:6px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.pcd:nth-child(7n+1){border-inline-start:0}.pcd.out{background:var(--bg)}.pcd.out .pcn b{opacity:.45}.pcd.fri{background:var(--soft)}.pcd.now .pcn b{background:var(--gold);color:#fff;border-radius:999px;padding:0 7px}
+.pcd.over{outline:2px dashed var(--gold);outline-offset:-3px;background:var(--gold-soft)}
+.pcn{display:flex;gap:6px;align-items:center;font-size:12.5px}.pcn span{display:none}.pcn i{font-style:normal;font-size:11px;color:var(--ink-3)}.pcd.fri .pcn b{color:var(--ink-3)}
+.pcc{font:inherit;display:flex;gap:6px;align-items:center;width:100%;text-align:start;background:var(--surface);border:1px solid var(--line);border-inline-start:3px solid var(--sc);border-radius:7px;padding:3px;cursor:pointer;color:inherit;min-width:0}
+.pcc[draggable=true]{cursor:grab}.pcc.drag{opacity:.4}.pcc:hover{border-color:var(--gold)}
+.pcc img,.pcc .ni{width:30px;height:36px;border-radius:4px;object-fit:cover;flex:0 0 auto;background:var(--soft);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--ink-3)}.pcc img.dr{opacity:.55;filter:grayscale(.5)}
+.pct{min-width:0;display:flex;flex-direction:column}.pct b{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pct small{font-size:11px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pcmeta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--ink-2);margin:8px 0}.pcmeta input{font:inherit;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}.pcmeta a{color:var(--gold-ink);font-weight:600;text-decoration:none;margin-inline-start:auto}
+@media (max-width:760px){.pchd{display:none}.pcg{display:block}.pcd{border-inline-start:0;min-height:0}.pcd.empty,.pcd.out{display:none}.pcn b{display:none}.pcn span{display:inline;font-weight:600}.pcd.now .pcn span{color:var(--gold-ink)}}
 .lb-x{border:0;background:none;font-size:26px;line-height:1;cursor:pointer;color:var(--ink)}
 .lb-row{display:flex;gap:10px;overflow-x:auto;padding:14px}.lb-row img{height:min(70vh,560px);width:auto;border-radius:8px;flex:0 0 auto}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
@@ -265,6 +280,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       {id:'today',t:'اليوم',d:'المطلوب الآن: التسليمات والمراجعات والنشر والحملات',m:'مباشر',live:true},
       {id:'content',t:'المحتوى',d:'كل منشورات التقويم بتصاميمها المرفوعة وحالتها',m:'مباشر',live:true},
       {id:'ads-live',t:'الحملات',d:'الصرف والنتائج والإعلانات الشغالة ونتائج المبيعات',m:'مباشر',live:true},
+      {id:'design-cal',t:'تقويم التصاميم',d:'كل منشور في يومه بتصميمه: ارفع، اعتمد، واسحب المنشور ليوم تاني',m:'مباشر',live:true},
       {id:'ad-designs',t:'تصاميم الإعلانات',d:'نسخ جديدة من تصاميم الإعلانات: المصمم يرفع، والمدير يعتمد، وبعدها تتركّب على المنصة',m:'مباشر',live:true},
       {id:'preview',t:'معاينة المنشورات',d:'شكل كل منشور على إنستغرام وفيسبوك وتيك توك وX قبل ما ينزل، وشبكة الحساب',m:'مباشر',live:true},
       {id:'publish',t:'جدول النشر',d:'مواعيد النشر لكل منصة: انسخ النص، نزّل التصميم، وعلّم إنه اتنشر',m:'مباشر',live:true},
@@ -541,6 +557,101 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       lb.innerHTML='<div class="lb-in"><div class="lb-h"><b>'+esc(x.a.title||x.a.name)+'</b><span>'+(x.c.platform==='meta'?'ميتا':'سناب')+' · '+esc(x.a.hood||'')+'</span><button type="button" class="lb-x" aria-label="إغلاق">×</button></div><div class="lb-row">'+im.map(function(u){return '<img src="'+esc(u)+'" alt="">'}).join('')+'</div></div>';
       lb.hidden=false;lb.querySelector('.lb-x').onclick=function(){lb.hidden=true};lb.onclick=function(e){if(e.target===lb)lb.hidden=true};
     }});
+  }
+
+  /* ---------- تقويم التصاميم (المنشورات) ---------- */
+  var PC={m:null,f:{pl:'',need:false},open:null};
+  var WD=['السبت','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة'];
+  function canMove(){return CAN('posts.edit')||CAN('publish.schedule')}
+  function pcStart(){if(!PC.m){var d=new Date(TODAY);d.setDate(1);PC.m=iso(d)}return pd(PC.m)}
+  function pcVers(p){var g={};(p.designs||[]).filter(function(x){return safeUrl(x.url)}).forEach(function(x){var v=x.v||1;(g[v]=g[v]||[]).push(x)});return Object.keys(g).map(Number).sort(function(a,b){return b-a}).map(function(v){return {v:v,files:g[v]}})}
+  function pcNeed(p){return !(p.designs||[]).length&&!DONE[p.status]}
+  function renderPostCal(){
+    if(!LOADED)return '<p class="loading">جارِ تحميل التقويم…</p>';
+    var m0=pcStart(),y=m0.getFullYear(),mo=m0.getMonth(),first=new Date(y,mo,1),last=new Date(y,mo+1,0);
+    var s=new Date(first);s.setDate(s.getDate()-((s.getDay()+1)%7));var e=new Date(last);e.setDate(e.getDate()+(5-e.getDay()+7)%7);
+    var by={};POSTS.forEach(function(p){if(PC.f.pl&&p.p!==PC.f.pl&&(p.targets||[]).indexOf(PC.f.pl)<0)return;if(PC.f.need&&!pcNeed(p))return;(by[p.d]=by[p.d]||[]).push(p)});
+    var inM=POSTS.filter(function(p){var d=pd(p.d);return d.getMonth()===mo&&d.getFullYear()===y}),need=inM.filter(pcNeed).length,rev=inM.filter(function(p){return p.status==='review'}).length;
+    var h='<h2>تقويم التصاميم</h2><p class="lede">كل منشور في يومه بتصميمه وحالته. '+(CAN('designs.upload')?'افتح المنشور وارفع التصميم أو نسخة جديدة منه. ':'')+(canMove()?'اسحب أي منشور ليوم تاني عشان تغيّر ميعاده.':'')+'</p>';
+    h+='<div class="tiles"><div class="tile'+(need?' warn':'')+'"><span class="k">محتاجة تصميم هذا الشهر</span><span class="v num">'+need+'</span></div><div class="tile'+(rev?' gold':'')+'"><span class="k">بانتظار المراجعة</span><span class="v num">'+rev+'</span></div><div class="tile"><span class="k">منشورات الشهر</span><span class="v num">'+inM.length+'</span></div></div>';
+    h+='<div class="pcbar"><div class="pcnav"><button data-mv="-1" aria-label="الشهر اللي فات">›</button><b>'+MON[mo]+' '+y+'</b><button data-mv="1" aria-label="الشهر الجاي">‹</button><button data-mv="0" class="tdy">الشهر ده</button></div>'+
+      '<div class="chips" id="pcf" style="margin:0"><button data-p="" aria-pressed="'+(PC.f.pl==='')+'">كل المنصات</button>'+PLAT.map(function(x){return '<button data-p="'+x.k+'" aria-pressed="'+(PC.f.pl===x.k)+'">'+x.n+'</button>'}).join('')+'<button data-need="1" aria-pressed="'+PC.f.need+'">محتاجة تصميم</button></div></div>';
+    h+='<div class="pcal"><div class="pchd">'+WD.map(function(w,i){return '<span'+(i===6?' class="fri"':'')+'>'+w+'</span>'}).join('')+'</div><div class="pcg">';
+    for(var d=new Date(s);d<=e;d.setDate(d.getDate()+1)){
+      var k=iso(d),fri=d.getDay()===5,out=d.getMonth()!==mo,list=by[k]||[];
+      h+='<div class="pcd'+(fri?' fri':'')+(out?' out':'')+(k===T?' now':'')+(list.length?'':' empty')+'" data-day="'+k+'"><div class="pcn"><b>'+d.getDate()+'</b><span>'+WD[(d.getDay()+1)%7]+' '+d.getDate()+' '+MON[d.getMonth()]+'</span>'+(fri?'<i>إجازة</i>':'')+'</div>'+
+        list.map(function(p){var m=media(p);return '<button type="button" class="pcc" data-pc="'+esc(p.id)+'"'+(canMove()?' draggable="true"':'')+' style="--sc:var(--st-'+p.status+')">'+(m&&m.type==='img'?'<img src="'+esc(m.url)+'" alt="" loading="lazy"'+(m.draft?' class="dr"':'')+'>':'<span class="ni">'+(m?'▶':'+')+'</span>')+'<span class="pct"><b>'+esc(p.t)+'</b><small>'+esc(PSHORT[p.p]||p.p)+' · '+esc(STL[p.status]||'')+'</small></span></button>'}).join('')+'</div>';
+    }
+    return h+'</div></div>';
+  }
+  function pcMove(id,day){
+    var p=BY_P[id];if(!p||p.d===day)return;
+    if(pd(day).getDay()===5){ptoast('الجمعة إجازة، اختار يوم تاني.');return}
+    if(!canMove()){ptoast('مش عندك صلاحية تغيير الميعاد');return}
+    save(id,{d:day},'اتنقل لـ'+dayD(day));
+  }
+  function bindPostCal(){
+    page.querySelectorAll('[data-mv]').forEach(function(b){b.onclick=function(){var v=+b.dataset.mv,d=pcStart();if(!v){d=new Date(TODAY);d.setDate(1)}else d=new Date(d.getFullYear(),d.getMonth()+v,1);PC.m=iso(d);rerender()}});
+    var f=document.getElementById('pcf');if(f){f.querySelectorAll('[data-p]').forEach(function(b){b.onclick=function(){PC.f.pl=b.dataset.p;rerender()}});f.querySelector('[data-need]').onclick=function(){PC.f.need=!PC.f.need;rerender()}}
+    page.querySelectorAll('[data-pc]').forEach(function(b){
+      b.onclick=function(){PC.open=b.dataset.pc;pcSheet()};
+      b.ondragstart=function(e){e.dataTransfer.setData('text/plain',b.dataset.pc);e.dataTransfer.effectAllowed='move';b.classList.add('drag')};
+      b.ondragend=function(){b.classList.remove('drag');page.querySelectorAll('.pcd.over').forEach(function(x){x.classList.remove('over')})};
+    });
+    page.querySelectorAll('.pcd').forEach(function(c){
+      c.ondragover=function(e){if(c.classList.contains('fri'))return;e.preventDefault();c.classList.add('over')};
+      c.ondragleave=function(){c.classList.remove('over')};
+      c.ondrop=function(e){e.preventDefault();c.classList.remove('over');var id=e.dataTransfer.getData('text/plain');if(id)pcMove(id,c.dataset.day)};
+    });
+  }
+  function pcBox(){var b=document.getElementById('pclb');if(!b){b=document.createElement('div');b.id='pclb';b.className='lb';b.hidden=true;document.body.appendChild(b);b.onclick=function(e){if(e.target===b)pcClose()}}return b}
+  function pcClose(){PC.open=null;pcBox().hidden=true;pcBox().innerHTML=''}
+  function pcSheet(){
+    var box=pcBox(),p=PC.open&&BY_P[PC.open];if(!p){box.hidden=true;return}
+    var up=CAN('designs.upload'),ap=CAN('posts.approve'),dl=CAN('designs.delete'),vs=pcVers(p),done=!!DONE[p.status];
+    var h='<div class="lb-in adsh"><div class="lb-h"><b>'+esc(p.t)+'</b><span>'+esc(PSHORT[p.p]||p.p)+' · '+dayD(p.d)+' · '+esc(STL[p.status]||'')+'</span><button type="button" class="lb-x" aria-label="إغلاق">×</button></div><div class="adb">';
+    h+='<div class="pcmeta">'+(canMove()?'<label>ميعاد النشر <input type="date" id="pcdate" value="'+esc(p.d)+'"></label>':'<span>النشر: '+dayD(p.d)+'</span>')+'<span>تسليم التصميم: '+dayD(dueOf(p))+'</span>'+(p.f?'<span>الشكل: '+esc(p.f)+'</span>':'')+'<a href="'+postHref(p)+'">افتح في اللوحة ←</a></div>';
+    if(p.b)h+='<p class="adn"><b>البريف:</b> '+esc(p.b)+'</p>';
+    if(p.lastNote&&p.status==='changes')h+='<p class="adn rv"><b>آخر ملاحظة:</b> '+esc(p.lastNote)+'</p>';
+    if(ap&&vs.length&&!done)h+='<div class="plb"><button class="pbtn sm" data-pa="approved">✓ اعتماد التصميم</button>'+(p.status!=='changes'?'<button class="pbtn sm ghost" data-pa="changes">تعديلات مطلوبة</button>':'')+'</div><div class="adrn" id="pcrn" hidden><textarea rows="2" placeholder="إيه المطلوب تعديله؟"></textarea><button class="pbtn sm" id="pcsend">إرسال للمصمم</button></div>';
+    if(up)h+='<div class="plb" style="margin-top:12px"><button class="pbtn" type="button" id="pcshow">↑ ارفع '+(vs.length?'نسخة جديدة (النسخة '+(vs[0].v+1)+')':'التصميم')+'</button></div><div id="pcupw" hidden style="margin-top:10px"><form class="adup" id="pcup"><label>الملفات (كل صور الكاروسيل أو الفيديو مع بعض)<input type="file" name="files" multiple accept="image/png,image/jpeg,image/webp,video/mp4,video/quicktime,application/pdf" required></label><label>ملاحظة (اختياري)<textarea name="note" rows="2" placeholder="مثال: غيّرت الخلفية وكبّرت العنوان"></textarea></label><div class="plb"><button class="pbtn" type="submit">↑ ارفع</button><span class="m" id="pcst"></span></div></form></div>';
+    h+='<h4>التصاميم'+(vs.length?' <span class="c">'+vs.length+' '+(vs.length>1?'نسخ':'نسخة')+'</span>':'')+'</h4>';
+    if(!vs.length&&(p.im||[]).length)h+='<p class="adn">لسه مفيش تصميم مرفوع. ده التصميم المقترح:</p><div class="lb-row sm">'+p.im.map(function(u){return '<img src="'+esc(u)+'" alt="">'}).join('')+'</div>';
+    else if(!vs.length)h+='<p class="empty">لسه مفيش تصميم مرفوع.</p>';
+    h+=vs.map(function(g,gi){var fl=g.files,f0=fl[0]||{};
+      return '<div class="adv"><div class="plh"><b>النسخة '+g.v+'</b>'+(gi===0?stTag(p.status):'<span class="st" style="--sc:var(--ink-3)">نسخة قديمة</span>')+'<span class="m">'+esc(NAMES[f0.by]||f0.by||'')+(f0.at?' · '+dayD(f0.at.slice(0,10)):'')+'</span></div>'+
+        '<div class="lb-row sm">'+fl.map(function(z){return /^video\//.test(z.type||'')?'<video src="'+esc(z.url)+'#t=0.1" controls preload="metadata"></video>':/^image\//.test(z.type||'')?'<a href="'+esc(z.url)+'" target="_blank" rel="noopener"><img src="'+esc(z.url)+'" alt=""></a>':'<a class="pbtn sm ghost" href="'+esc(z.url)+'" target="_blank" rel="noopener">PDF</a>'}).join('')+'</div>'+
+        '<div class="plb">'+(fl.length>1?'<button class="pbtn sm" data-pz="'+g.v+'">⬇ تحميل الكل (ZIP)</button>':'')+fl.map(function(z,i){return '<a class="pbtn sm ghost" href="'+esc(z.url)+'" download="'+esc(z.name||'design')+'">⬇ '+(fl.length>1?'ملف '+(i+1):'تحميل')+'</a>'}).join('')+(dl&&!done?'<button class="pbtn sm ghost" data-pd="'+g.v+'" style="color:var(--warn)">حذف النسخة</button>':'')+'</div></div>'}).join('');
+    box.innerHTML=h+'</div></div>';box.hidden=false;
+    box.querySelector('.lb-x').onclick=pcClose;
+    var di=box.querySelector('#pcdate');if(di)di.onchange=function(){if(di.value){pcMove(p.id,di.value);if(pd(di.value).getDay()===5)di.value=p.d}};
+    var sw=box.querySelector('#pcshow');if(sw)sw.onclick=function(){box.querySelector('#pcupw').hidden=false;sw.parentNode.hidden=true};
+    var fm=box.querySelector('#pcup');if(fm)fm.onsubmit=function(e){e.preventDefault();pcUpload(p,fm,vs.length?vs[0].v+1:1)};
+    box.querySelectorAll('[data-pa]').forEach(function(b){b.onclick=function(){if(b.dataset.pa==='changes'){box.querySelector('#pcrn').hidden=false;box.querySelector('#pcrn textarea').focus();return}pcStatus(p,'approved','')}});
+    var sd=box.querySelector('#pcsend');if(sd)sd.onclick=function(){var t=box.querySelector('#pcrn textarea').value.trim();if(!t){ptoast('اكتب المطلوب تعديله');return}pcStatus(p,'changes',t)};
+    box.querySelectorAll('[data-pz]').forEach(function(b){var g=vs.filter(function(x){return x.v===+b.dataset.pz})[0];b.onclick=function(){var t=b.textContent;b.disabled=true;b.textContent='جارِ التجهيز…';capital.zip(g.files.map(function(z){return {url:z.url,name:z.name}}),p.t+'-النسخة-'+g.v).then(function(){b.disabled=false;b.textContent=t}).catch(function(){b.disabled=false;b.textContent=t;ptoast('التحميل فشل، حاول تاني.')})}});
+    box.querySelectorAll('[data-pd]').forEach(function(b){b.onclick=function(){var v=+b.dataset.pd;if(!confirm('حذف النسخة '+v+'؟'))return;var keep=(p.designs||[]).filter(function(x){return (x.v||1)!==v}),gone=(p.designs||[]).filter(function(x){return (x.v||1)===v});
+      DB.doc('posts/'+p.id).update({designs:keep,updatedBy:ME,updatedAt:new Date().toISOString()}).then(function(){gone.forEach(function(z){if(z.path)capital.removeFile(z.path).catch(function(){})});ptoast('اتحذفت النسخة')}).catch(function(){ptoast('ما اتحذفتش، حاول تاني.')})}});
+  }
+  function pcNote(p,t){if(!t)return Promise.resolve();return DB.collection('posts/'+p.id+'/notes').add({by:ME,at:new Date().toISOString(),text:t}).then(function(){return DB.doc('posts/'+p.id).update({noteCount:(p.noteCount||0)+1,lastNote:t.slice(0,140)})}).catch(function(){})}
+  function pcStatus(p,st,note){
+    var patch={status:st,updatedBy:ME,updatedAt:new Date().toISOString()};
+    DB.doc('posts/'+p.id).update(patch).then(function(){return pcNote(p,note)}).then(function(){ptoast(st==='approved'?'اتعتمد التصميم':'اتبعت طلب التعديل للمصمم')}).catch(function(){ptoast('ما اتحفظش، حاول تاني.')});
+  }
+  function pcUpload(p,fm,v){
+    var E=fm.elements,files=[].slice.call(E.namedItem('files').files||[]),st=fm.querySelector('#pcst'),btn=fm.querySelector('button[type=submit]'),note=E.namedItem('note').value.trim(),out=[],i=0;
+    if(!files.length){ptoast('اختار الملفات الأول');return}
+    btn.disabled=true;
+    (function next(){
+      if(i>=files.length){
+        var patch={designs:(p.designs||[]).concat(out),updatedBy:ME,updatedAt:new Date().toISOString()};
+        if(!DONE[p.status]&&p.status!=='review')patch.status='review';
+        DB.doc('posts/'+p.id).update(patch).then(function(){return pcNote(p,note?'النسخة '+v+': '+note:'')}).then(function(){ptoast('اترفعت النسخة '+v+(patch.status?' وراحت للمراجعة':''))}).catch(function(e){btn.disabled=false;st.textContent='ما اتحفظتش: '+((e&&e.message)||'حاول تاني')});
+        return;
+      }
+      st.textContent='جارِ رفع '+(i+1)+' من '+files.length+'…';
+      capital.upload(p.id,files[i]).then(function(r){r.v=v;out.push(r);i++;next()}).catch(function(e){btn.disabled=false;st.textContent=(e&&e.message)||'الرفع فشل، حاول تاني.'});
+    })();
   }
 
   /* ---------- تصاميم الإعلانات (نسخ جديدة) ---------- */
@@ -857,9 +968,9 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   var view=document.getElementById('view'),bar=document.getElementById('bar');
   function renderLive(id){
     var sc=page.scrollTop;
-    page.innerHTML=id==='today'?renderToday():id==='content'?renderContent():id==='ads-live'?renderAds():id==='ads'?renderLiveAds():id==='publish'?renderPublish():id==='preview'?renderPreview():id==='ad-designs'?renderAdDesigns():renderLibrary();
+    page.innerHTML=id==='today'?renderToday():id==='content'?renderContent():id==='ads-live'?renderAds():id==='ads'?renderLiveAds():id==='publish'?renderPublish():id==='preview'?renderPreview():id==='ad-designs'?renderAdDesigns():id==='design-cal'?renderPostCal():renderLibrary();
     page.scrollTop=sc;
-    if(id==='content')bindContent();if(id==='ads-live')bindAds();if(id==='ads')bindLiveAds();if(id==='publish')bindPublish();if(id==='preview')bindPreview();if(id==='ad-designs'){loadAdDesigns();bindAdDesigns()}
+    if(id==='content')bindContent();if(id==='ads-live')bindAds();if(id==='ads')bindLiveAds();if(id==='publish')bindPublish();if(id==='preview')bindPreview();if(id==='ad-designs'){loadAdDesigns();bindAdDesigns()}if(id==='design-cal'){bindPostCal();if(PC.open)pcSheet()}
   }
   function route(){
     var id=location.hash.slice(1).split('?')[0];if(!BY[id]||BY[id].self||BY[id].ext)id='today';
