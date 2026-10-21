@@ -130,7 +130,7 @@
     }).then(function (role) {
       if (!role) { domReady(function () { showDenied(email); }); return; }
       ROLE = role;
-      return loadAccess().then(loadMembers).then(function () { domReady(function () { closeGate(); readyResolve(); addFilesLink(); addTeamButton(); }); });
+      return loadAccess().then(loadMembers).then(function () { domReady(function () { closeGate(); readyResolve(); addFilesLink(); addTeamButton(); startBell(); }); });
     });
   }
 
@@ -368,6 +368,147 @@
     });
   }
 
+
+
+  /* ---------- الإشعارات ---------- */
+  var VAPID_PUB = 'BFQm6RyQtbIhIvO4a3ymzke5bRRZDqkZiF8YQVjcJJL3SOR9Jt2ezB257M7ZFY8zTNr7lUIdHCkI6q5RuYnJhOw';
+  var ACTS = [], BELL_OK = false, PUSH_ON = false;
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
+  function seenKey() { return 'cs-seen-' + (SESSION ? SESSION.user.email.toLowerCase() : ''); }
+  function lastSeen() { return lsGet(seenKey()) || new Date(Date.now() - 3 * 864e5).toISOString(); }
+  function mine(a) { return SESSION && a.actor && a.actor.toLowerCase() === SESSION.user.email.toLowerCase(); }
+  function unread() { var ls = lastSeen(); return ACTS.filter(function (a) { return !mine(a) && a.at > ls; }).length; }
+  function txt(a) { return window.activityText ? window.activityText(a) : { title: 'تحديث', body: '', url: '/files.html' }; }
+  function ago(t) { var m = Math.round((Date.now() - new Date(t).getTime()) / 60000); if (m < 1) return 'دلوقتي'; if (m < 60) return 'من ' + m + ' دقيقة'; var h = Math.round(m / 60); if (h < 24) return 'من ' + h + ' ساعة'; var d = Math.round(h / 24); return d === 1 ? 'إمبارح' : 'من ' + d + ' أيام'; }
+  function badge() { var b = document.getElementById('bell-n'); if (!b) return; var n = unread(); b.textContent = n > 99 ? '99+' : n; b.hidden = !n; }
+  function pushSupported() { return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window; }
+  function isIOS() { return /iP(hone|ad|od)/.test(navigator.userAgent) && !window.MSStream; }
+  function standalone() { return (window.matchMedia && matchMedia('(display-mode: standalone)').matches) || navigator.standalone; }
+  function b64(s) { var p = '='.repeat((4 - s.length % 4) % 4), r = atob((s + p).replace(/-/g, '+').replace(/_/g, '/')), o = new Uint8Array(r.length); for (var i = 0; i < r.length; i++) o[i] = r.charCodeAt(i); return o; }
+  function swReg() { return navigator.serviceWorker.register('/sw.js', { scope: '/' }); }
+  function checkPush() {
+    if (!pushSupported()) return Promise.resolve(false);
+    return navigator.serviceWorker.getRegistration('/').then(function (r) { return r ? r.pushManager.getSubscription() : null; }).then(function (s) { PUSH_ON = !!s && Notification.permission === 'granted'; return PUSH_ON; }).catch(function () { return false; });
+  }
+  function enablePush() {
+    if (!pushSupported()) return Promise.reject(new Error(isIOS() && !standalone() ? 'ios' : 'unsupported'));
+    return Notification.requestPermission().then(function (p) {
+      if (p !== 'granted') throw new Error('denied');
+      return swReg();
+    }).then(function (reg) {
+      return navigator.serviceWorker.ready.then(function () { return reg.pushManager.getSubscription(); }).then(function (s) { return s || reg.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: b64(VAPID_PUB) }); });
+    }).then(function (sub) {
+      var j = sub.toJSON();
+      return sb.from('push_subs').upsert({ endpoint: j.endpoint, email: SESSION.user.email.toLowerCase(), sub: j, ua: navigator.userAgent.slice(0, 200), at: new Date().toISOString() }).then(unwrap);
+    }).then(function () { PUSH_ON = true; });
+  }
+  function disablePush() {
+    return navigator.serviceWorker.getRegistration('/').then(function (r) { return r ? r.pushManager.getSubscription() : null; }).then(function (s) {
+      if (!s) return;
+      var ep = s.endpoint;
+      return s.unsubscribe().then(function () { return sb.from('push_subs').delete().eq('endpoint', ep).then(unwrap); });
+    }).then(function () { PUSH_ON = false; });
+  }
+  function toast(a) {
+    var t = txt(a), el = document.createElement('a');
+    el.className = 'cs-toast'; el.href = t.url; el.innerHTML = '<b></b><span></span>';
+    el.firstChild.textContent = t.title; el.lastChild.textContent = t.body;
+    var box = document.getElementById('cs-toasts'); if (!box) { box = document.createElement('div'); box.id = 'cs-toasts'; document.body.appendChild(box); }
+    box.appendChild(el); setTimeout(function () { el.remove(); }, 7000);
+  }
+  function renderPanel() {
+    var p = document.getElementById('bell-p'); if (!p) return;
+    var ls = lastSeen(), list = ACTS.filter(function (a) { return !mine(a); }).slice(0, 40);
+    var h = '<div class="bh"><b>الإشعارات</b>' + (unread() ? '<button type="button" id="bell-read">علّم الكل مقروء</button>' : '') + '</div>';
+    h += '<div class="bpush">';
+    if (PUSH_ON) h += '<span>✓ الإشعارات شغالة على الجهاز ده</span><button type="button" id="bell-off">إيقاف</button>';
+    else if (pushSupported()) h += '<span>اعرف بأي تحديث حتى لو الموقع مقفول</span><button type="button" id="bell-on" class="on">فعّل على الجهاز ده</button>';
+    else if (isIOS()) h += '<span>على الآيفون: من Safari دوس «مشاركة» ← «إضافة إلى الشاشة الرئيسية»، وافتح الموقع من الأيقونة وفعّل الإشعارات من هنا.</span>';
+    else h += '<span>المتصفح ده مش بيدعم إشعارات الجهاز، بس هتشوف التحديثات هنا.</span>';
+    h += '</div><div class="bl">';
+    h += list.length ? list.map(function (a) { var t = txt(a); return '<a href="' + t.url.replace(/"/g, '&quot;') + '" class="' + (a.at > ls ? 'new' : '') + '"><b></b><span></span><i>' + ago(a.at) + '</i></a>'; }).join('') : '<p>مفيش تحديثات لسه.</p>';
+    p.innerHTML = h + '</div>';
+    var links = p.querySelectorAll('.bl a');
+    list.forEach(function (a, i) { if (!links[i]) return; var t = txt(a); links[i].children[0].textContent = t.title; links[i].children[1].textContent = t.body; links[i].onclick = function () { p.hidden = true; if (/#p=/.test(t.url) && location.pathname === new URL(t.url, location.href).pathname) setTimeout(function () { location.reload(); }, 30); }; });
+    var r = document.getElementById('bell-read'); if (r) r.onclick = function () { lsSet(seenKey(), new Date().toISOString()); badge(); renderPanel(); };
+    var on = document.getElementById('bell-on'); if (on) on.onclick = function () {
+      on.disabled = true; on.textContent = 'جارِ التفعيل…';
+      enablePush().then(renderPanel).catch(function (e) {
+        var m = e && e.message === 'denied' ? 'المتصفح رافض الإشعارات. افتح إعدادات الموقع (القفل جنب العنوان) وخلّي الإشعارات «سماح»، وجرّب تاني.' : e && e.message === 'ios' ? 'على الآيفون لازم تضيف الموقع للشاشة الرئيسية الأول.' : 'ما اتفعّلتش، جرّب تاني.';
+        on.disabled = false; on.textContent = 'فعّل على الجهاز ده'; alertBox(m);
+      });
+    };
+    var off = document.getElementById('bell-off'); if (off) off.onclick = function () { disablePush().then(renderPanel); };
+  }
+  function alertBox(m) { var p = document.getElementById('bell-p'); if (!p) return; var d = document.createElement('div'); d.className = 'bwarn'; d.textContent = m; p.insertBefore(d, p.children[1] || null); }
+  function startBell() {
+    var who = document.getElementById('who'); if (!who || document.getElementById('bell')) return;
+    var st = document.createElement('style');
+    st.textContent = '#bell{position:relative;border:1px solid #C29B3C;background:transparent;color:inherit;border-radius:999px;width:34px;height:34px;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;margin-inline-start:8px;flex:0 0 auto}#bell svg{width:18px;height:18px}' +
+      '#bell-n{position:absolute;top:-5px;inset-inline-end:-5px;background:#B4483A;color:#fff;border-radius:999px;font-size:11px;font-weight:700;min-width:18px;height:18px;line-height:18px;padding:0 4px;text-align:center}' +
+      '#bell-p{position:fixed;top:60px;inset-inline-end:12px;width:min(380px,calc(100vw - 24px));max-height:min(70vh,560px);overflow:auto;background:var(--surface,#fff);color:var(--ink,#1F2427);border:1px solid var(--line,#D9D8D1);border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.22);z-index:9990;direction:rtl;font-size:14px}' +
+      '#bell-p .bh{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border-bottom:1px solid var(--line,#D9D8D1);position:sticky;top:0;background:inherit}#bell-p .bh button,#bell-p .bpush button{font:inherit;font-size:12.5px;border:1px solid var(--line,#D9D8D1);background:transparent;color:inherit;border-radius:999px;padding:4px 10px;cursor:pointer}' +
+      '#bell-p .bpush{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--soft,#ECEAE3);font-size:13px}#bell-p .bpush button.on{background:#1F2427;color:#F7F4EC;border-color:#1F2427;white-space:nowrap}' +
+      '#bell-p .bwarn{padding:8px 14px;background:#FBEAE7;color:#8A2F24;font-size:13px}' +
+      '#bell-p .bl a{display:block;padding:10px 14px;border-bottom:1px solid var(--line,#D9D8D1);text-decoration:none;color:inherit}#bell-p .bl a.new{background:rgba(194,155,60,.10)}#bell-p .bl a:hover{background:var(--soft,#ECEAE3)}#bell-p .bl b{display:block;font-size:13.5px}#bell-p .bl span{display:block;font-size:13px;color:var(--ink-2,#4B5560);line-height:1.5}#bell-p .bl i{font-style:normal;font-size:12px;color:var(--ink-3,#77808A)}#bell-p .bl p{padding:18px 14px;color:var(--ink-3,#77808A)}' +
+      '#cs-toasts{position:fixed;bottom:16px;inset-inline-start:16px;display:flex;flex-direction:column;gap:8px;z-index:9991;direction:rtl;max-width:min(360px,calc(100vw - 32px))}.cs-toast{display:block;background:#1F2427;color:#F7F4EC;border-radius:12px;padding:10px 14px;text-decoration:none;box-shadow:0 10px 30px rgba(0,0,0,.25);font-size:13.5px}.cs-toast b{display:block;color:#D4AE67}.cs-toast span{display:block;line-height:1.5}';
+    document.head.appendChild(st);
+    var b = document.createElement('button'); b.id = 'bell'; b.type = 'button'; b.setAttribute('aria-label', 'الإشعارات');
+    b.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 1 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span id="bell-n" hidden>0</span>';
+    who.parentNode.insertBefore(b, who);
+    var p = document.createElement('div'); p.id = 'bell-p'; p.hidden = true; document.body.appendChild(p);
+    b.onclick = function (e) { e.stopPropagation(); p.hidden = !p.hidden; if (!p.hidden) { checkPush().then(renderPanel); renderPanel(); } else { lsSet(seenKey(), new Date().toISOString()); badge(); } };
+    document.addEventListener('click', function (e) { if (!p.hidden && !p.contains(e.target) && e.target !== b) { p.hidden = true; lsSet(seenKey(), new Date().toISOString()); badge(); } });
+    var sc = document.createElement('script'); sc.src = 'activity-text.js'; sc.onload = function () { renderPanel(); }; document.head.appendChild(sc);
+    sb.from('activity').select('id,at,actor,kind,ref,data').order('at', { ascending: false }).limit(60).then(function (r) {
+      if (r.error) return; BELL_OK = true; ACTS = r.data || []; badge();
+      sb.channel('act-' + rid()).on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'activity' }, function (m) {
+        var a = m.new; if (!a || ACTS.some(function (x) { return x.id === a.id; })) return;
+        ACTS.unshift(a); badge(); if (!p.hidden) renderPanel();
+        if (!mine(a)) { if (document.visibilityState === 'visible') toast(a); }
+      }).subscribe();
+    });
+    checkPush();
+    if (pushSupported() && Notification.permission === 'granted') swReg().catch(function () { });
+  }
+  window.csBell = { enable: function () { return enablePush(); }, state: function () { return { ok: BELL_OK, n: ACTS.length, push: PUSH_ON }; } };
+  /* ---------- التحميل ---------- */
+  function isStore(u) { try { return /\/storage\/v1\/object\/public\//.test(new URL(u, location.href).pathname); } catch (e) { return false; } }
+  function cleanName(n) { return String(n || 'design').replace(/[\\/:*?"<>|]+/g, '-').slice(0, 120); }
+  function saveAs(url, name) {
+    var a = document.createElement('a');
+    if (isStore(url)) { a.href = url + (url.indexOf('?') < 0 ? '?' : '&') + 'download=' + encodeURIComponent(cleanName(name)); }
+    else { a.href = url; a.download = cleanName(name); }
+    a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove();
+    return Promise.resolve();
+  }
+  var JSZIP_P = null;
+  function loadZip() {
+    if (window.JSZip) return Promise.resolve(window.JSZip);
+    if (!JSZIP_P) JSZIP_P = new Promise(function (res, rej) { var sc = document.createElement('script'); sc.src = 'https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js'; sc.onload = function () { res(window.JSZip); }; sc.onerror = function () { JSZIP_P = null; rej(new Error('zip')); }; document.head.appendChild(sc); });
+    return JSZIP_P;
+  }
+  function zipFiles(files, zipName) {
+    return loadZip().then(function (JSZip) {
+      var z = new JSZip(), used = {};
+      return Promise.all(files.map(function (f, i) {
+        return fetch(f.url, { cache: 'force-cache' }).then(function (r) { if (!r.ok) throw new Error('fetch'); return r.blob(); }).then(function (b) {
+          var n = cleanName(f.name || ('design-' + (i + 1))), base = n, k = 2; while (used[n]) { n = base.replace(/(\.[^.]+)?$/, '-' + (k++) + '$1'); } used[n] = 1;
+          z.file(n, b);
+        });
+      })).then(function () { return z.generateAsync({ type: 'blob' }); });
+    }).then(function (blob) {
+      var a = document.createElement('a'), u = URL.createObjectURL(blob); a.href = u; a.download = cleanName(zipName || 'designs') + '.zip';
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(u); }, 4000);
+    });
+  }
+  // أي رابط «تحميل» لملف مرفوع على Supabase يتحمّل فعلاً بدل ما يفتح
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest && e.target.closest('a[download]');
+    if (!a || !isStore(a.href) || /[?&]download=/.test(a.href)) return;
+    e.preventDefault(); saveAs(a.href, a.getAttribute('download') || '');
+  }, true);
   /* ---------- التصاميم والبيانات المحمية ---------- */
   var MIME_OK = /^(image\/(png|jpeg|webp|gif)|video\/(mp4|quicktime)|application\/pdf)$/;
   window.capital = {
@@ -393,6 +534,10 @@
     kpis: function () { return sb.from('kpis').select('id,data,updated_at').order('id', { ascending: false }).then(unwrap); },
     saveKpi: function (id, data) { return sb.from('kpis').upsert({ id: id, data: data, updated_at: new Date().toISOString() }).then(unwrap); },
     removeFile: function (path) { return sb.storage.from('designs').remove([path]).then(unwrap); },
+    // تحميل فعلي للملف (روابط Supabase من دومين تاني، فالمتصفح كان بيفتحها بدل ما ينزّلها)
+    download: function (url, name) { return saveAs(url, name); },
+    // كذا ملف في ZIP واحد
+    zip: function (files, zipName) { return zipFiles(files, zipName); },
     // نسخ تصاميم الإعلانات (جدول ad_versions)
     adVersions: function () { return sb.from('ad_versions').select('id,ad_key,data,at').order('at', { ascending: false }).then(unwrap); },
     addAdVersion: function (adKey, data) { var id = rid(); return sb.from('ad_versions').insert({ id: id, ad_key: adKey, data: data }).then(unwrap).then(function () { return id; }); },

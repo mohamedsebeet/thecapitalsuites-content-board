@@ -3,6 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1F2427">
+<link rel="apple-touch-icon" href="img/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="كابيتال سويتس">
 <meta name="robots" content="noindex">
 <title>غرفة التشغيل · ذا كابيتال سويتس</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -598,7 +603,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       var x=adItems().filter(function(i){return i.key===AD.open})[0];if(!x){adClose();return}
       var vs=versOf(x.key);
       h='<div class="lb-in adsh"><div class="lb-h"><b>'+esc(x.title)+'</b><span>'+(x.platform==='meta'?'ميتا':x.platform==='snap'?'سناب':'جديد')+(x.hood?' · '+esc(x.hood):'')+(x.format?' · '+esc(x.format):'')+'</span><button type="button" class="lb-x" aria-label="إغلاق">×</button></div><div class="adb">';
-      if((x.img||[]).length)h+='<h4>الحالي على المنصة</h4><div class="lb-row sm">'+x.img.map(function(u){return '<a href="'+esc(u)+'" target="_blank" rel="noopener"><img src="'+esc(u)+'" alt=""></a>'}).join('')+'</div>';
+      if((x.img||[]).length)h+='<h4>الحالي على المنصة <button class="pbtn sm ghost" data-zipcur="1" style="margin-inline-start:8px">⬇ تحميل'+(x.img.length>1?' الكل (ZIP)':'')+'</button></h4><div class="lb-row sm">'+x.img.map(function(u){return '<a href="'+esc(u)+'" target="_blank" rel="noopener"><img src="'+esc(u)+'" alt=""></a>'}).join('')+'</div>';
       if(up)h+='<div class="plb" style="margin-top:14px"><button class="pbtn" type="button" id="adshow">↑ ارفع نسخة جديدة'+(vs.length?' (النسخة '+((vs[0].data.v||vs.length)+1)+')':'')+'</button></div><div id="adupw" hidden style="margin-top:10px">'+upForm(false)+'</div>';
       h+='<h4>النسخ'+(vs.length?' <span class="c">'+vs.length+'</span>':'')+'</h4>';
       h+=vs.length?vs.map(function(v){var d=v.data||{},fl=adFiles(v),mine=up&&(d.status==='review'||d.status==='changes');
@@ -606,7 +611,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
           (fl.length?'<div class="lb-row sm">'+fl.map(function(z){return /^video\//.test(z.type||'')?'<video src="'+esc(z.url)+'#t=0.1" controls preload="metadata"></video>':'<a href="'+esc(z.url)+'" target="_blank" rel="noopener"><img src="'+esc(z.url)+'" alt=""></a>'}).join('')+'</div>':'')+
           (d.note?'<p class="adn"><b>التغيير:</b> '+esc(d.note)+'</p>':'')+
           (d.reviewNote?'<p class="adn rv"><b>'+(d.status==='changes'?'المطلوب تعديله':'ملاحظة المراجعة')+':</b> '+esc(d.reviewNote)+'</p>':'')+
-          '<div class="plb">'+fl.map(function(z,i){return '<a class="pbtn sm ghost" href="'+esc(z.url)+'" download="'+esc(z.name||'design')+'" target="_blank" rel="noopener">⬇ '+(fl.length>1?'ملف '+(i+1):'تحميل')+'</a>'}).join('')+
+          '<div class="plb">'+(fl.length>1?'<button class="pbtn sm" data-zip="1">⬇ تحميل الكل (ZIP)</button>':'')+fl.map(function(z,i){return '<a class="pbtn sm ghost" href="'+esc(z.url)+'" download="'+esc(z.name||'design')+'">⬇ '+(fl.length>1?'ملف '+(i+1):'تحميل')+'</a>'}).join('')+
           (ap&&d.status!=='approved'&&d.status!=='live'?'<button class="pbtn sm" data-act="approved">✓ اعتماد</button>':'')+
           (ap&&d.status!=='changes'&&d.status!=='live'?'<button class="pbtn sm ghost" data-act="changes">تعديلات مطلوبة</button>':'')+
           (ap&&d.status==='approved'?'<button class="pbtn sm" data-act="live">اتركّبت على المنصة</button>':'')+
@@ -618,6 +623,9 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     box.innerHTML=h;box.hidden=false;
     box.querySelector('.lb-x').onclick=adClose;
     var sw=box.querySelector('#adshow');if(sw)sw.onclick=function(){box.querySelector('#adupw').hidden=false;sw.parentNode.hidden=true};
+    function zbtn(b,files,name){b.onclick=function(){var t=b.textContent;b.disabled=true;b.textContent='جارِ التجهيز…';capital.zip(files,name).then(function(){b.textContent=t;b.disabled=false}).catch(function(){b.disabled=false;b.textContent=t;ptoast('التحميل فشل، حاول تاني.')})}}
+    var curX=AD.open&&adItems().filter(function(i){return i.key===AD.open})[0];
+    var zc=box.querySelector('[data-zipcur]');if(zc&&curX){if(curX.img.length===1)zc.onclick=function(){capital.download(curX.img[0],curX.title+'-الحالي'+(curX.img[0].match(/\.[a-z0-9]+$/i)||[''])[0])};else zbtn(zc,curX.img.map(function(u,i){return {url:u,name:curX.title+'-'+(i+1)+(u.match(/\.[a-z0-9]+$/i)||[''])[0]}}),curX.title+'-التصميم-الحالي')}
     var fm=box.querySelector('#adup');if(fm)fm.onsubmit=function(e){e.preventDefault();adUpload(fm)};
     box.querySelectorAll('.adv').forEach(function(el){
       var v=AD.vers.filter(function(z){return z.id===el.dataset.vid})[0];if(!v)return;
@@ -625,6 +633,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
         var a=b.dataset.act;if(a==='changes'){el.querySelector('.adrn').hidden=false;el.querySelector('.adrn textarea').focus();return}
         adReview(v,a,null)}});
       var s=el.querySelector('[data-send]');if(s)s.onclick=function(){var t=el.querySelector('.adrn textarea').value.trim();if(!t){ptoast('اكتب المطلوب تعديله');return}adReview(v,'changes',t)};
+      var zb=el.querySelector('[data-zip]');if(zb)zbtn(zb,adFiles(v).map(function(z){return {url:z.url,name:z.name}}),(curX?curX.title:'إعلان')+'-النسخة-'+(v.data.v||''));
       var dbn=el.querySelector('[data-del]');if(dbn)dbn.onclick=function(){if(!confirm('حذف النسخة '+(v.data.v||'')+' وملفاتها؟'))return;
         capital.removeAdVersion(v.id).then(function(){return Promise.all(adFiles(v).filter(function(z){return z.path}).map(function(z){return capital.removeFile(z.path).catch(function(){})}))}).then(function(){ptoast('اتحذفت النسخة');return loadAdVers()}).then(function(){rerender();adSheet()}).catch(function(){ptoast('ما اتحذفتش، حاول تاني.')})};
     });
@@ -642,7 +651,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     btn.disabled=true;
     (function next(){
       if(i>=files.length){
-        var d=Object.assign({v:n,files:out,note:E.namedItem('note').value.trim(),by:ME,at:new Date().toISOString(),status:'review'},extra);
+        var cx=adItems().filter(function(z){return z.key===key})[0];var d=Object.assign({v:n,files:out,note:E.namedItem('note').value.trim(),by:ME,at:new Date().toISOString(),status:'review',adTitle:extra.title||(cx?cx.title:'')},extra);
         capital.addAdVersion(key,d).then(function(){ptoast('اترفعت النسخة '+n+' وراحت للمراجعة');AD.open=key;AD.newOpen=false;return loadAdVers()}).then(function(){rerender();adSheet()}).catch(function(e){btn.disabled=false;st.textContent='ما اتحفظتش: '+((e&&e.message)||'حاول تاني')});
         return;
       }

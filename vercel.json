@@ -9,6 +9,6 @@
       { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
       { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
     ] },
-    { "source": "/(index.html|config.js|runtime.js)?", "headers": [ { "key": "Cache-Control", "value": "no-cache" } ] }
+    { "source": "/(index.html|config.js|runtime.js|sw.js|activity-text.js|manifest.webmanifest)?", "headers": [ { "key": "Cache-Control", "value": "no-cache" } ] }
   ]
 }
