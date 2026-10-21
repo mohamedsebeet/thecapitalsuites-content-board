@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
       if (!ok2) return res.status(403).json({ error: 'no access' });
       const ads = [];
       (data.campaigns || []).forEach(c => (c.ads || []).forEach(a => ads.push({
-        key: c.platform + ':' + a.id, platform: c.platform, name: a.name, title: a.title, hood: a.hood,
+        key: c.platform + ':' + (a.id || (c.id + '/' + a.name)), platform: c.platform, name: a.name, title: a.title, hood: a.hood,
         format: a.format, img: a.img || [], on: a.status === 'ACTIVE' && c.status === 'ACTIVE'
       })));
       return res.status(200).json({ updatedAt: data.updatedAt, ads });

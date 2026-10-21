@@ -111,7 +111,7 @@ button.pc:hover{border-color:var(--gold)}
 .adsh{width:min(1000px,100%)}.adb{overflow:auto;padding:4px 16px 16px}.adb h4{margin:16px 0 8px;font-size:14px}.adb h4 .c{color:var(--ink-3);font-weight:400}
 .lb-row.sm{padding:0 0 4px}.lb-row.sm img,.lb-row.sm video{height:220px;width:auto;border-radius:8px;border:1px solid var(--line)}
 .adup{display:flex;flex-direction:column;gap:10px;border:1px dashed var(--gold);border-radius:10px;padding:12px;background:var(--soft)}
-.adup label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--ink-2);flex:1 1 180px}.adup input,.adup select,.adup textarea{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
+.adup label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--ink-2)}.adrow label{flex:1 1 180px}.adup input,.adup select,.adup textarea{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--ink)}
 .adrow{display:flex;gap:10px;flex-wrap:wrap}.adup .m{font-size:12.5px;color:var(--ink-3)}
 .adv{border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin-bottom:10px}.adn{font-size:13.5px;margin:6px 0;color:var(--ink-2)}.adn.rv{color:var(--warn)}
 .adrn{display:flex;gap:8px;margin-top:8px;align-items:flex-start}.adrn textarea{flex:1;font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}
@@ -599,7 +599,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       var vs=versOf(x.key);
       h='<div class="lb-in adsh"><div class="lb-h"><b>'+esc(x.title)+'</b><span>'+(x.platform==='meta'?'ميتا':x.platform==='snap'?'سناب':'جديد')+(x.hood?' · '+esc(x.hood):'')+(x.format?' · '+esc(x.format):'')+'</span><button type="button" class="lb-x" aria-label="إغلاق">×</button></div><div class="adb">';
       if((x.img||[]).length)h+='<h4>الحالي على المنصة</h4><div class="lb-row sm">'+x.img.map(function(u){return '<a href="'+esc(u)+'" target="_blank" rel="noopener"><img src="'+esc(u)+'" alt=""></a>'}).join('')+'</div>';
-      if(up)h+='<h4>نسخة جديدة'+(vs.length?' (النسخة '+((vs[0].data.v||vs.length)+1)+')':'')+'</h4>'+upForm(false);
+      if(up)h+='<div class="plb" style="margin-top:14px"><button class="pbtn" type="button" id="adshow">↑ ارفع نسخة جديدة'+(vs.length?' (النسخة '+((vs[0].data.v||vs.length)+1)+')':'')+'</button></div><div id="adupw" hidden style="margin-top:10px">'+upForm(false)+'</div>';
       h+='<h4>النسخ'+(vs.length?' <span class="c">'+vs.length+'</span>':'')+'</h4>';
       h+=vs.length?vs.map(function(v){var d=v.data||{},fl=adFiles(v),mine=up&&(d.status==='review'||d.status==='changes');
         return '<div class="adv" data-vid="'+esc(v.id)+'"><div class="plh"><b>النسخة '+(d.v||'')+'</b>'+aTag(d.status)+'<span class="m">'+esc(NAMES[d.by]||d.by||'')+(v.at?' · '+dayD(v.at.slice(0,10)):'')+'</span></div>'+
@@ -617,6 +617,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     }
     box.innerHTML=h;box.hidden=false;
     box.querySelector('.lb-x').onclick=adClose;
+    var sw=box.querySelector('#adshow');if(sw)sw.onclick=function(){box.querySelector('#adupw').hidden=false;sw.parentNode.hidden=true};
     var fm=box.querySelector('#adup');if(fm)fm.onsubmit=function(e){e.preventDefault();adUpload(fm)};
     box.querySelectorAll('.adv').forEach(function(el){
       var v=AD.vers.filter(function(z){return z.id===el.dataset.vid})[0];if(!v)return;
