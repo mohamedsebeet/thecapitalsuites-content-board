@@ -16,6 +16,21 @@ module.exports = async (req, res) => {
       headers: { apikey: key, Authorization: auth, 'Content-Type': 'application/json' },
       body: JSON.stringify(body || {})
     });
+    // ?view=designs: تصاميم الإعلانات بس (من غير صرف ولا نتايج) للمصمم ومين يعتمد
+    if (/[?&]view=designs\b/.test(req.url || '')) {
+      let ok2 = false;
+      for (const p of ['view.campaigns', 'designs.upload', 'posts.approve']) {
+        const x = await call('has_perm', { p });
+        if (x.ok && await x.json()) { ok2 = true; break; }
+      }
+      if (!ok2) return res.status(403).json({ error: 'no access' });
+      const ads = [];
+      (data.campaigns || []).forEach(c => (c.ads || []).forEach(a => ads.push({
+        key: c.platform + ':' + a.id, platform: c.platform, name: a.name, title: a.title, hood: a.hood,
+        format: a.format, img: a.img || [], on: a.status === 'ACTIVE' && c.status === 'ACTIVE'
+      })));
+      return res.status(200).json({ updatedAt: data.updatedAt, ads });
+    }
     // صلاحية «الحملات والصرف»، ولو ملف الصلاحيات لسه ما اتشغّلش نكتفي بإنه عضو
     let r = await call('has_perm', { p: 'view.campaigns' });
     let ok = r.ok ? await r.json() : null;

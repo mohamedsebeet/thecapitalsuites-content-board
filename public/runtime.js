@@ -393,6 +393,11 @@
     kpis: function () { return sb.from('kpis').select('id,data,updated_at').order('id', { ascending: false }).then(unwrap); },
     saveKpi: function (id, data) { return sb.from('kpis').upsert({ id: id, data: data, updated_at: new Date().toISOString() }).then(unwrap); },
     removeFile: function (path) { return sb.storage.from('designs').remove([path]).then(unwrap); },
+    // نسخ تصاميم الإعلانات (جدول ad_versions)
+    adVersions: function () { return sb.from('ad_versions').select('id,ad_key,data,at').order('at', { ascending: false }).then(unwrap); },
+    addAdVersion: function (adKey, data) { var id = rid(); return sb.from('ad_versions').insert({ id: id, ad_key: adKey, data: data }).then(unwrap).then(function () { return id; }); },
+    saveAdVersion: function (id, data) { return sb.from('ad_versions').update({ data: data }).eq('id', id).then(unwrap); },
+    removeAdVersion: function (id) { return sb.from('ad_versions').delete().eq('id', id).then(unwrap); },
     api: function (name) {
       return window.capital.token().then(function (t) {
         return fetch('api/' + name, { headers: { Authorization: 'Bearer ' + t }, cache: 'no-store' });
