@@ -140,6 +140,14 @@ button.pc:hover{border-color:var(--gold)}
 .pct{min-width:0;display:flex;flex-direction:column}.pct b{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pct small{font-size:11px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .pcmeta{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--ink-2);margin:8px 0}.pcmeta input{font:inherit;padding:5px 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink)}.pcmeta a{color:var(--gold-ink);font-weight:600;text-decoration:none;margin-inline-start:auto}
 @media (max-width:760px){.pchd{display:none}.pcg{display:block}.pcd{border-inline-start:0;min-height:0}.pcd.empty,.pcd.out{display:none}.pcn b{display:none}.pcn span{display:inline;font-weight:600}.pcd.now .pcn span{color:var(--gold-ink)}}
+.adcta{display:flex;justify-content:space-between;align-items:center;margin:0 12px;padding:9px 2px;border-bottom:1px solid #DBDBDB;font-weight:600;font-size:13.5px;color:#0095F6}
+.adcta.fb{margin:0;padding:8px 12px;background:#F0F2F5;border:0;color:#050505}.adcta.fb small{display:block;font-size:11px;color:#65676B;font-weight:400}.adcta.fb b{background:#E4E6EB;border-radius:6px;padding:6px 10px;font-size:13px}
+.screen.st{position:relative;background:#000;overflow:hidden}.story{position:absolute;inset:0}.story .media.full{position:absolute;inset:0;aspect-ratio:auto;background:#000}.story .media.full img,.story .media.full video{object-fit:contain}
+.story .dotsrow{display:none}.sttop{position:absolute;top:0;left:0;right:0;padding:14px 12px;background:linear-gradient(rgba(0,0,0,.45),transparent);color:#fff;z-index:2}.sttop .bars i{display:block;height:2px;background:rgba(255,255,255,.85);border-radius:2px;margin-bottom:8px}
+.sttop .who{display:flex;gap:8px;align-items:center;font-size:13px}.sttop .who .av{width:30px;height:30px}.sttop .who span{opacity:.85;font-size:12px}.sttop .who small{display:block;font-size:11px;opacity:.8}
+.stbot{position:absolute;left:0;right:0;bottom:0;padding:16px 14px 22px;background:linear-gradient(transparent,rgba(0,0,0,.55));display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2;color:#fff;text-align:center}.stbot p{margin:0;font-size:13px;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.pill{background:#fff;color:#111;border-radius:999px;padding:8px 18px;font-weight:700;font-size:13.5px}.pill.y{background:#FFFC00}
+.apcmp{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;width:100%}.apcmp>div{flex:0 1 285px;min-width:240px}.apcmp .phone{width:100%}.screen.st{width:100%}.apl{text-align:center;font-size:13px;font-weight:600;color:var(--ink-2);margin:0 0 6px}.cmpb{border-color:var(--gold)!important}
 .lb-x{border:0;background:none;font-size:26px;line-height:1;cursor:pointer;color:var(--ink)}
 .lb-row{display:flex;gap:10px;overflow-x:auto;padding:14px}.lb-row img{height:min(70vh,560px);width:auto;border-radius:8px;flex:0 0 auto}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
@@ -285,37 +293,39 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       {id:'today',t:'اليوم',d:'المطلوب الآن من المحتوى العضوي والإعلانات',m:'مباشر',live:true}
     ]},
     {g:'المحتوى العضوي',items:[
-      {id:'design-cal',t:'تقويم التصاميم',d:'كل منشور في يومه بتصميمه: ارفع، اعتمد، واسحب المنشور ليوم تاني',m:'مباشر',live:true},
+      {id:'simple',t:'اللوحة المبسطة',d:'الأسبوع بالمراحل أو الشهر بالتواريخ: ارفع التصميم، اعتمد، انقل الميعاد، وعلّم اتنشر',m:'الشغل اليومي ↗',href:'simple.html',self:true},
       {id:'preview',t:'معاينة المنشورات',d:'شكل كل منشور على إنستغرام وفيسبوك وتيك توك وX قبل ما ينزل، وشبكة الحساب',m:'مباشر',live:true,need:'view.publish'},
       {id:'publish',t:'جدول النشر',d:'مواعيد النشر لكل منصة: انسخ النص، نزّل التصميم، وعلّم إنه اتنشر',m:'مباشر',live:true,need:'view.publish'},
-      {id:'board',t:'لوحة النشر',d:'اللوحة الكاملة والمبسطة: الحالات والتسليمات والملاحظات',m:'الكاملة والمبسطة ↗',href:'./',self:true}
+      {id:'board',t:'اللوحة الكاملة',d:'تعديل النصوص والبريف والملاحظات والحالات بالتفصيل',m:'تعديل المحتوى ↗',href:'./',self:true}
     ],files:[
-      {id:'cal30',dl:["تقويم-المحتوى-أول-30-يوماً.pdf"],t:'تقويم أول 30 يوماً',d:'صفحة الإدارة: المنشورات من 15 أكتوبر إلى 14 نوفمبر',m:'آخر تحديث 19 أكتوبر',href:'files/cal30.html'},
-      {id:'d-cal30',dl:["تقويم-أول-30-يوماً-عرض.pdf"],t:'تقويم أول 30 يوماً (عرض)',d:'نسخة مختصرة في 6 شرائح',m:'آخر تحديث 19 أكتوبر',href:'files/decks/cal30.html',need:'view.decks'},
-      {id:'d-brand',dl:["استراتيجية-المحتوى-والبراند.pdf"],t:'استراتيجية المحتوى والبراند (عرض)',d:'عرض 10 شرائح',m:'آخر تحديث 19 أكتوبر',href:'files/decks/brand.html',need:'view.decks'},
-      {id:'week1',dl:["محتوى-الأسبوع-الأول.zip"],t:'محتوى الأسبوع الأول',d:'تصاميم أول أسبوع نشر وملف النصوص والتعليمات (التسليم الأصلي)',m:'7 أكتوبر',href:'files/week1.html'},
-      {id:'where',dl:["منشور-وين-نشغل.zip"],t:'منشور «وين نشغّل»',d:'ثلاث اتجاهات لتصميم المنشور الثالث',m:'11 أكتوبر',href:'files/where.html'}
+      {id:'cal30',dl:["تقويم-المحتوى-أول-30-يوماً.pdf","تقويم-أول-30-يوماً-عرض.pdf"],t:'تقويم أول 30 يوماً',d:'المنشورات من 15 أكتوبر إلى 14 نوفمبر: الصفحة الكاملة والعرض المختصر',m:'آخر تحديث 19 أكتوبر',href:'files/cal30.html'},
+      {id:'d-brand',dl:["استراتيجية-المحتوى-والبراند.pdf"],t:'استراتيجية المحتوى والبراند',d:'عرض 10 شرائح',m:'آخر تحديث 19 أكتوبر',href:'files/decks/brand.html',need:'view.decks'}
     ]},
     {g:'الإعلانات',items:[
-      {id:'ads-live',t:'أداء الحملات',d:'الصرف والنتائج ونتائج المبيعات',m:'مباشر',live:true,need:'view.campaigns'},
-      {id:'ads',dl:["الإعلانات-الشغالة-الآن.zip"],t:'الإعلانات الشغالة',d:'التصميم الحالي لكل إعلان على ميتا وسناب مع صرفه ونتايجه',m:'مباشر',live:true,need:'view.campaigns'},
-      {id:'ad-designs',t:'تصاميم الإعلانات',d:'النسخ الجديدة من تصاميم الإعلانات: المصمم يرفع، والمدير يعتمد، وبعدها تتركّب على المنصة',m:'مباشر',live:true,need:['view.campaigns','designs.upload','posts.approve']}
+      {id:'ads-live',t:'أداء الحملات',d:'الصرف والنتائج لكل حملة وإعلان، ونتائج المبيعات',m:'مباشر',live:true,need:'view.campaigns'},
+      {id:'ad-designs',t:'تصاميم الإعلانات',d:'التصميم الحالي لكل إعلان والنسخ الجديدة: المصمم يرفع، والمدير يعتمد، وبعدها تتركّب على المنصة',m:'مباشر',live:true,need:['view.campaigns','designs.upload','posts.approve']},
+      {id:'ad-preview',t:'معاينة الإعلانات',d:'شكل كل إعلان وهو ممول على إنستغرام وفيسبوك وسناب، وقارن النسخة الجديدة بالحالية',m:'مباشر',live:true,need:['view.campaigns','designs.upload','posts.approve']}
     ],files:[
       {id:'campaigns',dl:["مخطط-تنفيذ-الحملات.pdf"],t:'مخطط تنفيذ الحملات',d:'هيكل الحملات والمجموعات والإعلانات في سناب وميتا وتيك توك مع معاينة الجوال',m:'آخر تحديث 5 أكتوبر',href:'files/campaigns.html',need:'view.plans'},
-      {id:'media',dl:["الميديا-بلان.pdf"],t:'الميديا بلان',d:'توزيع ميزانية الاختبار على المنصات والمراحل',m:'1 أكتوبر',href:'files/media-plan.html',need:'view.plans'},
-      {id:'budget',dl:["اعتماد-ميزانية-الحملات.pdf"],t:'اعتماد ميزانية الحملات',d:'نموذج اعتماد الميزانية للإدارة',m:'5 أكتوبر',href:'files/budget.html',need:'view.plans'},
-      {id:'d-weekly2',dl:["تقرير-الحملات-الأسبوع-الثاني.pdf"],t:'تقرير الحملات · الأسبوع الثاني',d:'8 إلى 14 أكتوبر · 5 شرائح مع مقارنة بأسبوع الإطلاق',m:'15 أكتوبر',href:'files/decks/weekly2.html',need:'view.decks'},
-      {id:'d-weekly',dl:["تقرير-الحملات-أسبوع-الإطلاق.pdf"],t:'تقرير الحملات · أسبوع الإطلاق',d:'1 إلى 7 أكتوبر · 5 شرائح',m:'8 أكتوبر',href:'files/decks/weekly.html',need:'view.decks'},
-      {id:'ads-archive',dl:["تصاميم-إعلانات-الحملة.zip", "فيديوهات-الحملة.zip"],t:'أرشيف تصاميم الحملة',d:'كل التصاميم والفيديوهات اللي اتسلّمت للحملة (5 أكتوبر)، شغالة أو لا',m:'5 أكتوبر',href:'files/ads.html',need:'view.campaigns'}
+      {id:'media',dl:["الميديا-بلان.pdf","اعتماد-ميزانية-الحملات.pdf"],t:'الميزانية والميديا بلان',d:'توزيع ميزانية الاختبار على المنصات والمراحل، ونموذج اعتماد الميزانية',m:'5 أكتوبر',href:'files/media-plan.html',need:'view.plans'},
+      {id:'d-weekly2',dl:["تقرير-الحملات-الأسبوع-الثاني.pdf","تقرير-الحملات-أسبوع-الإطلاق.pdf"],t:'التقارير الأسبوعية',d:'أحدث تقرير (الأسبوع الثاني: 8 إلى 14 أكتوبر)، ومعاه تقرير أسبوع الإطلاق',m:'15 أكتوبر',href:'files/decks/weekly2.html',need:'view.decks'}
     ]},
     {g:'مرجع عام',fold:true,items:[
       {id:'shamel',dl:["الملف-الشامل.pdf"],t:'الملف الشامل',d:'خطة تسكين الوحدات: 8 أقسام من الخطة العامة إلى المحتوى والبراند',m:'آخر تحديث 19 أكتوبر',href:'files/shamel.html',need:'view.plans'},
       {id:'site',t:'الموقع الجديد',d:'thecapitalsuites-new.vercel.app',m:'منشور',href:'https://thecapitalsuites-new.vercel.app',ext:true},
-      {id:'library',t:'كل الملفات',d:'فهرس كل ملفات المشروع',m:'',live:true}
+      {id:'library',t:'الأرشيف',d:'كل الملفات، ومعاها الملفات القديمة',m:'',live:true}
+    ]},
+    {g:'ملفات قديمة',archive:true,items:[
+      {id:'d-cal30',dl:["تقويم-أول-30-يوماً-عرض.pdf"],t:'تقويم أول 30 يوماً (عرض)',d:'نسخة مختصرة في 6 شرائح',m:'19 أكتوبر',href:'files/decks/cal30.html',need:'view.decks'},
+      {id:'d-weekly',dl:["تقرير-الحملات-أسبوع-الإطلاق.pdf"],t:'تقرير الحملات · أسبوع الإطلاق',d:'1 إلى 7 أكتوبر · 5 شرائح',m:'8 أكتوبر',href:'files/decks/weekly.html',need:'view.decks'},
+      {id:'budget',dl:["اعتماد-ميزانية-الحملات.pdf"],t:'اعتماد ميزانية الحملات',d:'نموذج اعتماد الميزانية للإدارة',m:'5 أكتوبر',href:'files/budget.html',need:'view.plans'},
+      {id:'week1',dl:["محتوى-الأسبوع-الأول.zip"],t:'محتوى الأسبوع الأول (التسليم الأصلي)',d:'تصاميم أول أسبوع نشر وملف النصوص والتعليمات',m:'7 أكتوبر',href:'files/week1.html'},
+      {id:'where',dl:["منشور-وين-نشغل.zip"],t:'منشور «وين نشغّل»',d:'ثلاث اتجاهات لتصميم المنشور الثالث',m:'11 أكتوبر',href:'files/where.html'},
+      {id:'ads-archive',dl:["تصاميم-إعلانات-الحملة.zip","فيديوهات-الحملة.zip"],t:'أرشيف تصاميم الحملة',d:'كل التصاميم والفيديوهات اللي اتسلّمت للحملة (5 أكتوبر)، شغالة أو لا',m:'5 أكتوبر',href:'files/ads.html',need:'view.campaigns'}
     ]}
   ];
   // روابط قديمة بتتحوّل للصفحة الجديدة
-  var ALIAS={content:'design-cal',simple:'board'};
+  var ALIAS={content:'simple','design-cal':'simple',ads:'ad-designs'};
   function gItems(g){return g.items.concat(g.files||[])}
   var V='3';
   var BY={};GROUPS.forEach(function(g){gItems(g).forEach(function(i){BY[i.id]=i})});
@@ -328,7 +338,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   var DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
   var MON=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
   var DESIGN_LEAD=3;
-  function dlLinks(i){return (i.dl||[]).map(function(f){var z=/\.zip$/.test(f);return '<a href="files/pdf/'+encodeURIComponent(f)+'?v='+V+'" download="'+esc(f)+'">⬇ تحميل '+(z?(/فيديو/.test(f)?'الفيديوهات (ZIP)':/الشغالة/.test(f)?'تصاميم الإعلانات الشغالة (ZIP)':'التصاميم (ZIP)'):'PDF')+'</a>'}).join('')}
+  function dlLinks(i){return (i.dl||[]).map(function(f){var z=/\.zip$/.test(f);return '<a href="files/pdf/'+encodeURIComponent(f)+'?v='+V+'" download="'+esc(f)+'">⬇ تحميل '+(z?(/فيديو/.test(f)?'الفيديوهات (ZIP)':/الشغالة/.test(f)?'تصاميم الإعلانات الشغالة (ZIP)':'التصاميم (ZIP)'):(i.dl.length>1?'PDF: '+f.replace(/\.pdf$/,'').replace(/-/g,' '):'PDF'))+'</a>'}).join('')}
   function esc(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML}
   function pd(s){var a=String(s).slice(0,10).split('-');return new Date(+a[0],+a[1]-1,+a[2])}
   function iso(d){return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2)}
@@ -364,13 +374,14 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   function CAN(k){return !window.capital||!capital.can||capital.can(k)}
   function canSee(i){return !i.need||[].concat(i.need).some(CAN)}
   function applyAccess(){
-    GROUPS=GROUPS.map(function(g){var it=g.items.filter(canSee),fl=(g.files||[]).filter(canSee);return it.length||fl.length?{g:g.g,top:g.top,fold:g.fold,items:it,files:fl}:null}).filter(Boolean);
+    GROUPS=GROUPS.map(function(g){var it=g.items.filter(canSee),fl=(g.files||[]).filter(canSee);return it.length||fl.length?{g:g.g,top:g.top,fold:g.fold,archive:g.archive,items:it,files:fl}:null}).filter(Boolean);
     BY={};GROUPS.forEach(function(g){gItems(g).forEach(function(i){BY[i.id]=i})});buildNav();
   }
   function navA(i,small){var href=i.self||i.ext?i.href:'#'+i.id,tgt=i.ext?' target="_blank" rel="noopener"':'';return '<a href="'+href+'"'+tgt+' data-id="'+i.id+'"'+(small?' class="sm"':'')+'><b>'+esc(i.t)+(i.ext?' ↗':'')+'</b>'+(!small&&i.m?'<span>'+esc(i.m)+'</span>':'')+'</a>'}
   function buildNav(){
     var nav='',opts='';
     GROUPS.forEach(function(g){
+      if(g.archive)return;
       if(g.top){nav+=g.items.map(function(i){return navA(i)}).join('');opts+=g.items.map(function(i){return '<option value="'+i.id+'">'+esc(i.t)+'</option>'}).join('');return}
       if(g.fold){nav+='<details class="fold ref"><summary>'+esc(g.g)+'</summary>'+g.items.map(function(i){return navA(i,true)}).join('')+'</details>'}
       else{
@@ -414,11 +425,11 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     var name=NAMES[ME]||'';
     var h='<h2>'+(name?'أهلاً '+esc(name):'أهلاً')+'</h2><p class="lede">'+dayD(T)+' · الأسبوع '+wk+' من خطة المحتوى ('+weekRange(wk)+'). كل اللي على الصفحة دي بيتحدث لوحده.</p>';
     // المحتوى العضوي
-    h+='<div class="tsec"><h3>المحتوى العضوي</h3><a href="#design-cal">تقويم التصاميم ←</a></div>';
+    h+='<div class="tsec"><h3>المحتوى العضوي</h3><a href="simple.html?view=month">اللوحة المبسطة ←</a></div>';
     h+='<div class="tiles">'+
-      '<a class="tile" href="#design-cal"><span class="k">منشورات الأسبوع</span><span class="v num">'+pub+' / '+inWeek.length+'</span><span class="s">اتنشر من المخطط هذا الأسبوع</span></a>'+
-      '<a class="tile'+(review.length?' gold':'')+'" href="#design-cal"><span class="k">بانتظار المراجعة</span><span class="v num">'+review.length+'</span><span class="s">تصاميم مرفوعة محتاجة اعتماد</span></a>'+
-      '<a class="tile'+(late.length?' warn':'')+'" href="#design-cal"><span class="k">متأخر عن موعد التسليم</span><span class="v num">'+late.length+'</span><span class="s">'+(late.length?'محتاج متابعة مع المصمم':'كل شيء في موعده')+'</span></a>'+
+      '<a class="tile" href="simple.html?view=month"><span class="k">منشورات الأسبوع</span><span class="v num">'+pub+' / '+inWeek.length+'</span><span class="s">اتنشر من المخطط هذا الأسبوع</span></a>'+
+      '<a class="tile'+(review.length?' gold':'')+'" href="simple.html?view=month"><span class="k">بانتظار المراجعة</span><span class="v num">'+review.length+'</span><span class="s">تصاميم مرفوعة محتاجة اعتماد</span></a>'+
+      '<a class="tile'+(late.length?' warn':'')+'" href="simple.html?view=month"><span class="k">متأخر عن موعد التسليم</span><span class="v num">'+late.length+'</span><span class="s">'+(late.length?'محتاج متابعة مع المصمم':'كل شيء في موعده')+'</span></a>'+
     '</div>';
     var mineFirst=CAN('designs.upload')&&!CAN('posts.approve');
     var pTodo='<div class="panel"><h4>'+(mineFirst?'مطلوب منك':'مطلوب من المصمم')+' <span class="c">خلال 7 أيام</span></h4>'+(todo.length?todo.slice(0,10).map(function(p){var dd=isSetup(p)?p.d:dueOf(p);return li(p,'التسليم <span class="'+(dd<T?'late':'')+'">'+dayD(dd)+(dd<T?' · متأخر':'')+'</span>')}).join(''):'<p class="empty">مفيش تسليمات قريبة.</p>')+'</div>';
@@ -438,8 +449,8 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     // تصاميم المحتوى العضوي
     var ups=[];ALL.forEach(function(p){(p.designs||[]).forEach(function(x){ups.push({p:p,x:x})})});
     ups.sort(function(a,b){return (b.x.at||'')<(a.x.at||'')?-1:1});
-    h+='<div class="sec"><h3>آخر تصاميم المنشورات</h3><small>من المصمم على اللوحة مباشرة</small><a class="more" href="#design-cal">تقويم التصاميم ←</a></div>';
-    h+=ups.length?'<div class="grid">'+ups.slice(0,8).map(function(u){return card(u.p,u.x)}).join('')+'</div>':'<p class="note">لسه مفيش تصاميم مرفوعة. أول ما المصمم يرفع تصميم من تقويم التصاميم هيظهر هنا، والمنشور يتحول للمراجعة.</p>';
+    h+='<div class="sec"><h3>آخر تصاميم المنشورات</h3><small>من المصمم على اللوحة مباشرة</small><a class="more" href="simple.html?view=month">اللوحة المبسطة ←</a></div>';
+    h+=ups.length?'<div class="grid">'+ups.slice(0,8).map(function(u){return card(u.p,u.x)}).join('')+'</div>':'<p class="note">لسه مفيش تصاميم مرفوعة. أول ما المصمم يرفع تصميم من اللوحة المبسطة هيظهر هنا، والمنشور يتحول للمراجعة.</p>';
     h+='<div class="sec"><h3>منشورات الأسبوع '+wk+'</h3><small>'+weekRange(wk)+'</small></div>'+(inWeek.length?'<div class="grid">'+inWeek.map(function(p){return card(p)}).join('')+'</div>':'<p class="empty">مفيش منشورات هذا الأسبوع.</p>');
     return h;
   }
@@ -694,7 +705,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     show.sort(function(a,b){var va=versOf(a.key)[0],vb=versOf(b.key)[0];var ta=va?va.at:'',tb=vb?vb.at:'';return ta<tb?1:ta>tb?-1:0});
     var h='<h2>تصاميم الإعلانات</h2><p class="lede">'+(up?'افتح أي إعلان وارفع نسخة جديدة من تصميمه (فيد وستوري وصور الكاروسيل مع بعض). النسخة بتروح للمراجعة، وبعد الاعتماد بتتركّب على المنصة.':'النسخ الجديدة اللي رفعها المصمم لتصاميم الإعلانات. راجع واعتمد أو اطلب تعديل، وبعد ما تركّبها على المنصة علّمها «اتركّبت».')+'</p>';
     h+='<div class="tiles"><div class="tile'+(cnt.review?' gold':'')+'"><span class="k">بانتظار المراجعة</span><span class="v num">'+cnt.review+'</span><span class="s">'+(ap?'محتاجة اعتمادك':'عند المدير')+'</span></div><div class="tile'+(cnt.changes?' warn':'')+'"><span class="k">تعديلات مطلوبة</span><span class="v num">'+cnt.changes+'</span><span class="s">'+(up?'محتاجة نسخة جديدة منك':'عند المصمم')+'</span></div><div class="tile"><span class="k">معتمدة ولسه ما اتركّبتش</span><span class="v num">'+cnt.approved+'</span><span class="s">جاهزة تتركّب على المنصة</span></div></div>';
-    h+='<div class="chips" id="adf" style="margin-top:16px"><button data-a="0" aria-pressed="'+!AD.f.all+'">الشغالة بس</button><button data-a="1" aria-pressed="'+AD.f.all+'">الكل</button><span style="width:12px"></span><button data-p="" aria-pressed="'+(AD.f.pl==='')+'">كل المنصات</button><button data-p="meta" aria-pressed="'+(AD.f.pl==='meta')+'">ميتا</button><button data-p="snap" aria-pressed="'+(AD.f.pl==='snap')+'">سناب</button>'+(all.some(function(x){return x.platform==='tiktok'})?'<button data-p="tiktok" aria-pressed="'+(AD.f.pl==='tiktok')+'">تيك توك</button>':'')+'<span style="width:12px"></span><button data-h="1" aria-pressed="'+AD.f.has+'">عليها نسخ جديدة</button>'+(up?'<button data-new="1" style="margin-inline-start:auto;background:var(--char);color:var(--char-ink);border-color:var(--char)">+ تصميم لإعلان جديد</button>':'')+'</div>';
+    h+='<div class="chips" id="adf" style="margin-top:16px"><button data-a="0" aria-pressed="'+!AD.f.all+'">الشغالة بس</button><button data-a="1" aria-pressed="'+AD.f.all+'">الكل</button><span style="width:12px"></span><button data-p="" aria-pressed="'+(AD.f.pl==='')+'">كل المنصات</button><button data-p="meta" aria-pressed="'+(AD.f.pl==='meta')+'">ميتا</button><button data-p="snap" aria-pressed="'+(AD.f.pl==='snap')+'">سناب</button>'+(all.some(function(x){return x.platform==='tiktok'})?'<button data-p="tiktok" aria-pressed="'+(AD.f.pl==='tiktok')+'">تيك توك</button>':'')+'<span style="width:12px"></span><button data-h="1" aria-pressed="'+AD.f.has+'">عليها نسخ جديدة</button>'+'<button data-zipall="1" style="margin-inline-start:auto">⬇ التصاميم الحالية (ZIP)</button>'+(up?'<button data-new="1" style="background:var(--char);color:var(--char-ink);border-color:var(--char)">+ تصميم لإعلان جديد</button>':'')+'</div>';
     h+='<div class="chips" style="margin-top:-6px"><span class="chl">الحملة:</span><button data-camp="" aria-pressed="'+(AD.f.camp==='')+'">كل الحملات</button>'+camps.map(function(c){return '<button data-camp="'+esc(c)+'" aria-pressed="'+(AD.f.camp===c)+'">'+esc(c)+'</button>'}).join('')+'</div>';
     h+=show.length?'<div class="grid ads">'+show.map(function(x){
       var vs=versOf(x.key),v=vs[0],f=v?adFiles(v).filter(function(z){return /^image\//.test(z.type||'')})[0]:null,src=f?f.url:(x.img||[])[0];
@@ -709,6 +720,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     f.querySelectorAll('[data-p]').forEach(function(b){b.onclick=function(){AD.f.pl=b.dataset.p;rerender()}});
     f.querySelectorAll('[data-h]').forEach(function(b){b.onclick=function(){AD.f.has=!AD.f.has;rerender()}});
     page.querySelectorAll('[data-camp]').forEach(function(b){b.onclick=function(){AD.f.camp=b.dataset.camp;rerender()}});
+    var za=f.querySelector('[data-zipall]');if(za)za.onclick=function(){var fl=[],seen={};adItems().filter(function(x){return x.on&&!x.isNew&&(!AD.f.pl||x.platform===AD.f.pl)&&(!AD.f.camp||x.camp===AD.f.camp)}).forEach(function(x){(x.img||[]).forEach(function(u,i){var o=x.orig[i];if(seen[o||u])return;seen[o||u]=1;fl.push({url:o||u,name:(x.camp?x.camp+'-':'')+x.title+(x.img.length>1?'-'+(i+1):'')+'.jpg',toJpg:!o&&/\.webp$/i.test(u)})})});if(!fl.length){ptoast('مفيش تصاميم بالفلتر ده');return}var t=za.textContent;za.disabled=true;za.textContent='جارِ تجهيز '+fl.length+' ملف…';capital.zip(fl,'تصاميم-الإعلانات-الحالية'+(AD.f.camp?'-'+AD.f.camp:'')).then(function(){za.disabled=false;za.textContent=t}).catch(function(){za.disabled=false;za.textContent=t;ptoast('التحميل فشل، حاول تاني.')})};
     f.querySelectorAll('[data-new]').forEach(function(b){b.onclick=function(){AD.open=null;AD.newOpen=true;adSheet()}});
     page.querySelectorAll('[data-ak]').forEach(function(b){b.onclick=function(){AD.open=b.dataset.ak;AD.newOpen=false;adSheet()}});
   }
@@ -717,6 +729,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   function upForm(isNew){
     return '<form class="adup" id="adup">'+(isNew?'<div class="adrow"><label>اسم الإعلان<input name="title" required placeholder="مثال: الملز · استديو 3200"></label><label>المنصة<select name="platform"><option value="meta">ميتا</option><option value="snap">سناب</option><option value="tiktok">تيك توك</option></select></label><label>الحملة<select name="camp">'+adCamps(adItems()).map(function(c){return '<option'+(c===AD.f.camp?' selected':'')+'>'+esc(c)+'</option>'}).join('')+'<option value="__new">+ حملة جديدة…</option></select></label><label class="newcamp" hidden>اسم الحملة الجديدة<input name="campName" placeholder="مثال: القيروان"></label></div>':'')+
       '<label>الملفات (فيد وستوري وكل صور الكاروسيل مع بعض)<input type="file" name="files" multiple accept="image/png,image/jpeg,image/webp,video/mp4,video/quicktime" required></label>'+
+      '<label>نص الإعلان (اختياري، عشان يظهر في المعاينة)<textarea name="text" rows="3" placeholder="الكلام اللي بيظهر فوق التصميم في الإعلان"></textarea></label>'+
       '<label>إيه اللي اتغيّر في النسخة دي؟<textarea name="note" rows="2" placeholder="مثال: السعر الجديد 3200 من غير «يبدأ من»، وخلفية أفتح"></textarea></label>'+
       '<div class="plb"><button class="pbtn" type="submit">↑ ارفع النسخة</button><span class="m" id="adst"></span></div></form>';
   }
@@ -727,7 +740,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     else{
       var x=adItems().filter(function(i){return i.key===AD.open})[0];if(!x){adClose();return}
       var vs=versOf(x.key);
-      h='<div class="lb-in adsh"><div class="lb-h"><b>'+esc(x.title)+'</b><span>'+(x.platform==='meta'?'ميتا':x.platform==='snap'?'سناب':x.platform==='tiktok'?'تيك توك':'جديد')+(x.hood?' · '+esc(x.hood):'')+(x.format?' · '+esc(x.format):'')+'</span><button type="button" class="lb-x" aria-label="إغلاق">×</button></div><div class="adb">';
+      h='<div class="lb-in adsh"><div class="lb-h"><b>'+esc(x.title)+'</b><a class="pbtn sm ghost" href="#ad-preview?ad='+encodeURIComponent(x.key)+'" data-apopen="'+esc(x.key)+'" style="order:3">معاينة ←</a><span>'+(x.platform==='meta'?'ميتا':x.platform==='snap'?'سناب':x.platform==='tiktok'?'تيك توك':'جديد')+(x.hood?' · '+esc(x.hood):'')+(x.format?' · '+esc(x.format):'')+'</span><button type="button" class="lb-x" aria-label="إغلاق">×</button></div><div class="adb">';
       if((x.img||[]).length)h+='<h4>الحالي على المنصة <button class="pbtn sm ghost" data-zipcur="1" style="margin-inline-start:8px">⬇ تحميل'+(x.img.length>1?' الكل (ZIP)':'')+'</button></h4><div class="lb-row sm">'+x.img.map(function(u){return '<a href="'+esc(u)+'" target="_blank" rel="noopener"><img src="'+esc(u)+'" alt=""></a>'}).join('')+'</div>';
       if(up)h+='<div class="plb" style="margin-top:14px"><button class="pbtn" type="button" id="adshow">↑ ارفع نسخة جديدة'+(vs.length?' (النسخة '+((vs[0].data.v||vs.length)+1)+')':'')+'</button></div><div id="adupw" hidden style="margin-top:10px">'+upForm(false)+'</div>';
       h+='<h4>النسخ'+(vs.length?' <span class="c">'+vs.length+'</span>':'')+'</h4>';
@@ -747,6 +760,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     }
     box.innerHTML=h;box.hidden=false;
     box.querySelector('.lb-x').onclick=adClose;
+    var apo=box.querySelector('[data-apopen]');if(apo)apo.onclick=function(){AP.key=apo.dataset.apopen;AP.ver='cur';AP.pl='';AP.i=0;adClose()};
     var sw=box.querySelector('#adshow');if(sw)sw.onclick=function(){box.querySelector('#adupw').hidden=false;sw.parentNode.hidden=true};
     function zbtn(b,files,name){b.onclick=function(){var t=b.textContent;b.disabled=true;b.textContent='جارِ التجهيز…';capital.zip(files,name).then(function(){b.textContent=t;b.disabled=false}).catch(function(){b.disabled=false;b.textContent=t;ptoast('التحميل فشل، حاول تاني.')})}}
     var curX=AD.open&&adItems().filter(function(i){return i.key===AD.open})[0];
@@ -777,7 +791,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     btn.disabled=true;
     (function next(){
       if(i>=files.length){
-        var cx=adItems().filter(function(z){return z.key===key})[0];var d=Object.assign({v:n,files:out,note:E.namedItem('note').value.trim(),by:ME,at:new Date().toISOString(),status:'review',adTitle:extra.title||(cx?cx.title:'')},extra);
+        var cx=adItems().filter(function(z){return z.key===key})[0];var d=Object.assign({v:n,files:out,text:E.namedItem('text').value.trim(),note:E.namedItem('note').value.trim(),by:ME,at:new Date().toISOString(),status:'review',adTitle:extra.title||(cx?cx.title:'')},extra);
         capital.addAdVersion(key,d).then(function(){ptoast('اترفعت النسخة '+n+' وراحت للمراجعة');AD.open=key;AD.newOpen=false;return loadAdVers()}).then(function(){rerender();adSheet()}).catch(function(e){btn.disabled=false;st.textContent='ما اتحفظتش: '+((e&&e.message)||'حاول تاني')});
         return;
       }
@@ -966,9 +980,80 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     var mo=page.querySelector('[data-pvmore]');if(mo)mo.onclick=function(){PV.more=true;rerender()};
   }
 
+  /* ---------- معاينة الإعلانات ---------- */
+  var AP={key:'',ver:'cur',pl:'',i:0,cmp:false,more:false,camp:''};
+  var APL=[{k:'igf',n:'إنستغرام فيد'},{k:'igs',n:'إنستغرام ستوري'},{k:'fbf',n:'فيسبوك فيد'},{k:'sns',n:'سناب ستوري'}];
+  function apMedia(x,ver){
+    if(ver==='cur')return (x.img||[]).map(function(u){return {u:u,v:false}});
+    var v=AD.vers.filter(function(z){return z.id===ver})[0];if(!v)return [];
+    return adFiles(v).filter(function(z){return /^(image|video)\//.test(z.type||'')}).map(function(z){return {u:z.url,v:/^video\//.test(z.type||'')}});
+  }
+  function apText(x,ver){
+    if(ver!=='cur'){var v=AD.vers.filter(function(z){return z.id===ver})[0];if(v&&v.data.text)return v.data.text}
+    var vs=versOf(x.key).filter(function(z){return z.data.status==='live'&&z.data.text});if(ver==='cur'&&vs.length)return vs[0].data.text;
+    return '';
+  }
+  function apBox(m,cls){
+    var n=m.length,i=Math.min(AP.i,Math.max(n-1,0)),x=m[i],h='<div class="media'+(cls?' '+cls:'')+'">';
+    h+=!x?'<div class="empty">مفيش تصميم للنسخة دي</div>':x.v?'<video src="'+esc(x.u)+'#t=0.1" muted playsinline controls preload="metadata"></video>':'<img src="'+esc(x.u)+'" alt="">';
+    if(n>1)h+='<span class="cnt">'+(i+1)+'/'+n+'</span>'+(i>0?'<button class="nav p" data-api="-1" aria-label="السابق">›</button>':'')+(i<n-1?'<button class="nav n" data-api="1" aria-label="التالي">‹</button>':'');
+    return h+'</div>'+(n>1?'<div class="dotsrow">'+m.map(function(_,k){return '<i'+(k===i?' class="on"':'')+'></i>'}).join('')+'</div>':'');
+  }
+  function apTxtBlock(t,n){
+    if(!t)return '<span class="mut" style="color:#8A8D91">نص الإعلان مش محفوظ لسه</span>';
+    var c=AP.more||t.length<=n?{t:t,cut:false}:{t:t.slice(0,n).replace(/\s+\S*$/,''),cut:true};
+    return pvTxt(c.t)+(c.cut?'… <span class="more" data-apmore>المزيد</span>':'');
+  }
+  var CTA='إرسال رسالة واتساب';
+  function apPhone(x,ver,pl){
+    var m=apMedia(x,ver),t=apText(x,ver),h;
+    if(pl==='igf')h=SB+'<div class="appbar"><span style="font-family:cursive;font-size:20px">Instagram</span><span>♡ ✉</span></div><div class="ph-h"><span class="av"></span><span><b>thecapitalsuites</b><span class="s">ممول</span></span><span class="dots">···</span></div>'+apBox(m)+'<div class="adcta"><span>'+CTA+'</span><span>›</span></div><div class="ig-act">'+IC.heart+IC.com+IC.send+'<span class="sv">'+IC.save+'</span></div><div class="cap"><b>thecapitalsuites</b> '+apTxtBlock(t,125)+'</div>';
+    else if(pl==='fbf')h=SB+'<div class="appbar" style="color:#1877F2;font-size:22px">facebook</div><div class="ph-h"><span class="av"></span><span><b>'+NAME+'</b><span class="s">ممول · 🌐</span></span><span class="dots">···</span></div><div class="fb-txt">'+apTxtBlock(t,180)+'</div>'+apBox(m)+'<div class="adcta fb"><span><small>WHATSAPP</small>'+esc(x.title||NAME)+'</span><b>'+CTA+'</b></div><div class="fb-bar"><span>👍 أعجبني</span><span>💬 تعليق</span><span>↗ مشاركة</span></div>';
+    else if(pl==='igs')h='<div class="story">'+apBox(m,'full')+'<div class="sttop"><div class="bars"><i></i></div><div class="who"><span class="av"></span><b>thecapitalsuites</b><span>ممول</span></div></div><div class="stbot">'+(t?'<p>'+esc(t.split('\n')[0].slice(0,90))+'</p>':'')+'<span class="pill">'+CTA+'</span></div></div>';
+    else h='<div class="story snap">'+apBox(m,'full')+'<div class="sttop"><div class="who"><span class="av"></span><span><b>'+NAME+'</b><small>إعلان</small></span></div></div><div class="stbot"><span class="pill y">أرسل رسالة</span></div></div>';
+    return '<div class="phone"><div class="screen'+(pl==='igs'||pl==='sns'?' st':'')+'">'+h+'</div></div>';
+  }
+  function renderAdPreview(){
+    if(AD.err)return '<h2>معاينة الإعلانات</h2><p class="note">تعذّر تحميل الإعلانات. حدّث الصفحة.</p>';
+    if(!AD.ads||!AD.vLoaded)return '<p class="loading">جارِ تحميل الإعلانات…</p>';
+    var all=adItems().filter(function(x){return x.on||x.isNew||versOf(x.key).length}),camps=adCamps(all);
+    if(AP.camp&&camps.indexOf(AP.camp)<0)AP.camp='';
+    var list=all.filter(function(x){return !AP.camp||x.camp===AP.camp});
+    if(!list.length)return '<h2>معاينة الإعلانات</h2><p class="empty">مفيش إعلانات.</p>';
+    var hm=/[?&]ad=([^&]+)/.exec(location.hash);if(hm&&!AP.key)AP.key=decodeURIComponent(hm[1]);
+    var x=list.filter(function(z){return z.key===AP.key})[0]||list[0];AP.key=x.key;
+    var vs=versOf(x.key);if(AP.ver!=='cur'&&!vs.some(function(v){return v.id===AP.ver}))AP.ver=vs.length&&!(x.img||[]).length?vs[0].id:'cur';
+    if(!(x.img||[]).length&&AP.ver==='cur'&&vs.length)AP.ver=vs[0].id;
+    if(!AP.pl)AP.pl=x.platform==='snap'?'sns':'igf';
+    var h='<h2>معاينة الإعلانات</h2><p class="lede">شكل الإعلان وهو ممول على الموبايل قبل ما يتركّب. اختار الإعلان والنسخة والمكان، ودوس «قارن بالحالي» عشان تشوف النسخة الجديدة جنب الشغالة.</p>';
+    h+='<div class="chips"><span class="chl">الحملة:</span><button data-apc="" aria-pressed="'+(AP.camp==='')+'">كل الحملات</button>'+camps.map(function(c){return '<button data-apc="'+esc(c)+'" aria-pressed="'+(AP.camp===c)+'">'+esc(c)+'</button>'}).join('')+'</div>';
+    h+='<div class="pv"><div class="pv-list">';
+    var byc={};list.forEach(function(z){(byc[z.camp||'بدون حملة']=byc[z.camp||'بدون حملة']||[]).push(z)});
+    Object.keys(byc).forEach(function(c){h+='<div class="wkh">'+esc(c)+'</div>'+byc[c].map(function(z){var v=versOf(z.key)[0],src=(z.img||[])[0]||(v?(adFiles(v).filter(function(f){return /^image\//.test(f.type||'')})[0]||{}).url:'');
+      return '<button class="pv-it" data-apk="'+esc(z.key)+'" aria-current="'+(z.key===x.key)+'">'+(src?'<img class="th" src="'+esc(src)+'" alt="" loading="lazy">':'<span class="th">—</span>')+'<span style="min-width:0"><b>'+esc(z.title)+'</b><span class="m">'+(z.platform==='meta'?'ميتا':z.platform==='snap'?'سناب':z.platform==='tiktok'?'تيك توك':'جديد')+(v?' · النسخة '+(v.data.v||'')+' '+(AST[v.data.status]||AST.review)[0]:'')+'</span></span></button>'}).join('')});
+    h+='</div><div class="pv-main">';
+    h+='<div class="pv-tabs">'+((x.img||[]).length?'<button data-apv="cur" aria-pressed="'+(AP.ver==='cur')+'">الحالي على المنصة</button>':'')+vs.map(function(v){return '<button data-apv="'+esc(v.id)+'" aria-pressed="'+(AP.ver===v.id)+'">النسخة '+(v.data.v||'')+'</button>'}).join('')+(vs.length&&(x.img||[]).length?'<button data-apcmp="1" aria-pressed="'+AP.cmp+'" class="cmpb">قارن بالحالي</button>':'')+'</div>';
+    h+='<div class="pv-tabs">'+APL.map(function(p){return '<button data-app="'+p.k+'" aria-pressed="'+(AP.pl===p.k)+'">'+p.n+'</button>'}).join('')+'</div>';
+    var cmp=AP.cmp&&AP.ver!=='cur'&&(x.img||[]).length;
+    h+=cmp?'<div class="apcmp"><div><p class="apl">الحالي على المنصة</p>'+apPhone(x,'cur',AP.pl)+'</div><div><p class="apl">'+esc((vs.filter(function(v){return v.id===AP.ver})[0]||{data:{}}).data.v?'النسخة '+vs.filter(function(v){return v.id===AP.ver})[0].data.v:'النسخة الجديدة')+'</p>'+apPhone(x,AP.ver,AP.pl)+'</div></div>':apPhone(x,AP.ver,AP.pl);
+    var cv=vs.filter(function(v){return v.id===AP.ver})[0];
+    h+='<div class="pv-meta">'+esc(x.title)+(cv?' · النسخة '+(cv.data.v||'')+' · '+aTag(cv.data.status):'')+' · <a href="#ad-designs" data-apgo="'+esc(x.key)+'" style="color:var(--gold-ink)">افتح في تصاميم الإعلانات</a></div>';
+    return h+'</div></div>';
+  }
+  function bindAdPreview(){
+    page.querySelectorAll('[data-apc]').forEach(function(b){b.onclick=function(){AP.camp=b.dataset.apc;AP.key='';AP.i=0;rerender()}});
+    page.querySelectorAll('[data-apk]').forEach(function(b){b.onclick=function(){AP.key=b.dataset.apk;AP.ver='cur';AP.i=0;AP.pl='';AP.cmp=false;AP.more=false;rerender()}});
+    page.querySelectorAll('[data-apv]').forEach(function(b){b.onclick=function(){AP.ver=b.dataset.apv;AP.i=0;if(AP.ver==='cur')AP.cmp=false;rerender()}});
+    page.querySelectorAll('[data-app]').forEach(function(b){b.onclick=function(){AP.pl=b.dataset.app;rerender()}});
+    var c=page.querySelector('[data-apcmp]');if(c)c.onclick=function(){AP.cmp=!AP.cmp;if(AP.cmp&&AP.ver==='cur'){var vs=versOf(AP.key);if(vs[0])AP.ver=vs[0].id}rerender()};
+    page.querySelectorAll('[data-api]').forEach(function(b){b.onclick=function(){AP.i+=+b.dataset.api;rerender()}});
+    var mo=page.querySelector('[data-apmore]');if(mo)mo.onclick=function(){AP.more=true;rerender()};
+    var g=page.querySelector('[data-apgo]');if(g)g.onclick=function(){AD.open=g.dataset.apgo;setTimeout(adSheet,50)};
+  }
+
   /* ---------- الأرشيف ---------- */
   function renderLibrary(){
-    var h='<h2>كل الملفات</h2><p class="lede">آخر نسخة معتمدة من كل ملف. اختر من القائمة، أو افتح أي ملف في نافذة مستقلة.</p>';
+    var h='<h2>الأرشيف</h2><p class="lede">كل ملفات المشروع في مكان واحد، والملفات القديمة اللي اتشالت من القائمة في الآخر.</p>';
     GROUPS.forEach(function(g){
       var items=gItems(g).filter(function(i){return i.id!=='library'&&i.id!=='today'});if(!items.length)return;
       h+='<div class="sec"><h3>'+esc(g.g)+'</h3></div><div class="lib">'+items.map(function(i){
@@ -983,12 +1068,12 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   var view=document.getElementById('view'),bar=document.getElementById('bar');
   function renderLive(id){
     var sc=page.scrollTop;
-    page.innerHTML=id==='today'?renderToday():id==='content'?renderContent():id==='ads-live'?renderAds():id==='ads'?renderLiveAds():id==='publish'?renderPublish():id==='preview'?renderPreview():id==='ad-designs'?renderAdDesigns():id==='design-cal'?renderPostCal():renderLibrary();
+    page.innerHTML=id==='today'?renderToday():id==='content'?renderContent():id==='ads-live'?renderAds():id==='ads'?renderLiveAds():id==='publish'?renderPublish():id==='preview'?renderPreview():id==='ad-designs'?renderAdDesigns():id==='design-cal'?renderPostCal():id==='ad-preview'?renderAdPreview():renderLibrary();
     page.scrollTop=sc;
-    if(id==='content')bindContent();if(id==='ads-live')bindAds();if(id==='ads')bindLiveAds();if(id==='publish')bindPublish();if(id==='preview')bindPreview();if(id==='ad-designs'){loadAdDesigns();bindAdDesigns()}if(id==='design-cal'){bindPostCal();if(PC.open)pcSheet()}
+    if(id==='content')bindContent();if(id==='ads-live')bindAds();if(id==='ads')bindLiveAds();if(id==='publish')bindPublish();if(id==='preview')bindPreview();if(id==='ad-designs'){loadAdDesigns();bindAdDesigns()}if(id==='design-cal'){bindPostCal();if(PC.open)pcSheet()}if(id==='ad-preview'){loadAdDesigns();bindAdPreview()}
   }
   function route(){
-    var id=location.hash.slice(1).split('?')[0];if(ALIAS[id]&&BY[ALIAS[id]]&&!BY[ALIAS[id]].self){history.replaceState(null,'','#'+ALIAS[id]);id=ALIAS[id]}if(!BY[id]||BY[id].self||BY[id].ext)id='today';
+    var id=location.hash.slice(1).split('?')[0];if(ALIAS[id]&&BY[ALIAS[id]]){var al=BY[ALIAS[id]];if(al.self){location.replace(al.href+(id==='design-cal'?'?view=month':''));return}history.replaceState(null,'','#'+ALIAS[id]);id=ALIAS[id]}if(!BY[id]||BY[id].self||BY[id].ext)id='today';
     var i=BY[id],changed=id!==CUR;CUR=id;
     side.querySelectorAll('a').forEach(function(a){if(a.getAttribute('data-id')===id)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
     var cur=side.querySelector('a[aria-current]');if(cur&&cur.closest('details'))cur.closest('details').open=true;
