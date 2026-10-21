@@ -37,6 +37,11 @@ a.btn:hover{border-color:#E2C466;color:#E2C466}
 .app{flex:1;display:grid;grid-template-columns:270px minmax(0,1fr);min-height:0}
 nav.side{background:var(--surface);border-left:1px solid var(--line);overflow-y:auto;padding:16px 12px 40px}
 .grp{font-size:12px;font-weight:600;color:var(--gold-ink);margin:18px 10px 6px;letter-spacing:.02em}
+.tsec{display:flex;align-items:baseline;gap:12px;margin:26px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--gold)}.tsec h3{margin:0;font-family:'Alexandria',Tahoma,sans-serif;font-size:18px}.tsec a{margin-inline-start:auto;font-size:13px;color:var(--gold-ink);font-weight:600;text-decoration:none}
+.sech{font-family:'Alexandria',Tahoma,sans-serif;font-size:15px;font-weight:700;color:var(--ink);margin:22px 4px 6px;padding:0 6px 6px;border-bottom:2px solid var(--gold)}
+.fold{margin:4px 0 6px}.fold summary{cursor:pointer;list-style:none;font-size:13px;font-weight:600;color:var(--ink-3);padding:6px 10px;border-radius:8px}.fold summary::-webkit-details-marker{display:none}.fold summary::before{content:'◂';display:inline-block;margin-inline-end:6px;transition:transform .15s}.fold[open] summary::before{transform:rotate(-90deg)}.fold summary:hover{background:var(--soft)}.fold summary .c{font-weight:400}
+nav.side a.sm{padding:5px 10px 5px 10px;padding-inline-start:24px}nav.side a.sm b{font-size:13.5px;font-weight:500}
+.fold.ref{margin-top:22px;border-top:1px solid var(--line);padding-top:8px}.fold.ref summary{font-size:13.5px;color:var(--gold-ink)}
 .grp:first-child{margin-top:4px}
 nav.side a{display:block;text-decoration:none;padding:8px 10px;border-radius:8px;border:1px solid transparent}
 nav.side a b{display:block;font-weight:600;font-size:14.5px}
@@ -276,47 +281,44 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
 (function(){
   /* ---------- الأقسام ---------- */
   var GROUPS=[
-    {g:'التشغيل',items:[
-      {id:'today',t:'اليوم',d:'المطلوب الآن: التسليمات والمراجعات والنشر والحملات',m:'مباشر',live:true},
-      {id:'content',t:'المحتوى',d:'كل منشورات التقويم بتصاميمها المرفوعة وحالتها',m:'مباشر',live:true},
-      {id:'ads-live',t:'الحملات',d:'الصرف والنتائج والإعلانات الشغالة ونتائج المبيعات',m:'مباشر',live:true},
+    {g:'اليوم',top:true,items:[
+      {id:'today',t:'اليوم',d:'المطلوب الآن من المحتوى العضوي والإعلانات',m:'مباشر',live:true}
+    ]},
+    {g:'المحتوى العضوي',items:[
       {id:'design-cal',t:'تقويم التصاميم',d:'كل منشور في يومه بتصميمه: ارفع، اعتمد، واسحب المنشور ليوم تاني',m:'مباشر',live:true},
-      {id:'ad-designs',t:'تصاميم الإعلانات',d:'نسخ جديدة من تصاميم الإعلانات: المصمم يرفع، والمدير يعتمد، وبعدها تتركّب على المنصة',m:'مباشر',live:true},
-      {id:'preview',t:'معاينة المنشورات',d:'شكل كل منشور على إنستغرام وفيسبوك وتيك توك وX قبل ما ينزل، وشبكة الحساب',m:'مباشر',live:true},
-      {id:'publish',t:'جدول النشر',d:'مواعيد النشر لكل منصة: انسخ النص، نزّل التصميم، وعلّم إنه اتنشر',m:'مباشر',live:true},
-      {id:'simple',t:'اللوحة المبسطة',d:'الأسبوع في 4 مراحل وزرار واحد لكل منشور: ارفع، اعتمد، اتنشر',m:'مباشر',href:'simple.html',self:true},
-      {id:'board',t:'لوحة النشر',d:'التقويم الكامل: الحالات والتسليمات والملاحظات ورفع التصاميم',m:'مباشر',href:'./',self:true}
-    ]},
-    {g:'الخطط',items:[
-      {id:'shamel',dl:["الملف-الشامل.pdf"],t:'الملف الشامل',d:'خطة تسكين الوحدات: 8 أقسام من الخطة العامة إلى المحتوى والبراند',m:'آخر تحديث 6 أكتوبر',href:'files/shamel.html'},
-      {id:'campaigns',dl:["مخطط-تنفيذ-الحملات.pdf"],t:'مخطط تنفيذ الحملات',d:'هيكل الحملات والمجموعات والإعلانات في سناب وميتا وتيك توك مع معاينة الجوال',m:'آخر تحديث 5 أكتوبر',href:'files/campaigns.html'},
-      {id:'media',dl:["الميديا-بلان.pdf"],t:'الميديا بلان',d:'توزيع ميزانية الاختبار على المنصات والمراحل',m:'1 أكتوبر',href:'files/media-plan.html'},
-      {id:'budget',dl:["اعتماد-ميزانية-الحملات.pdf"],t:'اعتماد ميزانية الحملات',d:'نموذج اعتماد الميزانية للإدارة',m:'5 أكتوبر',href:'files/budget.html'}
-    ]},
-    {g:'المحتوى المعتمد',items:[
-      {id:'cal30',dl:["تقويم-المحتوى-أول-30-يوماً.pdf"],t:'تقويم المحتوى · أول 30 يوماً',d:'صفحة الإدارة: المنشورات من 15 أكتوبر إلى 14 نوفمبر',m:'آخر تحديث 8 أكتوبر',href:'files/cal30.html'},
-      {id:'week1',dl:["محتوى-الأسبوع-الأول.zip"],t:'محتوى الأسبوع الأول (التسليم الأصلي)',d:'تصاميم أول أسبوع نشر وملف النصوص والتعليمات',m:'7 أكتوبر',href:'files/week1.html'},
+      {id:'preview',t:'معاينة المنشورات',d:'شكل كل منشور على إنستغرام وفيسبوك وتيك توك وX قبل ما ينزل، وشبكة الحساب',m:'مباشر',live:true,need:'view.publish'},
+      {id:'publish',t:'جدول النشر',d:'مواعيد النشر لكل منصة: انسخ النص، نزّل التصميم، وعلّم إنه اتنشر',m:'مباشر',live:true,need:'view.publish'},
+      {id:'board',t:'لوحة النشر',d:'اللوحة الكاملة والمبسطة: الحالات والتسليمات والملاحظات',m:'الكاملة والمبسطة ↗',href:'./',self:true}
+    ],files:[
+      {id:'cal30',dl:["تقويم-المحتوى-أول-30-يوماً.pdf"],t:'تقويم أول 30 يوماً',d:'صفحة الإدارة: المنشورات من 15 أكتوبر إلى 14 نوفمبر',m:'آخر تحديث 19 أكتوبر',href:'files/cal30.html'},
+      {id:'d-cal30',dl:["تقويم-أول-30-يوماً-عرض.pdf"],t:'تقويم أول 30 يوماً (عرض)',d:'نسخة مختصرة في 6 شرائح',m:'آخر تحديث 19 أكتوبر',href:'files/decks/cal30.html',need:'view.decks'},
+      {id:'d-brand',dl:["استراتيجية-المحتوى-والبراند.pdf"],t:'استراتيجية المحتوى والبراند (عرض)',d:'عرض 10 شرائح',m:'آخر تحديث 19 أكتوبر',href:'files/decks/brand.html',need:'view.decks'},
+      {id:'week1',dl:["محتوى-الأسبوع-الأول.zip"],t:'محتوى الأسبوع الأول',d:'تصاميم أول أسبوع نشر وملف النصوص والتعليمات (التسليم الأصلي)',m:'7 أكتوبر',href:'files/week1.html'},
       {id:'where',dl:["منشور-وين-نشغل.zip"],t:'منشور «وين نشغّل»',d:'ثلاث اتجاهات لتصميم المنشور الثالث',m:'11 أكتوبر',href:'files/where.html'}
     ]},
-    {g:'العروض للإدارة',items:[
-      {id:'d-brand',dl:["استراتيجية-المحتوى-والبراند.pdf"],t:'استراتيجية المحتوى والبراند',d:'عرض 10 شرائح',m:'6 أكتوبر',href:'files/decks/brand.html'},
-      {id:'d-cal30',dl:["تقويم-أول-30-يوماً-عرض.pdf"],t:'تقويم أول 30 يوماً (عرض)',d:'نسخة مختصرة في 6 شرائح',m:'10 أكتوبر',href:'files/decks/cal30.html'},
-      {id:'d-weekly2',dl:["تقرير-الحملات-الأسبوع-الثاني.pdf"],t:'تقرير الحملات · الأسبوع الثاني',d:'8 إلى 14 أكتوبر · 5 شرائح مع مقارنة بأسبوع الإطلاق',m:'15 أكتوبر',href:'files/decks/weekly2.html'},
-      {id:'d-weekly',dl:["تقرير-الحملات-أسبوع-الإطلاق.pdf"],t:'تقرير الحملات · أسبوع الإطلاق',d:'1 إلى 7 أكتوبر · 5 شرائح',m:'8 أكتوبر',href:'files/decks/weekly.html'}
-    ]},
     {g:'الإعلانات',items:[
-      {id:'ads',dl:["الإعلانات-الشغالة-الآن.zip"],t:'الإعلانات الشغالة الآن',d:'التصميم الفعلي لكل إعلان شغال في ميتا وسناب مع صرفه ونتايجه',m:'مباشر',live:true},
-      {id:'ads-archive',dl:["تصاميم-إعلانات-الحملة.zip", "فيديوهات-الحملة.zip"],t:'أرشيف تصاميم الحملة',d:'كل التصاميم والفيديوهات اللي اتسلّمت للحملة (5 أكتوبر)، شغالة أو لا',m:'5 أكتوبر',href:'files/ads.html'}
+      {id:'ads-live',t:'أداء الحملات',d:'الصرف والنتائج ونتائج المبيعات',m:'مباشر',live:true,need:'view.campaigns'},
+      {id:'ads',dl:["الإعلانات-الشغالة-الآن.zip"],t:'الإعلانات الشغالة',d:'التصميم الحالي لكل إعلان على ميتا وسناب مع صرفه ونتايجه',m:'مباشر',live:true,need:'view.campaigns'},
+      {id:'ad-designs',t:'تصاميم الإعلانات',d:'النسخ الجديدة من تصاميم الإعلانات: المصمم يرفع، والمدير يعتمد، وبعدها تتركّب على المنصة',m:'مباشر',live:true,need:['view.campaigns','designs.upload','posts.approve']}
+    ],files:[
+      {id:'campaigns',dl:["مخطط-تنفيذ-الحملات.pdf"],t:'مخطط تنفيذ الحملات',d:'هيكل الحملات والمجموعات والإعلانات في سناب وميتا وتيك توك مع معاينة الجوال',m:'آخر تحديث 5 أكتوبر',href:'files/campaigns.html',need:'view.plans'},
+      {id:'media',dl:["الميديا-بلان.pdf"],t:'الميديا بلان',d:'توزيع ميزانية الاختبار على المنصات والمراحل',m:'1 أكتوبر',href:'files/media-plan.html',need:'view.plans'},
+      {id:'budget',dl:["اعتماد-ميزانية-الحملات.pdf"],t:'اعتماد ميزانية الحملات',d:'نموذج اعتماد الميزانية للإدارة',m:'5 أكتوبر',href:'files/budget.html',need:'view.plans'},
+      {id:'d-weekly2',dl:["تقرير-الحملات-الأسبوع-الثاني.pdf"],t:'تقرير الحملات · الأسبوع الثاني',d:'8 إلى 14 أكتوبر · 5 شرائح مع مقارنة بأسبوع الإطلاق',m:'15 أكتوبر',href:'files/decks/weekly2.html',need:'view.decks'},
+      {id:'d-weekly',dl:["تقرير-الحملات-أسبوع-الإطلاق.pdf"],t:'تقرير الحملات · أسبوع الإطلاق',d:'1 إلى 7 أكتوبر · 5 شرائح',m:'8 أكتوبر',href:'files/decks/weekly.html',need:'view.decks'},
+      {id:'ads-archive',dl:["تصاميم-إعلانات-الحملة.zip", "فيديوهات-الحملة.zip"],t:'أرشيف تصاميم الحملة',d:'كل التصاميم والفيديوهات اللي اتسلّمت للحملة (5 أكتوبر)، شغالة أو لا',m:'5 أكتوبر',href:'files/ads.html',need:'view.campaigns'}
     ]},
-    {g:'الموقع',items:[
-      {id:'site',t:'الموقع الجديد',d:'thecapitalsuites-new.vercel.app',m:'منشور',href:'https://thecapitalsuites-new.vercel.app',ext:true}
-    ]},
-    {g:'الأرشيف',items:[
+    {g:'مرجع عام',fold:true,items:[
+      {id:'shamel',dl:["الملف-الشامل.pdf"],t:'الملف الشامل',d:'خطة تسكين الوحدات: 8 أقسام من الخطة العامة إلى المحتوى والبراند',m:'آخر تحديث 19 أكتوبر',href:'files/shamel.html',need:'view.plans'},
+      {id:'site',t:'الموقع الجديد',d:'thecapitalsuites-new.vercel.app',m:'منشور',href:'https://thecapitalsuites-new.vercel.app',ext:true},
       {id:'library',t:'كل الملفات',d:'فهرس كل ملفات المشروع',m:'',live:true}
     ]}
   ];
+  // روابط قديمة بتتحوّل للصفحة الجديدة
+  var ALIAS={content:'design-cal',simple:'board'};
+  function gItems(g){return g.items.concat(g.files||[])}
   var V='3';
-  var BY={};GROUPS.forEach(function(g){g.items.forEach(function(i){BY[i.id]=i})});
+  var BY={};GROUPS.forEach(function(g){gItems(g).forEach(function(i){BY[i.id]=i})});
 
   /* ---------- أدوات ---------- */
   var ST=[{k:'idea',l:'فكرة / بريف'},{k:'copy',l:'النص جاهز'},{k:'design',l:'عند المصمم'},{k:'review',l:'للمراجعة'},{k:'changes',l:'تعديلات مطلوبة'},{k:'approved',l:'معتمد'},{k:'scheduled',l:'مجدول'},{k:'published',l:'منشور'}];
@@ -359,25 +361,26 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
 
   /* ---------- القائمة ---------- */
   var side=document.getElementById('side'),pick=document.getElementById('pick'),page=document.getElementById('page');
-  var NEED_I={'ad-designs':['view.campaigns','designs.upload','posts.approve'],preview:'view.publish','ads-live':'view.campaigns',ads:'view.campaigns','ads-archive':'view.campaigns',publish:'view.publish'};
-  var NEED_G={'الخطط':'view.plans','العروض للإدارة':'view.decks'};
   function CAN(k){return !window.capital||!capital.can||capital.can(k)}
+  function canSee(i){return !i.need||[].concat(i.need).some(CAN)}
   function applyAccess(){
-    GROUPS=GROUPS.map(function(g){if(NEED_G[g.g]&&!CAN(NEED_G[g.g]))return null;return {g:g.g,items:g.items.filter(function(i){return !NEED_I[i.id]||[].concat(NEED_I[i.id]).some(CAN)})}}).filter(function(g){return g&&g.items.length});
-    BY={};GROUPS.forEach(function(g){g.items.forEach(function(i){BY[i.id]=i})});buildNav();
+    GROUPS=GROUPS.map(function(g){var it=g.items.filter(canSee),fl=(g.files||[]).filter(canSee);return it.length||fl.length?{g:g.g,top:g.top,fold:g.fold,items:it,files:fl}:null}).filter(Boolean);
+    BY={};GROUPS.forEach(function(g){gItems(g).forEach(function(i){BY[i.id]=i})});buildNav();
   }
+  function navA(i,small){var href=i.self||i.ext?i.href:'#'+i.id,tgt=i.ext?' target="_blank" rel="noopener"':'';return '<a href="'+href+'"'+tgt+' data-id="'+i.id+'"'+(small?' class="sm"':'')+'><b>'+esc(i.t)+(i.ext?' ↗':'')+'</b>'+(!small&&i.m?'<span>'+esc(i.m)+'</span>':'')+'</a>'}
   function buildNav(){
-  var nav='',opts='';
-  GROUPS.forEach(function(g){
-    nav+='<div class="grp">'+esc(g.g)+'</div>';opts+='<optgroup label="'+esc(g.g)+'">';
-    g.items.forEach(function(i){
-      var href=i.self||i.ext?i.href:'#'+i.id, tgt=i.ext?' target="_blank" rel="noopener"':'';
-      nav+='<a href="'+href+'"'+tgt+' data-id="'+i.id+'"><b>'+esc(i.t)+(i.ext?' ↗':'')+'</b>'+(i.m?'<span>'+esc(i.m)+'</span>':'')+'</a>';
-      opts+='<option value="'+i.id+'">'+esc(i.t)+'</option>';
+    var nav='',opts='';
+    GROUPS.forEach(function(g){
+      if(g.top){nav+=g.items.map(function(i){return navA(i)}).join('');opts+=g.items.map(function(i){return '<option value="'+i.id+'">'+esc(i.t)+'</option>'}).join('');return}
+      if(g.fold){nav+='<details class="fold ref"><summary>'+esc(g.g)+'</summary>'+g.items.map(function(i){return navA(i,true)}).join('')+'</details>'}
+      else{
+        nav+='<div class="sech">'+esc(g.g)+'</div>'+g.items.map(function(i){return navA(i)}).join('');
+        if((g.files||[]).length)nav+='<details class="fold"><summary>الملفات <span class="c">'+g.files.length+'</span></summary>'+g.files.map(function(i){return navA(i,true)}).join('')+'</details>';
+      }
+      opts+='<optgroup label="'+esc(g.g)+'">'+g.items.map(function(i){return '<option value="'+i.id+'">'+esc(i.t)+'</option>'}).join('')+'</optgroup>';
+      if((g.files||[]).length)opts+='<optgroup label="'+esc(g.g)+' · الملفات">'+g.files.map(function(i){return '<option value="'+i.id+'">'+esc(i.t)+'</option>'}).join('')+'</optgroup>';
     });
-    opts+='</optgroup>';
-  });
-  side.innerHTML=nav;pick.innerHTML=opts;
+    side.innerHTML=nav;pick.innerHTML=opts;
   }
   buildNav();
   pick.onchange=function(){var i=BY[pick.value];if(!i)return;if(i.self){location.href=i.href;return}if(i.ext){window.open(i.href,'_blank','noopener');route();return}location.hash=i.id};
@@ -409,27 +412,34 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     var pubSoon=POSTS.filter(function(p){return p.d>=T&&p.d<=iso(addD(TODAY,2))&&p.status!=='published'});
     var last=CAMP&&CAMP.periods&&CAMP.periods[CAMP.periods.length-1];
     var name=NAMES[ME]||'';
-    var h='<h2>'+(name?'أهلاً '+esc(name):'أهلاً')+'</h2><p class="lede">'+dayD(T)+' · الأسبوع '+wk+' من خطة المحتوى ('+weekRange(wk)+'). كل اللي على الصفحة دي بيتحدث لوحده من اللوحة والحملات.</p>';
+    var h='<h2>'+(name?'أهلاً '+esc(name):'أهلاً')+'</h2><p class="lede">'+dayD(T)+' · الأسبوع '+wk+' من خطة المحتوى ('+weekRange(wk)+'). كل اللي على الصفحة دي بيتحدث لوحده.</p>';
+    // المحتوى العضوي
+    h+='<div class="tsec"><h3>المحتوى العضوي</h3><a href="#design-cal">تقويم التصاميم ←</a></div>';
     h+='<div class="tiles">'+
-      '<a class="tile" href="#content"><span class="k">منشورات الأسبوع</span><span class="v num">'+pub+' / '+inWeek.length+'</span><span class="s">اتنشر من المخطط هذا الأسبوع</span></a>'+
-      '<a class="tile'+(review.length?' gold':'')+'" href="#content"><span class="k">بانتظار المراجعة</span><span class="v num">'+review.length+'</span><span class="s">تصاميم مرفوعة محتاجة اعتماد</span></a>'+
-      '<div class="tile'+(late.length?' warn':'')+'"><span class="k">متأخر عن موعد التسليم</span><span class="v num">'+late.length+'</span><span class="s">'+(late.length?'محتاج متابعة مع المصمم':'كل شيء في موعده')+'</span></div>'+
-      (!CAN('view.campaigns')?'':last?'<a class="tile" href="#ads-live"><span class="k">صرف الحملات · '+esc(last.label||'')+'</span><span class="v num">'+n2(last.spend)+'</span><span class="s">ريال · '+fmtD(last.from)+' – '+fmtD(last.to)+'</span></a>':'<a class="tile" href="#ads-live"><span class="k">الحملات</span><span class="v">—</span><span class="s">'+(CAMP_ERR?'تعذّر التحميل':'جارِ التحميل…')+'</span></a>')+
+      '<a class="tile" href="#design-cal"><span class="k">منشورات الأسبوع</span><span class="v num">'+pub+' / '+inWeek.length+'</span><span class="s">اتنشر من المخطط هذا الأسبوع</span></a>'+
+      '<a class="tile'+(review.length?' gold':'')+'" href="#design-cal"><span class="k">بانتظار المراجعة</span><span class="v num">'+review.length+'</span><span class="s">تصاميم مرفوعة محتاجة اعتماد</span></a>'+
+      '<a class="tile'+(late.length?' warn':'')+'" href="#design-cal"><span class="k">متأخر عن موعد التسليم</span><span class="v num">'+late.length+'</span><span class="s">'+(late.length?'محتاج متابعة مع المصمم':'كل شيء في موعده')+'</span></a>'+
     '</div>';
-    var adRv=AD.vers.filter(function(v){return v.data&&v.data.status==='review'}).length,adCh=AD.vers.filter(function(v){return v.data&&v.data.status==='changes'}).length;
-    if(CAN('posts.approve')&&adRv)h+='<a class="note" href="#ad-designs" style="display:block;text-decoration:none;color:inherit"><b>تصاميم إعلانات جديدة بانتظار مراجعتك: '+adRv+'</b> · افتح «تصاميم الإعلانات» ←</a>';
-    else if(CAN('designs.upload')&&!CAN('posts.approve')&&adCh)h+='<a class="note" href="#ad-designs" style="display:block;text-decoration:none;color:inherit"><b>تصاميم إعلانات مطلوب تعديلها: '+adCh+'</b> · افتح «تصاميم الإعلانات» ←</a>';
     var mineFirst=CAN('designs.upload')&&!CAN('posts.approve');
     var pTodo='<div class="panel"><h4>'+(mineFirst?'مطلوب منك':'مطلوب من المصمم')+' <span class="c">خلال 7 أيام</span></h4>'+(todo.length?todo.slice(0,10).map(function(p){var dd=isSetup(p)?p.d:dueOf(p);return li(p,'التسليم <span class="'+(dd<T?'late':'')+'">'+dayD(dd)+(dd<T?' · متأخر':'')+'</span>')}).join(''):'<p class="empty">مفيش تسليمات قريبة.</p>')+'</div>';
     var pRev='<div class="panel"><h4>'+(CAN('posts.approve')?'بانتظار مراجعتك':'عند المراجعة')+' <span class="c">'+review.length+'</span></h4>'+(review.length?review.slice(0,10).map(function(p){return li(p)}).join(''):'<p class="empty">مفيش حاجة مستنية مراجعة.</p>')+'</div>';
     var pSoon='<div class="panel"><h4>النشر خلال يومين <a href="#publish"'+(CAN('view.publish')?'':' hidden')+' style="margin-inline-start:auto;font-size:12.5px;color:var(--gold-ink);text-decoration:none">جدول النشر ←</a></h4>'+(pubSoon.length?pubSoon.map(function(p){return li(p)}).join(''):'<p class="empty">مفيش نشر خلال اليومين الجايين.</p>')+'</div>';
-    h+='<div class="sec"><h3>المطلوب الآن</h3></div><div class="cols">'+pTodo+pRev+pSoon+'</div>';
-    // آخر التصاميم المرفوعة
+    h+='<div class="cols">'+pTodo+pRev+pSoon+'</div>';
+    // الإعلانات
+    var showAds=CAN('view.campaigns')||CAN('designs.upload')||CAN('posts.approve');
+    if(showAds){
+      var cnt={review:0,changes:0,approved:0};AD.vers.forEach(function(v){var st=v.data&&v.data.status;if(cnt[st]!=null)cnt[st]++});
+      h+='<div class="tsec"><h3>الإعلانات</h3><a href="#ad-designs">تصاميم الإعلانات ←</a></div><div class="tiles">';
+      if(CAN('view.campaigns'))h+=last?'<a class="tile" href="#ads-live"><span class="k">صرف الحملات · '+esc(last.label||'')+'</span><span class="v num">'+n2(last.spend)+'</span><span class="s">ريال · '+fmtD(last.from)+' – '+fmtD(last.to)+'</span></a>':'<a class="tile" href="#ads-live"><span class="k">الحملات</span><span class="v">—</span><span class="s">'+(CAMP_ERR?'تعذّر التحميل':'جارِ التحميل…')+'</span></a>';
+      h+='<a class="tile'+(cnt.review?' gold':'')+'" href="#ad-designs"><span class="k">تصاميم بانتظار المراجعة</span><span class="v num">'+cnt.review+'</span><span class="s">'+(CAN('posts.approve')?'محتاجة اعتمادك':'عند المدير')+'</span></a>'+
+        '<a class="tile'+(cnt.changes?' warn':'')+'" href="#ad-designs"><span class="k">تعديلات مطلوبة</span><span class="v num">'+cnt.changes+'</span><span class="s">'+(mineFirst?'محتاجة نسخة جديدة منك':'عند المصمم')+'</span></a>'+
+        '<a class="tile" href="#ad-designs"><span class="k">معتمدة ولسه ما اتركّبتش</span><span class="v num">'+cnt.approved+'</span><span class="s">جاهزة تتركّب على المنصة</span></a></div>';
+    }
+    // تصاميم المحتوى العضوي
     var ups=[];ALL.forEach(function(p){(p.designs||[]).forEach(function(x){ups.push({p:p,x:x})})});
     ups.sort(function(a,b){return (b.x.at||'')<(a.x.at||'')?-1:1});
-    h+='<div class="sec"><h3>آخر التصاميم المرفوعة</h3><small>من المصمم على اللوحة مباشرة</small><a class="more" href="#content">كل المحتوى ←</a></div>';
-    h+=ups.length?'<div class="grid">'+ups.slice(0,8).map(function(u){return card(u.p,u.x)}).join('')+'</div>':'<p class="note">لسه مفيش تصاميم مرفوعة على اللوحة. أول ما المصمم يفتح المنشور ويضغط <b>«رفع تصميم»</b> هيظهر هنا وفي صفحة المحتوى، والمنشور يتحول للمراجعة.</p>';
-    // الأسبوع
+    h+='<div class="sec"><h3>آخر تصاميم المنشورات</h3><small>من المصمم على اللوحة مباشرة</small><a class="more" href="#design-cal">تقويم التصاميم ←</a></div>';
+    h+=ups.length?'<div class="grid">'+ups.slice(0,8).map(function(u){return card(u.p,u.x)}).join('')+'</div>':'<p class="note">لسه مفيش تصاميم مرفوعة. أول ما المصمم يرفع تصميم من تقويم التصاميم هيظهر هنا، والمنشور يتحول للمراجعة.</p>';
     h+='<div class="sec"><h3>منشورات الأسبوع '+wk+'</h3><small>'+weekRange(wk)+'</small></div>'+(inWeek.length?'<div class="grid">'+inWeek.map(function(p){return card(p)}).join('')+'</div>':'<p class="empty">مفيش منشورات هذا الأسبوع.</p>');
     return h;
   }
@@ -960,7 +970,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   function renderLibrary(){
     var h='<h2>كل الملفات</h2><p class="lede">آخر نسخة معتمدة من كل ملف. اختر من القائمة، أو افتح أي ملف في نافذة مستقلة.</p>';
     GROUPS.forEach(function(g){
-      var items=g.items.filter(function(i){return i.id!=='library'});if(!items.length)return;
+      var items=gItems(g).filter(function(i){return i.id!=='library'&&i.id!=='today'});if(!items.length)return;
       h+='<div class="sec"><h3>'+esc(g.g)+'</h3></div><div class="lib">'+items.map(function(i){
         var href=i.self||i.ext?i.href:'#'+i.id,tgt=i.ext?' target="_blank" rel="noopener"':'';
         return '<div class="card"><a href="'+href+'"'+tgt+' style="text-decoration:none;display:flex;flex-direction:column;gap:4px"><span class="k">'+esc(g.g)+'</span><b>'+esc(i.t)+(i.ext?' ↗':'')+'</b><span>'+esc(i.d)+'</span><i>'+esc(i.m)+'</i></a>'+(i.dl?'<span class="dlr">'+dlLinks(i).replace(/⬇ /g,'')+'</span>':'')+'</div>';
@@ -978,9 +988,10 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     if(id==='content')bindContent();if(id==='ads-live')bindAds();if(id==='ads')bindLiveAds();if(id==='publish')bindPublish();if(id==='preview')bindPreview();if(id==='ad-designs'){loadAdDesigns();bindAdDesigns()}if(id==='design-cal'){bindPostCal();if(PC.open)pcSheet()}
   }
   function route(){
-    var id=location.hash.slice(1).split('?')[0];if(!BY[id]||BY[id].self||BY[id].ext)id='today';
+    var id=location.hash.slice(1).split('?')[0];if(ALIAS[id]&&BY[ALIAS[id]]&&!BY[ALIAS[id]].self){history.replaceState(null,'','#'+ALIAS[id]);id=ALIAS[id]}if(!BY[id]||BY[id].self||BY[id].ext)id='today';
     var i=BY[id],changed=id!==CUR;CUR=id;
     side.querySelectorAll('a').forEach(function(a){if(a.getAttribute('data-id')===id)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+    var cur=side.querySelector('a[aria-current]');if(cur&&cur.closest('details'))cur.closest('details').open=true;
     pick.value=id;document.title=i.t+' · ذا كابيتال سويتس';
     if(i.live){view.hidden=true;bar.hidden=true;page.hidden=false;view.removeAttribute('src');if(changed)page.scrollTop=0;renderLive(id);return}
     page.hidden=true;bar.hidden=false;view.hidden=false;
