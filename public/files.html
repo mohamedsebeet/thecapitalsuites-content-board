@@ -556,7 +556,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   }
   function versOf(k){return AD.vers.filter(function(v){return v.ad_key===k}).sort(function(a,b){return (b.data.v||0)-(a.data.v||0)})}
   function adItems(){
-    var out=(AD.ads||[]).map(function(a){return {key:a.key,platform:a.platform,title:a.title||a.name,hood:a.hood,format:a.format,img:a.img,on:a.on}});
+    var out=(AD.ads||[]).map(function(a){return {key:a.key,platform:a.platform,title:a.title||a.name,hood:a.hood,format:a.format,img:a.img,orig:a.orig||[],on:a.on}});
     var seen={};AD.vers.forEach(function(v){if(/^new:/.test(v.ad_key)&&!seen[v.ad_key]){seen[v.ad_key]=1;var d=v.data||{};out.push({key:v.ad_key,platform:d.platform||'',title:d.title||'إعلان جديد',hood:d.hood||'',format:'جديد',img:[],on:true,isNew:true})}});
     return out;
   }
@@ -625,7 +625,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     var sw=box.querySelector('#adshow');if(sw)sw.onclick=function(){box.querySelector('#adupw').hidden=false;sw.parentNode.hidden=true};
     function zbtn(b,files,name){b.onclick=function(){var t=b.textContent;b.disabled=true;b.textContent='جارِ التجهيز…';capital.zip(files,name).then(function(){b.textContent=t;b.disabled=false}).catch(function(){b.disabled=false;b.textContent=t;ptoast('التحميل فشل، حاول تاني.')})}}
     var curX=AD.open&&adItems().filter(function(i){return i.key===AD.open})[0];
-    var zc=box.querySelector('[data-zipcur]');if(zc&&curX){if(curX.img.length===1)zc.onclick=function(){capital.download(curX.img[0],curX.title+'-الحالي'+(curX.img[0].match(/\.[a-z0-9]+$/i)||[''])[0])};else zbtn(zc,curX.img.map(function(u,i){return {url:u,name:curX.title+'-'+(i+1)+(u.match(/\.[a-z0-9]+$/i)||[''])[0]}}),curX.title+'-التصميم-الحالي')}
+    var zc=box.querySelector('[data-zipcur]');if(zc&&curX){var cf=curX.img.map(function(u,i){var o=curX.orig[i];return {url:o||u,name:curX.title+(curX.img.length>1?'-'+(i+1):'')+'.jpg',toJpg:!o&&/\.webp$/i.test(u)}});if(cf.length===1)zc.onclick=function(){capital.download(cf[0].url,cf[0].name,cf[0].toJpg)};else zbtn(zc,cf,curX.title+'-التصميم-الحالي')}
     var fm=box.querySelector('#adup');if(fm)fm.onsubmit=function(e){e.preventDefault();adUpload(fm)};
     box.querySelectorAll('.adv').forEach(function(el){
       var v=AD.vers.filter(function(z){return z.id===el.dataset.vid})[0];if(!v)return;

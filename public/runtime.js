@@ -483,6 +483,15 @@
     a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove();
     return Promise.resolve();
   }
+  // الصور اللي محفوظة WebP للعرض بس بتتحوّل JPG قبل التحميل
+  function jpgBlob(url) {
+    return new Promise(function (res, rej) {
+      var im = new Image(); im.crossOrigin = 'anonymous';
+      im.onload = function () { var c = document.createElement('canvas'); c.width = im.naturalWidth; c.height = im.naturalHeight; var x = c.getContext('2d'); x.fillStyle = '#fff'; x.fillRect(0, 0, c.width, c.height); x.drawImage(im, 0, 0); c.toBlob(function (b) { b ? res(b) : rej(new Error('jpg')); }, 'image/jpeg', 0.95); };
+      im.onerror = function () { rej(new Error('img')); }; im.src = url;
+    });
+  }
+  function saveBlob(blob, name) { var a = document.createElement('a'), u = URL.createObjectURL(blob); a.href = u; a.download = cleanName(name); document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(u); }, 4000); }
   var JSZIP_P = null;
   function loadZip() {
     if (window.JSZip) return Promise.resolve(window.JSZip);
@@ -493,7 +502,7 @@
     return loadZip().then(function (JSZip) {
       var z = new JSZip(), used = {};
       return Promise.all(files.map(function (f, i) {
-        return fetch(f.url, { cache: 'force-cache' }).then(function (r) { if (!r.ok) throw new Error('fetch'); return r.blob(); }).then(function (b) {
+        return (f.toJpg ? jpgBlob(f.url) : fetch(f.url, { cache: 'force-cache' }).then(function (r) { if (!r.ok) throw new Error('fetch'); return r.blob(); })).then(function (b) {
           var n = cleanName(f.name || ('design-' + (i + 1))), base = n, k = 2; while (used[n]) { n = base.replace(/(\.[^.]+)?$/, '-' + (k++) + '$1'); } used[n] = 1;
           z.file(n, b);
         });
@@ -535,7 +544,7 @@
     saveKpi: function (id, data) { return sb.from('kpis').upsert({ id: id, data: data, updated_at: new Date().toISOString() }).then(unwrap); },
     removeFile: function (path) { return sb.storage.from('designs').remove([path]).then(unwrap); },
     // تحميل فعلي للملف (روابط Supabase من دومين تاني، فالمتصفح كان بيفتحها بدل ما ينزّلها)
-    download: function (url, name) { return saveAs(url, name); },
+    download: function (url, name, toJpg) { return toJpg ? jpgBlob(url).then(function (b) { saveBlob(b, name); }) : saveAs(url, name); },
     // كذا ملف في ZIP واحد
     zip: function (files, zipName) { return zipFiles(files, zipName); },
     // نسخ تصاميم الإعلانات (جدول ad_versions)

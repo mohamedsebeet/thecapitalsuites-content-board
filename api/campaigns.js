@@ -1,5 +1,6 @@
 // يرجّع بيانات الحملات لأعضاء الفريق المسجلين فقط (يتأكد من الدخول عن طريق Supabase)
 const data = require('../data/campaigns.json');
+let ORIG = {}; try { ORIG = require('../data/ad-originals.json'); } catch (e) { }
 
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'private, no-store');
@@ -27,7 +28,7 @@ module.exports = async (req, res) => {
       const ads = [];
       (data.campaigns || []).forEach(c => (c.ads || []).forEach(a => ads.push({
         key: c.platform + ':' + (a.id || (c.id + '/' + a.name)), platform: c.platform, name: a.name, title: a.title, hood: a.hood,
-        format: a.format, img: a.img || [], on: a.status === 'ACTIVE' && c.status === 'ACTIVE'
+        format: a.format, img: a.img || [], orig: (a.img || []).map(u => ORIG[u] || null), on: a.status === 'ACTIVE' && c.status === 'ACTIVE'
       })));
       return res.status(200).json({ updatedAt: data.updatedAt, ads });
     }
