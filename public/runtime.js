@@ -473,6 +473,109 @@
     if (pushSupported() && Notification.permission === 'granted') swReg().catch(function () { });
   }
   window.csBell = { enable: function () { return enablePush(); }, state: function () { return { ok: BELL_OK, n: ACTS.length, push: PUSH_ON }; } };
+
+  /* ---------- الرسم على التصميم (ملاحظات للمصمم) ---------- */
+  function annotate(url, title) {
+    return new Promise(function (resolve) {
+      var st = document.getElementById('ann-st');
+      if (!st) {
+        st = document.createElement('style'); st.id = 'ann-st';
+        st.textContent = '#ann{position:fixed;inset:0;z-index:9995;background:rgba(10,13,16,.92);display:flex;flex-direction:column;direction:rtl;color:#F7F4EC;font-family:inherit}' +
+          '#ann .at{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 14px;background:#1F2427;border-bottom:1px solid #333}' +
+          '#ann .at b{font-size:14px;margin-inline-end:auto}#ann button{font:inherit;font-size:13.5px;border:1px solid #444;background:#2A3035;color:#F7F4EC;border-radius:8px;padding:6px 11px;cursor:pointer}' +
+          '#ann button[aria-pressed=true]{background:#C29B3C;border-color:#C29B3C;color:#1F2427;font-weight:700}#ann .sw{width:26px;height:26px;border-radius:50%;padding:0;border:2px solid #555}#ann .sw[aria-pressed=true]{border-color:#fff;box-shadow:0 0 0 2px #C29B3C}' +
+          '#ann .sep{width:1px;height:24px;background:#444}#ann .cv{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:12px;position:relative}' +
+          '#ann canvas{max-width:100%;max-height:100%;background:#fff;touch-action:none;cursor:crosshair;box-shadow:0 10px 40px rgba(0,0,0,.5)}' +
+          '#ann .ab{display:flex;gap:8px;align-items:center;padding:10px 14px;background:#1F2427;border-top:1px solid #333;flex-wrap:wrap}#ann .ab textarea{flex:1 1 260px;font:inherit;font-size:14px;border-radius:8px;border:1px solid #444;background:#111;color:#F7F4EC;padding:8px 10px;min-height:40px;resize:vertical}' +
+          '#ann .ab .go{background:#C29B3C;color:#1F2427;border-color:#C29B3C;font-weight:700;padding:9px 16px}#ann .hint{font-size:12.5px;color:#A9ADA6}' +
+          '#ann .tx{position:absolute;font:inherit;font-size:16px;font-weight:700;padding:4px 8px;border-radius:6px;border:2px solid #C29B3C;background:#fff;color:#111;min-width:160px;z-index:2}';
+        document.head.appendChild(st);
+      }
+      var box = document.createElement('div'); box.id = 'ann';
+      var COLS = ['#E5322D', '#FFD400', '#FFFFFF', '#1F2427'];
+      box.innerHTML = '<div class="at"><b></b>' +
+        '<button data-t="pen" aria-pressed="true">✎ قلم</button><button data-t="arrow">↗ سهم</button><button data-t="rect">▭ مربع</button><button data-t="text">T نص</button><span class="sep"></span>' +
+        COLS.map(function (c, i) { return '<button class="sw" data-c="' + c + '" style="background:' + c + '" aria-pressed="' + (i === 0) + '" aria-label="لون"></button>'; }).join('') + '<span class="sep"></span>' +
+        '<button data-w="1">رفيع</button><button data-w="2" aria-pressed="true">متوسط</button><button data-w="3">عريض</button><span class="sep"></span>' +
+        '<button data-a="undo">↶ تراجع</button><button data-a="clear">مسح الكل</button><button data-a="x">إلغاء</button></div>' +
+        '<div class="cv"><canvas></canvas></div>' +
+        '<div class="ab"><textarea placeholder="اكتب المطلوب تعديله (اختياري)"></textarea><button class="go" data-a="save">حفظ وإرسال للمصمم</button><span class="hint">ارسم على الجزء المطلوب تعديله، أو حط سهم أو مربع أو نص.</span></div>';
+      box.querySelector('.at b').textContent = title || 'ملاحظات على التصميم';
+      document.body.appendChild(box);
+      var cv = box.querySelector('canvas'), cx = cv.getContext('2d'), img = new Image(), ops = [], cur = null, T = 'pen', COL = COLS[0], W = 2, K = 1;
+      function done(v) { box.remove(); document.removeEventListener('keydown', kd); resolve(v); }
+      function kd(e) { if (e.key === 'Escape') done(null); if ((e.ctrlKey || e.metaKey) && e.key === 'z') { ops.pop(); draw(); } }
+      document.addEventListener('keydown', kd);
+      img.crossOrigin = 'anonymous';
+      img.onload = function () {
+        var max = 2000, sc = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+        cv.width = Math.round(img.naturalWidth * sc); cv.height = Math.round(img.naturalHeight * sc); K = cv.width / 600; draw();
+      };
+      img.onerror = function () { box.querySelector('.cv').innerHTML = '<p>ما قدرتش أفتح الصورة للرسم عليها.</p>'; };
+      img.src = url;
+      function lw() { return [3, 6, 12][W - 1] * K; }
+      function arrow(o) {
+        cx.beginPath(); cx.moveTo(o.x1, o.y1); cx.lineTo(o.x2, o.y2); cx.stroke();
+        var a = Math.atan2(o.y2 - o.y1, o.x2 - o.x1), h = Math.max(14 * K, o.w * 3);
+        cx.beginPath(); cx.moveTo(o.x2, o.y2); cx.lineTo(o.x2 - h * Math.cos(a - .45), o.y2 - h * Math.sin(a - .45)); cx.lineTo(o.x2 - h * Math.cos(a + .45), o.y2 - h * Math.sin(a + .45)); cx.closePath(); cx.fill();
+      }
+      function one(o) {
+        cx.strokeStyle = o.c; cx.fillStyle = o.c; cx.lineWidth = o.w; cx.lineCap = 'round'; cx.lineJoin = 'round';
+        if (o.t === 'pen') { cx.beginPath(); o.p.forEach(function (q, i) { if (i) cx.lineTo(q[0], q[1]); else cx.moveTo(q[0], q[1]); }); if (o.p.length === 1) cx.lineTo(o.p[0][0] + .1, o.p[0][1]); cx.stroke(); }
+        else if (o.t === 'rect') cx.strokeRect(Math.min(o.x1, o.x2), Math.min(o.y1, o.y2), Math.abs(o.x2 - o.x1), Math.abs(o.y2 - o.y1));
+        else if (o.t === 'arrow') arrow(o);
+        else if (o.t === 'text') {
+          var fs = Math.round(26 * K * (o.s || 1)); cx.font = '700 ' + fs + 'px "IBM Plex Sans Arabic",Tahoma,sans-serif'; cx.textBaseline = 'top'; cx.direction = 'rtl'; cx.textAlign = 'right';
+          var tw = cx.measureText(o.s0).width, pad = fs * .3;
+          cx.fillStyle = o.c === '#FFFFFF' || o.c === '#FFD400' ? 'rgba(0,0,0,.65)' : 'rgba(255,255,255,.88)'; cx.fillRect(o.x - tw - pad, o.y - pad * .6, tw + pad * 2, fs + pad * 1.4);
+          cx.fillStyle = o.c; cx.fillText(o.s0, o.x + pad * 0 - 0, o.y);
+        }
+      }
+      function draw() { cx.clearRect(0, 0, cv.width, cv.height); if (img.complete && img.naturalWidth) cx.drawImage(img, 0, 0, cv.width, cv.height); ops.forEach(one); if (cur) one(cur); }
+      function pt(e) { var r = cv.getBoundingClientRect(); return [(e.clientX - r.left) * cv.width / r.width, (e.clientY - r.top) * cv.height / r.height]; }
+      cv.addEventListener('pointerdown', function (e) {
+        if (T === 'text') { textAt(e); return; }
+        cv.setPointerCapture(e.pointerId); var q = pt(e);
+        cur = T === 'pen' ? { t: 'pen', c: COL, w: lw(), p: [q] } : { t: T, c: COL, w: lw(), x1: q[0], y1: q[1], x2: q[0], y2: q[1] }; draw();
+      });
+      cv.addEventListener('pointermove', function (e) { if (!cur) return; var q = pt(e); if (cur.t === 'pen') cur.p.push(q); else { cur.x2 = q[0]; cur.y2 = q[1]; } draw(); });
+      function up() { if (!cur) return; if (cur.t === 'pen' || Math.abs(cur.x2 - cur.x1) + Math.abs(cur.y2 - cur.y1) > 6) ops.push(cur); cur = null; draw(); }
+      cv.addEventListener('pointerup', up); cv.addEventListener('pointercancel', up);
+      function textAt(e) {
+        var q = pt(e), r = cv.getBoundingClientRect(), wrap = box.querySelector('.cv'), wr = wrap.getBoundingClientRect();
+        var inp = document.createElement('input'); inp.className = 'tx'; inp.placeholder = 'اكتب وبعدين Enter';
+        inp.style.left = Math.max(4, e.clientX - wr.left - 170) + 'px'; inp.style.top = (e.clientY - wr.top - 14) + 'px'; wrap.appendChild(inp); setTimeout(function () { inp.focus(); }, 0);
+        var fin = false;
+        function commit() { if (fin) return; fin = true; var v = inp.value.trim(); inp.remove(); if (v) { ops.push({ t: 'text', c: COL, s0: v, s: [0.8, 1, 1.4][W - 1], x: q[0], y: q[1] }); draw(); } }
+        inp.onkeydown = function (k) { if (k.key === 'Enter') commit(); if (k.key === 'Escape') { fin = true; inp.remove(); } k.stopPropagation(); };
+        inp.onblur = commit;
+      }
+      box.querySelectorAll('[data-t]').forEach(function (b) { b.onclick = function () { T = b.dataset.t; box.querySelectorAll('[data-t]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); }; });
+      box.querySelectorAll('[data-c]').forEach(function (b) { b.onclick = function () { COL = b.dataset.c; box.querySelectorAll('[data-c]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); }; });
+      box.querySelectorAll('[data-w]').forEach(function (b) { b.onclick = function () { W = +b.dataset.w; box.querySelectorAll('[data-w]').forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); }; });
+      box.querySelectorAll('[data-a]').forEach(function (b) {
+        b.onclick = function () {
+          var a = b.dataset.a;
+          if (a === 'undo') { ops.pop(); draw(); }
+          else if (a === 'clear') { if (ops.length && confirm('تمسح كل الرسم؟')) { ops = []; draw(); } }
+          else if (a === 'x') { if (!ops.length || confirm('تقفل من غير حفظ؟')) done(null); }
+          else if (a === 'save') {
+            var note = box.querySelector('.ab textarea').value.trim();
+            if (!ops.length && !note) { alertAnn('ارسم على التصميم أو اكتب المطلوب الأول'); return; }
+            b.disabled = true; b.textContent = 'جارِ الحفظ…';
+            try { cv.toBlob(function (bl) { if (!bl) { b.disabled = false; b.textContent = 'حفظ وإرسال للمصمم'; alertAnn('ما قدرتش أحفظ الصورة'); return; } done({ blob: bl, note: note, drawn: ops.length > 0 }); }, 'image/png'); }
+            catch (err) { b.disabled = false; b.textContent = 'حفظ وإرسال للمصمم'; alertAnn('الصورة دي مش بتسمح بالحفظ. جرّب تفتحها من النسخة المرفوعة.'); }
+          }
+        };
+      });
+      function alertAnn(m) { var h = box.querySelector('.hint'); h.textContent = m; h.style.color = '#FFD400'; }
+    });
+  }
+  // ترفع صورة الملاحظات المرسومة وترجع بياناتها
+  function uploadMark(prefix, blob) {
+    var f = new File([blob], 'ملاحظات-' + new Date().toISOString().slice(0, 10) + '.png', { type: 'image/png' });
+    return window.capital.upload(prefix, f);
+  }
   /* ---------- التحميل ---------- */
   function isStore(u) { try { return /\/storage\/v1\/object\/public\//.test(new URL(u, location.href).pathname); } catch (e) { return false; } }
   function cleanName(n) { return String(n || 'design').replace(/[\\/:*?"<>|]+/g, '-').slice(0, 120); }
@@ -544,6 +647,8 @@
     saveKpi: function (id, data) { return sb.from('kpis').upsert({ id: id, data: data, updated_at: new Date().toISOString() }).then(unwrap); },
     removeFile: function (path) { return sb.storage.from('designs').remove([path]).then(unwrap); },
     // تحميل فعلي للملف (روابط Supabase من دومين تاني، فالمتصفح كان بيفتحها بدل ما ينزّلها)
+    annotate: annotate,
+    uploadMark: uploadMark,
     download: function (url, name, toJpg) { return toJpg ? jpgBlob(url).then(function (b) { saveBlob(b, name); }) : saveAs(url, name); },
     // كذا ملف في ZIP واحد
     zip: function (files, zipName) { return zipFiles(files, zipName); },

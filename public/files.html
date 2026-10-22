@@ -148,6 +148,8 @@ button.pc:hover{border-color:var(--gold)}
 .stbot{position:absolute;left:0;right:0;bottom:0;padding:16px 14px 22px;background:linear-gradient(transparent,rgba(0,0,0,.55));display:flex;flex-direction:column;align-items:center;gap:8px;z-index:2;color:#fff;text-align:center}.stbot p{margin:0;font-size:13px;text-shadow:0 1px 3px rgba(0,0,0,.6)}
 .pill{background:#fff;color:#111;border-radius:999px;padding:8px 18px;font-weight:700;font-size:13.5px}.pill.y{background:#FFFC00}
 .apcmp{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;width:100%}.apcmp>div{flex:0 1 285px;min-width:240px}.apcmp .phone{width:100%}.screen.st{width:100%}.apl{text-align:center;font-size:13px;font-weight:600;color:var(--ink-2);margin:0 0 6px}.cmpb{border-color:var(--gold)!important}
+.anw{position:relative;display:inline-flex;flex:0 0 auto}.anb{position:absolute;bottom:8px;inset-inline-start:8px;border:0;border-radius:999px;background:rgba(31,36,39,.88);color:#F7F4EC;font:inherit;font-size:12.5px;font-weight:600;padding:5px 11px;cursor:pointer;text-decoration:none}.anb:hover{background:#C29B3C;color:#1F2427}.anb.dl{padding:4px 9px}
+.mk{margin:8px 0;padding:8px 10px;border:1px dashed var(--warn);border-radius:10px}.mk b{display:block;font-size:13px;color:var(--warn);margin-bottom:6px}.mk small{display:block;font-size:12.5px;color:var(--ink-2);max-width:240px;align-self:flex-end}
 .lb-x{border:0;background:none;font-size:26px;line-height:1;cursor:pointer;color:var(--ink)}
 .lb-row{display:flex;gap:10px;overflow-x:auto;padding:14px}.lb-row img{height:min(70vh,560px);width:auto;border-radius:8px;flex:0 0 auto}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
@@ -746,7 +748,8 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       h+='<h4>النسخ'+(vs.length?' <span class="c">'+vs.length+'</span>':'')+'</h4>';
       h+=vs.length?vs.map(function(v){var d=v.data||{},fl=adFiles(v),mine=up&&(d.status==='review'||d.status==='changes');
         return '<div class="adv" data-vid="'+esc(v.id)+'"><div class="plh"><b>النسخة '+(d.v||'')+'</b>'+aTag(d.status)+'<span class="m">'+esc(NAMES[d.by]||d.by||'')+(v.at?' · '+dayD(v.at.slice(0,10)):'')+'</span></div>'+
-          (fl.length?'<div class="lb-row sm">'+fl.map(function(z){return /^video\//.test(z.type||'')?'<video src="'+esc(z.url)+'#t=0.1" controls preload="metadata"></video>':'<a href="'+esc(z.url)+'" target="_blank" rel="noopener"><img src="'+esc(z.url)+'" alt=""></a>'}).join('')+'</div>':'')+
+          (fl.length?'<div class="lb-row sm">'+fl.map(function(z,zi){return /^video\//.test(z.type||'')?'<video src="'+esc(z.url)+'#t=0.1" controls preload="metadata"></video>':'<span class="anw"><a href="'+esc(z.url)+'" target="_blank" rel="noopener"><img src="'+esc(z.url)+'" alt=""></a>'+(ap?'<button type="button" class="anb" data-ann="'+zi+'" title="ارسم ملاحظات على التصميم">✎ ارسم ملاحظات</button>':'')+'</span>'}).join('')+'</div>':'')+
+          ((d.marks||[]).length?'<div class="mk"><b>ملاحظات بالرسم</b><div class="lb-row sm">'+d.marks.map(function(m){return '<span class="anw"><a href="'+esc(m.url)+'" target="_blank" rel="noopener"><img src="'+esc(m.url)+'" alt=""></a><a class="anb dl" href="'+esc(m.url)+'" download="ملاحظات-النسخة-'+(d.v||'')+'.png">⬇</a></span>'+(m.note?'<small>'+esc(m.note)+'</small>':'')}).join('')+'</div></div>':'')+
           (d.note?'<p class="adn"><b>التغيير:</b> '+esc(d.note)+'</p>':'')+
           (d.reviewNote?'<p class="adn rv"><b>'+(d.status==='changes'?'المطلوب تعديله':'ملاحظة المراجعة')+':</b> '+esc(d.reviewNote)+'</p>':'')+
           '<div class="plb">'+(fl.length>1?'<button class="pbtn sm" data-zip="1">⬇ تحميل الكل (ZIP)</button>':'')+fl.map(function(z,i){return '<a class="pbtn sm ghost" href="'+esc(z.url)+'" download="'+esc(z.name||'design')+'">⬇ '+(fl.length>1?'ملف '+(i+1):'تحميل')+'</a>'}).join('')+
@@ -773,6 +776,12 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
         var a=b.dataset.act;if(a==='changes'){el.querySelector('.adrn').hidden=false;el.querySelector('.adrn textarea').focus();return}
         adReview(v,a,null)}});
       var s=el.querySelector('[data-send]');if(s)s.onclick=function(){var t=el.querySelector('.adrn textarea').value.trim();if(!t){ptoast('اكتب المطلوب تعديله');return}adReview(v,'changes',t)};
+      el.querySelectorAll('[data-ann]').forEach(function(b){b.onclick=function(){var f=adFiles(v)[+b.dataset.ann];if(!f)return;
+        capital.annotate(f.url,(curX?curX.title:'إعلان')+' · النسخة '+(v.data.v||'')).then(function(r){if(!r)return;ptoast('جارِ حفظ الملاحظات…');
+          return capital.uploadMark('ads/'+v.ad_key,r.blob).then(function(up){var d=Object.assign({},v.data);d.marks=(d.marks||[]).concat([{url:up.url,path:up.path,by:ME,at:new Date().toISOString(),note:r.note,file:f.name||''}]);
+            if(d.status!=='live'){d.status='changes';d.reviewedBy=ME;d.reviewedAt=new Date().toISOString();d.reviewNote=r.note||d.reviewNote||'شوف الملاحظات المرسومة على التصميم'}
+            return capital.saveAdVersion(v.id,d)}).then(function(){ptoast('اتبعتت الملاحظات للمصمم');return loadAdVers()}).then(function(){rerender();adSheet()});
+        }).catch(function(){ptoast('ما اتحفظتش الملاحظات، حاول تاني.')})}});
       var zb=el.querySelector('[data-zip]');if(zb)zbtn(zb,adFiles(v).map(function(z){return {url:z.url,name:z.name}}),(curX?curX.title:'إعلان')+'-النسخة-'+(v.data.v||''));
       var dbn=el.querySelector('[data-del]');if(dbn)dbn.onclick=function(){if(!confirm('حذف النسخة '+(v.data.v||'')+' وملفاتها؟'))return;
         capital.removeAdVersion(v.id).then(function(){return Promise.all(adFiles(v).filter(function(z){return z.path}).map(function(z){return capital.removeFile(z.path).catch(function(){})}))}).then(function(){ptoast('اتحذفت النسخة');return loadAdVers()}).then(function(){rerender();adSheet()}).catch(function(){ptoast('ما اتحذفتش، حاول تاني.')})};
