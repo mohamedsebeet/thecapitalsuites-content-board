@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-21T08:51:00+03:00",
+  "updatedAt": "2026-10-22T08:52:00+03:00",
   "source": "sync",
   "sourceNote": "يتحدث تلقائياً كل يوم من حسابات الإعلانات",
   "currency": "ريال",
@@ -97,27 +97,27 @@
       "id": "2026-10-15",
       "label": "الأسبوع الثالث",
       "from": "2026-10-15",
-      "to": "2026-10-20",
-      "spend": 1498.13,
-      "impressions": 211252,
+      "to": "2026-10-21",
+      "spend": 1723.96,
+      "impressions": 242493,
       "platforms": [
         {
           "key": "meta",
           "name": "ميتا · إنستغرام وفيسبوك",
-          "results": 262,
+          "results": 299,
           "resultLabel": "محادثة واتساب بدأت",
-          "cpr": 2.91,
-          "spend": 763.13,
-          "impressions": 91037
+          "cpr": 2.87,
+          "spend": 858.96,
+          "impressions": 102153
         },
         {
           "key": "snap",
           "name": "سناب شات · واتساب",
-          "results": 2672,
+          "results": 3141,
           "resultLabel": "ضغطة على زر واتساب",
           "cpr": 0.28,
-          "spend": 735.0,
-          "impressions": 120215
+          "spend": 865.0,
+          "impressions": 140340
         }
       ]
     }
@@ -128,19 +128,19 @@
       "id": "120249345827570172",
       "name": "ميتا · واتساب أكتوبر (الرمال والملز)",
       "status": "ACTIVE",
-      "spend": 1866.9,
-      "impressions": 202049,
-      "results": 686,
+      "spend": 1962.73,
+      "impressions": 213165,
+      "results": 723,
       "resultLabel": "محادثة",
-      "cpr": 2.72,
+      "cpr": 2.71,
       "ads": [
         {
           "name": "الرمال · احسبها صح",
           "status": "ACTIVE",
-          "spend": 697.17,
-          "impressions": 87867,
-          "results": 249,
-          "cpr": 2.8,
+          "spend": 742.78,
+          "impressions": 95236,
+          "results": 264,
+          "cpr": 2.81,
           "hood": "الرمال",
           "title": "احسبها صح",
           "id": "120249365094630172",
@@ -153,10 +153,10 @@
         {
           "name": "الملز · كاروسيل-جولة داخل الوحدة",
           "status": "ACTIVE",
-          "spend": 371.31,
-          "impressions": 43984,
-          "results": 141,
-          "cpr": 2.63,
+          "spend": 371.7,
+          "impressions": 44027,
+          "results": 142,
+          "cpr": 2.62,
           "hood": "الملز",
           "title": "كاروسيل-جولة داخل الوحدة",
           "id": "120249365189760172",
@@ -174,9 +174,9 @@
         {
           "name": "الملز · صالة لضيوفك",
           "status": "ACTIVE",
-          "spend": 237.98,
-          "impressions": 26403,
-          "results": 90,
+          "spend": 243.11,
+          "impressions": 27066,
+          "results": 92,
           "cpr": 2.64,
           "hood": "الملز",
           "title": "صالة لضيوفك",
@@ -189,11 +189,11 @@
         },
         {
           "name": "الرمال · كاروسيل-ليش الشهري",
-          "status": "ACTIVE",
-          "spend": 182.48,
-          "impressions": 12158,
-          "results": 76,
-          "cpr": 2.4,
+          "status": "PAUSED",
+          "spend": 192.25,
+          "impressions": 12769,
+          "results": 79,
+          "cpr": 2.43,
           "hood": "الرمال",
           "title": "كاروسيل-ليش الشهري",
           "id": "120249364856890172",
@@ -210,10 +210,10 @@
         {
           "name": "الملز · كأنك في بيتك",
           "status": "ACTIVE",
-          "spend": 145.11,
-          "impressions": 14980,
-          "results": 53,
-          "cpr": 2.74,
+          "spend": 147.27,
+          "impressions": 15284,
+          "results": 54,
+          "cpr": 2.73,
           "hood": "الملز",
           "title": "كأنك في بيتك",
           "id": "120249365189730172",
@@ -224,28 +224,12 @@
           "format": "صورة"
         },
         {
-          "name": "الرمال · فاتورتك كاملة وشاملة",
-          "status": "ACTIVE",
-          "spend": 108.63,
-          "impressions": 8717,
-          "results": 32,
-          "cpr": 3.39,
-          "hood": "الرمال",
-          "title": "فاتورتك كاملة وشاملة",
-          "id": "120249364934840172",
-          "creative_id": "855567004273385",
-          "img": [
-            "files/live-ads/meta/R-05_feed.webp"
-          ],
-          "format": "صورة"
-        },
-        {
           "name": "الملز · كاروسيل-ليش الشهري",
           "status": "ACTIVE",
-          "spend": 100.77,
-          "impressions": 6662,
-          "results": 42,
-          "cpr": 2.4,
+          "spend": 133.21,
+          "impressions": 8753,
+          "results": 56,
+          "cpr": 2.38,
           "hood": "الملز",
           "title": "كاروسيل-ليش الشهري",
           "id": "120249365189740172",
@@ -258,6 +242,22 @@
             "files/live-ads/meta/malaz-why/05.webp"
           ],
           "format": "كاروسيل"
+        },
+        {
+          "name": "الرمال · فاتورتك كاملة وشاملة",
+          "status": "ACTIVE",
+          "spend": 108.77,
+          "impressions": 8735,
+          "results": 32,
+          "cpr": 3.4,
+          "hood": "الرمال",
+          "title": "فاتورتك كاملة وشاملة",
+          "id": "120249364934840172",
+          "creative_id": "855567004273385",
+          "img": [
+            "files/live-ads/meta/R-05_feed.webp"
+          ],
+          "format": "صورة"
         },
         {
           "name": "الرمال · كاروسيل-جولة داخل الوحدة",
@@ -279,6 +279,26 @@
             "files/live-ads/meta/raml-tour/06.webp"
           ],
           "format": "كاروسيل"
+        },
+        {
+          "name": "الرمال · كاروسيل-ليش الشهري – جديد",
+          "status": "PAUSED",
+          "spend": 0.19,
+          "impressions": 17,
+          "results": 1,
+          "cpr": 0.19,
+          "hood": "الرمال",
+          "title": "كاروسيل-ليش الشهري – جديد",
+          "id": "120249684958320172",
+          "creative_id": "1410019917455236",
+          "format": "كاروسيل",
+          "img": [
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/852515241_4547689552044404_2148554351172850955_n.png?stp=dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=4hsqf0PLMQ8Q7kNvwGkaG63&_nc_oc=Ado1FWxuH79eb3w75PjpoV3-5R0OL6aoHohuiQ4hBEde7XrshNnYReViP3UdD_Hh-1A&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=ISkNzSX00ljGDgrOSZP2-g&_nc_tpa=Q5bMBQLw5PH971hXABzifDdJWBbkUEjAxD4qUxV8skBOI1nvnRqxNjiwtyV6zXwBtVat3cyAtI_qG-6RzQ&oh=00_AQO90iUGaXLsvLHVfpDjay_0QXIphCLfTunCn-lRg9-YGQ&oe=6ADF6AB3",
+            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/852028310_4547689575377735_5003710077809194471_n.png?stp=dst-jpg_tt6&_nc_cat=106&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=7zI0Od5Sug8Q7kNvwH6XYgi&_nc_oc=Adr5e0WbuqPFlpufEdlFgT0BR-NDRYuY3dIC_DZXJGiGKuQwp-DgoWOedRfAvgyqv7c&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=ISkNzSX00ljGDgrOSZP2-g&_nc_tpa=Q5bMBQLFDESXurJPpAf5AB0MZoDqQJunN_gFWyzUbObtvWbeho9M8ZS2xImOl-RzA-WgCd0DH434fACFcQ&oh=00_AQPYoR_1wqzM0OoUhaWSHItUoU6_1s1j_YJmd8LVG_wapw&oe=6ADF7DB8",
+            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/859766124_4547689578711068_947474474761937981_n.png?stp=dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=DG4CbIgdIGoQ7kNvwFRs5wz&_nc_oc=Adrznjq_Ygve927-A4ccCHYc0jmQ9BVqa65HJvg9Vb_gsflPKl294J_0tP-qoFwiPaw&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=ISkNzSX00ljGDgrOSZP2-g&_nc_tpa=Q5bMBQKT1udBZasPCSX1pWl3VRO5GTUv5ZyAO6E66RkHeg_h0ZSf2Xntmv8DZkpeEWiUHnlOc-MAUVVBsg&oh=00_AQM3-SzuD7kl8d7pGkL4VpYzB8rltIA4thrrOVVfrWC4wg&oe=6ADF8076",
+            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/856804028_4547689548711071_5199887687035045539_n.png?stp=dst-jpg_tt6&_nc_cat=110&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=P_E35HlIPfkQ7kNvwEvIBGg&_nc_oc=AdplqtLFOxoiJpTGJ0IKHDZw3FcdZhpHKBbJ9xHJo8jQJk9ZHDm-Nqthv4PW_uqBTe4&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=ISkNzSX00ljGDgrOSZP2-g&_nc_tpa=Q5bMBQLEnsyPk1wfTXkHVXIEuSXYgU21jDXRWKbIqnndVv7DbYn3o0XwVgvZgkNw_BtKujJm6fpMPC0STw&oh=00_AQMLVNGrIycZh5MEKVG1BREVDUzjHBdkk3DgFmvAvWoN3Q&oe=6ADF8830",
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/852221013_4547689582044401_8373072803472841414_n.png?stp=dst-jpg_tt6&_nc_cat=107&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=T86j3YCXpbMQ7kNvwFj988H&_nc_oc=AdoM_ppaEf58JgI2aNdC-zaWiHZ_bT7Rv-D35C1K4gq3oWXlmscS9hcz7pjw_knt9jA&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=ISkNzSX00ljGDgrOSZP2-g&_nc_tpa=Q5bMBQJvWTMx-2YI6_tecwQVYSEcm5p_yRYo32TfTfWWa7b7bwCEXnyzvhN6hasK8gvvBL1lWe8aGH9i7A&oh=00_AQMCPbSJxIrn-AkF91Lt05LqvU1ab7HhU_cxxNUILkLj0A&oe=6ADF8472"
+          ]
         }
       ]
     },
@@ -360,18 +380,18 @@
       "id": "ffa2e369-e15a-4e96-8834-2d77d1c03534",
       "name": "سناب · واتساب أكتوبر (الرمال والملز)",
       "status": "ACTIVE",
-      "spend": 1590.0,
-      "impressions": 242356,
-      "results": 5066,
+      "spend": 1720.0,
+      "impressions": 262481,
+      "results": 5535,
       "resultLabel": "ضغطة واتساب",
       "cpr": 0.31,
       "ads": [
         {
           "name": "الرمال · من 2,500 | v2",
           "status": "ACTIVE",
-          "spend": 633.79,
-          "impressions": 83773,
-          "results": 3126,
+          "spend": 695.32,
+          "impressions": 91293,
+          "results": 3456,
           "cpr": 0.2,
           "hood": "الرمال",
           "title": "من 2,500 | v2",
@@ -384,9 +404,9 @@
         {
           "name": "الملز · في قلب الرياض | v2",
           "status": "ACTIVE",
-          "spend": 440.39,
-          "impressions": 78067,
-          "results": 685,
+          "spend": 475.92,
+          "impressions": 84528,
+          "results": 742,
           "cpr": 0.64,
           "hood": "الملز",
           "title": "في قلب الرياض | v2",
@@ -399,10 +419,10 @@
         {
           "name": "الرمال · فاتورتك شاملة وكاملة | v2",
           "status": "ACTIVE",
-          "spend": 133.57,
-          "impressions": 22731,
-          "results": 433,
-          "cpr": 0.31,
+          "spend": 152.36,
+          "impressions": 26376,
+          "results": 471,
+          "cpr": 0.32,
           "hood": "الرمال",
           "title": "فاتورتك شاملة وكاملة | v2",
           "id": "f5bff161-df55-4143-aa23-03028a1ef6be",
@@ -414,10 +434,10 @@
         {
           "name": "الملز · استديو من 2500 | v2",
           "status": "ACTIVE",
-          "spend": 91.88,
-          "impressions": 14250,
-          "results": 164,
-          "cpr": 0.56,
+          "spend": 94.06,
+          "impressions": 14665,
+          "results": 171,
+          "cpr": 0.55,
           "hood": "الملز",
           "title": "استديو من 2500 | v2",
           "id": "e073f8fc-9128-417a-8a9c-d66e65b3b64d",
@@ -429,15 +449,30 @@
         {
           "name": "الرمال · دخول ذكي بدون مفتاح | v2",
           "status": "ACTIVE",
-          "spend": 52.39,
-          "impressions": 8148,
-          "results": 177,
+          "spend": 57.86,
+          "impressions": 9143,
+          "results": 192,
           "cpr": 0.3,
           "hood": "الرمال",
           "title": "دخول ذكي بدون مفتاح | v2",
           "id": "3529964a-c0b1-4044-bf17-6a3842827c01",
           "img": [
             "files/live-ads/snap/الرمال-04-دخول-ذكي-بدون-مفتاح-v2.webp"
+          ],
+          "format": "ستوري"
+        },
+        {
+          "name": "الرمال · ادخل بشنطتك | v2",
+          "status": "ACTIVE",
+          "spend": 48.74,
+          "impressions": 7933,
+          "results": 150,
+          "cpr": 0.32,
+          "hood": "الرمال",
+          "title": "ادخل بشنطتك | v2",
+          "id": "fbc73960-160e-4066-a6e3-51fcb9ae3c7f",
+          "img": [
+            "files/live-ads/snap/الرمال-01-ادخل-بشنطتك-v2.webp"
           ],
           "format": "ستوري"
         },
@@ -453,21 +488,6 @@
           "id": "1d94c085-edbc-4794-aecd-8cec4808e28f",
           "img": [
             "files/live-ads/snap/الملز-01-في-قلب-الرياض.webp"
-          ],
-          "format": "ستوري"
-        },
-        {
-          "name": "الرمال · ادخل بشنطتك | v2",
-          "status": "ACTIVE",
-          "spend": 44.53,
-          "impressions": 7214,
-          "results": 130,
-          "cpr": 0.34,
-          "hood": "الرمال",
-          "title": "ادخل بشنطتك | v2",
-          "id": "fbc73960-160e-4066-a6e3-51fcb9ae3c7f",
-          "img": [
-            "files/live-ads/snap/الرمال-01-ادخل-بشنطتك-v2.webp"
           ],
           "format": "ستوري"
         },
@@ -489,10 +509,10 @@
         {
           "name": "الملز · ترتيبها علينا | v2",
           "status": "ACTIVE",
-          "spend": 29.13,
-          "impressions": 4717,
-          "results": 39,
-          "cpr": 0.75,
+          "spend": 31.41,
+          "impressions": 5087,
+          "results": 41,
+          "cpr": 0.77,
           "hood": "الملز",
           "title": "ترتيبها علينا | v2",
           "id": "583e55ab-8e2d-4b8e-b1df-18a0598bd1f3",
@@ -699,6 +719,6 @@
   ],
   "campaignsRange": {
     "from": "2026-10-01",
-    "to": "2026-10-20"
+    "to": "2026-10-21"
   }
 }
