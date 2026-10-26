@@ -690,16 +690,22 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     loadAdVers().then(function(){rerender();adSheet()});
   }
   function isReq(v){return v&&v.data&&v.data.kind==='request'}
-  function versOf(k){return AD.vers.filter(function(v){return v.ad_key===k&&!isReq(v)}).sort(function(a,b){return (b.data.v||0)-(a.data.v||0)})}
-  function reqsOf(k){return AD.vers.filter(function(v){return v.ad_key===k&&isReq(v)}).sort(function(a,b){return a.at<b.at?1:-1})}
+  function keysOf(k){var p=AD.prev&&AD.prev[k];return p?[k].concat(p):[k]}
+  function versOf(k){var ks=keysOf(k);return AD.vers.filter(function(v){return ks.indexOf(v.ad_key)>=0&&!isReq(v)}).sort(function(a,b){return a.at<b.at?1:a.at>b.at?-1:(b.data.v||0)-(a.data.v||0)})}
+  function reqsOf(k){var ks=keysOf(k);return AD.vers.filter(function(v){return ks.indexOf(v.ad_key)>=0&&isReq(v)}).sort(function(a,b){return a.at<b.at?1:-1})}
   // طلب التعديل مفتوح لحد ما المصمم يرفع نسخة بعده
   function reqOpen(v){return isReq(v)&&!AD.vers.some(function(o){return o.ad_key===v.ad_key&&!isReq(o)&&o.at>v.at})}
   function adItems(){
     var out=(AD.ads||[]).map(function(a){return {key:a.key,platform:a.platform,title:a.title||a.name,hood:a.hood,camp:a.hood||'',format:a.format,img:a.img,orig:a.orig||[],on:a.on}});
     var seen={};AD.vers.forEach(function(v){if(/^new:/.test(v.ad_key)&&!seen[v.ad_key]){seen[v.ad_key]=1;var d=v.data||{};out.push({key:v.ad_key,platform:d.platform||'',title:d.title||'إعلان جديد',hood:d.campaign||d.hood||'',camp:d.campaign||d.hood||'',format:'جديد',img:[],on:true,isNew:true})}});
     out.forEach(function(x){x.hidden=!!AD.hid[x.key]});
+    // لما الإعلان يتعمل من جديد على المنصة (مثلاً بالأسعار الجديدة) بياخد رقم جديد: نربطه بالإعلان القديم بنفس الاسم عشان نسخه وتصميمه يفضلوا معاه
+    var prev={};out.forEach(function(x){if(!x.on||x.isNew)return;var b=adBase(x.title);var ps=out.filter(function(y){return y!==x&&!y.on&&!y.isNew&&y.platform===x.platform&&y.hood===x.hood&&adBase(y.title)===b}).map(function(y){return y.key});if(ps.length)prev[x.key]=ps});
+    AD.prev=prev;
+    out.forEach(function(x){if((x.img||[]).length||!prev[x.key])return;var pv=out.filter(function(y){return prev[x.key].indexOf(y.key)>=0&&(y.img||[]).length})[0];x.oldImg=pv?pv.img:[]});
     return out;
   }
+  function adBase(t){return String(t||'').replace(/[\u200e\u200f]/g,'').replace(/\s*[|–]\s*(v\d+|جديد).*$/i,'').replace(/[\d,٬٫.]+/g,'').replace(/\s+/g,' ').trim()}
   function vis(x){return AD.f.hid?x.hidden:!x.hidden}
   function adCamps(all){var o={};all.forEach(function(x){if(x.camp)o[x.camp]=1});var pri=['الرمال','الملز'];return Object.keys(o).sort(function(a,b){var ia=pri.indexOf(a),ib=pri.indexOf(b);if(ia<0)ia=9;if(ib<0)ib=9;return ia-ib||a.localeCompare(b,'ar')})}
   function adFiles(v){return (v.data.files||[]).filter(function(f){return safeUrl(f.url)})}
@@ -708,7 +714,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     if(!AD.ads||!AD.vLoaded)return '<p class="loading">جارِ تحميل الإعلانات…</p>';
     var every=adItems(),nHid=every.filter(function(x){return x.hidden}).length;if(!nHid)AD.f.hid=false;var all=every.filter(vis),up=CAN('designs.upload'),ap=CAN('posts.approve');
     if(AD.noTable)return '<h2>تصاميم الإعلانات</h2><p class="note">الصفحة جاهزة، بس محتاجة تشغيل ملف <b>05-ad-designs.sql</b> مرة واحدة في Supabase عشان رفع النسخ يشتغل.</p>';
-    var cnt={review:0,changes:0,approved:0};all.forEach(function(x){var v=versOf(x.key)[0];if(reqsOf(x.key).some(reqOpen))cnt.changes++;else if(v&&cnt[v.data.status]!=null)cnt[v.data.status]++});
+    var cnt={review:0,changes:0,approved:0},cseen={};all.forEach(function(x){var v=versOf(x.key)[0];if(v){if(cseen[v.id])return;cseen[v.id]=1}if(reqsOf(x.key).some(reqOpen))cnt.changes++;else if(v&&cnt[v.data.status]!=null)cnt[v.data.status]++});
     var camps=adCamps(all);if(AD.f.camp&&camps.indexOf(AD.f.camp)<0)AD.f.camp='';
     var show=all.filter(function(x){return (AD.f.hid||AD.f.all||x.on||x.isNew)&&(!AD.f.pl||x.platform===AD.f.pl)&&(!AD.f.camp||x.camp===AD.f.camp)&&(!AD.f.has||versOf(x.key).length)});
     show.sort(function(a,b){var va=versOf(a.key)[0],vb=versOf(b.key)[0];var ta=va?va.at:'',tb=vb?vb.at:'';return ta<tb?1:ta>tb?-1:0});
@@ -717,7 +723,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     h+='<div class="chips" id="adf" style="margin-top:16px"><button data-a="0" aria-pressed="'+!AD.f.all+'">الشغالة بس</button><button data-a="1" aria-pressed="'+AD.f.all+'">الكل</button><span style="width:12px"></span><button data-p="" aria-pressed="'+(AD.f.pl==='')+'">كل المنصات</button><button data-p="meta" aria-pressed="'+(AD.f.pl==='meta')+'">ميتا</button><button data-p="snap" aria-pressed="'+(AD.f.pl==='snap')+'">سناب</button>'+(all.some(function(x){return x.platform==='tiktok'})?'<button data-p="tiktok" aria-pressed="'+(AD.f.pl==='tiktok')+'">تيك توك</button>':'')+'<span style="width:12px"></span><button data-h="1" aria-pressed="'+AD.f.has+'">عليها نسخ جديدة</button>'+(nHid?'<button data-hid="1" aria-pressed="'+AD.f.hid+'">المحذوفة ('+nHid+')</button>':'')+'<button data-zipall="1" style="margin-inline-start:auto" title="بيحمّل أحدث نسخة من كل إعلان ظاهر بالفلتر، واللي مالوش نسخ جديدة بيتحمّل تصميمه الحالي">⬇ تحميل اللي ظاهر (ZIP)</button>'+(up?'<button data-new="1" style="background:var(--char);color:var(--char-ink);border-color:var(--char)">+ تصميم لإعلان جديد</button>':'')+'</div>';
     h+='<div class="chips" style="margin-top:-6px"><span class="chl">الحملة:</span><button data-camp="" aria-pressed="'+(AD.f.camp==='')+'">كل الحملات</button>'+camps.map(function(c){return '<button data-camp="'+esc(c)+'" aria-pressed="'+(AD.f.camp===c)+'">'+esc(c)+'</button>'}).join('')+'</div>';
     h+=show.length?'<div class="grid ads">'+show.map(function(x){
-      var vs=versOf(x.key),v=vs[0],f=v?adFiles(v).filter(function(z){return /^image\//.test(z.type||'')})[0]:null,src=f?f.url:(x.img||[])[0];
+      var vs=versOf(x.key),v=vs[0],f=v?adFiles(v).filter(function(z){return /^image\//.test(z.type||'')})[0]:null,src=f?f.url:(x.img||[])[0]||(x.oldImg||[])[0];
       var ph=src?'<img src="'+esc(src)+'" alt="" loading="lazy">':'<span>'+(x.isNew?'لسه مفيش ملفات':'التصميم مش متاح')+'</span>';
       return '<button class="pc ad" data-ak="'+esc(x.key)+'" type="button"><span class="ph'+(x.platform==='snap'?' tall':'')+'">'+ph+'<span class="badge">'+(x.platform==='meta'?'ميتا':x.platform==='snap'?'سناب':x.platform==='tiktok'?'تيك توك':'جديد')+(v?' · النسخة '+(v.data.v||vs.length):' · الحالي')+'</span></span><span class="bd"><span class="m">'+esc(x.hood||'')+(x.format?' · '+esc(x.format):'')+'</span><b>'+esc(x.title)+'</b>'+(reqsOf(x.key).some(reqOpen)?'<span class="st" style="--sc:var(--st-changes)">مطلوب نسخة جديدة</span>':v?aTag(v.data.status):'<span class="st" style="--sc:var(--ink-3)">'+(x.on?'التصميم الحالي':'متوقف')+'</span>')+'</span></button>';
     }).join('')+'</div>':'<p class="empty">مفيش إعلانات بالفلتر ده.</p>';
