@@ -657,6 +657,10 @@
     addAdVersion: function (adKey, data) { var id = rid(); return sb.from('ad_versions').insert({ id: id, ad_key: adKey, data: data }).then(unwrap).then(function () { return id; }); },
     saveAdVersion: function (id, data) { return sb.from('ad_versions').update({ data: data }).eq('id', id).then(unwrap); },
     removeAdVersion: function (id) { return sb.from('ad_versions').delete().eq('id', id).then(unwrap); },
+    // تصاميم إعلانات اتشالت من الصفحة (الإعلان على المنصة ما بيتأثرش)
+    hiddenAds: function () { return sb.from('ad_hidden').select('ad_key').then(unwrap).then(function (r) { return (r || []).map(function (x) { return x.ad_key; }); }); },
+    hideAd: function (key) { return sb.from('ad_hidden').insert({ ad_key: key, by: SESSION.user.email.toLowerCase() }).then(function (r) { if (r.error && r.error.code !== '23505') throw err(r.error); }); },
+    unhideAd: function (key) { return sb.from('ad_hidden').delete().eq('ad_key', key).then(unwrap); },
     api: function (name) {
       return window.capital.token().then(function (t) {
         return fetch('api/' + name, { headers: { Authorization: 'Bearer ' + t }, cache: 'no-store' });
