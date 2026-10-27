@@ -149,6 +149,10 @@ button.pc:hover{border-color:var(--gold)}
 .pill{background:#fff;color:#111;border-radius:999px;padding:8px 18px;font-weight:700;font-size:13.5px}.pill.y{background:#FFFC00}
 .apcmp{display:flex;gap:18px;flex-wrap:wrap;justify-content:center;width:100%}.apcmp>div{flex:0 1 285px;min-width:240px}.apcmp .phone{width:100%}.screen.st{width:100%}.apl{text-align:center;font-size:13px;font-weight:600;color:var(--ink-2);margin:0 0 6px}.cmpb{border-color:var(--gold)!important}
 .anw{position:relative;display:inline-flex;flex:0 0 auto}.anb{position:absolute;bottom:8px;inset-inline-start:8px;border:0;border-radius:999px;background:rgba(31,36,39,.88);color:#F7F4EC;font:inherit;font-size:12.5px;font-weight:600;padding:5px 11px;cursor:pointer;text-decoration:none}.anb:hover{background:#C29B3C;color:#1F2427}.anb.dl{padding:4px 9px}
+.anb.top{bottom:auto;top:8px}.lb-row.sm .anw video{height:220px}.mkw{display:flex;flex-direction:column;gap:4px;flex:0 0 auto;max-width:260px}.mkw small{max-width:260px}.mkt{position:absolute;top:8px;right:8px;background:var(--warn);color:#fff;font-size:12px;font-weight:700;border-radius:999px;padding:2px 9px}
+.lnk{border:0;background:none;padding:0;font:inherit;font-size:12.5px;color:var(--gold-ink);font-weight:600;cursor:pointer;text-decoration:underline}
+.pcnl{display:flex;flex-direction:column;gap:6px;max-height:300px;overflow:auto;margin-bottom:8px}.pcn1{background:var(--soft);border-radius:10px;padding:7px 11px;max-width:85%;align-self:flex-start}.pcn1.me{align-self:flex-end;background:var(--gold-soft)}.pcn1.sys{background:none;border:1px dashed var(--line);color:var(--ink-3)}.pcn1 p{margin:0;font-size:13.5px;white-space:pre-wrap}.pcn1 small{font-size:11.5px;color:var(--ink-3)}
+button.tile{font:inherit;text-align:start;cursor:pointer;color:inherit}.pc .ph .play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:30px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
 .adv.rq{border-color:var(--warn);background:color-mix(in srgb,var(--warn) 5%,transparent)}
 .mk{margin:8px 0;padding:8px 10px;border:1px dashed var(--warn);border-radius:10px}.mk b{display:block;font-size:13px;color:var(--warn);margin-bottom:6px}.mk small{display:block;font-size:12.5px;color:var(--ink-2);max-width:240px;align-self:flex-end}
 .lb-x{border:0;background:none;font-size:26px;line-height:1;cursor:pointer;color:var(--ink)}
@@ -297,6 +301,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     ]},
     {g:'المحتوى العضوي',items:[
       {id:'simple',t:'اللوحة المبسطة',d:'الأسبوع بالمراحل أو الشهر بالتواريخ: ارفع التصميم، اعتمد، انقل الميعاد، وعلّم اتنشر',m:'الشغل اليومي ↗',href:'simple.html',self:true},
+      {id:'post-designs',t:'تصاميم المحتوى',d:'كل تصميم وريل للمنشورات: المصمم يرفع، وإنت ترسم ملاحظاتك على الصورة أو على لقطة من الريل، وتعتمد',m:'مباشر',live:true,need:['view.publish','designs.upload','posts.approve']},
       {id:'preview',t:'معاينة المنشورات',d:'شكل كل منشور على إنستغرام وفيسبوك وتيك توك وX قبل ما ينزل، وشبكة الحساب',m:'مباشر',live:true,need:'view.publish'},
       {id:'publish',t:'جدول النشر',d:'مواعيد النشر لكل منصة: انسخ النص، نزّل التصميم، وعلّم إنه اتنشر',m:'مباشر',live:true,need:'view.publish'},
       {id:'board',t:'اللوحة الكاملة',d:'تعديل النصوص والبريف والملاحظات والحالات بالتفصيل',m:'تعديل المحتوى ↗',href:'./',self:true}
@@ -431,7 +436,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     h+='<div class="tsec"><h3>المحتوى العضوي</h3><a href="simple.html?view=month">اللوحة المبسطة ←</a></div>';
     h+='<div class="tiles">'+
       '<a class="tile" href="simple.html?view=month"><span class="k">منشورات الأسبوع</span><span class="v num">'+pub+' / '+inWeek.length+'</span><span class="s">اتنشر من المخطط هذا الأسبوع</span></a>'+
-      '<a class="tile'+(review.length?' gold':'')+'" href="simple.html?view=month"><span class="k">بانتظار المراجعة</span><span class="v num">'+review.length+'</span><span class="s">تصاميم مرفوعة محتاجة اعتماد</span></a>'+
+      '<a class="tile'+(review.length?' gold':'')+'" href="#post-designs"><span class="k">بانتظار المراجعة</span><span class="v num">'+review.length+'</span><span class="s">تصاميم مرفوعة محتاجة اعتماد</span></a>'+
       '<a class="tile'+(late.length?' warn':'')+'" href="simple.html?view=month"><span class="k">متأخر عن موعد التسليم</span><span class="v num">'+late.length+'</span><span class="s">'+(late.length?'محتاج متابعة مع المصمم':'كل شيء في موعده')+'</span></a>'+
     '</div>';
     var mineFirst=CAN('designs.upload')&&!CAN('posts.approve');
@@ -629,33 +634,114 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     });
   }
   function pcBox(){var b=document.getElementById('pclb');if(!b){b=document.createElement('div');b.id='pclb';b.className='lb';b.hidden=true;document.body.appendChild(b);b.onclick=function(e){if(e.target===b)pcClose()}}return b}
-  function pcClose(){PC.open=null;pcBox().hidden=true;pcBox().innerHTML=''}
+  function pcClose(){PC.open=null;pcBox().hidden=true;pcBox().innerHTML='';if(PCN.un){try{PCN.un()}catch(e){}}PCN={id:null,un:null,list:null}}
+  function isVid(z){return /^video\//.test(z.type||'')||/\.(mp4|mov|m4v|webm)(\?|$)/i.test(z.url||'')}
+  function isReel(p){var v=pcVers(p)[0];return (v&&v.files.some(isVid))||/ريل|reel|فيديو|video/i.test(p.f||'')}
+  /* المحادثة مع المصمم على المنشور (لحظية) */
+  var PCN={id:null,un:null,list:null};
+  function pcWatch(id){
+    if(PCN.id===id||!DB)return;if(PCN.un){try{PCN.un()}catch(e){}}PCN={id:id,un:null,list:null};
+    try{PCN.un=DB.collection('posts/'+id+'/notes').orderBy('at','asc').onSnapshot(function(s){PCN.list=s.docs.map(function(d){return d.data()});var el=document.getElementById('pcnotes');if(el&&PC.open===id)el.innerHTML=pcNotesHtml()},function(){PCN.list=[]})}catch(e){PCN.list=[]}
+  }
+  function pcNotesHtml(){
+    var l=PCN.list;if(!l)return '<p class="m">جارِ التحميل…</p>';if(!l.length)return '<p class="m">لسه مفيش كلام على المنشور ده.</p>';
+    return l.slice(-30).map(function(n){var who=n.by?(NAMES[n.by]||String(n.by).split('@')[0]):'',d=n.at?new Date(n.at):null,me=n.by===ME;
+      return '<div class="pcn1'+(n.sys?' sys':'')+(me?' me':'')+'"><p>'+esc(n.text)+'</p><small>'+esc(who)+(d?' · '+d.getDate()+' '+MON[d.getMonth()]+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2):'')+'</small></div>'}).join('');
+  }
+  function fmtT(t){return capital.fmtT?capital.fmtT(t):String(Math.round(t||0))}
   function pcSheet(){
     var box=pcBox(),p=PC.open&&BY_P[PC.open];if(!p){box.hidden=true;return}
-    var up=CAN('designs.upload'),ap=CAN('posts.approve'),dl=CAN('designs.delete'),vs=pcVers(p),done=!!DONE[p.status];
-    var h='<div class="lb-in adsh"><div class="lb-h"><b>'+esc(p.t)+'</b><span>'+esc(PSHORT[p.p]||p.p)+' · '+dayD(p.d)+' · '+esc(STL[p.status]||'')+'</span><button type="button" class="lb-x" aria-label="إغلاق">×</button></div><div class="adb">';
-    h+='<div class="pcmeta">'+(canMove()?'<label>ميعاد النشر <input type="date" id="pcdate" value="'+esc(p.d)+'"></label>':'<span>النشر: '+dayD(p.d)+'</span>')+'<span>تسليم التصميم: '+dayD(dueOf(p))+'</span>'+(p.f?'<span>الشكل: '+esc(p.f)+'</span>':'')+'<a href="'+postHref(p)+'">افتح في اللوحة ←</a></div>';
+    var up=CAN('designs.upload'),ap=CAN('posts.approve'),dl=CAN('designs.delete'),nw=CAN('notes.write'),vs=pcVers(p),done=!!DONE[p.status];
+    // احتفظ بأي كلام مكتوب لو الشاشة اتحدثت من تحديث لحظي
+    var keep={};box.querySelectorAll('textarea[id]').forEach(function(t){if(t.value)keep[t.id]=t.value});var rnOpen=box.querySelector('#pcrn')&&!box.querySelector('#pcrn').hidden;
+    var sc=box.querySelector('.adb')?box.querySelector('.adb').scrollTop:0;
+    var marks=p.marks||[],openMk=marks.filter(function(m){return vs[0]&&(m.v||1)===vs[0].v}).length;
+    var h='<div class="lb-in adsh"><div class="lb-h"><b>'+esc(p.t)+'</b><span>'+esc(PSHORT[p.p]||p.p)+' · '+dayD(p.d)+' · '+esc(STL[p.status]||'')+(isReel(p)?' · ريل':'')+'</span><button type="button" class="lb-x" aria-label="إغلاق">×</button></div><div class="adb">';
+    h+='<div class="pcmeta">'+(canMove()?'<label>ميعاد النشر <input type="date" id="pcdate" value="'+esc(p.d)+'"></label>':'<span>النشر: '+dayD(p.d)+'</span>')+'<span>تسليم التصميم: '+dayD(dueOf(p))+'</span>'+(p.f?'<span>الشكل: '+esc(p.f)+'</span>':'')+'<a href="#preview?p='+encodeURIComponent(p.id)+'" data-pcpv="1">معاينة ←</a><a href="'+postHref(p)+'">افتح في اللوحة ←</a></div>';
     if(p.b)h+='<p class="adn"><b>البريف:</b> '+esc(p.b)+'</p>';
-    if(p.lastNote&&p.status==='changes')h+='<p class="adn rv"><b>آخر ملاحظة:</b> '+esc(p.lastNote)+'</p>';
-    if(ap&&vs.length&&!done)h+='<div class="plb"><button class="pbtn sm" data-pa="approved">✓ اعتماد التصميم</button>'+(p.status!=='changes'?'<button class="pbtn sm ghost" data-pa="changes">تعديلات مطلوبة</button>':'')+'</div><div class="adrn" id="pcrn" hidden><textarea rows="2" placeholder="إيه المطلوب تعديله؟"></textarea><button class="pbtn sm" id="pcsend">إرسال للمصمم</button></div>';
-    if(up)h+='<div class="plb" style="margin-top:12px"><button class="pbtn" type="button" id="pcshow">↑ ارفع '+(vs.length?'نسخة جديدة (النسخة '+(vs[0].v+1)+')':'التصميم')+'</button></div><div id="pcupw" hidden style="margin-top:10px"><form class="adup" id="pcup"><label>الملفات (كل صور الكاروسيل أو الفيديو مع بعض)<input type="file" name="files" multiple accept="image/png,image/jpeg,image/webp,video/mp4,video/quicktime,application/pdf" required></label><label>ملاحظة (اختياري)<textarea name="note" rows="2" placeholder="مثال: غيّرت الخلفية وكبّرت العنوان"></textarea></label><div class="plb"><button class="pbtn" type="submit">↑ ارفع</button><span class="m" id="pcst"></span></div></form></div>';
+    if(p.status==='changes'&&(p.lastNote||openMk))h+='<p class="adn rv"><b>المطلوب تعديله:</b> '+esc(p.lastNote||'')+(openMk?' <span class="m">('+openMk+' '+(openMk>1?'ملاحظات مرسومة':'ملاحظة مرسومة')+' على النسخة '+vs[0].v+' تحت)</span>':'')+'</p>';
+    if(ap&&vs.length&&!done)h+='<div class="plb"><button class="pbtn sm" data-pa="approved">✓ اعتماد التصميم</button>'+(p.status!=='changes'?'<button class="pbtn sm ghost" data-pa="changes">تعديلات مطلوبة</button>':'')+'<span class="m">أو ارسم ملاحظاتك على '+(isReel(p)?'الريل أو الصورة':'التصميم')+' مباشرة ✎</span></div><div class="adrn" id="pcrn" hidden><textarea id="pcrnt" rows="2" placeholder="إيه المطلوب تعديله؟"></textarea><button class="pbtn sm" id="pcsend">إرسال للمصمم</button></div>';
+    if(up&&!done)h+='<div class="plb" style="margin-top:12px"><button class="pbtn" type="button" id="pcshow">↑ ارفع '+(vs.length?'نسخة جديدة (النسخة '+(vs[0].v+1)+')':'التصميم أو الريل')+'</button></div><div id="pcupw" hidden style="margin-top:10px"><form class="adup" id="pcup"><label>الملفات (كل صور الكاروسيل أو الريل مع الغلاف)<input type="file" name="files" multiple accept="image/png,image/jpeg,image/webp,video/mp4,video/quicktime,application/pdf" required></label><label>إيه اللي اتغيّر؟ (اختياري)<textarea id="pcupn" name="note" rows="2" placeholder="مثال: غيّرت الخلفية وكبّرت العنوان، وقصّرت أول 3 ثواني في الريل"></textarea></label><div class="plb"><button class="pbtn" type="submit">↑ ارفع</button><span class="m" id="pcst"></span></div></form></div>';
     h+='<h4>التصاميم'+(vs.length?' <span class="c">'+vs.length+' '+(vs.length>1?'نسخ':'نسخة')+'</span>':'')+'</h4>';
     if(!vs.length&&(p.im||[]).length)h+='<p class="adn">لسه مفيش تصميم مرفوع. ده التصميم المقترح:</p><div class="lb-row sm">'+p.im.map(function(u){return '<img src="'+esc(u)+'" alt="">'}).join('')+'</div>';
     else if(!vs.length)h+='<p class="empty">لسه مفيش تصميم مرفوع.</p>';
-    h+=vs.map(function(g,gi){var fl=g.files,f0=fl[0]||{};
-      return '<div class="adv"><div class="plh"><b>النسخة '+g.v+'</b>'+(gi===0?stTag(p.status):'<span class="st" style="--sc:var(--ink-3)">نسخة قديمة</span>')+'<span class="m">'+esc(NAMES[f0.by]||f0.by||'')+(f0.at?' · '+dayD(f0.at.slice(0,10)):'')+'</span></div>'+
-        '<div class="lb-row sm">'+fl.map(function(z){return /^video\//.test(z.type||'')?'<video src="'+esc(z.url)+'#t=0.1" controls preload="metadata"></video>':/^image\//.test(z.type||'')?'<a href="'+esc(z.url)+'" target="_blank" rel="noopener"><img src="'+esc(z.url)+'" alt=""></a>':'<a class="pbtn sm ghost" href="'+esc(z.url)+'" target="_blank" rel="noopener">PDF</a>'}).join('')+'</div>'+
+    h+=vs.map(function(g,gi){var fl=g.files,f0=fl[0]||{},mk=marks.filter(function(m){return (m.v||1)===g.v});
+      return '<div class="adv'+(gi===0&&p.status==='changes'?' rq':'')+'"><div class="plh"><b>النسخة '+g.v+'</b>'+(gi===0?stTag(p.status):'<span class="st" style="--sc:var(--ink-3)">نسخة قديمة</span>')+'<span class="m">'+esc(NAMES[f0.by]||f0.by||'')+(f0.at?' · '+dayD(f0.at.slice(0,10)):'')+'</span></div>'+
+        '<div class="lb-row sm">'+fl.map(function(z,zi){return isVid(z)?'<span class="anw"><video src="'+esc(z.url)+'#t=0.1" controls playsinline preload="metadata"></video>'+(ap?'<button type="button" class="anb top" data-annv="'+g.v+':'+zi+'" title="وقّف الريل عند اللقطة وارسم عليها">✎ علّق على الريل</button>':'')+'</span>':/^image\//.test(z.type||'')?'<span class="anw"><a href="'+esc(z.url)+'" target="_blank" rel="noopener"><img src="'+esc(z.url)+'" alt=""></a>'+(ap?'<button type="button" class="anb" data-ann="'+g.v+':'+zi+'" title="ارسم ملاحظات على التصميم">✎ ارسم ملاحظات</button>':'')+'</span>':'<a class="pbtn sm ghost" href="'+esc(z.url)+'" target="_blank" rel="noopener">PDF</a>'}).join('')+'</div>'+
+        (mk.length?'<div class="mk"><b>ملاحظات بالرسم'+(gi===0&&p.status==='changes'?' · مطلوب تعديلها في النسخة الجاية':'')+'</b><div class="lb-row sm">'+mk.map(function(m){var tl=m.t!=null?'<span class="mkt">🎬 عند '+esc(m.tl||fmtT(m.t))+'</span>':'';
+          return '<span class="mkw"><span class="anw"><a href="'+esc(m.url)+'" target="_blank" rel="noopener"><img src="'+esc(m.url)+'" alt=""></a><a class="anb dl" href="'+esc(m.url)+'" download="ملاحظات-النسخة-'+g.v+(m.t!=null?'-'+fmtT(m.t).replace(':','.'):'')+'.png">⬇</a>'+tl+'</span>'+(m.note?'<small>'+esc(m.note)+'</small>':'')+'<small class="m">'+esc(NAMES[m.by]||String(m.by||'').split('@')[0])+(m.t!=null&&m.file!=null?' · <button type="button" class="lnk" data-seek="'+g.v+':'+m.file+':'+m.t+'">شغّل الريل من '+esc(m.tl||fmtT(m.t))+'</button>':'')+(ap&&!done?' · <button type="button" class="lnk" data-delmk="'+esc(m.url)+'">حذف</button>':'')+'</small></span>'}).join('')+'</div></div>':'')+
         '<div class="plb">'+(fl.length>1?'<button class="pbtn sm" data-pz="'+g.v+'">⬇ تحميل الكل (ZIP)</button>':'')+fl.map(function(z,i){return '<a class="pbtn sm ghost" href="'+esc(z.url)+'" download="'+esc(z.name||'design')+'">⬇ '+(fl.length>1?'ملف '+(i+1):'تحميل')+'</a>'}).join('')+(dl&&!done?'<button class="pbtn sm ghost" data-pd="'+g.v+'" style="color:var(--warn)">حذف النسخة</button>':'')+'</div></div>'}).join('');
-    box.innerHTML=h+'</div></div>';box.hidden=false;
+    h+='<h4>الكلام مع المصمم</h4><div class="pcnl" id="pcnotes">'+pcNotesHtml()+'</div>'+(nw?'<div class="adrn"><textarea id="pcnt" rows="2" placeholder="'+(up&&!ap?'رد أو اسأل عن التعديل…':'اكتب ملاحظة للمصمم…')+'"></textarea><button class="pbtn sm" id="pcns">إرسال</button></div>':'');
+    box.innerHTML=h+'</div></div>';box.hidden=false;pcWatch(p.id);
+    Object.keys(keep).forEach(function(k){var t=box.querySelector('#'+k);if(t)t.value=keep[k]});if(rnOpen&&box.querySelector('#pcrn'))box.querySelector('#pcrn').hidden=false;
+    if(sc)box.querySelector('.adb').scrollTop=sc;
     box.querySelector('.lb-x').onclick=pcClose;
+    var pv=box.querySelector('[data-pcpv]');if(pv)pv.onclick=function(){pcClose()};
     var di=box.querySelector('#pcdate');if(di)di.onchange=function(){if(di.value){pcMove(p.id,di.value);if(pd(di.value).getDay()===5)di.value=p.d}};
     var sw=box.querySelector('#pcshow');if(sw)sw.onclick=function(){box.querySelector('#pcupw').hidden=false;sw.parentNode.hidden=true};
     var fm=box.querySelector('#pcup');if(fm)fm.onsubmit=function(e){e.preventDefault();pcUpload(p,fm,vs.length?vs[0].v+1:1)};
     box.querySelectorAll('[data-pa]').forEach(function(b){b.onclick=function(){if(b.dataset.pa==='changes'){box.querySelector('#pcrn').hidden=false;box.querySelector('#pcrn textarea').focus();return}pcStatus(p,'approved','')}});
-    var sd=box.querySelector('#pcsend');if(sd)sd.onclick=function(){var t=box.querySelector('#pcrn textarea').value.trim();if(!t){ptoast('اكتب المطلوب تعديله');return}pcStatus(p,'changes',t)};
+    var sd=box.querySelector('#pcsend');if(sd)sd.onclick=function(){var t=box.querySelector('#pcrn textarea').value.trim();if(!t){ptoast('اكتب المطلوب تعديله');return}box.querySelector('#pcrn textarea').value='';pcStatus(p,'changes',t)};
+    var ns=box.querySelector('#pcns');if(ns)ns.onclick=function(){var ta=box.querySelector('#pcnt'),t=ta.value.trim();if(!t)return;ns.disabled=true;var cur=BY_P[p.id]||p;
+      DB.collection('posts/'+p.id+'/notes').add({by:ME,at:new Date().toISOString(),text:t}).then(function(){ta.value='';ns.disabled=false;return DB.doc('posts/'+p.id).update({noteCount:(cur.noteCount||0)+1,lastNote:t.slice(0,140)}).catch(function(){})}).catch(function(){ns.disabled=false;ptoast('ما اتبعتتش، حاول تاني.')})};
+    function saveMark(g,fi,r,extra){
+      ptoast('جارِ حفظ الملاحظات…');
+      return capital.uploadMark(p.id,r.blob).then(function(upm){var cur=BY_P[p.id]||p,m=Object.assign({v:g.v,url:upm.url,path:upm.path,by:ME,at:new Date().toISOString(),note:r.note||'',file:fi},extra||{});
+        var patch={marks:(cur.marks||[]).concat([m]),updatedBy:ME,updatedAt:new Date().toISOString()};
+        if(['published','changes'].indexOf(cur.status)<0)patch.status='changes';
+        var t=(m.t!=null?'ملاحظة على الريل (النسخة '+g.v+') عند '+m.tl:'ملاحظات بالرسم على النسخة '+g.v)+(r.note?': '+r.note:'');
+        return DB.doc('posts/'+p.id).update(patch).then(function(){return DB.collection('posts/'+p.id+'/notes').add({by:ME,at:new Date().toISOString(),text:t}).then(function(){return DB.doc('posts/'+p.id).update({noteCount:(cur.noteCount||0)+1,lastNote:t.slice(0,140)})}).catch(function(){})})
+          .then(function(){ptoast('اتبعتت الملاحظات للمصمم')});
+      }).catch(function(e){ptoast(/permission|42501/i.test((e&&e.message)||'')?'مالكش صلاحية تحفظ ملاحظات مرسومة (شغّل 08-post-marks.sql).':'ما اتحفظتش الملاحظات، حاول تاني.')});
+    }
+    function fileOf(a){var x=a.split(':'),g=vs.filter(function(z){return z.v===+x[0]})[0];return g?{g:g,i:+x[1],f:g.files[+x[1]],t:x[2]!=null?+x[2]:null}:null}
+    box.querySelectorAll('[data-ann]').forEach(function(b){b.onclick=function(){var o=fileOf(b.dataset.ann);if(!o||!o.f)return;
+      capital.annotate(o.f.url,p.t+' · النسخة '+o.g.v).then(function(r){if(r)return saveMark(o.g,o.i,r)})}});
+    box.querySelectorAll('[data-annv]').forEach(function(b){b.onclick=function(){var o=fileOf(b.dataset.annv);if(!o||!o.f||!capital.annotateVideo)return;var vd=b.parentNode.querySelector('video');if(vd)vd.pause();
+      capital.annotateVideo(o.f.url,p.t+' · النسخة '+o.g.v,vd?vd.currentTime:0).then(function(r){if(r)return saveMark(o.g,o.i,r,{t:r.t,tl:r.at})})}});
+    box.querySelectorAll('[data-seek]').forEach(function(b){b.onclick=function(){var o=fileOf(b.dataset.seek);if(!o||!o.f||!capital.annotateVideo)return;
+      capital.annotateVideo(o.f.url,p.t+' · النسخة '+o.g.v,o.t,!ap).then(function(r){if(r)return saveMark(o.g,o.i,r,{t:r.t,tl:r.at})})}});
+    box.querySelectorAll('[data-delmk]').forEach(function(b){b.onclick=function(){if(!confirm('تحذف الملاحظة المرسومة دي؟'))return;var cur=BY_P[p.id]||p,gone=(cur.marks||[]).filter(function(m){return m.url===b.dataset.delmk})[0];
+      DB.doc('posts/'+p.id).update({marks:(cur.marks||[]).filter(function(m){return m.url!==b.dataset.delmk}),updatedBy:ME,updatedAt:new Date().toISOString()}).then(function(){if(gone&&gone.path)capital.removeFile(gone.path).catch(function(){});ptoast('اتحذفت الملاحظة')}).catch(function(){ptoast('ما اتحذفتش، حاول تاني.')})}});
     box.querySelectorAll('[data-pz]').forEach(function(b){var g=vs.filter(function(x){return x.v===+b.dataset.pz})[0];b.onclick=function(){var t=b.textContent;b.disabled=true;b.textContent='جارِ التجهيز…';capital.zip(g.files.map(function(z){return {url:z.url,name:z.name}}),p.t+'-النسخة-'+g.v).then(function(){b.disabled=false;b.textContent=t}).catch(function(){b.disabled=false;b.textContent=t;ptoast('التحميل فشل، حاول تاني.')})}});
     box.querySelectorAll('[data-pd]').forEach(function(b){b.onclick=function(){var v=+b.dataset.pd;if(!confirm('حذف النسخة '+v+'؟'))return;var keep=(p.designs||[]).filter(function(x){return (x.v||1)!==v}),gone=(p.designs||[]).filter(function(x){return (x.v||1)===v});
       DB.doc('posts/'+p.id).update({designs:keep,updatedBy:ME,updatedAt:new Date().toISOString()}).then(function(){gone.forEach(function(z){if(z.path)capital.removeFile(z.path).catch(function(){})});ptoast('اتحذفت النسخة')}).catch(function(){ptoast('ما اتحذفتش، حاول تاني.')})}});
+  }
+
+  /* ---------- تصاميم المحتوى (المنشورات والريلز): نفس فكرة تصاميم الإعلانات ---------- */
+  var PDS={f:{st:'',ty:'',pl:''}};
+  function pdState(p){if(p.status==='review')return 'review';if(p.status==='changes')return 'changes';if(p.status==='published')return 'published';if(DONE[p.status])return 'approved';return (p.designs||[]).length?'work':'need'}
+  function renderPostDesigns(){
+    if(!LOADED)return '<p class="loading">جارِ تحميل المنشورات…</p>';
+    var up=CAN('designs.upload'),ap=CAN('posts.approve'),f=PDS.f;
+    var all=POSTS.filter(function(p){return p.d&&p.t});
+    var cnt={review:0,changes:0,need:0};all.forEach(function(p){var s=pdState(p);if(s==='need'){if(p.d>=T)cnt.need++}else if(cnt[s]!=null)cnt[s]++});
+    var show=all.filter(function(p){var s=pdState(p);
+      if(f.st){if(f.st==='approved'?s!=='approved':f.st==='need'?!(s==='need'||s==='work'):s!==f.st)return false}
+      else if(s==='published'||((s==='need'||s==='work')&&p.d<T))return false;
+      if(f.ty&&(f.ty==='reel')!==isReel(p))return false;
+      if(f.pl&&p.p!==f.pl&&(p.targets||[]).indexOf(f.pl)<0&&p.p!=='ALL')return false;return true});
+    var ORD={review:0,changes:1,need:2,work:2,approved:3,published:4};
+    show.sort(function(a,b){var x=ORD[pdState(a)]-ORD[pdState(b)];if(x)return x;return f.st==='published'?(a.d<b.d?1:-1):(a.d<b.d?-1:a.d>b.d?1:0)});
+    var h='<h2>تصاميم المحتوى</h2><p class="lede">'+(ap?'كل تصميم وريل للمنشورات في مكان واحد. افتح أي منشور: اعتمد، أو ارسم ملاحظاتك على الصورة، أو وقّف الريل عند اللقطة وارسم عليها، والمصمم بيشوفها ويرد ويرفع نسخة جديدة.':'كل منشور بتصميمه أو الريل بتاعه. افتح المنشور تشوف الملاحظات المرسومة والمطلوب، ورد عليها وارفع النسخة الجديدة.')+'</p>';
+    h+='<div class="tiles"><button class="tile'+(cnt.review?' gold':'')+'" data-pst="review" type="button"><span class="k">بانتظار المراجعة</span><span class="v num">'+cnt.review+'</span><span class="s">'+(ap?'محتاجة اعتمادك أو ملاحظاتك':'عند المدير')+'</span></button><button class="tile'+(cnt.changes?' warn':'')+'" data-pst="changes" type="button"><span class="k">تعديلات مطلوبة</span><span class="v num">'+cnt.changes+'</span><span class="s">'+(up?'محتاجة نسخة جديدة منك':'عند المصمم')+'</span></button><button class="tile" data-pst="need" type="button"><span class="k">لسه محتاجة تصميم</span><span class="v num">'+cnt.need+'</span><span class="s">منشورات جاية من غير تصميم</span></button></div>';
+    h+='<div class="chips" id="pdf" style="margin-top:16px">'+[['','المطلوب دلوقتي'],['review','للمراجعة'],['changes','تعديلات'],['need','محتاجة تصميم'],['approved','معتمدة'],['published','اتنشرت']].map(function(x){return '<button data-pst="'+x[0]+'" aria-pressed="'+(f.st===x[0])+'">'+x[1]+'</button>'}).join('')+
+      '<span style="width:12px"></span>'+[['','صور وريلز'],['img','صور'],['reel','ريلز وفيديو']].map(function(x){return '<button data-pty="'+x[0]+'" aria-pressed="'+(f.ty===x[0])+'">'+x[1]+'</button>'}).join('')+
+      '<span style="width:12px"></span><button data-ppl="" aria-pressed="'+(f.pl==='')+'">كل المنصات</button>'+PLAT.map(function(x){return '<button data-ppl="'+x.k+'" aria-pressed="'+(f.pl===x.k)+'">'+x.n+'</button>'}).join('')+'</div>';
+    h+=show.length?'<div class="grid ads">'+show.map(function(p){
+      var v=pcVers(p)[0],fl=v?v.files:[],im=fl.filter(function(z){return /^image\//.test(z.type||'')})[0],vd=fl.filter(isVid)[0],reel=isReel(p),s=pdState(p);
+      var mk=(p.marks||[]).filter(function(m){return v&&(m.v||1)===v.v}).length;
+      var ph=im?'<img src="'+esc(im.url)+'" alt="" loading="lazy">':vd?'<video src="'+esc(vd.url)+'#t=0.5" muted playsinline preload="metadata"></video><span class="play">▶</span>':(p.im||[])[0]?'<img src="'+esc(p.im[0])+'" alt="" loading="lazy" style="opacity:.45">':'<span>لسه مفيش تصميم</span>';
+      var tag=s==='need'?'<span class="st" style="--sc:var(--warn)">محتاج تصميم</span>':s==='work'?stTag(p.status):stTag(p.status);
+      return '<button class="pc ad" data-pds="'+esc(p.id)+'" type="button"><span class="ph'+(reel?' tall':'')+'">'+ph+'<span class="badge">'+esc(PSHORT[p.p]||p.p)+(reel?' · ريل':'')+(v?' · النسخة '+v.v:'')+'</span></span><span class="bd"><span class="m">'+dayD(p.d)+(p.f?' · '+esc(p.f):'')+'</span><b>'+esc(p.t)+'</b>'+tag+(mk?'<span class="m" style="color:var(--warn)">✎ '+mk+' '+(mk>1?'ملاحظات مرسومة':'ملاحظة مرسومة')+'</span>':'')+(p.noteCount?'<span class="m">💬 '+p.noteCount+'</span>':'')+'</span></button>';
+    }).join('')+'</div>':'<p class="empty">مفيش منشورات بالفلتر ده.</p>';
+    return h;
+  }
+  function bindPostDesigns(){
+    page.querySelectorAll('[data-pst]').forEach(function(b){b.onclick=function(){PDS.f.st=PDS.f.st===b.dataset.pst&&b.classList.contains('tile')?'':b.dataset.pst;rerender()}});
+    page.querySelectorAll('[data-pty]').forEach(function(b){b.onclick=function(){PDS.f.ty=b.dataset.pty;rerender()}});
+    page.querySelectorAll('[data-ppl]').forEach(function(b){b.onclick=function(){PDS.f.pl=b.dataset.ppl;rerender()}});
+    page.querySelectorAll('[data-pds]').forEach(function(b){b.onclick=function(){PC.open=b.dataset.pds;pcSheet()}});
   }
   function pcNote(p,t){if(!t)return Promise.resolve();return DB.collection('posts/'+p.id+'/notes').add({by:ME,at:new Date().toISOString(),text:t}).then(function(){return DB.doc('posts/'+p.id).update({noteCount:(p.noteCount||0)+1,lastNote:t.slice(0,140)})}).catch(function(){})}
   function pcStatus(p,st,note){
@@ -1120,9 +1206,9 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   var view=document.getElementById('view'),bar=document.getElementById('bar');
   function renderLive(id){
     var sc=page.scrollTop;
-    page.innerHTML=id==='today'?renderToday():id==='content'?renderContent():id==='ads-live'?renderAds():id==='ads'?renderLiveAds():id==='publish'?renderPublish():id==='preview'?renderPreview():id==='ad-designs'?renderAdDesigns():id==='design-cal'?renderPostCal():id==='ad-preview'?renderAdPreview():renderLibrary();
+    page.innerHTML=id==='today'?renderToday():id==='content'?renderContent():id==='ads-live'?renderAds():id==='ads'?renderLiveAds():id==='publish'?renderPublish():id==='preview'?renderPreview():id==='ad-designs'?renderAdDesigns():id==='post-designs'?renderPostDesigns():id==='design-cal'?renderPostCal():id==='ad-preview'?renderAdPreview():renderLibrary();
     page.scrollTop=sc;
-    if(id==='content')bindContent();if(id==='ads-live')bindAds();if(id==='ads')bindLiveAds();if(id==='publish')bindPublish();if(id==='preview')bindPreview();if(id==='ad-designs'){loadAdDesigns();bindAdDesigns()}if(id==='design-cal'){bindPostCal();if(PC.open)pcSheet()}if(id==='ad-preview'){loadAdDesigns();bindAdPreview()}
+    if(id==='content')bindContent();if(id==='ads-live')bindAds();if(id==='ads')bindLiveAds();if(id==='publish')bindPublish();if(id==='preview')bindPreview();if(id==='ad-designs'){loadAdDesigns();bindAdDesigns()}if(id==='design-cal'){bindPostCal();if(PC.open)pcSheet()}if(id==='post-designs'){bindPostDesigns();if(PC.open)pcSheet()}if(id==='ad-preview'){loadAdDesigns();bindAdPreview()}
   }
   function route(){
     var id=location.hash.slice(1).split('?')[0];if(ALIAS[id]&&BY[ALIAS[id]]){var al=BY[ALIAS[id]];if(al.self){location.replace(al.href+(id==='design-cal'?'?view=month':''));return}history.replaceState(null,'','#'+ALIAS[id]);id=ALIAS[id]}if(!BY[id]||BY[id].self||BY[id].ext)id='today';

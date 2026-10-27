@@ -571,6 +571,60 @@
       function alertAnn(m) { var h = box.querySelector('.hint'); h.textContent = m; h.style.color = '#FFD400'; }
     });
   }
+  /* ---------- ملاحظات على الريلز والفيديو: وقّف عند اللقطة وارسم عليها ---------- */
+  function fmtT(s) { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ':' + ('0' + (s % 60)).slice(-2); }
+  function annotateVideo(url, title, startAt, noDraw) {
+    return new Promise(function (resolve) {
+      var st = document.getElementById('annv-st');
+      if (!st) {
+        st = document.createElement('style'); st.id = 'annv-st';
+        st.textContent = '#annv{position:fixed;inset:0;z-index:9994;background:rgba(10,13,16,.94);display:flex;flex-direction:column;direction:rtl;color:#F7F4EC;font-family:inherit}' +
+          '#annv .at{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:10px 14px;background:#1F2427;border-bottom:1px solid #333}#annv .at b{font-size:14px;margin-inline-end:auto}' +
+          '#annv button{font:inherit;font-size:13.5px;border:1px solid #444;background:#2A3035;color:#F7F4EC;border-radius:8px;padding:7px 12px;cursor:pointer}#annv button:disabled{opacity:.5;cursor:default}' +
+          '#annv .vw{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:12px}#annv video{max-width:100%;max-height:100%;background:#000;border-radius:8px}' +
+          '#annv .ab{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;padding:12px 14px;background:#1F2427;border-top:1px solid #333}' +
+          '#annv .go{background:#C29B3C;color:#1F2427;border-color:#C29B3C;font-weight:700;padding:10px 18px}#annv .tm{font-variant-numeric:tabular-nums;font-weight:700;min-width:46px;text-align:center}#annv .hint{font-size:12.5px;color:#A9ADA6;width:100%;text-align:center}';
+        document.head.appendChild(st);
+      }
+      var box = document.createElement('div'); box.id = 'annv';
+      box.innerHTML = '<div class="at"><b></b><button data-a="x">إغلاق</button></div>' +
+        '<div class="vw"><video controls playsinline preload="auto"></video></div>' +
+        '<div class="ab"><button data-s="-1" title="ثانية لورا">« 1ث</button><button data-s="-0.04" title="لقطة لورا">‹ لقطة</button><span class="tm">0:00</span><button data-s="0.04" title="لقطة لقدام">لقطة ›</button><button data-s="1" title="ثانية لقدام">1ث »</button>' +
+        '<button class="go" data-a="draw">✎ ارسم على اللقطة دي</button><span class="hint">شغّل الريل ووقّفه عند اللحظة اللي محتاجة تعديل، وبعدين اضغط «ارسم». الملاحظة بتتحفظ بالوقت.</span></div>';
+      box.querySelector('.at b').textContent = title || 'ملاحظات على الريل';
+      document.body.appendChild(box);
+      var v = box.querySelector('video'), tm = box.querySelector('.tm'), go = box.querySelector('[data-a=draw]');
+      if (noDraw) { go.hidden = true; box.querySelector('.hint').textContent = 'الملاحظة كانت عند ' + fmtT(startAt) + '.'; }
+      v.crossOrigin = 'anonymous'; v.src = url;
+      v.addEventListener('loadedmetadata', function () { if (startAt) try { v.currentTime = startAt; } catch (e) { } });
+      v.addEventListener('timeupdate', function () { tm.textContent = fmtT(v.currentTime); });
+      v.addEventListener('seeked', function () { tm.textContent = fmtT(v.currentTime); });
+      v.addEventListener('error', function () { box.querySelector('.hint').textContent = 'ما قدرتش أشغّل الفيديو هنا. نزّله واتفرج عليه، واكتب الملاحظة بالوقت في الملاحظات.'; go.disabled = true; });
+      function done(r) { box.remove(); document.removeEventListener('keydown', kd); resolve(r); }
+      function kd(e) { if (document.getElementById('ann')) return; if (e.key === 'Escape') done(null); }
+      document.addEventListener('keydown', kd);
+      box.querySelectorAll('[data-s]').forEach(function (b) { b.onclick = function () { v.pause(); try { v.currentTime = Math.max(0, Math.min(v.duration || 0, v.currentTime + (+b.dataset.s))); } catch (e) { } }; });
+      box.querySelector('[data-a=x]').onclick = function () { done(null); };
+      go.onclick = function () {
+        if (!v.videoWidth) { box.querySelector('.hint').textContent = 'استنى الفيديو يحمّل الأول.'; return; }
+        v.pause(); var t = v.currentTime;
+        var c = document.createElement('canvas'), sc = Math.min(1, 1600 / Math.max(v.videoWidth, v.videoHeight));
+        c.width = Math.round(v.videoWidth * sc); c.height = Math.round(v.videoHeight * sc);
+        try {
+          c.getContext('2d').drawImage(v, 0, 0, c.width, c.height);
+          c.toBlob(function (bl) {
+            if (!bl) { box.querySelector('.hint').textContent = 'ما قدرتش آخد اللقطة، جرّب تاني.'; return; }
+            var u = URL.createObjectURL(bl); box.style.display = 'none';
+            annotate(u, (title || 'الريل') + ' · عند ' + fmtT(t)).then(function (r) {
+              URL.revokeObjectURL(u);
+              if (!r) { box.style.display = ''; return; }
+              done({ blob: r.blob, note: r.note, drawn: r.drawn, t: Math.round(t * 10) / 10, at: fmtT(t) });
+            });
+          }, 'image/jpeg', 0.9);
+        } catch (err) { box.querySelector('.hint').textContent = 'الفيديو ده مش بيسمح بأخد لقطة منه. اكتب الملاحظة بالوقت في الملاحظات.'; }
+      };
+    });
+  }
   // ترفع صورة الملاحظات المرسومة وترجع بياناتها
   function uploadMark(prefix, blob) {
     var f = new File([blob], 'ملاحظات-' + new Date().toISOString().slice(0, 10) + '.png', { type: 'image/png' });
@@ -648,6 +702,8 @@
     removeFile: function (path) { return sb.storage.from('designs').remove([path]).then(unwrap); },
     // تحميل فعلي للملف (روابط Supabase من دومين تاني، فالمتصفح كان بيفتحها بدل ما ينزّلها)
     annotate: annotate,
+    annotateVideo: annotateVideo,
+    fmtT: fmtT,
     uploadMark: uploadMark,
     download: function (url, name, toJpg) { return toJpg ? jpgBlob(url).then(function (b) { saveBlob(b, name); }) : saveAs(url, name); },
     // كذا ملف في ZIP واحد

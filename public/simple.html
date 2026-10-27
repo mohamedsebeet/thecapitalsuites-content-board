@@ -109,6 +109,7 @@ label.btn{display:block;cursor:pointer}
 @media (max-width:900px){.mhd{display:none}.mg{display:block}.md{border-inline-start:0;min-height:0}.md.empty,.md.out{display:none}.mn b{display:none}.mn span{display:inline;font-weight:600}.mcal{margin:10px 16px 40px}}
 #sh .anw{position:relative;display:block}#sh .anb{position:absolute;bottom:6px;inset-inline-start:6px;border:0;border-radius:999px;background:rgba(31,36,39,.88);color:#F7F4EC;font-size:12px;font-weight:600;padding:4px 10px;text-decoration:none}#sh .anb:hover{background:var(--gold);color:var(--charcoal)}
 #sh .imgs a.anb{width:auto;height:auto;display:inline-block;overflow:visible;background:rgba(31,36,39,.88)}
+#sh .anw .anb[data-annv]{bottom:auto;top:6px}#sh .mkt{position:absolute;top:6px;inset-inline-end:6px;background:var(--warn);color:#fff;font-size:11.5px;font-weight:700;border-radius:999px;padding:1px 8px}
 #sh .mk{margin-top:8px;padding:8px;border:1px dashed var(--warn);border-radius:10px}#sh .mk b{display:block;font-size:12.5px;color:var(--warn);margin-bottom:6px}#sh .mkn{margin:6px 0 0;font-size:13px}
 #loading{text-align:center;padding:60px 20px;color:var(--muted)}
 @media (max-width:900px){
@@ -172,6 +173,7 @@ function esc(t){return String(t==null?'':t).replace(/[&<>"']/g,function(c){retur
 function safeUrl(u){u=String(u||'').trim();return /^https?:\/\//i.test(u)?u:''}
 function targets(p){return (p.targets||({IG:['IG'],FB:['FB'],TT:['TT'],X:['X'],ALL:['IG','FB','TT','X']}[p.p]||[])).filter(function(k){return !PAUSED[k]})}
 function isImg(x){return /^image\//.test(x.type||'')}
+function isVid(x){return /^video\//.test(x.type||'')||/\.(mp4|mov|m4v|webm)(\?|$)/i.test(x.url||'')}
 function thumb(p){var d=(p.designs||[]).filter(isImg)[0];if(d&&safeUrl(d.url))return d.url;var i=(p.im||[])[0];return i?(safeUrl(i)||(/^img\/[\w.-]+$/.test(i)?i:'')):''}
 function C(k){return window.capital&&capital.can?capital.can(k):false}
 var TODAY=new Date();TODAY.setHours(0,0,0,0);var T=iso(TODAY);
@@ -283,8 +285,8 @@ function renderSheet(){
   var a=actions(p,true);if(a)h+='<div class="row" style="margin:0 0 6px">'+a+'</div>';
   var VS=vers(p),upNew=C('designs.upload')&&['approved','scheduled','published'].indexOf(p.status)<0&&VS.length;
   h+='<div class="sec"><h4>التصميم'+(VS.length>1?' · '+VS.length+' نسخ':'')+'</h4>'+(VS.length?VS.map(function(g,gi){var f0=g.files[0]||{};
-    return '<div class="ver"><div class="vh"><b>النسخة '+g.v+'</b>'+(gi?'<small>نسخة قديمة</small>':'')+'<small>'+esc(NAMES[f0.by]||(f0.by||'').split('@')[0])+(f0.at?' · '+fmtS(f0.at.slice(0,10)):'')+'</small></div><div class="imgs">'+g.files.map(function(x,xi){var u=safeUrl(x.url);return '<span class="anw"><a href="'+esc(u)+'" download="'+esc(x.name||'design')+'" title="تحميل">'+(isImg(x)?'<img src="'+esc(u)+'" alt="" loading="lazy">':/^video\//.test(x.type||'')?'<video src="'+esc(u)+'#t=0.1" muted playsinline preload="metadata"></video>':'<span class="pdf">PDF</span>')+'</a>'+(isImg(x)&&C('posts.approve')?'<button type="button" class="anb" data-ann="'+g.v+':'+xi+'" title="ارسم ملاحظات على التصميم">✎ ارسم</button>':'')+'</span>'}).join('')+'</div>'+
-      (function(){var mk=(p.marks||[]).filter(function(m){return (m.v||1)===g.v});return mk.length?'<div class="mk"><b>ملاحظات بالرسم</b><div class="imgs">'+mk.map(function(m){return '<span class="anw"><a href="'+esc(safeUrl(m.url))+'" target="_blank" rel="noopener"><img src="'+esc(safeUrl(m.url))+'" alt=""></a><a class="anb" href="'+esc(safeUrl(m.url))+'" download="ملاحظات-النسخة-'+g.v+'.png">⬇</a></span>'}).join('')+'</div>'+mk.filter(function(m){return m.note}).map(function(m){return '<p class="mkn">'+esc(m.note)+'</p>'}).join('')+'</div>':''})()+
+    return '<div class="ver"><div class="vh"><b>النسخة '+g.v+'</b>'+(gi?'<small>نسخة قديمة</small>':'')+'<small>'+esc(NAMES[f0.by]||(f0.by||'').split('@')[0])+(f0.at?' · '+fmtS(f0.at.slice(0,10)):'')+'</small></div><div class="imgs">'+g.files.map(function(x,xi){var u=safeUrl(x.url);return '<span class="anw"><a href="'+esc(u)+'" download="'+esc(x.name||'design')+'" title="تحميل">'+(isImg(x)?'<img src="'+esc(u)+'" alt="" loading="lazy">':/^video\//.test(x.type||'')?'<video src="'+esc(u)+'#t=0.1" muted playsinline preload="metadata"></video>':'<span class="pdf">PDF</span>')+'</a>'+(isImg(x)&&C('posts.approve')?'<button type="button" class="anb" data-ann="'+g.v+':'+xi+'" title="ارسم ملاحظات على التصميم">✎ ارسم</button>':'')+(isVid(x)&&C('posts.approve')?'<button type="button" class="anb" data-annv="'+g.v+':'+xi+'" title="وقّف الريل عند اللقطة وارسم عليها">✎ علّق</button>':'')+'</span>'}).join('')+'</div>'+
+      (function(){var mk=(p.marks||[]).filter(function(m){return (m.v||1)===g.v});return mk.length?'<div class="mk"><b>ملاحظات بالرسم</b><div class="imgs">'+mk.map(function(m){return '<span class="anw"><a href="'+esc(safeUrl(m.url))+'" target="_blank" rel="noopener"><img src="'+esc(safeUrl(m.url))+'" alt=""></a><a class="anb" href="'+esc(safeUrl(m.url))+'" download="ملاحظات-النسخة-'+g.v+'.png">⬇</a>'+(m.t!=null?'<span class="mkt">🎬 '+esc(m.tl||'')+'</span>':'')+'</span>'}).join('')+'</div>'+mk.filter(function(m){return m.note}).map(function(m){return '<p class="mkn">'+(m.t!=null?'<b>عند '+esc(m.tl||'')+':</b> ':'')+esc(m.note)+'</p>'}).join('')+'</div>':''})()+
       '<div class="row">'+(g.files.length>1?'<button class="btn" data-zip="'+g.v+'" style="flex:0 0 auto">⬇ تحميل النسخة (ZIP)</button>':'<a class="btn" href="'+esc(safeUrl(f0.url))+'" download="'+esc(f0.name||'design')+'" style="flex:0 0 auto;text-decoration:none">⬇ تحميل</a>')+'</div></div>'}).join(''):'<p class="hint">لسه مفيش تصميم مرفوع.</p>')+
     (upNew?'<div class="row"><label class="btn pri" style="flex:0 0 auto">↑ ارفع نسخة جديدة (النسخة '+(VS[0].v+1)+')<input type="file" data-up="'+esc(p.id)+'" accept="image/png,image/jpeg,image/webp,image/gif,video/mp4,video/quicktime,application/pdf" multiple hidden></label></div>':'')+'</div>';
   h+='<div class="sec"><h4>النص</h4>'+(p.c?'<div class="cap">'+esc(p.c).replace(/\[([^\]]+)\]/g,'<mark>[$1]</mark>')+'</div><div class="row"><button class="btn" id="cp" style="flex:0 0 auto">نسخ النص</button></div>':'<p class="hint">لسه ما اتكتبش نص.</p>')+'</div>';
@@ -296,13 +298,17 @@ function renderSheet(){
   if(kv&&document.getElementById('nt'))document.getElementById('nt').value=kv;
   document.getElementById('sx').onclick=closeSheet;
   var sd=document.getElementById('sd');if(sd)sd.onchange=function(){if(!sd.value)return;if(pd(sd.value).getDay()===5){toast('الجمعة إجازة، اختار يوم تاني.');sd.value=p.d;return}moveDay(p.id,sd.value)};
-  sh.querySelectorAll('[data-ann]').forEach(function(b){b.onclick=function(){var a=b.dataset.ann.split(':'),g=VS.filter(function(x){return x.v===+a[0]})[0],f=g&&g.files[+a[1]];if(!f)return;
-    capital.annotate(f.url,(p.t||'تصميم')+' · النسخة '+g.v).then(function(r){if(!r)return;toast('جارِ حفظ الملاحظات…');
-      return capital.uploadMark(p.id,r.blob).then(function(up){var cur=BY[p.id]||p,patch={marks:(cur.marks||[]).concat([{v:g.v,url:up.url,path:up.path,by:ME,at:new Date().toISOString(),note:r.note}])};
+  function saveMark(g,xi,r,vid){toast('جارِ حفظ الملاحظات…');
+      return capital.uploadMark(p.id,r.blob).then(function(up){var cur=BY[p.id]||p,m={v:g.v,url:up.url,path:up.path,by:ME,at:new Date().toISOString(),note:r.note||'',file:xi};if(vid){m.t=r.t;m.tl=r.at}var patch={marks:(cur.marks||[]).concat([m])};
         if(['published','changes'].indexOf(cur.status)<0)patch.status='changes';
-        var t='ملاحظات بالرسم على النسخة '+g.v+(r.note?': '+r.note:'');
-        return write(p.id,patch,'اتبعتت الملاحظات للمصمم').then(function(){return db.collection('posts/'+p.id+'/notes').add({by:ME,at:new Date().toISOString(),text:t}).then(function(){return db.doc('posts/'+p.id).update({noteCount:(cur.noteCount||0)+1,lastNote:t.slice(0,140)})}).catch(function(){})})});
-    }).catch(function(){toast('ما اتحفظتش الملاحظات، حاول تاني.')})}});
+        var t=(vid?'ملاحظة على الريل (النسخة '+g.v+') عند '+r.at:'ملاحظات بالرسم على النسخة '+g.v)+(r.note?': '+r.note:'');
+        return write(p.id,patch,'اتبعتت الملاحظات للمصمم').then(function(){return db.collection('posts/'+p.id+'/notes').add({by:ME,at:new Date().toISOString(),text:t}).then(function(){return db.doc('posts/'+p.id).update({noteCount:(cur.noteCount||0)+1,lastNote:t.slice(0,140)})}).catch(function(){})})}).catch(function(){toast('ما اتحفظتش الملاحظات، حاول تاني.')});
+  }
+  function annFile(a){a=a.split(':');var g=VS.filter(function(x){return x.v===+a[0]})[0];return g&&g.files[+a[1]]?{g:g,i:+a[1],f:g.files[+a[1]]}:null}
+  sh.querySelectorAll('[data-ann]').forEach(function(b){b.onclick=function(){var o=annFile(b.dataset.ann);if(!o)return;
+    capital.annotate(o.f.url,(p.t||'تصميم')+' · النسخة '+o.g.v).then(function(r){if(r)return saveMark(o.g,o.i,r,false)})}});
+  sh.querySelectorAll('[data-annv]').forEach(function(b){b.onclick=function(){var o=annFile(b.dataset.annv);if(!o||!capital.annotateVideo)return;
+    capital.annotateVideo(o.f.url,(p.t||'ريل')+' · النسخة '+o.g.v,0).then(function(r){if(r)return saveMark(o.g,o.i,r,true)})}});
   sh.querySelectorAll('[data-zip]').forEach(function(b){var g=VS.filter(function(x){return x.v===+b.dataset.zip})[0];b.onclick=function(){var t=b.textContent;b.disabled=true;b.textContent='جارِ التجهيز…';capital.zip(g.files.map(function(z){return {url:z.url,name:z.name}}),(p.t||'تصميم')+'-النسخة-'+g.v).then(function(){b.disabled=false;b.textContent=t}).catch(function(){b.disabled=false;b.textContent=t;toast('التحميل فشل، حاول تاني.')})}});
   var cp=document.getElementById('cp');if(cp)cp.onclick=function(){navigator.clipboard.writeText(p.c).then(function(){toast('اتنسخ النص')},function(){toast('ما قدرتش أنسخ، حدده يدوي')})};
   var ns=document.getElementById('ns');if(ns)ns.onclick=function(){var t=document.getElementById('nt').value.trim();if(!t)return;ns.disabled=true;
