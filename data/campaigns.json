@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26T08:52:00+03:00",
+  "updatedAt": "2026-10-27T08:52:00+03:00",
   "source": "sync",
   "sourceNote": "يتحدث تلقائياً كل يوم من حسابات الإعلانات",
   "currency": "ريال",
@@ -135,27 +135,27 @@
       "id": "2026-10-22",
       "label": "الأسبوع الرابع",
       "from": "2026-10-22",
-      "to": "2026-10-25",
-      "spend": 840.62,
-      "impressions": 115759,
+      "to": "2026-10-26",
+      "spend": 1071.73,
+      "impressions": 148435,
       "platforms": [
         {
           "key": "meta",
           "name": "ميتا · إنستغرام وفيسبوك",
-          "results": 155,
+          "results": 208,
           "resultLabel": "محادثة واتساب بدأت",
-          "cpr": 2.52,
-          "spend": 390.62,
-          "impressions": 46743
+          "cpr": 2.56,
+          "spend": 531.73,
+          "impressions": 63967
         },
         {
           "key": "snap",
           "name": "سناب شات · واتساب",
-          "results": 1597,
+          "results": 1731,
           "resultLabel": "ضغطة على زر واتساب",
-          "cpr": 0.28,
-          "spend": 450.0,
-          "impressions": 69016
+          "cpr": 0.31,
+          "spend": 540.0,
+          "impressions": 84468
         }
       ]
     }
@@ -166,17 +166,17 @@
       "id": "120249345827570172",
       "name": "ميتا · واتساب أكتوبر (الرمال والملز)",
       "status": "ACTIVE",
-      "spend": 2353.55,
-      "impressions": 259958,
-      "results": 878,
+      "spend": 2494.66,
+      "impressions": 277182,
+      "results": 931,
       "resultLabel": "محادثة",
       "cpr": 2.68,
       "ads": [
         {
           "name": "الرمال · احسبها صح",
           "status": "PAUSED",
-          "spend": 936.21,
-          "impressions": 124426,
+          "spend": 936.23,
+          "impressions": 124428,
           "results": 332,
           "cpr": 2.82,
           "hood": "الرمال",
@@ -304,14 +304,30 @@
           "id": "120249750609130172",
           "format": "صورة",
           "img": [
-            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/863289716_4553548988125127_5405934642916226400_n.png?stp=dst-jpg_tt6&_nc_cat=111&ccb=1-7&_nc_sid=ff4730&_nc_ohc=weJQ_tP3atYQ7kNvwEsWGLC&_nc_oc=AdpAZzhzg3tW4q-AfJvoJPpbwQLwk8NdTCJbz_fwKmNL9DKq7UmcEVnHYxgFvvrGaBQ&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=Qh8KTxshp4P0Tfug6wx5CA&_nc_tpa=Q5bMBQLzsFvecgnZ3F3D_I8ydliz5-yjr7CYIp2sBX0dCVuE6xFr6rjN6dzCEPppMl5y3JxVE6r2dKYQhA&oh=00_AQMLEOmtb5Gqf2TDWLvcePGvR715UQb38vwx7DDu-zZNPQ&oe=6AE4BE05"
+            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/863289716_4553548988125127_5405934642916226400_n.png?stp=dst-jpg_tt6&_nc_cat=111&ccb=1-7&_nc_sid=ff4730&_nc_ohc=e-uxaY2JXVEQ7kNvwEFB4Ii&_nc_oc=AdpZxX_a2vMep9wAzpJEgyLXA0UZuHy27cQ0AzTr-fi_mqrsxW4tsHukbIEzeLEqr-k&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=wceaF8dR2qhrE3g_3jYM1g&_nc_tpa=Q5bMBQIbb7r3zE3EfL6SCiINd82ig35ea7XbSuqcLnhfqIXtsxSJ5QM05xzPpbgLifeYRzJLxLD-ZpkRsg&oh=00_AQNJzOHE78pjVFkJmX4dU7RtFs2OUd5bBh0OYi2StRz_QA&oe=6AE60F85"
           ],
           "status": "ACTIVE",
-          "spend": 44.08,
-          "impressions": 5331,
-          "results": 8,
-          "cpr": 5.51,
-          "creative_id": "1446468863525948"
+          "spend": 124.13,
+          "impressions": 14485,
+          "results": 40,
+          "cpr": 3.1,
+          "creative_id": "1653185873117174"
+        },
+        {
+          "name": "الملز · كأنك في بيتك – v1 – أسعار جديدة",
+          "hood": "الملز",
+          "title": "كأنك في بيتك – v1 – أسعار جديدة",
+          "id": "120249750609780172",
+          "format": "صورة",
+          "img": [
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/866591190_4553550264791666_8400037369887649081_n.png?stp=dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=ff4730&_nc_ohc=6CW0hZi2kWkQ7kNvwHA_L2Z&_nc_oc=AdrrTN4JX17929hI2zuthchzvibY1ab9RwRvYeZQgwnJSnz4RAUEYFNhOGe4C5ocqw8&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=wceaF8dR2qhrE3g_3jYM1g&_nc_tpa=Q5bMBQKhQNE-Xp621g7v0xGmglt5NQomQJjEycyni5IRZe2ARyik_cwhWKv4maZld-sTP96RrWZZUEsOXA&oh=00_AQPAXlcRYQyyPWm-7N4Kqm78HtY8XAVqXF2pLKOHesAqNQ&oe=6AE61BA2"
+          ],
+          "status": "ACTIVE",
+          "spend": 46.82,
+          "impressions": 7455,
+          "results": 13,
+          "cpr": 3.6,
+          "creative_id": "1471008121596667"
         },
         {
           "name": "الرمال · كاروسيل-جولة داخل الوحدة",
@@ -335,20 +351,20 @@
           "format": "كاروسيل"
         },
         {
-          "name": "الملز · كأنك في بيتك – v1 – أسعار جديدة",
+          "name": "الملز · صالة لضيوفك – v1 – أسعار جديدة",
           "hood": "الملز",
-          "title": "كأنك في بيتك – v1 – أسعار جديدة",
-          "id": "120249750609780172",
+          "title": "صالة لضيوفك – v1 – أسعار جديدة",
+          "id": "120249750610300172",
           "format": "صورة",
           "img": [
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/866591190_4553550264791666_8400037369887649081_n.png?stp=dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=ff4730&_nc_ohc=1Vg_lF69uZ4Q7kNvwFFynKT&_nc_oc=AdoR2ejO6Fwl-yw_zOfLaHuibRguaMzLPuxH3dJ8tuMbYMvAkZIZg_HaXjU-wdqrUlI&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=Qh8KTxshp4P0Tfug6wx5CA&_nc_tpa=Q5bMBQIZHNL65ltGKoRRsrzB9L1VpJoF-f4jbDrTqj-mOuc_MM0SU58bIM1wkbIAKtX30ycO_4ozSNPY9w&oh=00_AQPbVqHy3DXWDNQ6mdOBnjgmFPTMONQmLdcWIuUBBRFwEw&oe=6AE4CA22"
+            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/856583549_4553550311458328_496160566366543784_n.png?stp=dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=ff4730&_nc_ohc=bLTY_zBHxR8Q7kNvwGAqPv6&_nc_oc=Adr5NeX0X5ZzufDIfFOY9Mvcr_F-RN9b2riks_c42l14cTUqNe5GkgAIxErxZs8Bng0&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=wceaF8dR2qhrE3g_3jYM1g&_nc_tpa=Q5bMBQINyNQAJJMOiTTRMfm1vuYpydG0Ei1dyDA-_8V_6dVC3fV6ai2mjN2AiWSfDlZSyk0PV3UNK_rjig&oh=00_AQM3IbZ1mKSrBJnUK4PkORT2F8LezXrzIxzv8DAAp0sd6A&oe=6AE5F855"
           ],
           "status": "ACTIVE",
-          "spend": 8.4,
-          "impressions": 1255,
-          "results": 2,
-          "cpr": 4.2,
-          "creative_id": "2272770399960299"
+          "spend": 15.2,
+          "impressions": 1418,
+          "results": 12,
+          "cpr": 1.27,
+          "creative_id": "2393719354497437"
         },
         {
           "name": "الرمال · فاتورتك كاملة وشاملة – v2 – أسعار جديدة",
@@ -357,30 +373,55 @@
           "id": "120249750609500172",
           "format": "صورة",
           "img": [
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/864950487_4553550171458342_1036349166258068427_n.png?stp=dst-jpg_tt6&_nc_cat=110&ccb=1-7&_nc_sid=ff4730&_nc_ohc=hD0IoMPGXIUQ7kNvwFUTXGQ&_nc_oc=Adr3MNkF-Lbqxbn9G8CSyHaRuboq8uC0ys2uaoA9IStl0OwmFSMnsU5Ptq2VAr8y6Fg&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=Qh8KTxshp4P0Tfug6wx5CA&_nc_tpa=Q5bMBQKWmbFiwOPIbD6v5Yr4MGKUXHZiWCIIg5ic4239cAm32xuwYxy1bt9e6SUHtY_gqKybEbMte-IYhQ&oh=00_AQPxnCFb6jTwxCEo-6vJpOCASSGINnp5zI_yW0p-7q24mA&oe=6AE4C5A7"
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/864950487_4553550171458342_1036349166258068427_n.png?stp=dst-jpg_tt6&_nc_cat=110&ccb=1-7&_nc_sid=ff4730&_nc_ohc=hD0IoMPGXIUQ7kNvwFvoT8b&_nc_oc=Adr1hvWuq8yxTRB2ox2H2xeWKKfcAy5qE_YblwCs27jO1cehFqpVoPHk1UHWUju74f4&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=wceaF8dR2qhrE3g_3jYM1g&_nc_tpa=Q5bMBQIj-HB6TPBepTdvaV63NGcx_QiP87eKUt90DjUsZR-NZf_-uTffOCllPfMh0cqm5YTlSE1vIthGsA&oh=00_AQPqPnLlh7NS07HXMxpMyUzzQtJDvEOFPKvJF9J7aU5iMQ&oe=6AE61727"
           ],
           "status": "ACTIVE",
-          "spend": 3.2,
-          "impressions": 232,
+          "spend": 7.37,
+          "impressions": 509,
           "results": 3,
-          "cpr": 1.07,
-          "creative_id": "29260127907008108"
+          "cpr": 2.46,
+          "creative_id": "2045924686110396"
         },
         {
-          "name": "الملز · صالة لضيوفك – v1 – أسعار جديدة",
+          "name": "الملز · كاروسيل-جولة داخل الوحدة – v2 – أسعار جديدة",
           "hood": "الملز",
-          "title": "صالة لضيوفك – v1 – أسعار جديدة",
-          "id": "120249750610300172",
-          "format": "صورة",
+          "title": "كاروسيل-جولة داخل الوحدة – v2 – أسعار جديدة",
+          "id": "120249750610730172",
+          "format": "كاروسيل",
           "img": [
-            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/856583549_4553550311458328_496160566366543784_n.png?stp=dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=ff4730&_nc_ohc=TF0DVWTKlxIQ7kNvwGB-lgw&_nc_oc=Adp_Svn7534z_Rak5MDxU_JP3cC_k1X59Qg27aXovQ2WA6lzbVjVXmeJntSw9kk_EEo&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=Qh8KTxshp4P0Tfug6wx5CA&_nc_tpa=Q5bMBQJ96i7BvLpRWYO0pb5UD0GF8EwNEi9UhY0rTLmxi6Esua44IHBL4_87z6KZIoCMLrbS7QacJM0jqg&oh=00_AQNMRGX58iUuKfdhjPPeLVFwy15daMsi282ydy_trT_IwQ&oe=6AE4A6D5"
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/864581385_4553551858124840_4370885226880193849_n.png?stp=dst-jpg_tt6&_nc_cat=100&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=nQw2L2AgjsgQ7kNvwHaU43d&_nc_oc=AdqnuSzFhA-WBlyzsZmU_p-LiN3Gq1n4Vil7Xl5dirwyU7K2dIH2ehpuGxAwGwqLV0g&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQLBN_rHIxN9aUqdPTB1fNv1hmT9JQL_8XMg59XLmcP3f4Eem1KWIPYzlB2VfiRfG8OrBNGGyo48pw&oh=00_AQM9puzQBwy0ePPwWGUlTmqOBV7MtvC95vdPqxLkBUSLyA&oe=6AE617AE",
+            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/866337168_4553551968124829_5977162196717898562_n.png?stp=dst-jpg_tt6&_nc_cat=101&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=VGNOuS6nwH8Q7kNvwHx2Aj4&_nc_oc=AdoyvQ3e25EPqERRAZ65pdYH5QkYC_Srsu8Nr0ESf8psMPwfgNXPIMO9rXvLOApRwFs&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQLpylOtrVBn8qD-_47hnGN1Sj5nv1DiEhxpXE7AUiUsLewdYpUHlZcIpizUvQBo1uhs57r04KABjQ&oh=00_AQMq7o03c_DDcS2YLK_Ix_k8yhwsj4563cyey1v64bucuw&oe=6AE61E8C",
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/866369916_4553552188124807_6890270777878781991_n.png?stp=dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=ZJmzX9kNUbwQ7kNvwHASGGA&_nc_oc=Adou6hz2FqbvqHHDOIB3xy5MRAYwJZYOZld2zc2bkneuRe36LNwphodECApyP4rN2kQ&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQInIuViVAHoXW4uiAoozrBSMf6-1RjO5iJ3BweZxHTEFyT91tC_6jBvVvaB01-OJn5GXDiwa34QKw&oh=00_AQPaGdtfmg6fLaxmdV244_WiJW4Ww9172O0zkvut0vOryg&oe=6AE5FDC5",
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/866623796_4553552244791468_6639256575052688122_n.png?stp=dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=ZQGjw6jtiDsQ7kNvwHVZ6Ko&_nc_oc=AdrYOM1XgQOIHIrEH32i-_saZzuHL8qBsheEB-w2eASVqgm9HMgffpPGqTYI6KaefSM&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQKsIr-fcosLXcCFVIJcDtWicgX8if7M2DVm84zXRBomh_Qgn7nYOKd64-jUAwm3RwXv85qDWUTJ5Q&oh=00_AQPNwuc_HUh98vkXgb_i6MjqnnHkpHppoItLCTt1GV0QSQ&oe=6AE60F43",
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/858315712_4553552388124787_6751737936059147357_n.png?stp=dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=dLXNd1hJ92MQ7kNvwGXETwu&_nc_oc=Adqb4PbKS7e0NmbmuTAQUJ2j7gqVCYBAS3zOMfUw4drSFvuLIkXBwRZFhCLYKhtJKho&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQLneMadr2B4-HLRAXg8r1OnqI3Cdfg18zGmmPh2TyfzoUn3J_sIpHPjilxEc9_wZV_QQya29bqjlw&oh=00_AQO4qsH4IOi4PrWj0IBZoYrjDxaCcezKlq2VfWxnQtxMJg&oe=6AE617D7",
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/856583901_4553552471458112_3693622391027640262_n.png?stp=dst-jpg_tt6&_nc_cat=110&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=wQIbkd_q74EQ7kNvwEXz-HY&_nc_oc=Ado4n8s-V_2CzXcN70yevf6cGk8u0oVoQykFpwIljp33w210X3JR_Wk3kE9UDyp7bw8&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQLn-kCEHxAEp-vyHpVliySxvXfaNcpG6G3Uvtt1bji8lHytHrvBKBzKtaKgWcc0dsYGbaPa9pV5Lg&oh=00_AQN0TQSpDXgXaQPtiFhd4kFr-uy3LUF_1TxVpiNXaRJQyw&oe=6AE62A17"
           ],
           "status": "ACTIVE",
-          "spend": 2.07,
-          "impressions": 153,
-          "results": 3,
-          "cpr": 0.69,
-          "creative_id": "1785954022642062"
+          "spend": 2.58,
+          "impressions": 111,
+          "results": 1,
+          "cpr": 2.58,
+          "creative_id": "1650294149880993"
+        },
+        {
+          "name": "الرمال · كاروسيل-ليش الشهري – v1 – أسعار جديدة",
+          "hood": "الرمال",
+          "title": "كاروسيل-ليش الشهري – v1 – أسعار جديدة",
+          "id": "120249766878130172",
+          "format": "كاروسيل",
+          "status": "ACTIVE",
+          "creative_id": "4551851145030022",
+          "spend": 2.21,
+          "impressions": 163,
+          "results": 0,
+          "cpr": null,
+          "img": [
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/861786508_4555350694611623_6209639760610201990_n.png?stp=dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=nnIEaxYgks0Q7kNvwFE_75o&_nc_oc=AdrwpemgDnLH_0t3FCU3TuZVl5ZpQJifINsPmHfW5-GmfttuMBnh4Sf7rZJrK_WucD0&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQJHWz_opaQ_fcbpZPhP70yw2gGg3cTLakYKwRXQxMEN6E_C73WzLTlq_jybXohcdw0i2lHvnr5Apw&oh=00_AQN-OmAqjhaGbVjB-CNsxp0YVQeMwCPjubQGm_-fdARP_g&oe=6AE5F8A5",
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/863014522_4555350784611614_4726575406760365931_n.png?stp=dst-jpg_tt6&_nc_cat=107&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=mT9PP_X0MKAQ7kNvwF1pWo3&_nc_oc=AdoCLasC_bJq4rUaCB6qlWSJayyMW1MVTNKA4tJUU2rOsIbRT5uSscQF1D_oCVs0wS0&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQJTb58HSTyOwmnec33KYBtKJ031lWk6xVOowWwIQN6ljJU5pfnE336nteOFa2gZbgjQFpM87T7dHQ&oh=00_AQNgIAPUTTcPohebVe48AufNgsbAFSYpstP_EHre4kUWJA&oe=6AE5F3C6",
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/864542127_4555350961278263_4791923539023534343_n.png?stp=dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=Fe4DjCbKfpsQ7kNvwHSlcR4&_nc_oc=Adoj1Eh_ZMWLJivRfqnwMcI1ARtnyNewPoKDWFADJhwbPbpaCUYEmKVlibjELB_yhCo&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQLeAhgPwoISsxNB4tVEO4CMu5zIAxwin8UVV5AwFpJVKZ42TgXjUIlaTy1h7Luw7aWZMfWRf2W2LQ&oh=00_AQPm00Y21Pyeadt9MGV3P0TRYHIFSRIDS5ayz3AEijKdxg&oe=6AE600EE",
+            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/865109066_4555351141278245_6859179766042508728_n.png?stp=dst-jpg_tt6&_nc_cat=106&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=jkkr9IshbNIQ7kNvwEYdxwV&_nc_oc=AdpmsBR5WYFv0SaMEXV5x1eX-VXHo2NbHOP72RbS5YjAWxsmfX4_snVGqJV3KFnVUIo&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQIDfDICGtfmSAHTRN6wPhTx2JGWdoO-eXsoIUVX6FL-5t-tTYMyZDCoScR3X5CUXvjwX4wVIJg6-A&oh=00_AQNTKVeohKXd1xbgux7SlYFzrF9iGT4zs3tiYwaDL_L9GA&oe=6AE624E2",
+            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/868776937_4555351244611568_1966791078420615399_n.png?stp=dst-jpg_tt6&_nc_cat=101&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=j05sbYZzFo8Q7kNvwEtSRsy&_nc_oc=Ados9GSXJli3nbLG06IyIGEZ1zjdt7NJd3N92kco2toWIfNonNg2FUn_Pku9sDNow-0&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQK8rZ2_UUTDDGLKGL-LFSbRdBTRVJ6lIhXsvqgAmwD82zvX-Hw5AK5AqZC2AvDzAFIYxuHpGhqfbg&oh=00_AQM36oTUiXD1WV3cthAlHVh9dS6NwM4luy5JnnG8Ak1yQA&oe=6AE60EE2"
+          ]
         },
         {
           "name": "الملز · كاروسيل-ليش الشهري – v3 – أسعار جديدة",
@@ -389,18 +430,18 @@
           "id": "120249750610950172",
           "format": "كاروسيل",
           "img": [
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/866251168_4553552571458102_199801541431521017_n.png?stp=dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=cQfbiKNYUoMQ7kNvwHmHP7b&_nc_oc=Adpol003OF2kjyZyzwXidWQbpN-O3oHNLGxbeSDyl5GCe3bjzVVgg2RDDZiwjoWe9zg&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=u4JznbpU1aZwZOq4e1eLBg&_nc_tpa=Q5bMBQJROdqdRKoZb3GYle1pifo3GeC8KRCJsmkdKpuBU7hPHcfSayIHKjQ9aPpBzorvWi53r4MKNbDRrQ&oh=00_AQNRUZv1GzdAnKw3PdJhAdz-VET40AoPvUJXnCCZQ5Q4Zw&oe=6AE4A508",
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/855693760_4553552648124761_980973552693781336_n.png?stp=dst-jpg_tt6&_nc_cat=107&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=0ARlQeVYh6IQ7kNvwER_bBA&_nc_oc=Adp3n_P0GRUvxoPD_-hij77P3fdZ-kv0JlB02DS3saDfJ0C_PSiddFfhigJWES_PJeE&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=u4JznbpU1aZwZOq4e1eLBg&_nc_tpa=Q5bMBQLj77YtRsSZgokA9m71iY2TZuXnZxObsKAfQFpqLSH5VOx-SA7ab5qbAEFCqKUMqm6ZwC0k_B-_3Q&oh=00_AQMNGu_IOmv6K1i_a9hzBmuDHxpLTZvE5qlY8M5Iw46ttQ&oe=6AE4AB97",
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/864210584_4553552754791417_7468016279103807099_n.png?stp=dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=baDCNeSufUIQ7kNvwH_WdjH&_nc_oc=AdpbG5ML_Wc-9fzzSOR67HCTGUlNdUClqCCOEjtaYRq6QnGbhNYhsxylXENJEzcYJQQ&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=u4JznbpU1aZwZOq4e1eLBg&_nc_tpa=Q5bMBQKtZwU64TU0iZ9io6gjWgKfvN2HEWIG0r1Pv-Q3Q6YgyYJl5wG_yy3uqCClqW78O_AmElRQB6D8kw&oh=00_AQMA8yPIIcstSKKqdy-1jcSllV9YKOSRv-jNLPYpN62-wg&oe=6AE4D0C0",
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/850809077_4553552841458075_4791440175961369660_n.png?stp=dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=HVz57GtT7OAQ7kNvwEUz9Qt&_nc_oc=AdrbPj_Uzyv7Dd7zOrhcWhSl7qhbDu_XryYhX55UYcl1RfO_hNhD6zHlE2VRMEIBv78&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=u4JznbpU1aZwZOq4e1eLBg&_nc_tpa=Q5bMBQIdZWoxJ3ENIEBKdwmLxHjqthcL3nO2fg-qSZR5at05vWp2lWrFs6MIv4NPm583pWnfppXnfXH5Nw&oh=00_AQPY_OQlrvxksOPfPSvNTePXDZI5l0UWjvcIQn1CWd3snw&oe=6AE4D011",
-            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/864581393_4553552911458068_8917579402935594845_n.png?stp=dst-jpg_tt6&_nc_cat=109&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=70vpY1vUkCEQ7kNvwG8LkVc&_nc_oc=Adpyr2Zm4ixpkHI_mLV0uB0HJdhlztWJ--UCEolQWP6rduvhdtp0sgHb1s7jtf8YyFA&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=u4JznbpU1aZwZOq4e1eLBg&_nc_tpa=Q5bMBQK1FNwSkly1DDlqgYahLx3eswHTBA0sprIS1M0bW3U_hl67kjuiMk3DnnD1Rvw7u9OlCDWPz4A5_g&oh=00_AQOfT2Bk8pSjanvNwa6QU2l72PMxnWaL3TeWwmbFmDD4vw&oe=6AE4A7DF"
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/866251168_4553552571458102_199801541431521017_n.png?stp=dst-jpg_tt6&_nc_cat=102&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=4ig63fkC7qgQ7kNvwHT-_oP&_nc_oc=AdqxmGd7EYPWMgMqDYofzSg0W2iAm2gGAybobcoE-lwi0eb0IanXgTNNW2Cu7ghZkgM&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQIDtidUXC3ZZxMR3b65fN7pgNYioKeceBA6U52aPSIkXMWqvYvLSUGYuRK9cGLermyadLnDrT4G8Q&oh=00_AQPCeT5Vad5oDC6aeI_Olil8z-Aswk4wyHE1yz03MCEjjA&oe=6AE5F688",
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/855693760_4553552648124761_980973552693781336_n.png?stp=dst-jpg_tt6&_nc_cat=107&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=0ARlQeVYh6IQ7kNvwH8whYf&_nc_oc=AdpcEtXk_iCes0OAG_3miupDVlrkMlH5mSe9Edc5kPGSK2_hzkb7hdYB-tk34gTGufc&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQJhCIqkV3nvAiafEugtGXT4jsI4Ss-jYNH-nepxnhquYKdnS7cwbRAQ8KDq0jF7ZB-DBIaYBaygdA&oh=00_AQM6AEyZKPeAYtd3H7oZMRzE85g94B6TZfxUQSa25lOC-A&oe=6AE5FD17",
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/864210584_4553552754791417_7468016279103807099_n.png?stp=dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=baDCNeSufUIQ7kNvwFYmO2e&_nc_oc=AdoH6UJK4KG0wWunAqHvDVXUT8U9uPZcGjjbsnv1hxIE2CHPyJ8o4FJYV4c8C7WpSIQ&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQLARTOka0bRpqsb_DmfAQCvvfVZQt67Zmf7A4Ih99ISZqaKox6kenCa46uYOATlALzcs1bxjfH4CQ&oh=00_AQMcbX8IfmDiGFKVLirvgzcjHi10MR3I8fOn4ZxJLpIsiQ&oe=6AE62240",
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/850809077_4553552841458075_4791440175961369660_n.png?stp=dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=HVz57GtT7OAQ7kNvwFJ0GQS&_nc_oc=AdrvpDbWnz850dK5Uy3gGAkoc5H82yMnhNIFwrZvF1D-1Io4XFbL6RhRe-_WlJRODbg&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQJhq0MxjWsmfF3T24PTgFiaDB5nsswOaC25Ybhoz520kh6Qr7YPWLCJ4IkP-BCXONjyMs7eSwbTjQ&oh=00_AQOXhBukRkcS4KnjQfEGU01AOz_NmQcq8p7gMVPTlUcPjQ&oe=6AE62191",
+            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/864581393_4553552911458068_8917579402935594845_n.png?stp=dst-jpg_tt6&_nc_cat=109&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=70vpY1vUkCEQ7kNvwEUKmeK&_nc_oc=Adqp8nV38lfr0lczGpoHT_8lGzwsEeuQe29WJVEHTr7L0aYpb4RZQ0nfrGJr5uQH6dM&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=Z9rSY0OVjRQUEmmNGWtXyg&_nc_tpa=Q5bMBQKWLNjK9DwWXgVAC5-wd-q61bI5a9CC4jaZN8Vsew8DO_A9q38HAmKJNfeDnx8pr1wbt-N58EX_7g&oh=00_AQMhpiqqxFgCa6jsnVCspThbxSFrvLwUm9fEmwZmqeKlIw&oe=6AE5F95F"
           ],
           "status": "ACTIVE",
-          "spend": 0.41,
-          "impressions": 20,
+          "spend": 0.96,
+          "impressions": 74,
           "results": 0,
           "cpr": null,
-          "creative_id": "1138086355821847"
+          "creative_id": "1835467020967978"
         },
         {
           "name": "الرمال · كاروسيل-ليش الشهري – جديد",
@@ -415,33 +456,12 @@
           "creative_id": "1410019917455236",
           "format": "كاروسيل",
           "img": [
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/852515241_4547689552044404_2148554351172850955_n.png?stp=dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=n7Ig9hgo8PgQ7kNvwHfMY0e&_nc_oc=AdrwHRhJBKC6XNzQHMysqYoLO66CCNmvc2REYbvPIU16nqYZkgTJ0dmuF6uNFJH-ew0&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=QSF-IXWmQN6pfoQWH026zQ&_nc_tpa=Q5bMBQKmxt9cXhDNCOd8maLNDF2HHp360gN1j_fES56bwHe7CY98bYoCqflvS0PNwr3hQlpYJb9QbrXMRw&oh=00_AQP9uVv7OtFImd3OOFk8pJo5owj24Up5cQ0JyYCV_fwkvQ&oe=6AE4B0B3",
-            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/852028310_4547689575377735_5003710077809194471_n.png?stp=dst-jpg_tt6&_nc_cat=106&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=h_Le-UWYpx0Q7kNvwECby5D&_nc_oc=Adoo8Kdj9jbf-gD8f17S8taePzS_i7nlpVn4eirh1q-SuNJ6pAJOOeGRQXCYXle6kIQ&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=QSF-IXWmQN6pfoQWH026zQ&_nc_tpa=Q5bMBQLaQKiG4HTT9xlSGRlIcRxZyQXKvIgR5faRfgHKFuoVgDzFCUaiHlmjh1_FXqpauQXEq8sxnbxFUQ&oh=00_AQOp1UvugvmxamYlj2wjcV6AsMnyY1bLuzecV4GyeAePOA&oe=6AE4C3B8",
-            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/859766124_4547689578711068_947474474761937981_n.png?stp=dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=LMNpps1p6j0Q7kNvwG0HljE&_nc_oc=AdoaMve6feNaz3sdly8GT3vUkpbqh4v5YNxx8CTDM6AnM2U78rAOSMQ4DqV-Z2YH1qQ&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=QSF-IXWmQN6pfoQWH026zQ&_nc_tpa=Q5bMBQIoh_C4sWfQ88UgicNxSYtjR5ZKmg48Ci6Ip-RO8frsVDSgBBunxMMwaOUZx2wbaj5NpSRUZb3xMg&oh=00_AQOYV3dLAiEd7Thy7RjKoLb4Xw-R03Q6__yzJY07GT3GFQ&oe=6AE4C676",
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/856804028_4547689548711071_5199887687035045539_n.png?stp=dst-jpg_tt6&_nc_cat=110&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=o8cm-0iaDYcQ7kNvwHUDbGd&_nc_oc=Adpv83tvADwJA5vNcIAzRvebc50WRp0tRL-UpRh_6HqXERv5ZxtUs1-fKVc-5e7ZJH4&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=QSF-IXWmQN6pfoQWH026zQ&_nc_tpa=Q5bMBQJvcq-fJgPX4liqstG-neWCxEsn9Q6Wk5TKS46bQ-sJvRrrvPp0XptFerGNXrasVLch2BIGhO_pyg&oh=00_AQNDogW16bitzw8PKVsWjlp5k8snBrN_0Xx2QbGI0-jkmQ&oe=6AE4CE30",
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/852221013_4547689582044401_8373072803472841414_n.png?stp=dst-jpg_tt6&_nc_cat=107&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=6pBS98iyV9wQ7kNvwEla03s&_nc_oc=Adp6M9VIM7jgjEtXWAjGiA4q4kg2RvUQvb2HZnAQ0DgvuL4wKxIO--XB794GceUTjas&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=QSF-IXWmQN6pfoQWH026zQ&_nc_tpa=Q5bMBQI-MvjwKX7dAzuLnvI7neZ9ThWO5PfWf0yUJvq-cpczxKolfYvDJqPrSBhLzwfabY2dtwkzIngNxA&oh=00_AQO24StQTfE6VREOwif9z6Zy9BCXwRc2zqfBmV79lN9iAQ&oe=6AE4CA72"
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/852515241_4547689552044404_2148554351172850955_n.png?stp=dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=ZSWGn-qxufwQ7kNvwG04pQv&_nc_oc=Adr5cH3jtHbkz7shf9gpgEwWS4z5KMbGwhQ4dDchZb0AN_7QYP0AP9XCVXPQcf_tuIo&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=7xKSxwMLBLVBHdQGvl9tgw&_nc_tpa=Q5bMBQLV_BNLJLcfZ1Og7ymUjCNfhDhboOD-E95rmo4BM014-LFXHuJvdeB3ggQ_Ti2VtrDKTRN8xMG3lA&oh=00_AQN7AJbQIup1WQM_jBmCeGCyX3gyED6cmwpbka32anQuCw&oe=6AE60233",
+            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/852028310_4547689575377735_5003710077809194471_n.png?stp=dst-jpg_tt6&_nc_cat=106&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=h_Le-UWYpx0Q7kNvwHFjSsx&_nc_oc=AdrioSEKddNBGTH0vjYRJRAgzgJGLcAsv87bGTn9J7O-pp7MvIv-JYUhs0tGQRRdYc4&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=7xKSxwMLBLVBHdQGvl9tgw&_nc_tpa=Q5bMBQJ6vm5AitGbFpacqiwf4YEYvgkYtBWT7OCC_UoIEbZf4raxGkvUQLUmSacek8ENhwWDzNraCEpKdg&oh=00_AQM_UtJgzLlOcR-3n9IBRUjOs7xiFWQZTLfs1nCntatyhA&oe=6AE61538",
+            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/859766124_4547689578711068_947474474761937981_n.png?stp=dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=LMNpps1p6j0Q7kNvwHAaF9z&_nc_oc=AdpHhtkuBwiv5mTCctvk4WSeH-HRqZ6c9LOmiMpaZpsTAzHe8WtoLL6HplrsrJixzn8&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=7xKSxwMLBLVBHdQGvl9tgw&_nc_tpa=Q5bMBQI8UwrjwSh1Uxhe-JbmlwVesu7LP_uK0mHsZ0tPQBf1hUjdxxlOA24E1CVlVRKx1yj1xnN5wqjVZw&oh=00_AQOlEIabsb1dE5c1d9ehKZWdqd6fwImAR1uqPNKxtMTdSw&oe=6AE617F6",
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/856804028_4547689548711071_5199887687035045539_n.png?stp=dst-jpg_tt6&_nc_cat=110&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=o8cm-0iaDYcQ7kNvwHmBF8e&_nc_oc=AdpDPM2nZGM92nQUS_8ZjjaPbjvM3cEGfdsi9mSU-1vVJ0SeJpcfmnhc__I_fM5gLY4&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=7xKSxwMLBLVBHdQGvl9tgw&_nc_tpa=Q5bMBQKvaWwbWNTxHlDkvXMFF13tgcP29G6pFcFCTpk62LK2ssYt5O9ovgFyFEwOOkUemWVHHCSLx76ciw&oh=00_AQOgbXPtYHhWQdBfXaG9E7uT6WhPe7YTRMK99riO20uOkg&oe=6AE61FB0",
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/852221013_4547689582044401_8373072803472841414_n.png?stp=dst-jpg_tt6&_nc_cat=107&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=6pBS98iyV9wQ7kNvwEKLdFe&_nc_oc=Adp2MElVrHl5J4u4TGOFTP2BnnWESSSJBIPq1F59kDkzEN67O7fhaC7rFSXtQL20m24&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=7xKSxwMLBLVBHdQGvl9tgw&_nc_tpa=Q5bMBQKKjYH58pW66HEVprfumy4GM--kxa5JnzQg31e40yjiS6rjTV5bPX_FEFOudpG6sgoNQjEGAEMcxw&oh=00_AQOPx1gb_LQhmVMvi45cBuZTjj6woR8Yb_cqEqOwhEMinQ&oe=6AE61BF2"
           ]
-        },
-        {
-          "name": "الملز · كاروسيل-جولة داخل الوحدة – v2 – أسعار جديدة",
-          "hood": "الملز",
-          "title": "كاروسيل-جولة داخل الوحدة – v2 – أسعار جديدة",
-          "id": "120249750610730172",
-          "format": "كاروسيل",
-          "img": [
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/864581385_4553551858124840_4370885226880193849_n.png?stp=dst-jpg_tt6&_nc_cat=100&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=nQw2L2AgjsgQ7kNvwG-bJHP&_nc_oc=AdpEm_g808Zcp9cGFM1Ttyr9-e-V4KTwCb6Finhtao_nrnr3CO1R-XfSuwR9w1iwUEA&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=u4JznbpU1aZwZOq4e1eLBg&_nc_tpa=Q5bMBQIZqv9YZjpfGnWMZ_POSCZJOrMsgsJjBVTzCkhC_B9OeCeMLPhQAG6nBfD3luEoq37gZXAwpJVNug&oh=00_AQMpOPA2aaEW5E4T0iZq1mAEqRLwdapcattA3hz4Z0OB7g&oe=6AE4C62E",
-            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/866337168_4553551968124829_5977162196717898562_n.png?stp=dst-jpg_tt6&_nc_cat=101&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=VGNOuS6nwH8Q7kNvwFWip9x&_nc_oc=AdrSOVlPd86mDy1x4qmVNvdNgw38WD7UEkePTXTLbkmiYGzWdSAEwPHkzXy0MlnIoFQ&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=u4JznbpU1aZwZOq4e1eLBg&_nc_tpa=Q5bMBQL31RHcDkhnzmNeUJlUUW6qpSR0SSlSJNnI4XaCDGUB0sTWVEcUcSwBGlIQ4YuOuiRNV8aUydDrQQ&oh=00_AQPXzFly8goaOeXmBjxxNeb6OsM9l_SwgGq5-h6E7pLnUg&oe=6AE4CD0C",
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/866369916_4553552188124807_6890270777878781991_n.png?stp=dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=ZJmzX9kNUbwQ7kNvwG-kB9_&_nc_oc=AdrG93X7cswRo_Ngbk878JtkpysYHG1QK2F2nExpEQ73K3UcRu8yaEwhLIvymU8Fv-k&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=u4JznbpU1aZwZOq4e1eLBg&_nc_tpa=Q5bMBQK3UIOe_ggSlGGc-QSMriAWQNU1bOIJlpJh4RBfE1kYL_egaTFpIEeHi6DaVMmVjPcIF8g9TBtjNg&oh=00_AQNwdHgVwD-ZKML-90d_ivWQft3YFAqnFC9Nhn5Z-w2sAw&oe=6AE4AC45",
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/866623796_4553552244791468_6639256575052688122_n.png?stp=dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=ZQGjw6jtiDsQ7kNvwGDZnkL&_nc_oc=Adov3LSxV3UV-3AiY_ycCNveb8cmX55fqmI0IZ5MIdjvj50yRyxuiwJf_kHoQ7L33h4&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=u4JznbpU1aZwZOq4e1eLBg&_nc_tpa=Q5bMBQL69dVv0TxlKuIvo1pEuYpx9w7B57vBy-EwoM6diJPvxfO5kgQ6E8YndxM_NfeZN6pnuP4sbelQ9w&oh=00_AQMoKnxwXJcm4mQmfWLmk4vM7xtZEzn_HgJp9LYOlktmiQ&oe=6AE4BDC3",
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/858315712_4553552388124787_6751737936059147357_n.png?stp=dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=hE9tg07SgyUQ7kNvwEdoDgX&_nc_oc=AdqIjCuwpFSSKh01doCYHLzTFXDLZXscxt1WCV9pxX7Mnkbib9_NfoJ3JY6rfQbkWv4&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=u4JznbpU1aZwZOq4e1eLBg&_nc_tpa=Q5bMBQJ9zt9j0pr4m8Oi3DeQvYLu1stjI8Wt4mcyBLgaAo1zQXb2yPnv5h4ISWOpOyI61_j31Zm4W2_hXg&oh=00_AQNS-dk30UfCvMhM1Al16n697Xse83kcEgmrSwvfjety2g&oe=6AE4C657",
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/856583901_4553552471458112_3693622391027640262_n.png?stp=dst-jpg_tt6&_nc_cat=110&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=wQIbkd_q74EQ7kNvwG05xHg&_nc_oc=AdopZa3rhr2N0Y67wnifkymhDznO-dake8jxgtD4pzdLHucgWY5SR8EhM_RXsb9cgzA&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=u4JznbpU1aZwZOq4e1eLBg&_nc_tpa=Q5bMBQKBbu5uEr6_3fMx8zFJ5VnfaTq_nloJsnMuhvydSTGHh2qeHUFZY7n1_DbNx8I7jKPsvydGwVwmaQ&oh=00_AQPFb-v9T938rS1q52Nyqi16Obfd6yYlL1EbTVcU2pJxWw&oe=6AE4D897"
-          ],
-          "status": "ACTIVE",
-          "spend": 0.02,
-          "impressions": 2,
-          "results": 0,
-          "cpr": null,
-          "creative_id": "2195912867660023"
         }
       ]
     },
@@ -523,11 +543,11 @@
       "id": "ffa2e369-e15a-4e96-8834-2d77d1c03534",
       "name": "سناب · واتساب أكتوبر (الرمال والملز)",
       "status": "ACTIVE",
-      "spend": 2170.0,
-      "impressions": 331497,
-      "results": 7132,
+      "spend": 2260.0,
+      "impressions": 346949,
+      "results": 7266,
       "resultLabel": "ضغطة واتساب",
-      "cpr": 0.3,
+      "cpr": 0.31,
       "ads": [
         {
           "name": "الرمال · من 2,500 | v2",
@@ -665,6 +685,19 @@
           "format": "ستوري"
         },
         {
+          "name": "الملز · في قلب الرياض | v3",
+          "hood": "الملز",
+          "title": "في قلب الرياض | v3",
+          "id": "12b31bfd-00b5-4297-a105-c6583689e6b8",
+          "format": "ستوري",
+          "img": [],
+          "status": "ACTIVE",
+          "spend": 33.19,
+          "impressions": 6524,
+          "results": 49,
+          "cpr": 0.68
+        },
+        {
           "name": "الرمال · دخول ذكي بدون مفتاح",
           "status": "PAUSED",
           "spend": 29.03,
@@ -695,6 +728,32 @@
           "format": "ستوري"
         },
         {
+          "name": "الرمال · ادخل بشنطتك | v3",
+          "hood": "الرمال",
+          "title": "ادخل بشنطتك | v3",
+          "id": "64a0db28-5dbc-4572-8f60-e06e30a86971",
+          "format": "ستوري",
+          "img": [],
+          "status": "ACTIVE",
+          "spend": 19.02,
+          "impressions": 3365,
+          "results": 25,
+          "cpr": 0.76
+        },
+        {
+          "name": "الرمال · دخول ذكي بدون مفتاح | v3",
+          "hood": "الرمال",
+          "title": "دخول ذكي بدون مفتاح | v3",
+          "id": "5367a893-311f-4cb8-b1ef-28d9fe91e4cd",
+          "format": "ستوري",
+          "img": [],
+          "status": "ACTIVE",
+          "spend": 13.74,
+          "impressions": 2112,
+          "results": 23,
+          "cpr": 0.6
+        },
+        {
           "name": "الملز · ترتيبها علينا",
           "status": "PAUSED",
           "spend": 13.4,
@@ -708,6 +767,45 @@
             "files/live-ads/snap/الملز-05-ترتيبها-علينا.webp"
           ],
           "format": "ستوري"
+        },
+        {
+          "name": "الرمال · فاتورتك شاملة وكاملة | v3",
+          "hood": "الرمال",
+          "title": "فاتورتك شاملة وكاملة | v3",
+          "id": "4dfbfe9c-0b48-4e4d-bf19-987dff293a42",
+          "format": "ستوري",
+          "img": [],
+          "status": "ACTIVE",
+          "spend": 13.29,
+          "impressions": 1960,
+          "results": 22,
+          "cpr": 0.6
+        },
+        {
+          "name": "الرمال · من 3,000 | v3",
+          "hood": "الرمال",
+          "title": "من 3,000 | v3",
+          "id": "4ef4a6a6-53d9-4077-a13f-21a88f8337b3",
+          "format": "ستوري",
+          "img": [],
+          "status": "ACTIVE",
+          "spend": 10.29,
+          "impressions": 1529,
+          "results": 18,
+          "cpr": 0.57
+        },
+        {
+          "name": "الملز · ترتيبها علينا | v3",
+          "hood": "الملز",
+          "title": "ترتيبها علينا | v3",
+          "id": "3d66ea60-58e4-49ec-b716-fe776a260ff3",
+          "format": "ستوري",
+          "img": [],
+          "status": "ACTIVE",
+          "spend": 10.03,
+          "impressions": 1792,
+          "results": 12,
+          "cpr": 0.84
         },
         {
           "name": "الملز · استديو من 2500",
@@ -740,19 +838,6 @@
           "format": "ستوري"
         },
         {
-          "name": "الملز · في قلب الرياض | v3",
-          "hood": "الملز",
-          "title": "في قلب الرياض | v3",
-          "id": "12b31bfd-00b5-4297-a105-c6583689e6b8",
-          "format": "ستوري",
-          "img": [],
-          "status": "ACTIVE",
-          "spend": 4.64,
-          "impressions": 882,
-          "results": 11,
-          "cpr": 0.42
-        },
-        {
           "name": "الملز · استديو من 3,000 | v3",
           "hood": "الملز",
           "title": "استديو من 3,000 | v3",
@@ -760,75 +845,10 @@
           "format": "ستوري",
           "img": [],
           "status": "ACTIVE",
-          "spend": 3.24,
-          "impressions": 553,
-          "results": 4,
-          "cpr": 0.81
-        },
-        {
-          "name": "الرمال · ادخل بشنطتك | v3",
-          "hood": "الرمال",
-          "title": "ادخل بشنطتك | v3",
-          "id": "64a0db28-5dbc-4572-8f60-e06e30a86971",
-          "format": "ستوري",
-          "img": [],
-          "status": "ACTIVE",
-          "spend": 2.74,
-          "impressions": 520,
-          "results": 5,
-          "cpr": 0.55
-        },
-        {
-          "name": "الملز · ترتيبها علينا | v3",
-          "hood": "الملز",
-          "title": "ترتيبها علينا | v3",
-          "id": "3d66ea60-58e4-49ec-b716-fe776a260ff3",
-          "format": "ستوري",
-          "img": [],
-          "status": "ACTIVE",
-          "spend": 2.45,
-          "impressions": 474,
-          "results": 2,
-          "cpr": 1.23
-        },
-        {
-          "name": "الرمال · دخول ذكي بدون مفتاح | v3",
-          "hood": "الرمال",
-          "title": "دخول ذكي بدون مفتاح | v3",
-          "id": "5367a893-311f-4cb8-b1ef-28d9fe91e4cd",
-          "format": "ستوري",
-          "img": [],
-          "status": "ACTIVE",
-          "spend": 1.34,
-          "impressions": 241,
-          "results": 1,
-          "cpr": 1.34
-        },
-        {
-          "name": "الرمال · فاتورتك شاملة وكاملة | v3",
-          "hood": "الرمال",
-          "title": "فاتورتك شاملة وكاملة | v3",
-          "id": "4dfbfe9c-0b48-4e4d-bf19-987dff293a42",
-          "format": "ستوري",
-          "img": [],
-          "status": "ACTIVE",
-          "spend": 1.31,
-          "impressions": 239,
-          "results": 2,
-          "cpr": 0.66
-        },
-        {
-          "name": "الرمال · من 3,000 | v3",
-          "hood": "الرمال",
-          "title": "من 3,000 | v3",
-          "id": "4ef4a6a6-53d9-4077-a13f-21a88f8337b3",
-          "format": "ستوري",
-          "img": [],
-          "status": "ACTIVE",
-          "spend": 0.95,
-          "impressions": 122,
-          "results": 4,
-          "cpr": 0.24
+          "spend": 7.1,
+          "impressions": 1201,
+          "results": 14,
+          "cpr": 0.51
         }
       ]
     },
@@ -953,6 +973,6 @@
   ],
   "campaignsRange": {
     "from": "2026-10-01",
-    "to": "2026-10-25"
+    "to": "2026-10-26"
   }
 }
