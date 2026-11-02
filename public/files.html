@@ -1222,7 +1222,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       vs.forEach(function(g){
         var f=g.files,at=f.map(function(x){return x.at||''}).sort()[0]||p.updatedAt||'',by=(f.filter(function(x){return x.by})[0]||{}).by||'';
         var ok=g.v===top&&!!DONE[p.status];
-        rows.push({type:'محتوى',title:p.t||'منشور',at:at,by:by,isNew:g.v===min,v:g.v,files:f.length,st:ok?'approved':(g.v===top?(p.status==='changes'?'changes':'review'):'old')});
+        rows.push({type:'محتوى',title:p.t||'منشور',at:at,by:by,isNew:g.v===min,v:g.v,files:f.length,fl:f,st:ok?'approved':(g.v===top?(p.status==='changes'?'changes':'review'):'old')});
       });
     });
     var TT={};if(AD.ads)adItems().forEach(function(x){TT[x.key]=x.title});
@@ -1230,7 +1230,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     Object.keys(byKey).forEach(function(k){
       var vs=byKey[k].sort(function(a,b){return a.at<b.at?-1:1}),last=vs[vs.length-1];
       vs.forEach(function(v,i){var d=v.data||{},st=d.status||'review';
-        rows.push({type:'إعلان',title:d.title||d.adTitle||TT[k]||(/^new:/.test(k)?'إعلان جديد':k),at:d.at||v.at||'',by:d.by||'',isNew:i===0,v:d.v||i+1,files:(d.files||[]).length,st:st==='approved'||st==='live'?'approved':v===last?(st==='changes'?'changes':'review'):'old'});
+        rows.push({type:'إعلان',title:d.title||d.adTitle||TT[k]||(/^new:/.test(k)?'إعلان جديد':k),at:d.at||v.at||'',by:d.by||'',isNew:i===0,v:d.v||i+1,files:(d.files||[]).length,fl:d.files||[],st:st==='approved'||st==='live'?'approved':v===last?(st==='changes'?'changes':'review'):'old'});
       });
     });
     return rows.sort(function(a,b){return a.at<b.at?1:-1});
@@ -1256,11 +1256,11 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       '<button type="button" class="tile'+(DC.st==='new'?' gold':'')+'" data-st="new"><span class="k">تصاميم جديدة</span><span class="v num">'+nNew+'</span><span class="s">'+nOkNew+' منها اتعتمدت</span></button>'+
       '<button type="button" class="tile'+(DC.st==='rev'?' gold':'')+'" data-st="rev"><span class="k">تعديلات</span><span class="v num">'+nRev+'</span><span class="s">نسخ جديدة لتصاميم موجودة</span></button>'+
       '<button type="button" class="tile'+(DC.st==='ok'?' gold':'')+'" data-st="ok"><span class="k">نسخ معتمدة</span><span class="v num">'+nOk+'</span><span class="s">النسخة اللي اتعتمدت فعلاً</span></button></div>';
-    h+='<div class="tsec"><h3>التفاصيل ('+shown.length+')</h3>'+(shown.length?'<span class="chips" style="margin:0;margin-inline-start:auto"><button type="button" id="dccsv">⬇ تحميل الكشف (Excel)</button></span>':'')+'</div>';
+    h+='<div class="tsec"><h3>التفاصيل ('+shown.length+')</h3>'+(list.length?'<span class="chips" style="margin:0;margin-inline-start:auto">'+(list.some(function(x){return x.st==='approved'&&x.fl.length})?'<button type="button" id="dczip" title="كل ملفات النسخ المعتمدة في الفترة والفلتر اللي مختارهم">⬇ تحميل المعتمدة (ZIP)</button>':'')+(shown.length?'<button type="button" id="dccsv">⬇ تحميل الكشف (Excel)</button>':'')+'</span>':'')+'</div>';
     h+=shown.length?'<div style="overflow-x:auto"><table class="t"><thead><tr><th>التاريخ</th><th>النوع</th><th>التصميم</th><th>جديد / تعديل</th><th>الملفات</th><th>الحالة</th>'+(ap?'<th>المصمم</th>':'')+'</tr></thead><tbody>'+shown.map(function(x){var s2=DCS[x.st];
       return '<tr><td class="num">'+(x.at?fmtD(x.at):'—')+'</td><td>'+x.type+'</td><td>'+esc(x.title)+'</td><td>'+(x.isNew?'جديد':'تعديل · نسخة '+x.v)+'</td><td class="num">'+x.files+'</td><td><span class="st" style="--sc:var(--st-'+s2[1]+')">'+s2[0]+'</span></td>'+(ap?'<td>'+esc(dcName(x.by))+'</td>':'')+'</tr>'}).join('')+'</tbody></table></div>':'<p class="empty">مفيش تصاميم اترفعت في الفترة دي.</p>';
     h+='<p class="note">الكاروسيل أو التصميم اللي فيه أكتر من مقاس بيتحسب تصميم واحد، وعدد ملفاته ظاهر في عمود «الملفات». التصاميم اللي اتسلمت قبل غرفة التشغيل (زي أرشيف أول الحملة) مش محسوبة هنا.</p>';
-    DC._shown=shown;DC._r=r;
+    DC._shown=shown;DC._r=r;DC._ok=list.filter(function(x){return x.st==='approved'});
     return h;
   }
   function bindDesignerCount(){
@@ -1270,6 +1270,12 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     var w=document.getElementById('dcw');if(w)w.onchange=function(){DC.who=w.value;rerender()};
     var f=document.getElementById('dcf'),t=document.getElementById('dct');
     if(f)f.onchange=function(){DC.from=f.value;rerender()};if(t)t.onchange=function(){DC.to=t.value;rerender()};
+    var z=document.getElementById('dczip');if(z)z.onclick=function(){
+      var fl=[];DC._ok.forEach(function(x){var n=x.fl.filter(function(f){return safeUrl(f.url)});n.forEach(function(f,i){var ext=(String(f.name||f.url).split('?')[0].match(/\.[a-z0-9]{2,5}$/i)||['.png'])[0];fl.push({url:f.url,name:(x.type==='إعلان'?'إعلان':'منشور')+' - '+x.title+(n.length>1?' - '+(i+1):'')+ext})})});
+      if(!fl.length){ptoast('مفيش ملفات معتمدة في الفترة دي');return}
+      var t=z.textContent;z.disabled=true;z.textContent='جارِ تجهيز '+fl.length+' ملف…';
+      capital.zip(fl,'تصاميم-معتمدة-'+(DC.per==='all'?'كل-الفترة':DC._r[0]+'-إلى-'+DC._r[1])).then(function(){z.disabled=false;z.textContent=t;ptoast('اتحمّل '+fl.length+' ملف من '+DC._ok.length+' تصميم معتمد')}).catch(function(){z.disabled=false;z.textContent=t;ptoast('التحميل فشل، حاول تاني.')});
+    };
     var c=document.getElementById('dccsv');if(c)c.onclick=function(){
       var ap=CAN('posts.approve'),q=function(v){v=String(v==null?'':v);return '"'+v.replace(/"/g,'""')+'"'};
       var lines=[['التاريخ','النوع','التصميم','جديد / تعديل','الملفات','الحالة'].concat(ap?['المصمم']:[]).map(q).join(',')];
