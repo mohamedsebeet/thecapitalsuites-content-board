@@ -3,12 +3,52 @@
   "outputDirectory": "dist",
   "framework": null,
   "headers": [
-    { "source": "/(.*)", "headers": [
-      { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
-      { "key": "Content-Security-Policy", "value": "frame-ancestors 'self'" },
-      { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-      { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
-    ] },
-    { "source": "/(index.html|config.js|runtime.js|sw.js|activity-text.js|manifest.webmanifest)?", "headers": [ { "key": "Cache-Control", "value": "no-cache" } ] }
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        },
+        {
+          "key": "Content-Security-Policy",
+          "value": "frame-ancestors 'self'"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/(index.html|config.js|runtime.js|sw.js|activity-text.js|manifest.webmanifest)?",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-cache"
+        }
+      ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/files/:path(.*\\.zip)",
+      "destination": "https://raw.githubusercontent.com/mohamedsebeet/thecapitalsuites-content-board/main/public/files/:path",
+      "permanent": false
+    },
+    {
+      "source": "/files/:path(.*\\.(?:mp4|mov))",
+      "destination": "https://cdn.jsdelivr.net/gh/mohamedsebeet/thecapitalsuites-content-board@main/public/files/:path",
+      "permanent": false
+    },
+    {
+      "source": "/files/week1/week1-texts.pdf",
+      "destination": "https://cdn.jsdelivr.net/gh/mohamedsebeet/thecapitalsuites-content-board@main/public/files/week1/week1-texts.pdf",
+      "permanent": false
+    }
   ]
 }

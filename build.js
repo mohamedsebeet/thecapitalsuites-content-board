@@ -9,7 +9,13 @@ if (!url || !anonKey) {
   process.exit(1);
 }
 fs.rmSync('dist', { recursive: true, force: true });
-fs.cpSync('public', 'dist', { recursive: true });
+// الملفات التقيلة (ZIP والفيديو وملف نصوص الأسبوع الأول) ما بتتنسخش في كل نشر عشان مساحة Vercel،
+// وبتتحوّل من vercel.json لنسختها في GitHub (المستودع عام)
+const HEAVY = /\.(zip|mp4|mov)$/i, HEAVY_FILES = ['files/week1/week1-texts.pdf'];
+fs.cpSync('public', 'dist', { recursive: true, filter: function (src) {
+  const rel = path.relative('public', src).split(path.sep).join('/');
+  return !(HEAVY.test(rel) || HEAVY_FILES.indexOf(rel) >= 0);
+} });
 fs.writeFileSync(path.join('dist', 'config.js'),
   'window.BOARD_CONFIG=' + JSON.stringify({ url, anonKey }) + ';\n');
 console.log('✔ dist جاهز');
