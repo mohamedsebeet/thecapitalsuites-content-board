@@ -302,6 +302,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     {g:'المحتوى العضوي',items:[
       {id:'simple',t:'اللوحة المبسطة',d:'الأسبوع بالمراحل أو الشهر بالتواريخ: ارفع التصميم، اعتمد، انقل الميعاد، وعلّم اتنشر',m:'الشغل اليومي ↗',href:'simple.html',self:true},
       {id:'post-designs',t:'تصاميم المحتوى',d:'كل تصميم وريل للمنشورات: المصمم يرفع، وإنت ترسم ملاحظاتك على الصورة أو على لقطة من الريل، وتعتمد',m:'مباشر',live:true,need:['view.publish','designs.upload','posts.approve']},
+      {id:'designer-count',t:'حساب المصمم',d:'عدد التصاميم اللي اترفعت في أي فترة: جديد ولا تعديل، ومعتمد ولا لأ، مع كشف تحمّله للمحاسبة',m:'مباشر',live:true,need:['designs.upload','posts.approve']},
       {id:'preview',t:'معاينة المنشورات',d:'شكل كل منشور على إنستغرام وفيسبوك وتيك توك وX قبل ما ينزل، وشبكة الحساب',m:'مباشر',live:true,need:'view.publish'},
       {id:'publish',t:'جدول النشر',d:'مواعيد النشر لكل منصة: انسخ النص، نزّل التصميم، وعلّم إنه اتنشر',m:'مباشر',live:true,need:'view.publish'},
       {id:'board',t:'اللوحة الكاملة',d:'تعديل النصوص والبريف والملاحظات والحالات بالتفصيل',m:'تعديل المحتوى ↗',href:'./',self:true}
@@ -1204,11 +1205,84 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
 
   /* ---------- التوجيه ---------- */
   var view=document.getElementById('view'),bar=document.getElementById('bar');
+
+  /* ---------- حساب المصمم ---------- */
+  var DC={per:'this',from:'',to:'',who:'',type:'',st:''};
+  function dcRange(){
+    var y=TODAY.getFullYear(),m=TODAY.getMonth();
+    if(DC.per==='this')return [iso(new Date(y,m,1)),iso(new Date(y,m+1,0))];
+    if(DC.per==='last')return [iso(new Date(y,m-1,1)),iso(new Date(y,m,0))];
+    if(DC.per==='custom')return [DC.from||'2000-01-01',DC.to||'2100-01-01'];
+    return ['2000-01-01','2100-01-01'];
+  }
+  function dcRows(){
+    var rows=[];
+    POSTS.concat(ALL.filter(isSetup)).forEach(function(p){
+      var vs=pcVers(p);if(!vs.length)return;var top=vs[0].v,min=vs[vs.length-1].v;
+      vs.forEach(function(g){
+        var f=g.files,at=f.map(function(x){return x.at||''}).sort()[0]||p.updatedAt||'',by=(f.filter(function(x){return x.by})[0]||{}).by||'';
+        var ok=g.v===top&&!!DONE[p.status];
+        rows.push({type:'محتوى',title:p.t||'منشور',at:at,by:by,isNew:g.v===min,v:g.v,files:f.length,st:ok?'approved':(g.v===top?(p.status==='changes'?'changes':'review'):'old')});
+      });
+    });
+    var TT={};if(AD.ads)adItems().forEach(function(x){TT[x.key]=x.title});
+    var byKey={};AD.vers.filter(function(v){return !isReq(v)}).forEach(function(v){(byKey[v.ad_key]=byKey[v.ad_key]||[]).push(v)});
+    Object.keys(byKey).forEach(function(k){
+      var vs=byKey[k].sort(function(a,b){return a.at<b.at?-1:1}),last=vs[vs.length-1];
+      vs.forEach(function(v,i){var d=v.data||{},st=d.status||'review';
+        rows.push({type:'إعلان',title:d.title||d.adTitle||TT[k]||(/^new:/.test(k)?'إعلان جديد':k),at:d.at||v.at||'',by:d.by||'',isNew:i===0,v:d.v||i+1,files:(d.files||[]).length,st:st==='approved'||st==='live'?'approved':v===last?(st==='changes'?'changes':'review'):'old'});
+      });
+    });
+    return rows.sort(function(a,b){return a.at<b.at?1:-1});
+  }
+  var DCS={approved:['معتمد','approved'],review:['بانتظار المراجعة','review'],changes:['تعديلات مطلوبة','changes'],old:['نسخة سابقة','idea']};
+  function dcName(e){return NAMES[e]||e||'—'}
+  function renderDesignerCount(){
+    if(!LOADED||!AD.vLoaded)return '<p class="loading">جارِ تحميل التصاميم…</p>';
+    var r=dcRange(),ap=CAN('posts.approve'),all=dcRows();
+    if(!ap)DC.who=ME;
+    var whos={};all.forEach(function(x){if(x.by)whos[x.by]=1});
+    var list=all.filter(function(x){var d=String(x.at).slice(0,10);return d>=r[0]&&d<=r[1]&&(!DC.who||x.by===DC.who)&&(!DC.type||x.type===DC.type)});
+    var shown=list.filter(function(x){return !DC.st||(DC.st==='new'?x.isNew:DC.st==='rev'?!x.isNew:x.st==='approved')});
+    var nNew=list.filter(function(x){return x.isNew}).length,nRev=list.length-nNew,nOk=list.filter(function(x){return x.st==='approved'}).length,nOkNew=list.filter(function(x){return x.isNew&&(x.st==='approved'||all.some(function(y){return y.type===x.type&&y.title===x.title&&y.st==='approved'}))}).length;
+    var pl={this:'الشهر ده',last:'الشهر اللي فات',all:'كل الفترة',custom:'فترة محددة'};
+    var h='<h2>حساب المصمم</h2><p class="lede">كل تصميم اترفع على غرفة التشغيل بيتحسب هنا لوحده، سواء للمنشورات أو للإعلانات. <b>جديد</b> يعني أول نسخة من التصميم، و<b>تعديل</b> يعني نسخة تانية أو أكتر لنفس التصميم.</p>';
+    h+='<div class="chips" id="dcp">'+['this','last','all','custom'].map(function(k){return '<button data-per="'+k+'" aria-pressed="'+(DC.per===k)+'">'+pl[k]+'</button>'}).join('')+'</div>';
+    if(DC.per==='custom')h+='<div class="chips" id="dcd"><label>من <input type="date" id="dcf" value="'+esc(DC.from)+'"></label><label>إلى <input type="date" id="dct" value="'+esc(DC.to)+'"></label></div>';
+    h+='<div class="chips" id="dct2"><button data-ty="" aria-pressed="'+(DC.type==='')+'">الكل</button><button data-ty="محتوى" aria-pressed="'+(DC.type==='محتوى')+'">تصاميم المنشورات</button><button data-ty="إعلان" aria-pressed="'+(DC.type==='إعلان')+'">تصاميم الإعلانات</button>'+
+      (ap&&Object.keys(whos).length>1?'<span style="width:12px"></span><select id="dcw" aria-label="المصمم"><option value="">كل المصممين</option>'+Object.keys(whos).map(function(e){return '<option value="'+esc(e)+'"'+(DC.who===e?' selected':'')+'>'+esc(dcName(e))+'</option>'}).join('')+'</select>':'')+'</div>';
+    h+='<div class="tiles" id="dcs">'+
+      '<button type="button" class="tile'+(DC.st===''?' gold':'')+'" data-st=""><span class="k">إجمالي التصاميم</span><span class="v num">'+list.length+'</span><span class="s">'+(DC.per==='all'?'من أول ما بدأنا':DC.per==='custom'?((DC.from?'من '+fmtD(DC.from):'')+(DC.to?' لحد '+fmtD(DC.to):'')||'اختار التاريخين'):fmtD(r[0])+' – '+fmtD(r[1]))+'</span></button>'+
+      '<button type="button" class="tile'+(DC.st==='new'?' gold':'')+'" data-st="new"><span class="k">تصاميم جديدة</span><span class="v num">'+nNew+'</span><span class="s">'+nOkNew+' منها اتعتمدت</span></button>'+
+      '<button type="button" class="tile'+(DC.st==='rev'?' gold':'')+'" data-st="rev"><span class="k">تعديلات</span><span class="v num">'+nRev+'</span><span class="s">نسخ جديدة لتصاميم موجودة</span></button>'+
+      '<button type="button" class="tile'+(DC.st==='ok'?' gold':'')+'" data-st="ok"><span class="k">نسخ معتمدة</span><span class="v num">'+nOk+'</span><span class="s">النسخة اللي اتعتمدت فعلاً</span></button></div>';
+    h+='<div class="tsec"><h3>التفاصيل ('+shown.length+')</h3>'+(shown.length?'<span class="chips" style="margin:0;margin-inline-start:auto"><button type="button" id="dccsv">⬇ تحميل الكشف (Excel)</button></span>':'')+'</div>';
+    h+=shown.length?'<div style="overflow-x:auto"><table class="t"><thead><tr><th>التاريخ</th><th>النوع</th><th>التصميم</th><th>جديد / تعديل</th><th>الملفات</th><th>الحالة</th>'+(ap?'<th>المصمم</th>':'')+'</tr></thead><tbody>'+shown.map(function(x){var s2=DCS[x.st];
+      return '<tr><td class="num">'+(x.at?fmtD(x.at):'—')+'</td><td>'+x.type+'</td><td>'+esc(x.title)+'</td><td>'+(x.isNew?'جديد':'تعديل · نسخة '+x.v)+'</td><td class="num">'+x.files+'</td><td><span class="st" style="--sc:var(--st-'+s2[1]+')">'+s2[0]+'</span></td>'+(ap?'<td>'+esc(dcName(x.by))+'</td>':'')+'</tr>'}).join('')+'</tbody></table></div>':'<p class="empty">مفيش تصاميم اترفعت في الفترة دي.</p>';
+    h+='<p class="note">الكاروسيل أو التصميم اللي فيه أكتر من مقاس بيتحسب تصميم واحد، وعدد ملفاته ظاهر في عمود «الملفات». التصاميم اللي اتسلمت قبل غرفة التشغيل (زي أرشيف أول الحملة) مش محسوبة هنا.</p>';
+    DC._shown=shown;DC._r=r;
+    return h;
+  }
+  function bindDesignerCount(){
+    page.querySelectorAll('#dcp [data-per]').forEach(function(b){b.onclick=function(){DC.per=b.dataset.per;rerender()}});
+    page.querySelectorAll('#dct2 [data-ty]').forEach(function(b){b.onclick=function(){DC.type=b.dataset.ty;rerender()}});
+    page.querySelectorAll('#dcs [data-st]').forEach(function(b){b.onclick=function(){DC.st=DC.st===b.dataset.st?'':b.dataset.st;rerender()}});
+    var w=document.getElementById('dcw');if(w)w.onchange=function(){DC.who=w.value;rerender()};
+    var f=document.getElementById('dcf'),t=document.getElementById('dct');
+    if(f)f.onchange=function(){DC.from=f.value;rerender()};if(t)t.onchange=function(){DC.to=t.value;rerender()};
+    var c=document.getElementById('dccsv');if(c)c.onclick=function(){
+      var ap=CAN('posts.approve'),q=function(v){v=String(v==null?'':v);return '"'+v.replace(/"/g,'""')+'"'};
+      var lines=[['التاريخ','النوع','التصميم','جديد / تعديل','الملفات','الحالة'].concat(ap?['المصمم']:[]).map(q).join(',')];
+      DC._shown.forEach(function(x){lines.push([x.at?String(x.at).slice(0,10):'',x.type,x.title,x.isNew?'جديد':'تعديل (نسخة '+x.v+')',x.files,DCS[x.st][0]].concat(ap?[dcName(x.by)]:[]).map(q).join(','))});
+      var b=new Blob(['﻿'+lines.join('\r\n')],{type:'text/csv;charset=utf-8'}),a=document.createElement('a'),u=URL.createObjectURL(b);
+      a.href=u;a.download='كشف-تصاميم-'+DC._r[0]+'-إلى-'+DC._r[1]+'.csv';document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(u);a.remove()},500);
+    };
+  }
   function renderLive(id){
     var sc=page.scrollTop;
-    page.innerHTML=id==='today'?renderToday():id==='content'?renderContent():id==='ads-live'?renderAds():id==='ads'?renderLiveAds():id==='publish'?renderPublish():id==='preview'?renderPreview():id==='ad-designs'?renderAdDesigns():id==='post-designs'?renderPostDesigns():id==='design-cal'?renderPostCal():id==='ad-preview'?renderAdPreview():renderLibrary();
+    page.innerHTML=id==='today'?renderToday():id==='content'?renderContent():id==='ads-live'?renderAds():id==='ads'?renderLiveAds():id==='publish'?renderPublish():id==='preview'?renderPreview():id==='ad-designs'?renderAdDesigns():id==='post-designs'?renderPostDesigns():id==='design-cal'?renderPostCal():id==='ad-preview'?renderAdPreview():id==='designer-count'?renderDesignerCount():renderLibrary();
     page.scrollTop=sc;
-    if(id==='content')bindContent();if(id==='ads-live')bindAds();if(id==='ads')bindLiveAds();if(id==='publish')bindPublish();if(id==='preview')bindPreview();if(id==='ad-designs'){loadAdDesigns();bindAdDesigns()}if(id==='design-cal'){bindPostCal();if(PC.open)pcSheet()}if(id==='post-designs'){bindPostDesigns();if(PC.open)pcSheet()}if(id==='ad-preview'){loadAdDesigns();bindAdPreview()}
+    if(id==='content')bindContent();if(id==='ads-live')bindAds();if(id==='ads')bindLiveAds();if(id==='publish')bindPublish();if(id==='preview')bindPreview();if(id==='ad-designs'){loadAdDesigns();bindAdDesigns()}if(id==='design-cal'){bindPostCal();if(PC.open)pcSheet()}if(id==='post-designs'){bindPostDesigns();if(PC.open)pcSheet()}if(id==='ad-preview'){loadAdDesigns();bindAdPreview()}if(id==='designer-count'){loadAdDesigns();bindDesignerCount()}
   }
   function route(){
     var id=location.hash.slice(1).split('?')[0];if(ALIAS[id]&&BY[ALIAS[id]]){var al=BY[ALIAS[id]];if(al.self){location.replace(al.href+(id==='design-cal'?'?view=month':''));return}history.replaceState(null,'','#'+ALIAS[id]);id=ALIAS[id]}if(!BY[id]||BY[id].self||BY[id].ext)id='today';
