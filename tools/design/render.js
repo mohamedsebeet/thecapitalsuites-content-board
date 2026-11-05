@@ -33,6 +33,7 @@ const BASE = (w, h, extra) => `<!doctype html><html lang="ar" dir="rtl"><head><m
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:${w}px;height:${h}px;overflow:hidden}
 body{font-family:Plex,Tahoma,sans-serif;color:${C.ink};background:${C.cream};-webkit-font-smoothing:antialiased}
+h1,h2{white-space:pre-line}
 h1,h2,.d{font-family:Alexandria,Plex,Tahoma,sans-serif;font-weight:800;letter-spacing:-.01em;line-height:1.12}
 .logo{display:flex;flex-direction:column;align-items:center;gap:6px}
 .logo img{width:64px;height:68px}
