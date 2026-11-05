@@ -29,6 +29,10 @@ module.exports = async (req, res) => {
 
   try {
     // قائمة الشغل: المنشورات اللي محتاجة تصميم قريب، والتعديلات، والاتجاهات التانية المطلوبة
+    if (req.method === 'GET' && /[?&]q=ads\b/.test(req.url || '')) {
+      const rows = await rest('ad_versions?select=id,ad_key,at,data&order=at.desc&limit=500');
+      return res.status(200).json({ ads: rows.filter(r => (r.data || {}).kind !== 'request').map(r => ({ id: r.id, key: r.ad_key, at: r.at, v: r.data.v, title: r.data.title || r.data.adTitle || '', campaign: r.data.campaign || '', platform: r.data.platform || '', status: r.data.status, by: r.data.by })) });
+    }
     if (req.method === 'GET') {
       const days = Math.min(+(req.query && req.query.days) || 10, 60);
       const until = new Date(Date.now() + days * 864e5).toISOString().slice(0, 10);
@@ -65,12 +69,12 @@ module.exports = async (req, res) => {
 
     // رفع ملف واحد (PNG/JPG) لمخزن التصاميم
     if (b.action === 'upload') {
-      if (!/^[\w-]+$/.test(String(b.post || ''))) return res.status(400).json({ error: 'post' });
+      if (!/^[\w:-]+$/.test(String(b.post || ''))) return res.status(400).json({ error: 'post' });
       const type = /^image\/(png|jpeg|webp)$/.test(b.type) ? b.type : 'image/png';
       const buf = Buffer.from(String(b.b64 || ''), 'base64');
       if (!buf.length || buf.length > 4 * 1024 * 1024) return res.status(400).json({ error: 'size' });
       const ext = type === 'image/jpeg' ? 'jpg' : type.split('/')[1];
-      const path = 'claude/' + b.post + '/' + Date.now() + '-' + crypto.randomBytes(6).toString('hex') + '.' + ext;
+      const path = 'claude/' + String(b.post).replace(/:/g, '-') + '/' + Date.now() + '-' + crypto.randomBytes(6).toString('hex') + '.' + ext;
       const up = await fetch(URL_ + '/storage/v1/object/designs/' + path, {
         method: 'POST', headers: { apikey: SRV, Authorization: 'Bearer ' + SRV, 'Content-Type': type, 'Cache-Control': '31536000', 'x-upsert': 'false' }, body: buf
       });
@@ -95,6 +99,23 @@ module.exports = async (req, res) => {
       await rest('posts?id=eq.' + encodeURIComponent(b.post), { method: 'PATCH', headers: Object.assign({ Prefer: 'return=minimal' }, H), body: JSON.stringify({ data: patch, updated_at: now }) });
       await rest('notes', { method: 'POST', headers: Object.assign({ Prefer: 'return=minimal' }, H), body: JSON.stringify({ id: 'n' + Date.now().toString(36) + crypto.randomBytes(3).toString('hex'), post_id: b.post, data: { by: 'claude', at: now, text } }) });
       return res.status(200).json({ ok: true, v, files: files.length });
+    }
+
+    // نسخة تصميم إعلان: إعلان جديد (key = new:...) أو نسخة جديدة لإعلان موجود على المنصة
+    if (b.action === 'ad-version') {
+      let key = String(b.key || '');
+      if (key === 'new') key = 'new:' + crypto.randomBytes(5).toString('hex');
+      if (!/^(new|meta|snap):[\w./-]+$/.test(key)) return res.status(400).json({ error: 'key' });
+      const files = (b.files || []).filter(f => f && /^https:\/\//.test(f.url)).slice(0, 20)
+        .map(f => ({ path: f.path, url: f.url, name: f.name, type: f.type, size: f.size, at: now, by: 'claude' }));
+      if (!files.length) return res.status(400).json({ error: 'files' });
+      const prev = await rest('ad_versions?select=data&ad_key=eq.' + encodeURIComponent(key));
+      const v = prev.reduce((m, r) => Math.max(m, (r.data || {}).v || 0), 0) + 1;
+      const data = { v, files, text: String(b.text || '').slice(0, 2000), note: String(b.note || '').slice(0, 600), by: 'claude', at: now, status: 'review', adTitle: String(b.title || '') };
+      if (key.startsWith('new:')) Object.assign(data, { title: String(b.title || 'إعلان جديد'), platform: b.platform === 'snap' ? 'snap' : 'meta', campaign: String(b.campaign || ''), hood: String(b.campaign || '') });
+      const id = 'v' + Date.now().toString(36) + crypto.randomBytes(4).toString('hex');
+      await rest('ad_versions', { method: 'POST', headers: Object.assign({ Prefer: 'return=minimal' }, H), body: JSON.stringify({ id, ad_key: key, data }) });
+      return res.status(200).json({ ok: true, id, key, v });
     }
 
     return res.status(400).json({ error: 'action' });

@@ -23,5 +23,22 @@ async function j(r) { const t = await r.text(); let d; try { d = JSON.parse(t); 
     console.log(JSON.stringify(await j(await fetch(BASE, { method: 'POST', headers: H, body: JSON.stringify({ action: 'post-design', post, note, files: done }) }))));
     return;
   }
-  console.error('الأوامر: queue [days] | upload <post> "<note>" [A:]file ...'); process.exit(1);
+  // صندوق الصادر: تصاميم إعلانات جاهزة في المستودع تترفع كإعلانات جديدة (وما تترفعش مرتين)
+  if (cmd === 'outbox') {
+    const dir = a[0], m = JSON.parse(fs.readFileSync(path.join(dir, 'manifest.json'), 'utf8'));
+    const have = (await j(await fetch(BASE + '?q=ads', { headers: H }))).ads;
+    for (const ad of m.ads) {
+      const dup = have.some(x => x.by === 'claude' && x.title === ad.title && x.campaign === m.campaign && x.platform === ad.platform);
+      if (dup) { console.error('موجود قبل كده: ' + ad.title); continue; }
+      const up = [];
+      for (const f of ad.files) {
+        const fp = path.join(dir, f), b64 = fs.readFileSync(fp).toString('base64');
+        up.push(await j(await fetch(BASE, { method: 'POST', headers: H, body: JSON.stringify({ action: 'upload', post: 'ads-' + (m.slug || 'batch'), name: path.basename(f), type: 'image/png', b64 }) })));
+      }
+      const r = await j(await fetch(BASE, { method: 'POST', headers: H, body: JSON.stringify({ action: 'ad-version', key: 'new', title: ad.title, platform: ad.platform, campaign: m.campaign, text: ad.text, note: ad.note || '', files: up }) }));
+      console.log('اترفع: ' + ad.title + ' (' + up.length + ' ملف) → ' + r.key);
+    }
+    return;
+  }
+  console.error('الأوامر: queue [days] | upload <post> "<note>" [A:]file ... | outbox <dir>'); process.exit(1);
 })().catch(e => { console.error(e.message); process.exit(1); });
