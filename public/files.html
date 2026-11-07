@@ -304,7 +304,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
       {id:'post-designs',t:'تصاميم المحتوى',d:'كل تصميم وريل للمنشورات: المصمم يرفع، وإنت ترسم ملاحظاتك على الصورة أو على لقطة من الريل، وتعتمد',m:'مباشر',live:true,need:['view.publish','designs.upload','posts.approve']},
       {id:'claude-q',t:'طلبات Claude',d:'اللي Claude شغال عليه: تصاميم مطلوبة قريب، تعديلات، واتجاهات تانية، واللي مستني اعتمادك',m:'مباشر',live:true,need:['posts.approve']},
       {id:'designer-count',t:'حساب المصمم',d:'عدد التصاميم اللي اترفعت في أي فترة: جديد ولا تعديل، ومعتمد ولا لأ، مع كشف تحمّله للمحاسبة',m:'مباشر',live:true,need:['designs.upload','posts.approve']},
-      {id:'preview',t:'معاينة المنشورات',d:'شكل كل منشور على إنستغرام وفيسبوك وتيك توك وX قبل ما ينزل، وشبكة الحساب',m:'مباشر',live:true,need:'view.publish'},
+      {id:'preview',t:'معاينة المنشورات',d:'كل المحتوى اللي اتنشر واللي لسه، بشكله على إنستغرام وفيسبوك وتيك توك وX، مع فلاتر وشبكة الحساب',m:'مباشر',live:true,need:'view.publish'},
       {id:'publish',t:'جدول النشر',d:'مواعيد النشر لكل منصة: انسخ النص، نزّل التصميم، وعلّم إنه اتنشر',m:'مباشر',live:true,need:'view.publish'},
       {id:'board',t:'اللوحة الكاملة',d:'تعديل النصوص والبريف والملاحظات والحالات بالتفصيل',m:'تعديل المحتوى ↗',href:'./',self:true}
     ],files:[
@@ -1036,7 +1036,8 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   }
 
   /* ---------- معاينة المنشورات ---------- */
-  var PV={id:'',pl:'',i:0,more:false,grid:false};
+  var PV={id:'',pl:'',i:0,more:false,grid:false,st:'',fp:'',mo:'',q:''};
+  function pvState(p){return p.status==='published'||(p.d<T&&DONE[p.status])?'pub':p.d<T?'late':'next'}
   var NAME='ذا كابيتال سويتس';
   function pvMedia(p){
     var d=(p.designs||[]).filter(function(x){return safeUrl(x.url)}).map(function(x){return {u:x.url,v:/^video\//.test(x.type||''),pdf:/pdf/.test(x.type||'')}}).filter(function(x){return !x.pdf});
@@ -1100,26 +1101,39 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   }
   function renderPreview(){
     if(!LOADED)return '<p class="loading">جارِ تحميل المنشورات…</p>';
-    var from=iso(addD(TODAY,-14)),list=POSTS.filter(function(p){return p.d>=from}).sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:0});
-    if(!list.length)return '<h2>معاينة المنشورات</h2><p class="empty">مفيش منشورات جاية.</p>';
+    var allP=POSTS.slice().sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:0});
+    var mos=[];allP.forEach(function(x){var m=String(x.d).slice(0,7);if(m&&mos.indexOf(m)<0)mos.push(m)});
+    var base=allP.filter(function(x){return (!PV.fp||targets(x).indexOf(PV.fp)>=0)&&(!PV.mo||String(x.d).slice(0,7)===PV.mo)&&(!PV.q||String(x.t||'').indexOf(PV.q)>=0||String(x.c||'').indexOf(PV.q)>=0)});
+    var cnt={pub:0,next:0,late:0,nod:0};base.forEach(function(x){cnt[pvState(x)]++;if(!pvMedia(x).length)cnt.nod++});
+    var list=base.filter(function(x){return !PV.st||(PV.st==='nod'?!pvMedia(x).length:pvState(x)===PV.st)});
+    var chip=function(k,v,lab,n){return '<button data-pvf="'+k+'" data-v="'+esc(v)+'" aria-pressed="'+(PV[k]===v)+'">'+lab+(n!=null?' <span class="num">'+n+'</span>':'')+'</button>'};
+    var fh='<div class="chips"><span class="chl">الحالة:</span>'+chip('st','','الكل',base.length)+chip('st','pub','اتنشر',cnt.pub)+chip('st','next','لسه هينزل',cnt.next)+(cnt.late?chip('st','late','فات ميعاده وما اتنشرش',cnt.late):'')+chip('st','nod','من غير تصميم',cnt.nod)+'</div>'+
+      '<div class="chips"><span class="chl">المنصة:</span>'+chip('fp','','الكل')+['IG','FB','TT','X'].map(function(k){return chip('fp',k,PLK[k].n)}).join('')+'</div>'+
+      '<div class="chips"><span class="chl">الشهر:</span>'+chip('mo','','كل الشهور')+mos.map(function(m){return chip('mo',m,MON[+m.slice(5,7)-1]+' '+m.slice(0,4))}).join('')+
+      '<input type="search" id="pvq" placeholder="ابحث في العنوان أو النص" value="'+esc(PV.q)+'" style="margin-inline-start:8px;min-width:200px;padding:6px 12px;border:1px solid var(--rule);border-radius:999px;font:inherit;font-size:14px;background:var(--surface);color:var(--ink)"></div>';
+    if(!list.length)return '<h2>معاينة المنشورات</h2>'+fh+'<p class="empty">مفيش منشورات بالفلتر ده.</p>';
+    var from='0000';
     var hm=/[?&]p=([^&]+)/.exec(location.hash);if(hm&&!PV.id){PV.id=decodeURIComponent(hm[1])}
-    var p=BY_P[PV.id]||list.filter(function(x){return x.d>=T})[0]||list[0];PV.id=p.id;
+    var p=list.filter(function(x){return x.id===PV.id})[0]||list.filter(function(x){return x.d>=T})[0]||list[list.length-1];PV.id=p.id;
     var tg=targets(p);if(tg.indexOf(PV.pl)<0)PV.pl=tg[0]||'IG';
-    var h='<h2>معاينة المنشورات</h2><p class="lede">شكل كل منشور على الموبايل قبل ما ينزل: بالتصميم المرفوع ونص كل منصة. الأجزاء المظللة بالأصفر بيانات لسه لازم تتملي.</p>';
+    var h='<h2>معاينة المنشورات</h2><p class="lede">كل المحتوى، اللي اتنشر واللي لسه هينزل، بشكله على الموبايل: بالتصميم المرفوع ونص كل منصة. الأجزاء المظللة بالأصفر بيانات لسه لازم تتملي.</p>'+fh;
     var weeks={};h+='<div class="pv"><div class="pv-list">';
     list.forEach(function(x){var w=weekOf(x.d);if(!weeks[w]){weeks[w]=1;h+='<div class="wkh">الأسبوع '+w+' · '+weekRange(w)+'</div>'}
-      var m=pvMedia(x)[0];h+='<button class="pv-it" data-pvid="'+esc(x.id)+'" aria-current="'+(x.id===p.id&&!PV.grid)+'">'+(m&&!m.v?'<img class="th" src="'+esc(m.u)+'" alt="" loading="lazy">':'<span class="th">'+(m?'فيديو':'—')+'</span>')+'<span style="min-width:0"><b>'+esc(x.t)+'</b><span class="m">'+esc(dayD(x.d))+' · '+targets(x).map(function(k){return (PLK[k]||{n:k}).n}).join('، ')+'</span></span></button>'});
+      var m=pvMedia(x)[0];h+='<button class="pv-it" data-pvid="'+esc(x.id)+'" aria-current="'+(x.id===p.id&&!PV.grid)+'">'+(m&&!m.v?'<img class="th" src="'+esc(m.u)+'" alt="" loading="lazy">':'<span class="th">'+(m?'فيديو':'—')+'</span>')+'<span style="min-width:0"><b>'+esc(x.t)+'</b><span class="m">'+esc(dayD(x.d))+' · '+targets(x).map(function(k){return (PLK[k]||{n:k}).n}).join('، ')+' · '+({pub:'اتنشر',next:'جاي',late:'متأخر'})[pvState(x)]+'</span></span></button>'});
     h+='</div><div class="pv-main"><div class="pv-tabs">'+['IG','FB','TT','X'].map(function(k){var on=tg.indexOf(k)>=0;return '<button data-pvpl="'+k+'" aria-pressed="'+(!PV.grid&&PV.pl===k)+'"'+(on?'':' class="off" title="المنشور مش مجدول على المنصة دي"')+'>'+PLK[k].n+'</button>'}).join('')+'<button data-pvgrid aria-pressed="'+PV.grid+'">شبكة الحساب</button></div>';
     var t=txt(p,PV.pl),warn=[];
     if(!PV.grid){if(hasPH(t))warn.push('النص فيه بيانات بين [ ] لسه ما اتملتش');if(PV.pl==='X'&&t.length>280)warn.push('النص أطول من 280 حرف بـ'+(t.length-280)+'، والجزء الأحمر مش هيظهر');if(!pvMedia(p).length)warn.push('لسه مفيش تصميم مرفوع');else if(pvMedia(p)[0].draft)warn.push('ده التصميم المقترح، مش النهائي المرفوع');if(tg.indexOf(PV.pl)<0)warn.push('المنشور مش مجدول على '+PLK[PV.pl].n+'، دي معاينة بس')}
     h+=(warn.length?'<div class="pv-warn">'+warn.join(' · ')+'</div>':'');
-    h+='<div class="phone"><div class="screen'+(PV.pl==='X'&&!PV.grid?' dark':'')+(PV.pl==='TT'&&!PV.grid?' tt-s':'')+'">'+(PV.grid?pvGrid(list.concat(POSTS.filter(function(x){return x.d<from}))):PV.pl==='IG'?pvIG(p):PV.pl==='FB'?pvFB(p):PV.pl==='TT'?pvTT(p):pvX(p))+'</div></div>';
+    h+='<div class="phone"><div class="screen'+(PV.pl==='X'&&!PV.grid?' dark':'')+(PV.pl==='TT'&&!PV.grid?' tt-s':'')+'">'+(PV.grid?pvGrid(list):PV.pl==='IG'?pvIG(p):PV.pl==='FB'?pvFB(p):PV.pl==='TT'?pvTT(p):pvX(p))+'</div></div>';
     h+='<div class="pv-meta">'+(PV.grid?'المنشورات الجاية متعلّم عليها بالدهبي، ودوس على أي واحد يفتح معاينته':esc(p.t)+' · '+pvWhen(p)+' · '+stTag(p.status)+' · <a href="'+postHref(p)+'" style="color:var(--gold-ink)">افتح في اللوحة</a>')+'</div>';
     return h+'</div></div>';
   }
   var BY_P={};
   function bindPreview(){
     page.querySelectorAll('[data-pvid]').forEach(function(b){b.onclick=function(){PV.id=b.dataset.pvid;PV.i=0;PV.more=false;PV.grid=false;rerender()}});
+    page.querySelectorAll('[data-pvf]').forEach(function(b){b.onclick=function(){PV[b.dataset.pvf]=b.dataset.v;PV.i=0;rerender()}});
+    var q=page.querySelector('#pvq');if(q){var tm;q.oninput=function(){clearTimeout(tm);tm=setTimeout(function(){PV.q=q.value.trim();rerender();var n=page.querySelector('#pvq');if(n){n.focus();n.setSelectionRange(n.value.length,n.value.length)}},350)}}
+    var cur=page.querySelector('.pv-it[aria-current="true"]'),L=page.querySelector('.pv-list');if(cur&&L&&L.scrollHeight>L.clientHeight)L.scrollTop=Math.max(0,cur.offsetTop-L.offsetTop-60);
     page.querySelectorAll('[data-pvpl]').forEach(function(b){b.onclick=function(){PV.pl=b.dataset.pvpl;PV.grid=false;PV.more=false;rerender()}});
     var g=page.querySelector('[data-pvgrid]');if(g)g.onclick=function(){PV.grid=!PV.grid;rerender()};
     page.querySelectorAll('[data-pvi]').forEach(function(b){b.onclick=function(){PV.i+=+b.dataset.pvi;rerender()}});
