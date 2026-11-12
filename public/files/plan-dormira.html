@@ -58,13 +58,20 @@ tr.tot td.num{color:var(--gold);font-size:26px}
 </style>
 <style>
 .pg{gap:22px;padding:76px 96px}
+.pg+.pg{padding-top:70px;padding-bottom:66px}
 td{padding:12px 18px}
-.list{margin:0;padding-inline-start:28px;font-size:19px}.list li{margin:6px 0}
+.list{margin:0;padding-inline-start:28px;font-size:19px}.list li{margin:3px 0}
 .sign{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-.sign div{border:1px solid var(--line);border-radius:10px;padding:14px 18px;height:96px;font-size:15px;color:var(--ink-3)}
+.sign div{border:1px solid var(--line);border-radius:10px;padding:12px 18px;height:84px;font-size:15px;color:var(--ink-3)}
 .box{background:var(--soft);border-radius:12px;padding:18px 22px;font-size:19px}
 .box b{color:var(--gold)}
 th.nh{text-align:left}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.steps div{border:1px solid var(--line);border-radius:12px;padding:14px 20px}
+.steps em{font-style:normal;font-family:var(--f-mono);color:var(--gold);font-weight:600;font-size:17px}
+.steps b{display:block;font-size:21px;margin:2px 0 6px}
+.steps span{font-size:17px;color:var(--ink-2);line-height:1.6}
+.box small{font-size:15px;color:var(--ink-3)}
 td.day{white-space:nowrap;font-weight:600;width:150px}
 </style>
 </head>
@@ -76,20 +83,20 @@ td.day{white-space:nowrap;font-weight:600;width:150px}
   </div>
   <div class="cards">
     <div class="card"><small>البند</small><b>تجربة إعلانية لجلب حجوزات مباشرة عبر واتساب</b></div>
-    <div class="card"><small>المدة</small><b>7 أيام تجهيز + 21 يوماً تشغيل إعلاني</b></div>
+    <div class="card"><small>المدة</small><b>7 أيام تجهيز + 21 أو 30 يوماً تشغيل إعلاني</b></div>
     <div class="card"><small>الموقع</small><b>حي العقيق، على بُعد 2–3 كم من المركز المالي (KAFD)</b></div>
     <div class="card"><small>إعداد</small><b>محمد سبيت</b></div>
   </div>
   <h2><span class="n">01</span>الميزانية المقترحة</h2>
   <p class="sub">خياران للاعتماد، وكلاهما مستقل عن ميزانية العمارات (7,000 ريال). الأرقام بالريال.</p>
   <table>
-    <tr><th>المنصة</th><th>الشريحة</th><th class="nh">يومياً (أ)</th><th class="nh">21 يوماً (أ)</th><th class="nh">يومياً (ب)</th><th class="nh">21 يوماً (ب)</th></tr>
-    <tr><td><div class="pl"><i style="background:#0866FF"></i>ميتا</div></td><td class="mid">الإقامة الشهرية</td><td class="num">60</td><td class="num">1,260</td><td class="num">80</td><td class="num">1,680</td></tr>
-    <tr><td><div class="pl"><i style="background:#0866FF"></i>ميتا</div></td><td class="mid">الأعمال 3–14 ليلة · العقيق وKAFD</td><td class="num">40</td><td class="num">840</td><td class="num">50</td><td class="num">1,050</td></tr>
-    <tr><td><div class="pl"><i style="background:#FFFC00;border:1px solid #D9D400"></i>سناب شات</div></td><td class="mid">الإقامة الشهرية</td><td class="num">50</td><td class="num">1,050</td><td class="num">70</td><td class="num">1,470</td></tr>
-    <tr class="tot"><td colspan="2">الإجمالي</td><td class="num">150</td><td class="num">3,150</td><td class="num">200</td><td class="num">4,200</td></tr>
+    <tr><th>المنصة</th><th>الشريحة</th><th class="nh">يومياً (أ)</th><th class="nh">21 يوماً (أ)</th><th class="nh">يومياً (ب)</th><th class="nh">30 يوماً (ب)</th></tr>
+    <tr><td><div class="pl"><i style="background:#0866FF"></i>ميتا</div></td><td class="mid">الإقامة الشهرية</td><td class="num">60</td><td class="num">1,260</td><td class="num">80</td><td class="num">2,400</td></tr>
+    <tr><td><div class="pl"><i style="background:#0866FF"></i>ميتا</div></td><td class="mid">الأعمال 3–14 ليلة · العقيق وKAFD</td><td class="num">40</td><td class="num">840</td><td class="num">50</td><td class="num">1,500</td></tr>
+    <tr><td><div class="pl"><i style="background:#FFFC00;border:1px solid #D9D400"></i>سناب شات</div></td><td class="mid">الإقامة الشهرية</td><td class="num">50</td><td class="num">1,050</td><td class="num">70</td><td class="num">2,100</td></tr>
+    <tr class="tot"><td colspan="2">الإجمالي</td><td class="num">150</td><td class="num">3,150</td><td class="num">200</td><td class="num">6,000</td></tr>
   </table>
-  <div class="words">كتابةً: (أ) <b>ثلاثة آلاف ومئة وخمسون ريالاً</b> · (ب) <b>أربعة آلاف ومئتا ريال</b>. الخيار (ب) يعطي كل مجموعة ميزانية أكبر فتستقر نتائجها أسرع.</div>
+  <div class="words">كتابةً: (أ) <b>ثلاثة آلاف ومئة وخمسون ريالاً لمدة 21 يوماً</b> · (ب) <b>ستة آلاف ريال لمدة 30 يوماً</b>. الخيار (ب) يعطي كل مجموعة ميزانية أكبر ووقتاً أطول، فتستقر نتائجه ويمكن الحكم عليه بثقة أكبر.</div>
   <h2><span class="n">02</span>على ماذا بُني التقدير</h2>
   <p class="sub">نتائج أكتوبر 2026 الفعلية لعمارتي الرمال والملز.</p>
   <div class="kp">
@@ -98,38 +105,35 @@ td.day{white-space:nowrap;font-weight:600;width:150px}
     <div><b><bdi dir="ltr">4–8</bdi></b><span>ريالات تكلفة المحادثة المفترضة لدورميرا في ميتا</span></div>
   </div>
   <p class="note">رفعنا تقدير التكلفة لأن جمهور الفنادق يختلف عن جمهور الشقق. سناب شات لا يقيس المحادثات، لذلك نستخدم رسالة افتتاحية خاصة بكل إعلان لنعرف مصدر كل محادثة وحجز. المحادثة لا تعني حجزاً، والتقييم بالحجوزات المؤكدة.</p>
-  <h2><span class="n">03</span>حساب التعادل</h2>
-  <div class="box">عدد حجوزات التعادل = تكلفة الحملة ÷ هامش الربح الإضافي للحجز الواحد.<br>مثال توضيحي: بهامش 900 ريال للحجز تكفي <b>4 حجوزات</b> في الخيار (أ) و<b>5 حجوزات</b> في الخيار (ب). يُحسب الرقم الفعلي بعد استلام أسعار الفندق، ولا تُحتسب إلا الحجوزات الإضافية فوق مستوى ما قبل الحملة.</div>
 </div>
 <div class="pg">
+  <h2><span class="n">03</span>كم حجزاً نحتاج لتغطية تكلفة الحملة؟</h2>
+  <div class="steps">
+    <div><em>1</em><b>ربح الحجز</b><span>إيراد الحجز ناقص تكلفة تشغيله على الفندق (النظافة والمستلزمات والخدمات)</span></div>
+    <div><em>2</em><b>حجوزات التعادل</b><span>ميزانية الحملة ÷ ربح الحجز الواحد، ونقرّب الناتج لأعلى</span></div>
+    <div><em>3</em><b>بعد التعادل</b><span>كل حجز إضافي بعد ذلك ربح صافٍ للفندق</span></div>
+  </div>
+  <div class="box">مثال افتراضي: إذا حقق الحجز الشهري للفندق 900 ريال ربحاً بعد تكاليفه، يحتاج الخيار (أ) <b>4 حجوزات</b> (3,150 ÷ 900 = 3.5) والخيار (ب) <b>7 حجوزات</b> (6,000 ÷ 900 = 6.7) لتغطية الحملة.<br><small>الرقم الفعلي يُحسب بعد استلام أسعار الفندق وتكاليفه.</small></div>
   <h2><span class="n">04</span>شروط قبل بدء الصرف</h2>
-  <p class="sub">لا تبدأ الأيام الـ21 إلا بعد اكتمالها.</p>
-  <table>
-    <tr><th>المتطلب</th><th>المسؤول</th></tr>
-    <tr><td>أسعار الإقامة اليومية والشهرية والتوافر</td><td class="mid">مدير الفندق</td></tr>
-    <tr><td>معالجة ملاحظات النظافة وتوفير المستلزمات ليلاً</td><td class="mid">مدير التشغيل</td></tr>
-    <tr><td>مسؤول ثابت لواتساب الحجوزات ورقم مستقل لدورميرا</td><td class="mid">مدير الحجوزات</td></tr>
-    <tr><td>تسجيل مصدر كل حجز في نظام الحجوزات، وعدّ حجوزات واتساب في الأسابيع الأربعة السابقة</td><td class="mid">الحجوزات</td></tr>
-    <tr><td>صور ومقاطع حقيقية للفندق بمقاسات ميتا وسناب شات</td><td class="mid">التسويق</td></tr>
-    <tr><td>تحديث ملف الفندق على خرائط جوجل والرد على التقييمات</td><td class="mid">التسويق</td></tr>
-    <tr><td>التحقق من الترخيص ومتطلبات وزارة السياحة للإعلان</td><td class="mid">الإدارة المختصة</td></tr>
-    <tr><td>مركز تكلفة ووسيلة دفع مستقلة لدورميرا</td><td class="mid">الإدارة المالية</td></tr>
-  </table>
+  <p class="sub">لا تبدأ مدة الحملة إلا بعد اكتمالها.</p>
+  <ol class="list">
+    <li>اعتماد أسعار الإقامة اليومية والشهرية والتوافر</li>
+    <li>معالجة ملاحظات النزلاء على النظافة وتوفر المناشف والمفارش</li>
+    <li>صور ومقاطع حقيقية واحترافية للفندق</li>
+    <li>تحديث ملف الفندق على خرائط جوجل والرد على التقييمات</li>
+    <li>التحقق من الترخيص ومتطلبات وزارة السياحة للإعلان</li>
+  </ol>
   <h2><span class="n">05</span>ضوابط القرار أثناء الحملة</h2>
   <table>
     <tr><th>التوقيت</th><th>القرار</th></tr>
     <tr><td class="day">اليوم 7</td><td>إذا تجاوزت تكلفة المحادثة 10 ريالات يُعدَّل المحتوى والاستهداف</td></tr>
-    <tr><td class="day">اليوم 10</td><td>إذا لم يتحقق أي حجز مؤكد تُخفَّض الميزانية 50% وتُراجَع الأسعار والردود</td></tr>
-    <tr><td class="day">اليوم 14</td><td>تُنقل الميزانية للمنصة والشريحة الأعلى في الحجوزات المربحة</td></tr>
-    <tr><td class="day">اليوم 21</td><td>تقرير نهائي وقرار الاستمرار أو التعديل أو الإيقاف</td></tr>
+    <tr><td class="day">اليوم 14</td><td>إذا لم تتحقق معاينات ولا حجوزات مؤكدة تُخفَّض الميزانية 50% وتُراجَع الأسعار والردود. وإن تحققت تُنقل الميزانية للمنصة والشريحة الأفضل في الحجوزات</td></tr>
+    <tr><td class="day">اليوم 21</td><td>تقرير نهائي للخيار (أ)، وتقرير منتصف المرحلة للخيار (ب)</td></tr>
+    <tr><td class="day">اليوم 30</td><td>تقرير نهائي للخيار (ب) وقرار الاستمرار أو التعديل أو الإيقاف</td></tr>
   </table>
-  <p class="note">يُوقف الصرف فوراً إذا تأخر الرد على العملاء أو لم تكن الوحدات جاهزة. والهدف الرد خلال 5 دقائق على 80% من المحادثات.</p>
+  <p class="note">نقيس في كل مرحلة: المحادثات، ثم المعاينات (للإقامة الشهرية)، ثم الحجوزات المؤكدة والليالي المباعة. ويُوقف الصرف فوراً إذا تأخر الرد على العملاء أو لم تكن الوحدات جاهزة.</p>
   <h2><span class="n">06</span>المطلوب اعتماده</h2>
-  <ol class="list">
-    <li>ميزانية الاختبار: الخيار (أ) 3,150 ريالاً أو الخيار (ب) 4,200 ريال، منفصلة عن ميزانية العمارات.</li>
-    <li>فريق حجوزات مسؤول عن متابعة العملاء وتسجيل النتائج.</li>
-    <li>صلاحية للتسويق في تخفيض الصرف أو إيقافه أو نقله بين المنصتين وفق الضوابط أعلاه.</li>
-  </ol>
+  <div class="box">اعتماد ميزانية التجربة لفندق دورميرا وفق أحد الخيارين: <b>(أ) 3,150 ريالاً لمدة 21 يوماً</b> أو <b>(ب) 6,000 ريال لمدة 30 يوماً</b>، منفصلة عن ميزانية العمارات، على أن يبدأ الصرف بعد اكتمال شروط البند 04.</div>
   <div class="sign"><div>الاسم</div><div>الخيار المعتمد</div><div>التوقيع</div><div>التاريخ</div></div>
 </div>
 </body>
