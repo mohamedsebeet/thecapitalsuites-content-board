@@ -55,10 +55,17 @@
     {
       "source": "/api/gpt/:op",
       "destination": "/api/gpt?op=:op"
+    },
+    {
+      "source": "/api/mcp/:k",
+      "destination": "/api/mcp?k=:k"
     }
   ],
   "functions": {
     "api/gpt.js": {
+      "maxDuration": 60
+    },
+    "api/mcp.js": {
       "maxDuration": 60
     }
   }
