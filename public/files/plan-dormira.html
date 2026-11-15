@@ -73,6 +73,24 @@ th.nh{text-align:left}
 .steps span{font-size:17px;color:var(--ink-2);line-height:1.6}
 .box small{font-size:15px;color:var(--ink-3)}
 td.day{white-space:nowrap;font-weight:600;width:150px}
+.ads .r{padding:22px 24px;gap:28px}
+.ads .pl{align-items:flex-start}.ads .pl i{margin-top:9px}
+.ad{flex:1;display:flex;flex-direction:column;gap:18px}
+.ad1+.ad1{border-top:1px dashed var(--line);padding-top:18px}
+.fm{display:inline-block;font-size:14px;color:var(--gold);border:1px solid #E3D3AF;background:#FBF6EA;border-radius:999px;padding:1px 12px;margin-bottom:6px}
+.ad1 b{display:block;font-family:var(--f-disp);font-size:24px;font-weight:700;line-height:1.5}
+.ad1 p{margin:4px 0 0;font-size:18px;color:var(--ink-2);line-height:1.7}
+.ad1 q,.qk{display:inline-flex;align-items:center;gap:8px;margin-top:10px;font-size:16px;color:#1E6B45;background:#EAF5EE;border-radius:8px;padding:3px 12px}
+.ad1 q::before,.qk::before{content:"";width:14px;height:14px;border-radius:50%;background:#25D366;flex:none}
+.ad1 q::after{content:none}
+.qk{margin:0;padding:3px 8px;vertical-align:middle}
+@media screen and (max-width:900px){
+  body{font-size:17px}
+  .pg,.pg+.pg{width:auto;height:auto;padding:28px 16px;overflow:visible}
+  h1{font-size:28px}.cards,.kp,.steps{grid-template-columns:1fr}
+  table{font-size:16px}td,th{padding:10px 12px}td.day{width:auto}
+  .ex .r{flex-direction:column;gap:12px}.ex .r .pl{width:auto}
+}
 </style>
 </head>
 <body>
@@ -132,7 +150,34 @@ td.day{white-space:nowrap;font-weight:600;width:150px}
     <tr><td class="day">اليوم 30</td><td>تقرير نهائي وقرار الاستمرار أو التعديل أو الإيقاف</td></tr>
   </table>
   <p class="note">نقيس في كل مرحلة: المحادثات، ثم المعاينات (للإقامة الشهرية)، ثم الحجوزات المؤكدة والليالي المباعة. ويُوقف الصرف فوراً إذا تأخر الرد على العملاء أو لم تكن الوحدات جاهزة.</p>
-  <h2><span class="n">06</span>المطلوب اعتماده</h2>
+</div>
+<div class="pg">
+  <h2><span class="n">06</span>أمثلة للمحتوى الإعلاني</h2>
+  <p class="sub">نماذج مبدئية للنصوص، وتُصمَّم بصور الفندق الحقيقية بعد تصويره.</p>
+  <div class="ex ads">
+    <div class="r">
+      <div class="pl"><i style="background:#0866FF"></i><div>ميتا<small>الإقامة الشهرية</small></div></div>
+      <div class="ad">
+        <div class="ad1"><span class="fm">صورة 4:5</span><b>سكنك الشهري في العقيق</b><p>إقامة شهرية في فندق دورميرا بحي العقيق. غرفتك جاهزة من أول يوم، وتجدد بالشهر بدون عقد سنوي. راسلنا على واتساب واعرف السعر والتوافر.</p><q>أبغى أعرف أسعار الإقامة الشهرية</q></div>
+        <div class="ad1"><span class="fm">كاروسيل 5 شرائح</span><b>جولة داخل دورميرا</b><p>الغرفة · دورة المياه · الاستقبال · المنطقة المحيطة · الشريحة الأخيرة: السعر وزر «راسلنا واتساب».</p></div>
+      </div>
+    </div>
+    <div class="r">
+      <div class="pl"><i style="background:#0866FF"></i><div>ميتا<small>الأعمال 3–14 ليلة</small></div></div>
+      <div class="ad">
+        <div class="ad1"><span class="fm">صورة أو فيديو قصير</span><b>قريب من المركز المالي</b><p>عندك شغل في KAFD أو العقيق؟ أقم في دورميرا من 3 ليالٍ إلى أسبوعين، واحجز مباشرة على واتساب.</p><q>أبغى حجز إقامة عمل</q></div>
+      </div>
+    </div>
+    <div class="r">
+      <div class="pl"><i style="background:#FFFC00;border:1px solid #D9D400"></i><div>سناب شات<small>الإقامة الشهرية</small></div></div>
+      <div class="ad">
+        <div class="ad1"><span class="fm">ستوري 9:16</span><b>شهر كامل في العقيق</b><p>إقامة فندقية بالشهر · بدون عقد سنوي · زر «راسلنا واتساب».</p><q>من سناب: أبغى أسعار الشهري</q></div>
+        <div class="ad1"><span class="fm">فيديو 10 ثوانٍ</span><b>غرفتك جاهزة من أول يوم</b><p>الواجهة ← الاستقبال ← الغرفة ← العنوان على الشاشة ← زر واتساب.</p></div>
+      </div>
+    </div>
+  </div>
+  <p class="note"><span class="qk"></span> الرسالة الافتتاحية الجاهزة في واتساب، وتختلف لكل إعلان لنعرف مصدر كل محادثة وحجز. الأسعار تُضاف بعد اعتمادها، ورقم ترخيص الإعلان يظهر على كل تصميم، وعبارة «بدون عقد سنوي» تُستخدم فقط إذا سمحت بها شروط الحجز.</p>
+  <h2><span class="n">07</span>المطلوب اعتماده</h2>
   <div class="box">اعتماد ميزانية تجربة لفندق دورميرا قدرها <b>4,500 ريال لمدة 30 يوماً</b>، منفصلة عن ميزانية العمارات، على أن يبدأ الصرف بعد اكتمال شروط البند 04.</div>
 </div>
 </body>
