@@ -1,0 +1,254 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "غرفة التشغيل · ذا كابيتال سويتس",
+  "version": "1.0.0",
+  "description": "قراءة خطة المحتوى وطلبات التصميم، ورفع التصاميم للمراجعة. ما فيش اعتماد ولا حذف."
+ },
+ "servers": [
+  {
+   "url": "https://thecapitalsuites-content-board.vercel.app"
+  }
+ ],
+ "paths": {
+  "/api/gpt/queue": {
+   "get": {
+    "operationId": "getDesignQueue",
+    "summary": "المنشورات اللي محتاجة تصميم قريب، والتعديلات المطلوبة على تصاميمك، وطلبات الاتجاه التاني",
+    "parameters": [
+     {
+      "name": "days",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "default": 10,
+       "maximum": 60
+      },
+      "description": "عدد الأيام الجاية"
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "قائمة الشغل",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/gpt/post": {
+   "get": {
+    "operationId": "getPost",
+    "summary": "منشور واحد بكل تفاصيله وتصاميمه وملاحظاته",
+    "parameters": [
+     {
+      "name": "id",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "المنشور",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/gpt/plan": {
+   "get": {
+    "operationId": "getContentPlan",
+    "summary": "خطة المحتوى: كل المنشورات في فترة",
+    "parameters": [
+     {
+      "name": "from",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "format": "date"
+      }
+     },
+     {
+      "name": "to",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "format": "date"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "المنشورات",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/gpt/ads": {
+   "get": {
+    "operationId": "listAdDesigns",
+    "summary": "تصاميم الإعلانات المرفوعة وحالتها",
+    "responses": {
+     "200": {
+      "description": "الإعلانات",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/gpt/post-design": {
+   "post": {
+    "operationId": "uploadPostDesign",
+    "summary": "رفع تصميم (نسخة جديدة) على منشور وتحويله للمراجعة",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "required": [
+         "post",
+         "openaiFileIdRefs"
+        ],
+        "properties": {
+         "post": {
+          "type": "string",
+          "description": "رقم المنشور (id) من القائمة"
+         },
+         "note": {
+          "type": "string",
+          "description": "سطر واحد: إيه اللي عملته"
+         },
+         "opts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          },
+          "description": "حرف الاختيار لكل صورة بنفس الترتيب، مثل A وA وB. شرايح الكاروسيل الواحد بنفس الحرف"
+         },
+         "openaiFileIdRefs": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          },
+          "description": "الصور اللي هتترفع: الصور اللي في المحادثة أو اللي عملتها. ChatGPT بيملاها تلقائياً."
+         }
+        }
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "اترفع",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/gpt/ad-version": {
+   "post": {
+    "operationId": "uploadAdDesign",
+    "summary": "رفع تصميم إعلان جديد للمراجعة في «تصاميم الإعلانات»",
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "required": [
+         "key",
+         "title",
+         "platform",
+         "openaiFileIdRefs"
+        ],
+        "properties": {
+         "key": {
+          "type": "string",
+          "description": "new لإعلان جديد، أو مفتاح إعلان موجود من listAdDesigns لنسخة جديدة منه"
+         },
+         "title": {
+          "type": "string"
+         },
+         "platform": {
+          "type": "string",
+          "enum": [
+           "meta",
+           "snap"
+          ]
+         },
+         "campaign": {
+          "type": "string",
+          "description": "اسم الحي: الرمال أو القيروان أو الملز"
+         },
+         "text": {
+          "type": "string",
+          "description": "نص الإعلان"
+         },
+         "note": {
+          "type": "string"
+         },
+         "openaiFileIdRefs": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          },
+          "description": "الصور اللي هتترفع: الصور اللي في المحادثة أو اللي عملتها. ChatGPT بيملاها تلقائياً."
+         }
+        }
+       }
+      }
+     }
+    },
+    "responses": {
+     "200": {
+      "description": "اترفع",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

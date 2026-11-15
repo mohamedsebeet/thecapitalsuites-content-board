@@ -50,5 +50,16 @@
       "destination": "https://cdn.jsdelivr.net/gh/mohamedsebeet/thecapitalsuites-content-board@main/public/files/week1/week1-texts.pdf",
       "permanent": false
     }
-  ]
+  ],
+  "rewrites": [
+    {
+      "source": "/api/gpt/:op",
+      "destination": "/api/gpt?op=:op"
+    }
+  ],
+  "functions": {
+    "api/gpt.js": {
+      "maxDuration": 60
+    }
+  }
 }

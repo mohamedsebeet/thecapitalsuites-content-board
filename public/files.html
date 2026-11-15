@@ -302,7 +302,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     {g:'المحتوى العضوي',items:[
       {id:'simple',t:'اللوحة المبسطة',d:'الأسبوع بالمراحل أو الشهر بالتواريخ: ارفع التصميم، اعتمد، انقل الميعاد، وعلّم اتنشر',m:'الشغل اليومي ↗',href:'simple.html',self:true},
       {id:'post-designs',t:'تصاميم المحتوى',d:'كل تصميم وريل للمنشورات: المصمم يرفع، وإنت ترسم ملاحظاتك على الصورة أو على لقطة من الريل، وتعتمد',m:'مباشر',live:true,need:['view.publish','designs.upload','posts.approve']},
-      {id:'claude-q',t:'طلبات Claude',d:'اللي Claude شغال عليه: تصاميم مطلوبة قريب، تعديلات، واتجاهات تانية، واللي مستني اعتمادك',m:'مباشر',live:true,need:['posts.approve']},
+      {id:'claude-q',t:'طلبات Claude و ChatGPT',d:'اللي Claude و ChatGPT شغالين عليه: تصاميم مطلوبة قريب، تعديلات، واتجاهات تانية، واللي مستني اعتمادك',m:'مباشر',live:true,need:['posts.approve']},
       {id:'designer-count',t:'حساب المصمم',d:'عدد التصاميم اللي اترفعت في أي فترة: جديد ولا تعديل، ومعتمد ولا لأ، مع كشف تحمّله للمحاسبة',m:'مباشر',live:true,need:['designs.upload','posts.approve']},
       {id:'preview',t:'معاينة المنشورات',d:'كل المحتوى اللي اتنشر واللي لسه، بشكله على إنستغرام وفيسبوك وتيك توك وX، مع فلاتر وشبكة الحساب',m:'مباشر',live:true,need:'view.publish'},
       {id:'publish',t:'جدول النشر',d:'مواعيد النشر لكل منصة: انسخ النص، نزّل التصميم، وعلّم إنه اتنشر',m:'مباشر',live:true,need:'view.publish'},
@@ -410,7 +410,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
   /* ---------- البيانات ---------- */
   var DB=null,POSTS=[],ALL=[],LOADED=false,CAMP=null,CAMP_ERR=false,KPI={},ROLE='',ME='',NAMES={},CUR='';
   function load(){
-    ROLE=capital.role();ME=capital.email();NAMES=capital.names()||{};NAMES.claude='Claude';
+    ROLE=capital.role();ME=capital.email();NAMES=capital.names()||{};NAMES.claude='Claude';NAMES.gpt='ChatGPT';
     claude.use('db').then(function(db){DB=db;
       db.collection('posts').limit(1000).onSnapshot(function(s){
         ALL=s.docs.map(function(x){var o=Object.assign({},x.data());o.id=x.id;return o}).filter(function(p){return !PAUSED[p.p]}).sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:0});
@@ -664,7 +664,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     if(p.b)h+='<p class="adn"><b>البريف:</b> '+esc(p.b)+'</p>';
     if(p.status==='changes'&&(p.lastNote||openMk))h+='<p class="adn rv"><b>المطلوب تعديله:</b> '+esc(p.lastNote||'')+(openMk?' <span class="m">('+openMk+' '+(openMk>1?'ملاحظات مرسومة':'ملاحظة مرسومة')+' على النسخة '+vs[0].v+' تحت)</span>':'')+'</p>';
     var opts=vs.length?vs[0].files.map(function(x){return x.opt}).filter(function(o,i,a){return o&&a.indexOf(o)===i}):[];
-    if(ap&&vs.length&&!done)h+='<div class="plb">'+(opts.length>1?opts.map(function(o){return '<button class="pbtn sm" data-pick="'+esc(o)+'">✓ اعتماد الاختيار '+esc(o)+'</button>'}).join(''):'<button class="pbtn sm" data-pa="approved">✓ اعتماد التصميم</button>')+(vs[0].files.some(function(x){return x.by==='claude'})?'<button class="pbtn sm ghost" data-alt="1">↻ جرّب اتجاه تاني</button>':'')+(p.status!=='changes'?'<button class="pbtn sm ghost" data-pa="changes">تعديلات مطلوبة</button>':'')+'<span class="m">أو ارسم ملاحظاتك على '+(isReel(p)?'الريل أو الصورة':'التصميم')+' مباشرة ✎</span></div><div class="adrn" id="pcrn" hidden><textarea id="pcrnt" rows="2" placeholder="إيه المطلوب تعديله؟"></textarea><button class="pbtn sm" id="pcsend">إرسال للمصمم</button></div><div class="adrn" id="pcalt" hidden><textarea rows="2" placeholder="اختياري: إيه اللي مش عاجبك أو عايز تشوف إيه؟ مثال: أبسط، صورة الوحدة أكبر، ألوان أهدى"></textarea><button class="pbtn sm" id="pcaltsend">اطلب تصاميم جديدة</button></div>';
+    if(ap&&vs.length&&!done)h+='<div class="plb">'+(opts.length>1?opts.map(function(o){return '<button class="pbtn sm" data-pick="'+esc(o)+'">✓ اعتماد الاختيار '+esc(o)+'</button>'}).join(''):'<button class="pbtn sm" data-pa="approved">✓ اعتماد التصميم</button>')+(vs[0].files.some(function(x){return x.by==='claude'||x.by==='gpt'})?'<button class="pbtn sm ghost" data-alt="1">↻ جرّب اتجاه تاني</button>':'')+(p.status!=='changes'?'<button class="pbtn sm ghost" data-pa="changes">تعديلات مطلوبة</button>':'')+'<span class="m">أو ارسم ملاحظاتك على '+(isReel(p)?'الريل أو الصورة':'التصميم')+' مباشرة ✎</span></div><div class="adrn" id="pcrn" hidden><textarea id="pcrnt" rows="2" placeholder="إيه المطلوب تعديله؟"></textarea><button class="pbtn sm" id="pcsend">إرسال للمصمم</button></div><div class="adrn" id="pcalt" hidden><textarea rows="2" placeholder="اختياري: إيه اللي مش عاجبك أو عايز تشوف إيه؟ مثال: أبسط، صورة الوحدة أكبر، ألوان أهدى"></textarea><button class="pbtn sm" id="pcaltsend">اطلب تصاميم جديدة</button></div>';
     if(up&&!done)h+='<div class="plb" style="margin-top:12px"><button class="pbtn" type="button" id="pcshow">↑ ارفع '+(vs.length?'نسخة جديدة (النسخة '+(vs[0].v+1)+')':'التصميم أو الريل')+'</button></div><div id="pcupw" hidden style="margin-top:10px"><form class="adup" id="pcup"><label>الملفات (كل صور الكاروسيل أو الريل مع الغلاف)<input type="file" name="files" multiple accept="image/png,image/jpeg,image/webp,video/mp4,video/quicktime,application/pdf" required></label><label>إيه اللي اتغيّر؟ (اختياري)<textarea id="pcupn" name="note" rows="2" placeholder="مثال: غيّرت الخلفية وكبّرت العنوان، وقصّرت أول 3 ثواني في الريل"></textarea></label><div class="plb"><button class="pbtn" type="submit">↑ ارفع</button><span class="m" id="pcst"></span></div></form></div>';
     h+='<h4>التصاميم'+(vs.length?' <span class="c">'+vs.length+' '+(vs.length>1?'نسخ':'نسخة')+'</span>':'')+'</h4>';
     if(!vs.length&&(p.im||[]).length)h+='<p class="adn">لسه مفيش تصميم مرفوع. ده التصميم المقترح:</p><div class="lb-row sm">'+p.im.map(function(u){return '<img src="'+esc(u)+'" alt="">'}).join('')+'</div>';
@@ -1230,7 +1230,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
 
 
   /* ---------- طلبات Claude ---------- */
-  function claudeTop(p){var vs=pcVers(p);return vs.length&&vs[0].files.some(function(x){return x.by==='claude'})}
+  function claudeTop(p){var vs=pcVers(p);return vs.length&&vs[0].files.some(function(x){return x.by==='claude'||x.by==='gpt'})}
   function renderClaudeQ(){
     if(!LOADED)return '<p class="loading">جارِ التحميل…</p>';
     var lim=iso(addD(TODAY,10));
@@ -1240,7 +1240,7 @@ form.kpi input{font:inherit;padding:8px 10px;border:1px solid var(--line);border
     var rev=POSTS.filter(function(p){return p.status==='review'&&claudeTop(p)});
     function row(p,extra){return '<button type="button" class="tile" data-pds="'+esc(p.id)+'" style="text-align:start"><span class="k">'+dayD(p.d)+' · '+esc(PSHORT[p.p]||p.p||'')+'</span><b style="font-size:15px">'+esc(p.t||'منشور')+'</b><span class="s">'+esc(extra||'')+'</span></button>'}
     function sec(t,l,f,empty){return '<div class="tsec"><h3>'+t+' ('+l.length+')</h3></div>'+(l.length?'<div class="tiles">'+l.map(f).join('')+'</div>':'<p class="empty">'+empty+'</p>')}
-    var h='<h2>طلبات Claude</h2><p class="lede">Claude بيراجع الطلبات دي مرتين في اليوم (الصبح وبعد العصر) ويرفع التصاميم على المنشور نفسه. افتح أي منشور عشان تعتمد أو تطلب تعديل أو اتجاه تاني.</p>';
+    var h='<h2>طلبات Claude و ChatGPT</h2><p class="lede">Claude بيراجع الطلبات دي مرتين في اليوم (الصبح وبعد العصر)، و ChatGPT بيرفع لما تطلب منه. التصاميم بتتحط على المنشور نفسه. افتح أي منشور عشان تعتمد أو تطلب تعديل أو اتجاه تاني.</p>';
     h+=sec('مستني اعتمادك',rev,function(p){var vs=pcVers(p),o=vs[0].files.map(function(x){return x.opt}).filter(function(x,i,a){return x&&a.indexOf(x)===i});return row(p,'النسخة '+vs[0].v+(o.length>1?' · '+o.length+' اختيارات':''))},'مفيش تصاميم من Claude مستنية مراجعة.');
     h+=sec('تعديلات مطلوبة',chg,function(p){return row(p,p.lastNote||'')},'مفيش تعديلات مطلوبة.');
     h+=sec('اتجاه تاني مطلوب',alt,function(p){return row(p,p.ask.note||'من غير ملاحظات')},'مفيش.');
