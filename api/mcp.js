@@ -1,112 +1,87 @@
-// MCP adapter for the existing GPT agent. No approval or deletion tools.
+// خادم MCP لشات جي بي تي (إضافة/Connector): نفس صلاحيات رابط api/gpt (قراءة الطلبات والخطة ورفع التصاميم للمراجعة)
+// المصادقة: هيدر X-GPT-Key أو Authorization: Bearer بنفس المفتاح GPT_ACCESS_KEY، أو (لو الإضافة ما بتدعمش هيدر) /api/mcp/<المفتاح>
 const crypto = require('crypto');
 const agent = require('../lib/agent')('gpt', 'GPT_ACCESS_KEY', 'x-gpt-key');
-const spec = require('../tools/gpt/openapi.json');
-const operations = new Map();
-for (const [path, methods] of Object.entries(spec.paths)) {
-  for (const [method, op] of Object.entries(methods)) {
-    const inputSchema = method === 'post'
-      ? JSON.parse(JSON.stringify(op.requestBody.content['application/json'].schema))
-      : { type: 'object', properties: Object.fromEntries((op.parameters || []).map(p => [p.name, p.schema])), required: (op.parameters || []).filter(p => p.required).map(p => p.name) };
-    inputSchema.additionalProperties = false;
-    if (inputSchema.properties.openaiFileIdRefs) {
-      inputSchema.properties.openaiFileIdRefs = { type: 'array', minItems: 1, maxItems: 20, items: { type: 'string', format: 'uri' }, description: 'Actual HTTPS download URLs of the exact images previewed and authorized by Mohamed. MCP does not automatically resolve file IDs. Never invent URLs or pass local paths.' };
-      inputSchema.properties.uploadConfirmed = { type: 'boolean', const: true, description: 'Set true only after Mohamed explicitly says ارفع for these previewed designs.' };
-      inputSchema.required = inputSchema.required.filter(k => k !== 'openaiFileIdRefs');
-      inputSchema.required.push('uploadConfirmed');
-      inputSchema.oneOf = [{ required: ['openaiFileIdRefs'] }, { required: ['images'] }];
-      inputSchema.properties.images = { type: 'array', minItems: 1, maxItems: 20, description: 'Use for local ImageGen files when no genuine download URL is available. Base64-encode the actual approved file programmatically; never synthesize bytes.', items: { type: 'object', additionalProperties: false, required: ['name', 'type', 'base64'], properties: { name: { type: 'string', maxLength: 120 }, type: { type: 'string', enum: ['image/png', 'image/jpeg', 'image/webp'] }, base64: { type: 'string', maxLength: 4000000 } } } };
-      if (op.operationId === 'uploadPostDesign') {
-        inputSchema.required.push('note', 'opts');
-        inputSchema.properties.opts.items.enum = ['A', 'B'];
-      }
+
+function call(method, url, key, body) {
+  return new Promise(resolve => {
+    const res = { code: 200, setHeader() {}, status(c) { this.code = c; return this; }, json(j) { resolve({ code: this.code, data: j }); }, end() { resolve({ code: this.code, data: null }); } };
+    agent({ method, url, headers: { 'x-gpt-key': key }, body }, res).catch(e => resolve({ code: 500, data: { error: String(e.message || e) } }));
+  });
+}
+
+const IMG = { type: 'array', description: 'الصور بالترتيب. كل صورة إما {url} رابط https للصورة، أو {data, mime_type, name} بالـ base64', items: { type: 'object', properties: { url: { type: 'string' }, download_link: { type: 'string' }, data: { type: 'string' }, mime_type: { type: 'string' }, name: { type: 'string' } } } };
+const TOOLS = [
+  { name: 'get_design_queue', description: 'المنشورات اللي محتاجة تصميم قريب، والتعديلات المطلوبة على تصاميم ChatGPT، وطلبات الاتجاه التاني', inputSchema: { type: 'object', properties: { days: { type: 'integer', default: 10, maximum: 60 } } }, annotations: { readOnlyHint: true } },
+  { name: 'get_post', description: 'منشور واحد بالبريف والكابشن والتصاميم والملاحظات والرسومات', inputSchema: { type: 'object', required: ['id'], properties: { id: { type: 'string' } } }, annotations: { readOnlyHint: true } },
+  { name: 'get_content_plan', description: 'خطة المحتوى: المنشورات بين تاريخين (YYYY-MM-DD)', inputSchema: { type: 'object', required: ['from'], properties: { from: { type: 'string' }, to: { type: 'string' } } }, annotations: { readOnlyHint: true } },
+  { name: 'list_ad_designs', description: 'تصاميم الإعلانات المرفوعة وحالتها', inputSchema: { type: 'object', properties: {} }, annotations: { readOnlyHint: true } },
+  { name: 'upload_post_design', description: 'رفع تصميم كنسخة جديدة على منشور وتحويله للمراجعة. ما ترفعش غير بعد موافقة محمد', inputSchema: { type: 'object', required: ['post', 'images'], properties: { post: { type: 'string', description: 'رقم المنشور' }, note: { type: 'string', description: 'سطر: إيه اللي عملته' }, opts: { type: 'array', items: { type: 'string' }, description: 'حرف الاختيار لكل صورة بالترتيب (A، B). شرايح الكاروسيل الواحد بنفس الحرف' }, images: IMG } } },
+  { name: 'upload_ad_design', description: 'رفع تصميم إعلان للمراجعة في «تصاميم الإعلانات». ما ترفعش غير بعد موافقة محمد', inputSchema: { type: 'object', required: ['title', 'platform', 'images'], properties: { key: { type: 'string', description: 'new لإعلان جديد (الافتراضي) أو مفتاح إعلان موجود' }, title: { type: 'string' }, platform: { type: 'string', enum: ['meta', 'snap'] }, campaign: { type: 'string', description: 'الرمال أو القيروان أو الملز' }, text: { type: 'string' }, note: { type: 'string' }, images: IMG } } },
+];
+
+async function files(key, post, images, opts) {
+  const out = [];
+  for (let i = 0; i < Math.min((images || []).length, 20); i++) {
+    const im = images[i] || {}; let f;
+    if (im.data) {
+      const r = await call('POST', '/api/gpt', key, { action: 'upload', post: String(post).replace(/[^\w:-]/g, '-'), name: im.name || ('image-' + (i + 1) + '.png'), type: im.mime_type || 'image/png', b64: String(im.data).replace(/^data:[^,]+,/, '') });
+      if (r.code !== 200) throw new Error('upload ' + JSON.stringify(r.data)); f = r.data;
+    } else {
+      f = { ref: { download_link: im.url || im.download_link, name: im.name, mime_type: im.mime_type } };
     }
-    operations.set(op.operationId, { path, method, inputSchema, description: op.summary });
+    f.opt = opts && opts[i] ? opts[i] : null; out.push(f);
   }
+  return out;
 }
-function valid(value, schema) {
-  if (schema.oneOf && schema.oneOf.filter(s => (s.required || []).every(k => Object.hasOwn(value || {}, k))).length !== 1) return false;
-  if (schema.const !== undefined && value !== schema.const) return false;
-  if (schema.enum && !schema.enum.includes(value)) return false;
-  if (schema.type === 'object') return value && typeof value === 'object' && !Array.isArray(value) && (schema.required || []).every(k => k in value) && Object.keys(value).every(k => Object.hasOwn(schema.properties, k) && valid(value[k], schema.properties[k]));
-  if (schema.type === 'array') return Array.isArray(value) && value.length >= (schema.minItems || 0) && value.length <= (schema.maxItems || 20) && value.every(v => valid(v, schema.items));
-  if (schema.type === 'integer') return Number.isInteger(value) && value >= 1 && value <= (schema.maximum || Infinity);
-  if (schema.type === 'boolean') return typeof value === 'boolean';
-  return typeof value === 'string' && value.length <= (schema.maxLength || 10000);
+
+async function runTool(name, a, key) {
+  a = a || {};
+  if (name === 'get_design_queue') return call('GET', '/api/gpt?op=queue&days=' + (+a.days || 10), key);
+  if (name === 'get_post') return call('GET', '/api/gpt?op=post&id=' + encodeURIComponent(a.id || ''), key);
+  if (name === 'get_content_plan') return call('GET', '/api/gpt?op=plan&from=' + encodeURIComponent(a.from || '') + (a.to ? '&to=' + encodeURIComponent(a.to) : ''), key);
+  if (name === 'list_ad_designs') return call('GET', '/api/gpt?op=ads', key);
+  if (name === 'upload_post_design' || name === 'upload_ad_design') {
+    const fs = await files(key, name === 'upload_post_design' ? a.post : 'ads', a.images, a.opts);
+    const up = fs.filter(f => !f.ref), refs = fs.filter(f => f.ref);
+    const body = name === 'upload_post_design'
+      ? { action: 'post-design', post: a.post, note: a.note || '' }
+      : { action: 'ad-version', key: a.key || 'new', title: a.title, platform: a.platform, campaign: a.campaign || '', text: a.text || '', note: a.note || '' };
+    if (refs.length && !up.length) { body.openaiFileIdRefs = refs.map(f => f.ref); body.opts = refs.map(f => f.opt); }
+    else if (up.length && !refs.length) body.files = up;
+    else throw new Error('ابعت كل الصور بنفس الطريقة: روابط أو base64');
+    return call('POST', '/api/gpt', key, body);
+  }
+  return { code: 400, data: { error: 'unknown tool' } };
 }
+
 module.exports = async (req, res) => {
   res.setHeader('Cache-Control', 'no-store');
-  const expected = Buffer.from(process.env.GPT_ACCESS_KEY || '');
-  const supplied = Buffer.from(String(req.headers['x-gpt-key'] || ''));
-  if (!expected.length || expected.length !== supplied.length || !crypto.timingSafeEqual(expected, supplied)) return res.status(401).json({ error: 'Unauthorized' });
+  if (req.method === 'GET') return res.status(405).json({ error: 'POST only (MCP streamable HTTP, JSON)' });
   if (req.method !== 'POST') return res.status(405).end();
-  let rpc = req.body;
-  try { if (typeof rpc === 'string') rpc = JSON.parse(rpc); } catch { return res.status(400).json({ error: 'Invalid JSON' }); }
-  if (!rpc || rpc.jsonrpc !== '2.0' || typeof rpc.method !== 'string') return res.status(400).json({ error: 'Invalid JSON-RPC' });
-  const reply = result => res.status(200).json({ jsonrpc: '2.0', id: rpc.id ?? null, result });
-  const error = (code, message) => res.status(200).json({ jsonrpc: '2.0', id: rpc.id ?? null, error: { code, message } });
-  if (rpc.method === 'notifications/initialized') return res.status(202).end();
-  if (rpc.method === 'server/discover') return reply({ supportedVersions: ['2026-07-28'], capabilities: { tools: {} } });
-  if (rpc.method === 'initialize') return reply({ protocolVersion: '2025-03-26', capabilities: { tools: {} }, serverInfo: { name: 'capital-suites-designer', version: '0.1.0' } });
-  if (rpc.method === 'ping') return reply({});
-  if (rpc.method === 'tools/list') return reply({ tools: [...operations].map(([name, op]) => ({ name, description: op.description, inputSchema: op.inputSchema, annotations: { readOnlyHint: op.method === 'get', destructiveHint: false, idempotentHint: op.method === 'get', openWorldHint: true } })) });
-  if (rpc.method !== 'tools/call') return error(-32601, 'Method not found');
-  const op = operations.get(rpc.params?.name), args = rpc.params?.arguments || {};
-  if (!op || !valid(args, op.inputSchema)) return error(-32602, 'Invalid tool or arguments');
-  if (args.openaiFileIdRefs) {
-    for (const link of args.openaiFileIdRefs) {
-      let u; try { u = new URL(link); } catch { return error(-32602, 'HTTPS image download URL required'); }
-      const host = u.hostname.toLowerCase();
-      if (u.protocol !== 'https:' || u.username || u.password || u.port || !(host.endsWith('.oaiusercontent.com') || host.endsWith('.blob.core.windows.net') || host === 'files.openai.com')) return error(-32602, 'Use a genuine OpenAI image download URL; local paths and file IDs are unsupported');
+  const KEY = process.env.GPT_ACCESS_KEY;
+  const U = req.url || '', inUrl = (U.match(/[?&]k=([^&]+)/) || U.match(/^\/api\/mcp\/([^/?]+)/) || [])[1];
+  const given = req.headers['x-gpt-key'] || String(req.headers.authorization || '').replace(/^Bearer\s+/i, '') || (inUrl ? decodeURIComponent(inUrl) : '');
+  const ok = KEY && given && Buffer.from(given).length === Buffer.from(KEY).length && crypto.timingSafeEqual(Buffer.from(given), Buffer.from(KEY));
+  let m = req.body; if (typeof m === 'string') { try { m = JSON.parse(m); } catch (e) { m = null; } }
+  if (!m) return res.status(400).json({ jsonrpc: '2.0', id: null, error: { code: -32700, message: 'parse error' } });
+  const one = async msg => {
+    const id = msg.id === undefined ? null : msg.id, reply = r => ({ jsonrpc: '2.0', id, result: r }), err = (c, t) => ({ jsonrpc: '2.0', id, error: { code: c, message: t } });
+    if (msg.id === undefined) return null; // إشعارات
+    if (msg.method === 'initialize') return reply({ protocolVersion: (msg.params && msg.params.protocolVersion) || '2025-06-18', capabilities: { tools: {} }, serverInfo: { name: 'capital-ops-room', version: '1.0.0' }, instructions: 'غرفة التشغيل لذا كابيتال سويتس: اقرا طلبات التصميم وخطة المحتوى، وارفع التصاميم للمراجعة بعد موافقة محمد فقط.' });
+    if (msg.method === 'ping') return reply({});
+    if (!ok) return err(-32001, 'unauthorized: X-GPT-Key or Bearer token required');
+    if (msg.method === 'tools/list') return reply({ tools: TOOLS });
+    if (msg.method === 'tools/call') {
+      try {
+        const r = await runTool(msg.params && msg.params.name, msg.params && msg.params.arguments, KEY);
+        return reply({ content: [{ type: 'text', text: JSON.stringify(r.data) }], isError: r.code >= 400 });
+      } catch (e) { return reply({ content: [{ type: 'text', text: 'error: ' + String(e.message || e) }], isError: true }); }
     }
-    
-  }
-  if (args.images && args.images.reduce((n, img) => n + img.base64.length, 0) > 4000000) return error(-32602, 'Combined inline images must be at most 3 MB; use download URLs for larger batches');
-  const imageCount = (args.images || args.openaiFileIdRefs || []).length;
-  if (args.opts && args.opts.length !== imageCount) return error(-32602, 'One option label per image required');
-  if (args.note && /[\r\n]/.test(args.note)) return error(-32602, 'Note must be one line');
-  const forwarded = { ...args }; delete forwarded.uploadConfirmed;
-  if (op.method === 'post') {
-    // Validate every image before writing anything, then use the existing upload path.
-    const pending = [];
-    try {
-      for (let i = 0; i < imageCount; i++) {
-        let bytes, type, name;
-        if (args.images) {
-          const img = args.images[i];
-          if (!/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(img.base64)) throw new Error('Invalid base64');
-          bytes = Buffer.from(img.base64, 'base64'); type = img.type; name = img.name;
-        } else {
-          const response = await fetch(args.openaiFileIdRefs[i], { redirect: 'error', signal: AbortSignal.timeout(20000) });
-          if (!response.ok) throw new Error('Image download failed');
-          type = (response.headers.get('content-type') || '').split(';')[0];
-          if (!['image/png', 'image/jpeg', 'image/webp'].includes(type)) throw new Error('Unsupported image type');
-          let size = 0; const chunks = [];
-          for await (const chunk of response.body) { size += chunk.length; if (size > 3000000) throw new Error('Image exceeds 3 MB'); chunks.push(chunk); }
-          bytes = Buffer.concat(chunks); name = 'design-' + (i + 1) + '.' + (type === 'image/jpeg' ? 'jpg' : type.split('/')[1]);
-        }
-        const png = bytes.subarray(0, 8).equals(Buffer.from([137,80,78,71,13,10,26,10]));
-        const jpg = bytes[0] === 255 && bytes[1] === 216 && bytes[2] === 255;
-        const webp = bytes.toString('ascii',0,4) === 'RIFF' && bytes.toString('ascii',8,12) === 'WEBP';
-        if (!bytes.length || bytes.length > 3000000 || !(type === 'image/png' && png || type === 'image/jpeg' && jpg || type === 'image/webp' && webp)) throw new Error('Invalid image bytes or image exceeds 3 MB');
-        pending.push({ bytes, type, name });
-      }
-      forwarded.files = [];
-      for (let i = 0; i < pending.length; i++) {
-        const img = pending[i];
-        const file = await new Promise((resolve, reject) => {
-          let status = 200;
-          const capture = { setHeader() {}, status(n) { status = n; return this; }, json(data) { status >= 400 ? reject(new Error('Image storage failed')) : resolve(data); }, end() { reject(new Error('Image storage failed')); } };
-          Promise.resolve(agent({ method: 'POST', headers: req.headers, url: '/api/gpt/upload', body: { post: args.post || 'ads', name: img.name, type: img.type, b64: img.bytes.toString('base64') } }, capture)).catch(reject);
-        });
-        forwarded.files.push({ ...file, opt: args.opts?.[i] || null });
-      }
-    } catch (e) { return reply({ content: [{ type: 'text', text: e.message + '. Check state before retrying; some files may already be stored.' }], isError: true }); }
-    delete forwarded.images; delete forwarded.openaiFileIdRefs;
-  }
-  const query = op.method === 'get' ? '?' + new URLSearchParams(forwarded) : '';
-  const inner = { method: op.method.toUpperCase(), headers: req.headers, url: op.path + query, query: forwarded, body: op.method === 'post' ? forwarded : undefined };
-  let status = 200;
-  const output = { setHeader() {}, status(n) { status = n; return this; }, json(data) { return reply({ content: [{ type: 'text', text: JSON.stringify(data) }], isError: status >= 400 }); }, end() { return reply({ content: [{ type: 'text', text: 'HTTP ' + status }], isError: status >= 400 }); } };
-  try { return await agent(inner, output); } catch { return reply({ content: [{ type: 'text', text: 'Upstream request failed. Check state before retrying an upload.' }], isError: true }); }
+    return err(-32601, 'method not found');
+  };
+  if (!ok && !(Array.isArray(m) ? m : [m]).every(x => x.method === 'initialize' || x.id === undefined || x.method === 'ping')) res.setHeader('WWW-Authenticate', 'Bearer');
+  if (Array.isArray(m)) { const out = (await Promise.all(m.map(one))).filter(Boolean); return out.length ? res.status(200).json(out) : res.status(202).end(); }
+  const out = await one(m);
+  return out ? res.status(200).json(out) : res.status(202).end();
 };

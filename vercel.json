@@ -55,6 +55,10 @@
     {
       "source": "/api/gpt/:op",
       "destination": "/api/gpt?op=:op"
+    },
+    {
+      "source": "/api/mcp/:k",
+      "destination": "/api/mcp?k=:k"
     }
   ],
   "functions": {
