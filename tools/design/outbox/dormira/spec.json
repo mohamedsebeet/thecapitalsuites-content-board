@@ -1,21 +1,183 @@
-{"items":[
- {"name":"DOR-M1-feed","template":"feed","photo":"4f44cd67","kicker":"حي العقيق","title":"سكنك الشهري\nفي العقيق","sub":"شقق فندقية بالشهر\nمطبخ صغير · واي فاي ومواقف مجانية","cta":"راسلنا واتساب"},
- {"name":"DOR-M2","template":"carousel","slides":[
-   {"kind":"cover","photo":"56baed98","title":"جولة داخل\nدورميرا","sub":"حي العقيق، الرياض"},
-   {"kind":"photo","photo":"bc9f41ae","label":"الاستقبال","title":"استقبال على مدار الساعة"},
-   {"kind":"photo","photo":"5b4bf76c","label":"الجناح","title":"غرفة نوم وجلسة منفصلة"},
-   {"kind":"photo","photo":"9a7f973e","label":"المطبخ","title":"مطبخك داخل الجناح"},
-   {"kind":"end","title":"إقامة شهرية\nفي العقيق","cta":"راسلنا واتساب"}]},
- {"name":"DOR-M3-feed","template":"feed","photo":"37109cb2","kicker":"حي العقيق","title":"جناح عائلي بالشهر","sub":"غرفتين نوم · يكفي 4 أشخاص","cta":"راسلنا واتساب"},
- {"name":"DOR-M4-feed","template":"feed","dark":true,"titleTop":true,"photo":"2ded3fad","kicker":"حي العقيق","title":"تسكن بالشهر\nبدون عقد سنوي","sub":"دورميرا للشقق الفندقية","cta":"راسلنا واتساب"},
- {"name":"DOR-B1-feed","template":"feed","map":true,"photo":"305d7f38","kicker":"إقامات عمل","title":"قريب من\nالمركز المالي","sub":"من 3 ليالٍ إلى أسبوعين","cta":"احجز واتساب","size":66},
- {"name":"DOR-B2","template":"carousel","slides":[
-   {"kind":"cover","photo":"2f945a2c","title":"إقامة عمل\nفي العقيق","sub":"دورميرا للشقق الفندقية"},
-   {"kind":"map","label":"الموقع","title":"قريب من\nالمركز المالي","sub":"في حي العقيق، الرياض"},
-   {"kind":"photo","photo":"981e8a7d","label":"مكان العمل","title":"مكتب للابتوب\nوواي فاي مجاني","size":58},
-   {"kind":"photo","photo":"2ce50b41","label":"الخدمة","title":"مواقف مجانية\nواستقبال على مدار الساعة","size":54},
-   {"kind":"end","title":"احجز مباشرة","sub":"دورميرا · حي العقيق","cta":"راسلنا واتساب"}]},
- {"name":"DOR-S1-story","template":"story","photo":"56baed98","focus":"center 30%","kicker":"حي العقيق","title":"شهر كامل\nفي العقيق","sub":"شقق فندقية بالشهر","cta":"راسلنا واتساب"},
- {"name":"DOR-S2-story","template":"story","frame":true,"photo":"0a556dfa","title":"غرفتك جاهزة\nمن أول يوم","sub":"حي العقيق · بالشهر","cta":"راسلنا واتساب","size":92},
- {"name":"DOR-S3-story","template":"story","frame":true,"frameH":560,"photo":"9a7f973e","title":"وش تبي من\nسكنك الشهري؟","list":["مطبخ صغير","واي فاي","مواقف مجانية"],"end":"كلها في دورميرا","cta":"راسلنا واتساب","size":86}
-]}
+{
+ "items": [
+  {
+   "name": "DOR-M1-feed",
+   "template": "feed",
+   "photo": "4f44cd67",
+   "kicker": "حي العقيق",
+   "title": "سكنك الشهري\nفي العقيق",
+   "sub": "شقق فندقية بالشهر\nمطبخ صغير · واي فاي ومواقف مجانية",
+   "cta": "راسلنا واتساب"
+  },
+  {
+   "name": "DOR-M2",
+   "template": "carousel",
+   "slides": [
+    {
+     "kind": "cover",
+     "photo": "56baed98",
+     "title": "جولة داخل\nدورميرا",
+     "sub": "حي العقيق، الرياض"
+    },
+    {
+     "kind": "photo",
+     "photo": "bc9f41ae",
+     "label": "الاستقبال",
+     "title": "استقبال على مدار الساعة"
+    },
+    {
+     "kind": "photo",
+     "photo": "5b4bf76c",
+     "label": "الجناح",
+     "title": "غرفة نوم وجلسة منفصلة"
+    },
+    {
+     "kind": "photo",
+     "photo": "9a7f973e",
+     "label": "المطبخ",
+     "title": "مطبخك داخل الجناح"
+    },
+    {
+     "kind": "end",
+     "title": "إقامة شهرية\nفي العقيق",
+     "cta": "راسلنا واتساب"
+    }
+   ]
+  },
+  {
+   "name": "DOR-M3-feed",
+   "template": "feed",
+   "photo": "37109cb2",
+   "kicker": "حي العقيق",
+   "title": "جناح عائلي بالشهر",
+   "sub": "غرفتين نوم · يكفي 4 أشخاص",
+   "cta": "راسلنا واتساب"
+  },
+  {
+   "name": "DOR-M4-feed",
+   "template": "feed",
+   "dark": true,
+   "titleTop": true,
+   "photo": "2ded3fad",
+   "kicker": "حي العقيق",
+   "title": "تسكن بالشهر\nبدون عقد سنوي",
+   "sub": "دورميرا للشقق الفندقية",
+   "cta": "راسلنا واتساب"
+  },
+  {
+   "name": "DOR-B1-feed",
+   "template": "feed",
+   "map": true,
+   "photo": "305d7f38",
+   "kicker": "إقامات عمل",
+   "title": "قريب من\nالمركز المالي",
+   "sub": "من 3 ليالٍ إلى أسبوعين",
+   "cta": "احجز واتساب",
+   "size": 66
+  },
+  {
+   "name": "DOR-B2",
+   "template": "carousel",
+   "slides": [
+    {
+     "kind": "cover",
+     "photo": "2f945a2c",
+     "title": "إقامة عمل\nفي العقيق",
+     "sub": "دورميرا للشقق الفندقية"
+    },
+    {
+     "kind": "map",
+     "label": "الموقع",
+     "title": "قريب من\nالمركز المالي",
+     "sub": "في حي العقيق، الرياض"
+    },
+    {
+     "kind": "photo",
+     "photo": "981e8a7d",
+     "label": "مكان العمل",
+     "title": "مكتب للابتوب\nوواي فاي مجاني",
+     "size": 58
+    },
+    {
+     "kind": "photo",
+     "photo": "2ce50b41",
+     "label": "الخدمة",
+     "title": "مواقف مجانية\nواستقبال على مدار الساعة",
+     "size": 54
+    },
+    {
+     "kind": "end",
+     "title": "احجز مباشرة",
+     "sub": "دورميرا · حي العقيق",
+     "cta": "راسلنا واتساب"
+    }
+   ]
+  },
+  {
+   "name": "DOR-S1-story",
+   "template": "story",
+   "photo": "56baed98",
+   "focus": "center 30%",
+   "kicker": "حي العقيق",
+   "title": "شهر كامل\nفي العقيق",
+   "sub": "شقق فندقية بالشهر",
+   "cta": "راسلنا واتساب"
+  },
+  {
+   "name": "DOR-S2-story",
+   "template": "story",
+   "frame": true,
+   "photo": "0a556dfa",
+   "title": "غرفتك جاهزة\nمن أول يوم",
+   "sub": "حي العقيق · بالشهر",
+   "cta": "راسلنا واتساب",
+   "size": 92
+  },
+  {
+   "name": "DOR-S3-story",
+   "template": "story",
+   "frame": true,
+   "frameH": 560,
+   "photo": "9a7f973e",
+   "title": "وش تبي من\nسكنك الشهري؟",
+   "list": [
+    "مطبخ صغير",
+    "واي فاي",
+    "مواقف مجانية"
+   ],
+   "end": "كلها في دورميرا",
+   "cta": "راسلنا واتساب",
+   "size": 86
+  },
+  {
+   "name": "DOR-D1-feed",
+   "template": "feed",
+   "photo": "772c6e45",
+   "kicker": "حي العقيق",
+   "price": [
+    "من",
+    "350",
+    "ريال لليلة"
+   ],
+   "title": "ليلتك في العقيق",
+   "sub": "دقائق من البوليفارد والمركز المالي",
+   "cta": "احجز واتساب",
+   "size": 70
+  },
+  {
+   "name": "DOR-D2-story",
+   "template": "story",
+   "photo": "b4cde551",
+   "kicker": "حي العقيق",
+   "price": [
+    "من",
+    "350",
+    "ريال لليلة"
+   ],
+   "title": "ويكندك قريب\nمن البوليفارد",
+   "sub": "دورميرا للشقق الفندقية",
+   "cta": "احجز واتساب",
+   "size": 94
+  }
+ ]
+}

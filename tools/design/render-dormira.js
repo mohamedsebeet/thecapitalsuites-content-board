@@ -38,11 +38,15 @@ h1,h2{white-space:pre-line;font-family:Alexandria,Plex,sans-serif;font-weight:80
 .cta{white-space:nowrap;flex:none;display:inline-flex;align-items:center;gap:14px;background:${C.brass};color:#fff;font-family:Alexandria;font-weight:700;font-size:30px;padding:16px 36px;border-radius:999px}
 .cta i{width:22px;height:22px;border-radius:50%;background:#25D366;border:3px solid #fff}
 .lic{font-size:19px;color:${C.navy2}}
+.price{display:inline-flex;align-items:baseline;gap:10px;background:${C.navy};color:#fff;border-radius:16px;padding:10px 24px;font-family:Alexandria;font-weight:700;font-size:26px}
+.price b{font-size:50px;font-weight:800;color:${C.brassL}}
+.price.lt{background:#fff;color:${C.navy}}.price.lt b{color:${C.brass}}
 .lic.lt{color:#AFC0C7}
 .sub{white-space:pre-line;font-size:31px;line-height:1.55;color:${C.navy2}}
 ${extra || ''}</style></head><body>`;
 const END = '</body></html>';
 const mark = lt => `<div class="mark${lt ? ' lt' : ''}"><b>DORMIRA</b><span>دورميرا</span></div>`;
+const price = (p, lt) => p ? `<span class="price${lt ? ' lt' : ''}">${esc(p[0])} <b>${esc(p[1])}</b> ${esc(p[2])}</span>` : '';
 const cta = t => t ? `<span class="cta"><i></i>${esc(t)}</span>` : '';
 const pinMap = (dark, big) => `<svg width="100%" height="${big ? 300 : 120}" viewBox="0 0 900 120"><path d="M140 70 C 330 10, 560 120, 760 55" fill="none" stroke="${dark ? C.brassL : C.navy}" stroke-width="5" stroke-dasharray="4 14" stroke-linecap="round"/>
 <circle cx="760" cy="55" r="22" fill="${C.brass}"/><circle cx="760" cy="55" r="8" fill="#fff"/><circle cx="140" cy="70" r="22" fill="${dark ? '#fff' : C.navy}"/><circle cx="140" cy="70" r="8" fill="${dark ? C.navy : '#fff'}"/></svg>
@@ -63,7 +67,7 @@ function feed(it) {
   ${it.dark && it.titleTop ? `<h1>${esc(it.title)}</h1>` : ''}
   <div class="ph"><img src="${photo(it.photo)}"></div>
   ${it.map ? `<div>${pinMap(dark)}</div>` : ''}
-  <div class="row"><div>${it.dark && it.titleTop ? '' : `<h1>${esc(it.title)}</h1>`}${it.sub ? `<p class="sub" style="margin-top:12px${dark ? ';color:#C9D5DA' : ''}">${esc(it.sub)}</p>` : ''}</div>${cta(it.cta)}</div>
+  <div class="row"><div>${it.price ? `<div style="margin-bottom:22px">${price(it.price)}</div>` : ''}${it.dark && it.titleTop ? '' : `<h1>${esc(it.title)}</h1>`}${it.sub ? `<p class="sub" style="margin-top:12px${dark ? ';color:#C9D5DA' : ''}">${esc(it.sub)}</p>` : ''}</div>${cta(it.cta)}</div>
   <div class="foot"><span class="lic${dark ? ' lt' : ''}">${LIC}</span></div></div>` + END;
 }
 
@@ -88,7 +92,7 @@ function story(it) {
   .lic{position:absolute;bottom:262px;right:80px;left:80px;font-size:22px}`) +
   (framed ? `<div class="fr"><img src="${photo(it.photo)}"></div>` : `<div class="bg"><img src="${photo(it.photo)}"></div><div class="sh"></div>`) + `
   <div class="top">${mark(true)}${it.kicker ? `<span class="kick lt">${esc(it.kicker)}</span>` : ''}</div>
-  <div class="txt"><h1>${esc(it.title)}</h1>${it.sub ? `<p class="s2">${esc(it.sub)}</p>` : ''}${list}${it.end ? `<p class="end">${esc(it.end)}</p>` : ''}${cta(it.cta)}</div>
+  <div class="txt">${it.price ? `<div style="margin-bottom:30px">${price(it.price, true)}</div>` : ''}<h1>${esc(it.title)}</h1>${it.sub ? `<p class="s2">${esc(it.sub)}</p>` : ''}${list}${it.end ? `<p class="end">${esc(it.end)}</p>` : ''}${cta(it.cta)}</div>
   <div class="lic lt">${LIC}</div>` + END;
 }
 
