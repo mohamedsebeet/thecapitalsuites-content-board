@@ -1,5 +1,5 @@
 // خادم MCP لشات جي بي تي (إضافة/Connector): نفس صلاحيات رابط api/gpt (قراءة الطلبات والخطة ورفع التصاميم للمراجعة)
-// المصادقة: هيدر X-GPT-Key أو Authorization: Bearer بنفس المفتاح GPT_ACCESS_KEY، أو (لو الإضافة ما بتدعمش هيدر) /api/mcp/<المفتاح>
+// المصادقة: /api/mcp/open (بدون مفتاح، يتقفل بـ GPT_OPEN=0)، أو هيدر X-GPT-Key أو Authorization: Bearer بنفس المفتاح GPT_ACCESS_KEY، أو (لو الإضافة ما بتدعمش هيدر) /api/mcp/<المفتاح>
 const crypto = require('crypto');
 const agent = require('../lib/agent')('gpt', 'GPT_ACCESS_KEY', 'x-gpt-key');
 
@@ -62,7 +62,10 @@ module.exports = async (req, res) => {
   const KEY = process.env.GPT_ACCESS_KEY;
   const U = req.url || '', inUrl = (U.match(/[?&]k=([^&]+)/) || U.match(/^\/api\/mcp\/([^/?]+)/) || [])[1];
   const given = req.headers['x-gpt-key'] || String(req.headers.authorization || '').replace(/^Bearer\s+/i, '') || (inUrl ? decodeURIComponent(inUrl) : '');
-  const ok = KEY && given && Buffer.from(given).length === Buffer.from(KEY).length && crypto.timingSafeEqual(Buffer.from(given), Buffer.from(KEY));
+  // رابط مفتوح من غير مفتاح (/api/mcp/open) عشان ChatGPT يتربط بدون إعداد. يتقفل بمتغير GPT_OPEN=0 في Vercel.
+  // صلاحياته نفس الرابط العادي: قراءة الخطة والطلبات، ورفع تصاميم «للمراجعة» بس (الاعتماد والنشر من غرفة التشغيل).
+  const open = inUrl === 'open' && process.env.GPT_OPEN !== '0';
+  const ok = open || (KEY && given && Buffer.from(given).length === Buffer.from(KEY).length && crypto.timingSafeEqual(Buffer.from(given), Buffer.from(KEY)));
   let m = req.body; if (typeof m === 'string') { try { m = JSON.parse(m); } catch (e) { m = null; } }
   if (!m) return res.status(400).json({ jsonrpc: '2.0', id: null, error: { code: -32700, message: 'parse error' } });
   const one = async msg => {
