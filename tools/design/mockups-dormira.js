@@ -16,6 +16,8 @@ let css = '';
 })));
 
 const W = 390;
+const AV = dataUrl(path.join(ROOT, 'public/img/brand-symbol.png'), 'image/png');
+const avatar = (sz, ring) => `<div style="width:${sz}px;height:${sz}px;border-radius:50%;background:#fff;${ring ? 'border:2px solid #fff;' : 'border:1px solid #ddd;'}display:grid;place-items:center;flex:none"><img src="${AV}" style="width:62%;height:62%;object-fit:contain"></div>`;
 const shell = (inner, h, bg) => `<!doctype html><html dir="rtl" lang="ar"><head><meta charset="utf-8"><style>${css}
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{width:${W + 28}px;height:${h + 28}px;background:transparent}
@@ -37,13 +39,13 @@ function igFeed(img, caption, cta, slides) {
   const dots = slides ? `<div style="display:flex;gap:4px;justify-content:center;margin-top:-2px">${Array.from({ length: slides }, (_, i) => `<i style="width:6px;height:6px;border-radius:50%;background:${i ? '#c8c8c8' : '#0095F6'}"></i>`).join('')}</div>` : '';
   const inner = `<div class="st"><span>9:41</span><span>●●● ▮</span></div>
   <div style="display:flex;align-items:center;gap:10px;padding:8px 12px">
-    <div style="width:34px;height:34px;border-radius:50%;background:#14303A;color:#D9B98A;display:grid;place-items:center;font-family:Alexandria;font-weight:700;font-size:15px">D</div>
-    <div style="flex:1;line-height:1.25"><b style="font-size:14px">dormira</b><div style="font-size:12px;color:#555">إعلان مموّل</div></div><span style="font-size:20px;color:#333">···</span></div>
+    ${avatar(34)}
+    <div style="flex:1;line-height:1.25"><b style="font-size:14px">thecapitalsuites</b><div style="font-size:12px;color:#555">إعلان مموّل</div></div><span style="font-size:20px;color:#333">···</span></div>
   <div style="position:relative;height:${ih}px;background:#eee"><img src="${img}" style="width:100%;height:100%;object-fit:cover">
 </div>
   <div style="display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:#F2F2F2;font-size:14px;font-weight:600"><span>${esc(cta)}</span><span style="font-size:18px">‹</span></div>
   <div style="display:flex;align-items:center;gap:14px;padding:10px 14px 4px">${ICON.heart}${ICON.com}${ICON.send}<span style="flex:1">${dots}</span>${ICON.save}</div>
-  <p style="padding:4px 14px;font-size:13.5px;line-height:1.5;color:#111;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden"><b>dormira</b> ${esc(caption)}</p>`;
+  <p style="padding:4px 14px;font-size:13.5px;line-height:1.5;color:#111;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden"><b>thecapitalsuites</b> ${esc(caption)}</p>`;
   return shell(inner, 34 + 50 + ih + 44 + 44 + 70, '#fff');
 }
 
@@ -53,8 +55,8 @@ function snap(img, headline) {
   <div style="position:absolute;top:0;left:0;right:0;height:120px;background:linear-gradient(rgba(0,0,0,.45),transparent)"></div>
   <div style="position:absolute;top:12px;left:12px;right:12px;height:3px;border-radius:2px;background:rgba(255,255,255,.4)"><i style="display:block;width:35%;height:100%;background:#fff;border-radius:2px"></i></div>
   <div style="position:absolute;top:20px;right:14px;left:14px;display:flex;align-items:center;gap:8px;color:#fff">
-    <div style="width:28px;height:28px;border-radius:50%;background:#14303A;border:2px solid #fff;color:#D9B98A;display:grid;place-items:center;font-family:Alexandria;font-weight:700;font-size:14px">D</div>
-    <div style="line-height:1.25;text-shadow:0 1px 2px rgba(0,0,0,.4)"><b style="font-size:12.5px">دورميرا</b><div style="font-size:11px;opacity:.9">${esc(headline)}</div></div>
+    ${avatar(28, true)}
+    <div style="line-height:1.25;text-shadow:0 1px 2px rgba(0,0,0,.4)"><b style="font-size:12.5px">ذا كابيتال سويتس</b><div style="font-size:11px;opacity:.9">${esc(headline)}</div></div>
     <span style="margin-right:auto;font-size:11px;background:rgba(0,0,0,.35);padding:2px 8px;border-radius:8px">إعلان</span></div>
   <div style="position:absolute;bottom:18px;right:50%;transform:translateX(50%);background:#fff;color:#111;font-weight:600;font-size:14px;border-radius:999px;padding:9px 22px;display:flex;gap:8px;align-items:center;white-space:nowrap">
     <i style="width:12px;height:12px;border-radius:50%;background:#25D366"></i>راسلنا واتساب</div>`;
