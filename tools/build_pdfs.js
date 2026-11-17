@@ -6,6 +6,7 @@ const NM = process.argv[2];
 const ROOT = path.resolve(__dirname, '..', 'public', 'files');
 const OUT = path.join(ROOT, 'pdf');
 const JOBS = [
+  ['content-dormira-mgmt.html', 'إعلانات-حملة-دورميرا-للإدارة.pdf', 'doc'],
   ['content-dormira.html', 'المحتوى-الإعلاني-حملة-دورميرا.pdf', 'doc'],
   ['plan-dormira.html', 'اعتماد-ميزانية-حملة-دورميرا.pdf', 'doc'],
   ['plan-nov.html', 'خطة-الحملات-نوفمبر.pdf', 'doc'],
