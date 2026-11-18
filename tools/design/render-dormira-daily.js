@@ -76,7 +76,7 @@ const D1B = () => page(1080, 1350, C.navy, `
 .ft2{margin-top:28px;font-size:25px;color:#C6D3D7;line-height:1.7}
 .btn{position:absolute;bottom:118px;right:70px;left:70px}
 .f{position:absolute;bottom:40px;right:70px;left:70px}`,
-`<div class="archline"></div><div class="arch"><img src="${ph('bc9f41ae')}" style="object-position:50% 40%"></div>
+`<div class="archline"></div><div class="arch"><img src="${ph('79755915')}" style="object-position:40% 50%"></div>
 <div class="r"><div class="dm"><b>DORMIRA</b><span>دورميرا · حي العقيق</span></div>
 <div class="big"><b>4</b><span>دقايق</span></div><h1 class="ttl">من بوليفارد الرياض</h1>
 <div class="pr">ليلتك من <b>350</b> ريال</div><p class="ft2">مواقف مجانية · واي فاي مجاني<br>استقبال على مدار الساعة</p></div>
@@ -84,7 +84,7 @@ const D1B = () => page(1080, 1350, C.navy, `
 
 // A · سناب: البهو كامل وسؤال يوقف السحب
 const D2A = () => page(1080, 1920, C.navy, `
-.bg{position:absolute;inset:0}.bg img{width:100%;height:100%;object-fit:cover;object-position:50% 38%}
+.bg{position:absolute;inset:0}.bg img{width:100%;height:100%;object-fit:cover;object-position:50% 45%}
 .sh{position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,24,30,.92) 0%,rgba(9,24,30,.6) 22%,rgba(9,24,30,0) 40%,rgba(9,24,30,.15) 52%,rgba(9,24,30,.95) 72%)}
 .top{position:absolute;top:165px;right:80px;left:80px;color:#fff;text-align:center;display:flex;flex-direction:column;align-items:center}
 .top .dm span{color:${C.goldL}}
@@ -94,7 +94,7 @@ const D2A = () => page(1080, 1920, C.navy, `
 .pr{margin-top:22px;font-size:32px;color:#D7E1E4}.pr b{font-family:Messiri;font-size:60px;color:${C.goldL}}
 .wa{margin-top:34px;width:100%}
 .f{margin-top:28px;width:100%}`,
-`<div class="bg"><img src="${ph('bc9f41ae')}"></div><div class="sh"></div>
+`<div class="bg"><img src="${ph('56baed98')}"></div><div class="sh"></div>
 <div class="top"><div class="dm"><b>DORMIRA</b><span>دورميرا · حي العقيق</span></div><h1 class="ttl q">طالع البوليفارد\n<em>الليلة؟</em></h1></div>
 <div class="bot">${orn(C.goldL, 300)}<p class="ttl a">نومتك على بعد 4 دقايق</p><p class="pr">ليلتك من <b>350</b> ريال</p>${waBtn(112, 38)}<div class="f">${foot(true)}</div></div>`);
 

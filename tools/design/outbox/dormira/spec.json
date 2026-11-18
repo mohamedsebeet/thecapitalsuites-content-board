@@ -21,8 +21,8 @@
     },
     {
      "kind": "photo",
-     "photo": "bc9f41ae",
-     "label": "الاستقبال",
+     "photo": "5f0fb746",
+     "label": "المدخل",
      "title": "استقبال على مدار الساعة"
     },
     {
@@ -100,7 +100,7 @@
     },
     {
      "kind": "photo",
-     "photo": "2ce50b41",
+     "photo": "5f0fb746",
      "label": "الخدمة",
      "title": "مواقف مجانية\nواستقبال على مدار الساعة",
      "size": 54
@@ -167,7 +167,7 @@
   {
    "name": "DOR-D2-story",
    "template": "story",
-   "photo": "b4cde551",
+   "photo": "56baed98",
    "kicker": "حي العقيق",
    "price": [
     "من",
