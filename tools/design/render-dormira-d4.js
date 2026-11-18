@@ -76,7 +76,98 @@ const A1 = () => page(1080, 1350, `
 <div class="cta"><span class="btn">${waIco(54)}احجز واتساب <span class="n">${WA}</span></span></div>
 <div class="strip">${strip()}</div>`);
 
-const ALL = { A1: ['DOR-D4-MetaA', A1, 1080, 1350] };
+
+// Meta B · «ليلة قريبة من البوليفارد»: بطاقة مفتاح غرفة فوق صورة الواجهة، ولوح عاجي
+const keycard = (w) => `<div class="kc" style="width:${w}px;height:${Math.round(w / 1.586)}px">
+ <div class="kc-t"><div class="wm"><b>DORMIRA</b><span>دورميرا</span></div><i class="chip"></i></div>
+ <div class="kc-b"><small>بطاقة غرفتك</small><b>4 دقايق</b><span>من البوليفارد</span></div><i class="stripe"></i></div>`;
+const B1 = () => page(1080, 1350, `
+body{background:${C.ivory}}
+.ph{position:absolute;top:0;left:0;right:0;height:760px}.ph img{width:100%;height:100%;object-fit:cover;object-position:50% 46%}
+.ph:before{content:"";position:absolute;inset:0 0 auto 0;height:220px;background:linear-gradient(rgba(12,30,36,.55),transparent);z-index:1}
+.wave{position:absolute;top:560px;left:0;width:1080px;height:220px}
+.top{position:absolute;top:56px;left:64px;z-index:2;color:#fff}.top .wm span{color:${C.goldL}}
+.kc{position:absolute;top:520px;left:86px;background:${C.navy};border-radius:26px;padding:28px 32px;color:#fff;transform:rotate(-7deg);box-shadow:0 22px 44px rgba(12,30,36,.35);overflow:hidden;z-index:3}
+.kc:before{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;border:1.5px solid rgba(226,195,148,.5)}
+.kc .wm b{font-size:20px}.kc .wm span{font-size:15px;color:${C.goldL}}
+.kc-t{display:flex;justify-content:space-between;align-items:flex-start;direction:ltr}
+.chip{width:58px;height:44px;border-radius:9px;background:linear-gradient(135deg,${C.goldL},${C.gold});display:block}
+.kc-b{position:absolute;bottom:40px;right:32px;text-align:right}
+.kc-b small{font-size:18px;color:${C.goldL};font-weight:500}.kc-b b{display:block;font-family:Alexandria;font-weight:800;font-size:60px;line-height:1.05}.kc-b span{font-family:Alexandria;font-weight:600;font-size:24px}
+.stripe{position:absolute;left:0;right:0;bottom:16px;height:4px;background:${C.gold};opacity:.7}
+.tx{position:absolute;top:770px;right:70px;text-align:right}
+.tx h1{font-size:88px;color:${C.navy}}
+.pr{margin-top:20px;font-family:Alexandria;font-weight:600;font-size:30px;color:${C.gold}}.pr b{font-size:54px;font-weight:800;color:${C.navy};margin:0 6px}
+.feat{position:absolute;top:1052px;right:70px;left:70px;display:flex;justify-content:flex-start;gap:26px;font-size:24px;color:${C.ink2};border-top:1.5px solid #E2D8C6;padding-top:18px}
+.feat span{display:flex;align-items:center;gap:8px}
+.cta{position:absolute;bottom:118px;right:70px}
+.cta .btn{font-size:32px;background:${C.navy};color:#fff;border-color:${C.navy}}.cta .btn .n{color:#fff}
+.strip{position:absolute;bottom:0;left:0;right:0;height:96px;padding:0 54px;border-top:1.5px solid #E2D8C6}`,
+`<div class="ph"><img src="${ph('56baed98')}"></div>
+<svg class="wave" viewBox="0 0 1080 220" preserveAspectRatio="none"><path d="M0 120C200 40 420 30 620 80 800 126 950 150 1080 110V220H0Z" fill="${C.ivory}"/><path d="M0 104C200 24 420 14 620 64 800 110 950 134 1080 94" fill="none" stroke="${C.gold}" stroke-width="2"/></svg>
+<div class="top"><div class="wm"><b>DORMIRA</b><span>دورميرا · حي العقيق</span></div></div>
+${keycard(400)}
+<div class="tx"><h1 class="hl">ليلة قريبة\nمن البوليفارد</h1><p class="pr">من<b>350</b>ريال لليلة</p></div>
+<div class="feat"><span>${ico.park}مواقف مجانية</span><span>${ico.wifi}واي فاي مجاني</span><span>${ico.desk}استقبال 24 ساعة</span></div>
+<div class="cta"><span class="btn">${waIco(52)}احجز واتساب <span class="n">${WA}</span></span></div>
+<div class="strip">${strip()}</div>`);
+
+// Snap A · «طالع البوليفارد الليلة؟»: لوح كحلي بالسؤال، الغرفة في المنتصف بين منحنيين، والجواب على العاجي
+const A2 = () => page(1080, 1920, `
+.top{position:absolute;top:0;left:0;right:0;height:640px;background:${C.navy}}
+.wm{position:absolute;top:170px;left:72px;color:#fff}.wm span{color:${C.goldL}}
+.q{position:absolute;top:250px;right:72px;color:#fff;text-align:right}
+.q h1{font-size:122px}.q h1 em{font-style:normal;color:${C.goldL}}
+.arcs{position:absolute;top:0;left:0}
+.ph{position:absolute;top:560px;left:0;right:0;height:760px}.ph img{width:100%;height:100%;object-fit:cover;object-position:45% 50%}
+.w1{position:absolute;top:556px;left:0;width:1080px;height:150px}.w2{position:absolute;top:1200px;left:0;width:1080px;height:150px}
+.bot{position:absolute;top:1330px;right:72px;left:72px;text-align:right}
+.bot h2{font-size:78px;color:${C.navy}}
+.row{display:flex;align-items:center;justify-content:space-between;margin-top:22px}
+.pr{font-family:Alexandria;font-weight:600;font-size:30px;color:${C.gold}}.pr b{font-size:58px;font-weight:800;color:${C.navy};margin:0 6px}
+.feat{font-size:24px;color:${C.ink2}}
+.cta{margin-top:30px;display:flex}.cta .btn{font-size:36px;background:${C.navy};color:#fff;border-color:${C.navy}}.cta .btn .n{color:#fff}
+.strip{position:absolute;bottom:262px;left:72px;right:72px;height:auto;background:transparent;padding:0}
+body{background:${C.ivory}}`,
+`<div class="top"></div>
+<svg class="arcs" width="1080" height="640"><g fill="none" stroke="${C.gold}" stroke-width="1.6" opacity=".5"><circle cx="0" cy="640" r="300"/><circle cx="0" cy="640" r="345"/></g></svg>
+<div class="wm"><b>DORMIRA</b><span>دورميرا · حي العقيق</span></div>
+<div class="q"><h1 class="hl">طالع البوليفارد\n<em>الليلة؟</em></h1></div>
+<div class="ph"><img src="${ph('79755915')}"></div>
+<svg class="w1" viewBox="0 0 1080 150" preserveAspectRatio="none"><path d="M0 0H1080V60C860 130 640 140 420 100 250 70 110 60 0 84Z" fill="${C.navy}"/><path d="M0 100C110 76 250 86 420 116 640 156 860 146 1080 76" fill="none" stroke="${C.gold}" stroke-width="2"/></svg>
+<svg class="w2" viewBox="0 0 1080 150" preserveAspectRatio="none"><path d="M0 90C220 20 460 10 680 50 850 82 980 96 1080 80V150H0Z" fill="${C.ivory}"/><path d="M0 74C220 4 460 -6 680 34 850 66 980 80 1080 64" fill="none" stroke="${C.gold}" stroke-width="2"/></svg>
+<div class="bot"><h2 class="hl">نومتك على بعد 4 دقايق</h2>
+<div class="row"><p class="pr">من<b>350</b>ريال لليلة</p><p class="feat">مواقف مجانية · استقبال 24 ساعة</p></div>
+<div class="cta"><span class="btn">${waIco(56)}احجز واتساب <span class="n">${WA}</span></span></div></div>
+<div class="strip">${strip()}</div>`);
+
+// Snap B · السعر البطل: «350» ضخم، والغرفة في نصف قوس
+const B2 = () => page(1080, 1920, `
+body{background:${C.ivory}}
+.wm{position:absolute;top:170px;right:0;left:0;align-items:center;color:${C.navy}}.wm span{color:${C.gold}}
+.arcs{position:absolute;top:0;left:0}
+.price{position:absolute;top:250px;left:0;right:0;text-align:center;color:${C.navy}}
+.price small{display:block;font-family:Alexandria;font-weight:700;font-size:44px;color:${C.gold}}
+.price b{display:block;font-family:Alexandria;font-weight:800;font-size:300px;line-height:.92;letter-spacing:-.02em}
+.price span{display:inline-block;font-family:Alexandria;font-weight:700;font-size:46px;margin-top:6px;border-top:2px solid ${C.gold};padding-top:10px}
+.ph{position:absolute;top:820px;left:70px;right:70px;height:480px;border-radius:470px 470px 0 0;overflow:hidden}.ph img{width:100%;height:100%;object-fit:cover;object-position:60% 55%}
+.phl{position:absolute;top:802px;left:52px;right:52px;height:498px;border-radius:490px 490px 0 0;border:1.6px solid ${C.gold};border-bottom:0}
+.base{position:absolute;top:1300px;left:0;right:0;height:380px;background:${C.navy};padding:28px 72px 0;color:#fff}
+.base .r{display:flex;align-items:center;justify-content:space-between}
+.base h2{font-size:58px}
+.base .f{font-size:25px;color:${C.goldL};margin-top:18px}
+.cta .btn{font-size:31px;padding:10px 26px 10px 12px}
+.strip{position:absolute;bottom:276px;left:72px;right:72px;background:transparent;padding:0;color:#C8D4D8}
+.base .cta .btn{font-size:34px}`,
+`<svg class="arcs" width="1080" height="900"><g fill="none" stroke="${C.gold}" stroke-width="1.5" opacity=".45"><circle cx="1080" cy="120" r="230"/><circle cx="1080" cy="120" r="275"/></g></svg>
+<div class="wm"><b>DORMIRA</b><span>دورميرا · حي العقيق</span></div>
+<div class="price"><small>من</small><b>350</b><span>ريال لليلة</span></div>
+<div class="phl"></div><div class="ph"><img src="${ph('e8d04bb8')}"></div>
+<div class="base"><div class="r"><div><h2 class="hl">غرفتك في العقيق</h2><p class="f">4 دقايق من البوليفارد · مواقف مجانية</p></div></div>
+<div class="cta" style="margin-top:30px"><span class="btn">${waIco(50)}احجز واتساب <span class="n">${WA}</span></span></div></div>
+<div class="strip">${strip()}</div>`);
+
+const ALL = { A1: ['DOR-D4-MetaA', A1, 1080, 1350], B1: ['DOR-D4-MetaB', B1, 1080, 1350], A2: ['DOR-D4-SnapA', A2, 1080, 1920], B2: ['DOR-D4-SnapB', B2, 1080, 1920] };
 (async () => {
   const out = process.argv[2]; fs.mkdirSync(out, { recursive: true });
   const want = (process.argv[4] || Object.keys(ALL).join(',')).split(',');
