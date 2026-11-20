@@ -1,0 +1,27 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "capital-suites-designer",
+  "version": "0.1.0",
+  "description": "مصمم محتوى ذا كابيتال سويتس مرتبط بغرفة التشغيل.",
+  "author": {
+    "name": "Muhammad Sebeet"
+  },
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "مصمم ذا كابيتال سويتس",
+        "shortDescription": "تصاميم من البريف للمراجعة",
+        "longDescription": "يقرأ طلبات غرفة التشغيل ويرتب التعديلات والاتجاه الثاني والجديد، ويلتزم بهوية السكن الشهري ويعرض التصاميم قبل رفعها بإذن محمد. يتطلب ربط مفتاح غرفة التشغيل وتوفر ImageGen في المحادثة.",
+        "developerName": "Muhammad Sebeet",
+        "category": "Creativity",
+        "capabilities": [],
+        "brandColor": "#B08A3A",
+        "defaultPrompt": [
+          "شوف الطلبات",
+          "صمّم المنشور بعد قراءة البريف والملاحظات",
+          "ارفع التصاميم اللي اخترتها"
+        ]
+      }
+    }
+  }
+}
