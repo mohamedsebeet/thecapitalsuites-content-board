@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-20T08:55:00+03:00",
+  "updatedAt": "2026-11-21T08:50:00+03:00",
   "source": "sync",
   "sourceNote": "يتحدث تلقائياً كل يوم من حسابات الإعلانات",
   "currency": "ريال",
@@ -220,7 +220,7 @@
           "results": 964,
           "resultLabel": "ضغطة على زر واتساب",
           "cpr": 0.41,
-          "spend": 395.0,
+          "spend": 395,
           "impressions": 75471
         }
       ]
@@ -230,8 +230,8 @@
       "label": "الأسبوع السابع",
       "from": "2026-11-12",
       "to": "2026-11-18",
-      "spend": 1554.47,
-      "impressions": 244690,
+      "spend": 1554.49,
+      "impressions": 244691,
       "platforms": [
         {
           "key": "meta",
@@ -239,8 +239,8 @@
           "results": 362,
           "resultLabel": "محادثة واتساب بدأت",
           "cpr": 2.43,
-          "spend": 880.45,
-          "impressions": 107889
+          "spend": 880.47,
+          "impressions": 107890
         },
         {
           "key": "snap",
@@ -257,29 +257,29 @@
       "id": "2026-11-19",
       "label": "الأسبوع الثامن",
       "from": "2026-11-19",
-      "to": "2026-11-19",
+      "to": "2026-11-20",
       "platforms": [
         {
           "key": "meta",
           "name": "ميتا · إنستغرام وفيسبوك",
-          "results": 42,
+          "results": 113,
           "resultLabel": "محادثة واتساب بدأت",
-          "cpr": 3.36,
-          "spend": 141.3,
-          "impressions": 13960
+          "cpr": 3.21,
+          "spend": 362.41,
+          "impressions": 36155
         },
         {
           "key": "snap",
           "name": "سناب شات · واتساب",
-          "results": 488,
+          "results": 961,
           "resultLabel": "ضغطة على زر واتساب",
           "cpr": 0.3,
-          "spend": 146.69,
-          "impressions": 28381
+          "spend": 292.19,
+          "impressions": 54645
         }
       ],
-      "spend": 287.99,
-      "impressions": 42341
+      "spend": 654.6,
+      "impressions": 90800
     }
   ],
   "campaigns": [
@@ -288,11 +288,11 @@
       "id": "120249345827570172",
       "name": "ميتا · واتساب أكتوبر (الرمال والملز)",
       "status": "ACTIVE",
-      "spend": 4757.15,
-      "impressions": 540462,
-      "results": 1803,
+      "spend": 4873.64,
+      "impressions": 551749,
+      "results": 1833,
       "resultLabel": "محادثة",
-      "cpr": 2.64,
+      "cpr": 2.66,
       "ads": [
         {
           "name": "الرمال · احسبها صح – v2 – أسعار جديدة",
@@ -304,10 +304,10 @@
             "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/863289716_4553548988125127_5405934642916226400_n.png?stp=dst-jpg_tt6&_nc_cat=111&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=I8jOdjs4yFIQ7kNvwFct3PU&_nc_oc=Adq6jnvocfuEBHaLCTs8CGDT8nGjrvcrSakUUznXIH7HidmMJ1EJbI_usOb-e2WDNRs&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQKHLJcR_FkCDLc98RUVVuYn7O7N8qyiRiOQHpLf9hVfYZug3PMbvjm3dag9ra0V6_Pm3Rv25sE7Ag&oh=00_AQRBwt47QwW76FE8Pz1qgvkxd_D7oKiq1e-4-Ji89BdTuw&oe=6B05B385"
           ],
           "status": "ACTIVE",
-          "spend": 1367.86,
-          "impressions": 158380,
-          "results": 432,
-          "cpr": 3.17,
+          "spend": 1426.97,
+          "impressions": 164421,
+          "results": 446,
+          "cpr": 3.2,
           "creative_id": "1556516206509163"
         },
         {
@@ -343,6 +343,22 @@
           "creative_id": "1114491181503383"
         },
         {
+          "name": "القيروان · استديو مفروش بالشهر – المبنى",
+          "hood": "القيروان",
+          "title": "استديو مفروش بالشهر – المبنى",
+          "id": "120250066569900172",
+          "format": "صورة",
+          "creative_id": "1844674976552176",
+          "img": [
+            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/898382217_4578875165592509_4681230727028467235_n.png?stp=dst-jpg_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=HUz4KyTmE94Q7kNvwEM4jKy&_nc_oc=AdpBBKc7yAFT2AiPusHzvXp7LI5ehZgMJjwngCuiop58KuDiEZQdzF2YMevmjveYNZ8&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQJpcSWvE8AFpwXe80Ksijencm8FwnzQ6iIG_z6dTfGAPTONu5aLCvpUpn7fYNQ5MDg1bXcmYk5nxA&oh=00_AQTQ_MVa_dhjvF1Rx_g8qdhHYD4gJfy652-2XR8ggMeGHg&oe=6B059ECA"
+          ],
+          "status": "ACTIVE",
+          "spend": 374.5,
+          "impressions": 59881,
+          "results": 227,
+          "cpr": 1.65
+        },
+        {
           "name": "الملز · كاروسيل-جولة داخل الوحدة",
           "status": "PAUSED",
           "spend": 372.57,
@@ -362,22 +378,6 @@
             "files/live-ads/meta/malaz-tour/06.webp"
           ],
           "format": "كاروسيل"
-        },
-        {
-          "name": "القيروان · استديو مفروش بالشهر – المبنى",
-          "hood": "القيروان",
-          "title": "استديو مفروش بالشهر – المبنى",
-          "id": "120250066569900172",
-          "format": "صورة",
-          "creative_id": "1844674976552176",
-          "img": [
-            "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/898382217_4578875165592509_4681230727028467235_n.png?stp=dst-jpg_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=HUz4KyTmE94Q7kNvwEM4jKy&_nc_oc=AdpBBKc7yAFT2AiPusHzvXp7LI5ehZgMJjwngCuiop58KuDiEZQdzF2YMevmjveYNZ8&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQJpcSWvE8AFpwXe80Ksijencm8FwnzQ6iIG_z6dTfGAPTONu5aLCvpUpn7fYNQ5MDg1bXcmYk5nxA&oh=00_AQTQ_MVa_dhjvF1Rx_g8qdhHYD4gJfy652-2XR8ggMeGHg&oe=6B059ECA"
-          ],
-          "status": "ACTIVE",
-          "spend": 353.33,
-          "impressions": 56747,
-          "results": 218,
-          "cpr": 1.62
         },
         {
           "name": "الملز · صالة لضيوفك",
@@ -475,10 +475,10 @@
           "format": "كاروسيل",
           "status": "ACTIVE",
           "creative_id": "4551851145030022",
-          "spend": 95.53,
-          "impressions": 6383,
-          "results": 34,
-          "cpr": 2.81,
+          "spend": 102.35,
+          "impressions": 6824,
+          "results": 36,
+          "cpr": 2.84,
           "img": [
             "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/861786508_4555350694611623_6209639760610201990_n.png?stp=dst-jpg_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=wc8WyoWRjHkQ7kNvwHJE3tm&_nc_oc=AdpYgeHXvdGW4StFZb3BUfXmfvCIWSqkwFgns9eaaxZqUr64phYPJacTz8dPunEMjqE&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=oJMbytrAd9ulFl994K7Osw&_nc_tpa=Q5bMBQJ76MVFD93t5dsHzvm1Du4_cuPj8AGzPbT-WzQT5mE9rpPcuMnVVHlOFOQjwz4UJh_mEuZIkU4o8A&oh=00_AQQiDVVlEYzsmieWJbakF0HhlVWQCHXpsFYZCGem_gnENA&oe=6B059CA5",
             "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/863014522_4555350784611614_4726575406760365931_n.png?stp=dst-jpg_tt6&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=e1gL4P4XziAQ7kNvwFunhok&_nc_oc=AdpPcH7Gg7KXxbgq8kr89zwnX4YVBUxcooJgpIeb3U--EtddyDqyvrATVP1V8hlpiC8&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=oJMbytrAd9ulFl994K7Osw&_nc_tpa=Q5bMBQI8HT0U52q_i4xO-hIEN5CcMcnPZD_ZijbzURVMSacS52zyRZkwF7ZLnqxwTdUCDjtaJvfgtue_nQ&oh=00_AQSwmpnICr3IAh6ZOeqvTQzKBOpzDGltarOGRSna3G_l6w&oe=6B0597C6",
@@ -486,6 +486,22 @@
             "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/865109066_4555351141278245_6859179766042508728_n.png?stp=dst-jpg_tt6&_nc_cat=106&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=68WzccCOon4Q7kNvwFxzytT&_nc_oc=Adqh1XXrU0JGqpK3JI0629piTA4_wb9aDB8OBefl1xpEsCd99TqRIhnYaXjfxHP7dAM&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=oJMbytrAd9ulFl994K7Osw&_nc_tpa=Q5bMBQKbXf3w5OkNy1Bl2PmOta7707l8RZru-r3YYOVW0Jha4IVkG88YoFfXkJLAY7tzH5C-Xyf6rDGfWQ&oh=00_AQSRod-mG2Wb38i-Itv3XUMdXGkg41Q6DkW5dYszZPf1LA&oe=6B05C8E2",
             "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/868776937_4555351244611568_1966791078420615399_n.png?stp=dst-jpg_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=3cMJH5HdLQQQ7kNvwG7ACZz&_nc_oc=AdoJ_kR_VFJrwd9cpFOSHY_C0DDz83Z28X5Nslefv1xQQbGyivLCi2Uo3diUbAeNe-s&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=oJMbytrAd9ulFl994K7Osw&_nc_tpa=Q5bMBQKMuR1wwmZOBk8yyId7Tti3eaxlY_wZhwvQpnCS473x-o_BrpTeWuHvDmiZ73677w5tpMW2eifSdQ&oh=00_AQTUSU30aAobJFwaThqd322N5nusxhcVC5p5AmOdhRY_6g&oe=6B05B2E2"
           ]
+        },
+        {
+          "name": "القيروان · ادخل بشنطتك – من 4,200",
+          "hood": "القيروان",
+          "title": "ادخل بشنطتك – من 4,200",
+          "id": "120250066568760172",
+          "format": "صورة",
+          "creative_id": "1485083686814090",
+          "img": [
+            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/894240701_4578875068925852_4646638722069356969_n.png?stp=dst-jpg_tt6&_nc_cat=109&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=KqFZVgAjkEwQ7kNvwFQyFeM&_nc_oc=AdroOprEALyDNgF0sDK6LAZtL-T856kuUQxFPRZgyWCaa9-Dildc82t5FvN95Unmx6k&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQKj1og9uAEKh9aa9c_MEEzRDQBX4BW4gu0gpQiN_9VGPJN_ky5kJCxMjQeHLlQAILDPL0R92IkrQA&oh=00_AQSf8OW6K7JQUV84O2d0HSN0fvtrgJF3BE-sHDoFLy1n-Q&oe=6B05A28D"
+          ],
+          "status": "ACTIVE",
+          "spend": 77.78,
+          "impressions": 4647,
+          "results": 29,
+          "cpr": 2.68
         },
         {
           "name": "الملز · صالة لضيوفك – v1 – أسعار جديدة",
@@ -525,22 +541,6 @@
           "creative_id": "1437044567824671"
         },
         {
-          "name": "القيروان · ادخل بشنطتك – من 4,200",
-          "hood": "القيروان",
-          "title": "ادخل بشنطتك – من 4,200",
-          "id": "120250066568760172",
-          "format": "صورة",
-          "creative_id": "1485083686814090",
-          "img": [
-            "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/894240701_4578875068925852_4646638722069356969_n.png?stp=dst-jpg_tt6&_nc_cat=109&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=KqFZVgAjkEwQ7kNvwFQyFeM&_nc_oc=AdroOprEALyDNgF0sDK6LAZtL-T856kuUQxFPRZgyWCaa9-Dildc82t5FvN95Unmx6k&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQKj1og9uAEKh9aa9c_MEEzRDQBX4BW4gu0gpQiN_9VGPJN_ky5kJCxMjQeHLlQAILDPL0R92IkrQA&oh=00_AQSf8OW6K7JQUV84O2d0HSN0fvtrgJF3BE-sHDoFLy1n-Q&oe=6B05A28D"
-          ],
-          "status": "ACTIVE",
-          "spend": 50.5,
-          "impressions": 3094,
-          "results": 24,
-          "cpr": 2.1
-        },
-        {
           "name": "الرمال · فاتورتك كاملة وشاملة – v2 – أسعار جديدة",
           "hood": "الرمال",
           "title": "فاتورتك كاملة وشاملة – v2 – أسعار جديدة",
@@ -550,10 +550,10 @@
             "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/864950487_4553550171458342_1036349166258068427_n.png?stp=dst-jpg_tt6&_nc_cat=110&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=u8ZJ5IKnZtoQ7kNvwGvS_W1&_nc_oc=AdoK0O95CUD2CsVaFcsjJ0DY2p9H3cQk0t2HgO2az7zeBJnYoXU3rQ_UGGOgtVZMSPY&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQJ_QGUx5QeWtjiDDOJ_Z0BFi3fn8ImsitffAbLxzBRZqGgBUcMtB4ARLfXpYGjgt2-dSVcNExCatw&oh=00_AQTPQsOU-4lc9OdXWlINg_hGvbz3nKqZErR0yTipBCIkXQ&oe=6B05BB27"
           ],
           "status": "ACTIVE",
-          "spend": 27.23,
-          "impressions": 1404,
+          "spend": 27.55,
+          "impressions": 1424,
           "results": 6,
-          "cpr": 4.54,
+          "cpr": 4.59,
           "creative_id": "1588995252999467"
         },
         {
@@ -594,10 +594,10 @@
             "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/897488567_4578877148925644_100348684226019719_n.png?stp=dst-jpg_tt6&_nc_cat=111&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=hl2disoOe2sQ7kNvwH8m-26&_nc_oc=Adrw7X7QMJ4-3UEFuTZT-vMtDMe1KsRkQPjNCc-OeOh2r2MyMG9W432587cWjlIbTC4&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=oJMbytrAd9ulFl994K7Osw&_nc_tpa=Q5bMBQI5fTZe31o49gMs8oWrKKyWmeQRDi99l-LxS8i4C2uvUX5Mak3kl58h4q0H_fuEY98-3m6GbWI-Gw&oh=00_AQQDr1piKBOsY30XWz6xvM67vOA9Qaz3S5C0nmScOj-sXQ&oe=6B05CDEE"
           ],
           "status": "ACTIVE",
-          "spend": 4.57,
-          "impressions": 277,
+          "spend": 5.02,
+          "impressions": 302,
           "results": 2,
-          "cpr": 2.29
+          "cpr": 2.51
         },
         {
           "name": "الملز · كاروسيل-ليش الشهري – v3 – أسعار جديدة",
@@ -630,10 +630,10 @@
             "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/894400002_4578874755592550_3565186425906330905_n.png?stp=dst-jpg_tt6&_nc_cat=103&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=dy9dQMx0Ad0Q7kNvwHg-0pG&_nc_oc=Adob1iQrEOfxEkeHIgP-GbFNHOg544gKa9c0JUVJlg-FkP-MK4ohkGyBUAEJKrhd-3I&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQJK_FeE6yV_dJuyHR1weB-0jbFQtNOzKRsoBk5Di1kWcHQD_TXPnC8dt76VSUaYPGKYOlrPGDuM_A&oh=00_AQSU-3xWfuCwSKGNGnzixS0KdQCwiwuiLxTobBVa3n2TpA&oe=6B05B664"
           ],
           "status": "ACTIVE",
-          "spend": 2.21,
-          "impressions": 176,
+          "spend": 2.75,
+          "impressions": 203,
           "results": 2,
-          "cpr": 1.1
+          "cpr": 1.38
         },
         {
           "name": "القيروان · سكنك الشهري في القيروان",
@@ -646,10 +646,10 @@
             "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/897223098_4578874688925890_2688607830353171413_n.png?stp=dst-jpg_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=83iJ0-gMqD8Q7kNvwHPVL3T&_nc_oc=Adp9W_hEOJzFMlOqwJQlNcWkJGwOgG4018y9ydNSc95TM-OtALxMBiUwjNrSRiHQ-5U&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQIHg73M6_A97EgKbEdsTApaZuy_ud98xMkbM0a7vLGBB-y0QtNLH8lcSbmtkwndsGzfCsk3IbQtqQ&oh=00_AQTx_e07SdWicFH01HmZRM_Y7aA0rJGwhRn1U5EAWUy97A&oe=6B05AA59"
           ],
           "status": "ACTIVE",
-          "spend": 2.19,
-          "impressions": 143,
+          "spend": 2.69,
+          "impressions": 172,
           "results": 1,
-          "cpr": 2.19
+          "cpr": 2.69
         },
         {
           "name": "القيروان · فاتورتك شاملة",
@@ -662,8 +662,8 @@
             "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/893263936_4578874968925862_7151471107651634068_n.png?stp=dst-jpg_tt6&_nc_cat=108&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=lk_YpqytqwMQ7kNvwHkGSm-&_nc_oc=Adr79W59inmoeKjMRZiDFuoAFnORTeAeaYg2KGPp7OvXtn0qiXfdLp96lPZStxyIQBo&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQIYKyLLyr9sQwmGSZ8_u0rWopAY_ZbImotdu1pgm3HtaVcAr2X0sxIZAjFwnL6QRJ2LaUVhT9lkJg&oh=00_AQQHLZEF0SQVdT3G7wQvrlnVNR74gPYZiXL78AG4s7v3yQ&oe=6B05AA64"
           ],
           "status": "ACTIVE",
-          "spend": 0.75,
-          "impressions": 64,
+          "spend": 1.04,
+          "impressions": 80,
           "results": 0,
           "cpr": null
         },
@@ -682,8 +682,8 @@
             "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/897488567_4578877148925644_100348684226019719_n.png?stp=dst-jpg_tt6&_nc_cat=111&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=cbc22b&_nc_ohc=hl2disoOe2sQ7kNvwH8m-26&_nc_oc=Adrw7X7QMJ4-3UEFuTZT-vMtDMe1KsRkQPjNCc-OeOh2r2MyMG9W432587cWjlIbTC4&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=oJMbytrAd9ulFl994K7Osw&_nc_tpa=Q5bMBQI5fTZe31o49gMs8oWrKKyWmeQRDi99l-LxS8i4C2uvUX5Mak3kl58h4q0H_fuEY98-3m6GbWI-Gw&oh=00_AQQDr1piKBOsY30XWz6xvM67vOA9Qaz3S5C0nmScOj-sXQ&oe=6B05CDEE"
           ],
           "status": "ACTIVE",
-          "spend": 0.42,
-          "impressions": 22,
+          "spend": 0.44,
+          "impressions": 24,
           "results": 0,
           "cpr": null
         },
@@ -787,11 +787,11 @@
       "id": "120250227806310172",
       "name": "ميتا · دورميرا يومي (واتساب)",
       "status": "PAUSED",
-      "spend": 13.09,
-      "impressions": 1157,
+      "spend": 13.12,
+      "impressions": 1158,
       "results": 2,
       "resultLabel": "محادثة",
-      "cpr": 6.54,
+      "cpr": 6.56,
       "ads": [
         {
           "name": "دورميرا · يومي A · ليلتك في العقيق",
@@ -804,10 +804,10 @@
             "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/910907394_4592184034261622_4525432962738047994_n.png?stp=dst-jpg_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=Tz6NXwdoWS8Q7kNvwExq-kP&_nc_oc=AdraYzE5hBPPnDtaggDxcDU3ySy31PggqpkukAD5v90opXVbCiRybJ1pBOQNUjsomow&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQJx-LLaUu6ZhvOFOT8-T0kBsdErRupiYyykLoBBB3qDXfvY77UGdEn3bXTxDvb-CVWie5oR7qIwuA&oh=00_AQTZrUmnClyy1XxXRt-xoiI-D1EfM-P7R52wNgfPk0cmeA&oe=6B05B291"
           ],
           "status": "CAMPAIGN_PAUSED",
-          "spend": 8.93,
-          "impressions": 673,
+          "spend": 8.96,
+          "impressions": 674,
           "results": 2,
-          "cpr": 4.46
+          "cpr": 4.48
         },
         {
           "name": "دورميرا · يومي B · ليلة قريبة من البوليفارد",
@@ -922,11 +922,11 @@
       "id": "120250244878230172",
       "name": "ميتا · دورميرا (واتساب)",
       "status": "ACTIVE",
-      "spend": 68.46,
-      "impressions": 7253,
-      "results": 14,
+      "spend": 173.06,
+      "impressions": 18160,
+      "results": 55,
       "resultLabel": "محادثة",
-      "cpr": 4.89,
+      "cpr": 3.15,
       "ads": [
         {
           "name": "دورميرا · شهري · جناح غرفة وصالة (572)",
@@ -939,10 +939,10 @@
             "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/912172013_4593543270792365_240750822656341078_n.png?stp=dst-jpg_tt6&_nc_cat=107&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=HYDMwUcYL8kQ7kNvwEtoNfT&_nc_oc=AdpTlkBQR1WtUepxy6EjDHWTJq8t4u987cLTuL_SuyUghj-DR7SW0TDPKOqLzg85HkI&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQKI1G85Ha2x1R9jYnlTGoPIuTvQNcSMXtpUYsB6DIkE5BiP5mcRG7BeB-3Cw3Bnls1x-uPevDaEzw&oh=00_AQRPyrcWH_dOq0hdeIZpXbMnkw3kPmLjFZuHRKF8Ioan0Q&oe=6B05A99B"
           ],
           "status": "ACTIVE",
-          "spend": 24.6,
-          "impressions": 3180,
-          "results": 7,
-          "cpr": 3.51
+          "spend": 77.22,
+          "impressions": 9179,
+          "results": 34,
+          "cpr": 2.27
         },
         {
           "name": "دورميرا · عمل A · رحلة عمل للرياض؟",
@@ -955,10 +955,10 @@
             "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/915696167_4593543417459017_1091218064920956669_n.png?stp=dst-jpg_tt6&_nc_cat=101&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=rmi70uyTB4kQ7kNvwHbFi2C&_nc_oc=AdomT49Fy-7ZVtd1bNs0hWhdHpdVtpuvztNG8yVRYViouvIX-THzV_GcUdUAdeDQDU8&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQJz2LI4Pjaw4xeXR1FhRici8e1UgG0vJ68JsUg_To405_sbRWXzwk53y6ntbrY3SkZ98DpXAd8D9Q&oh=00_AQTuTYgrxg4s623TbU8TaK7D_IFqXaVSnfSuDKVkFJq0jA&oe=6B059A62"
           ],
           "status": "ACTIVE",
-          "spend": 23.37,
-          "impressions": 2193,
-          "results": 3,
-          "cpr": 7.79
+          "spend": 55.88,
+          "impressions": 5121,
+          "results": 7,
+          "cpr": 7.98
         },
         {
           "name": "دورميرا · يومي A · ليلتك في العقيق",
@@ -971,10 +971,10 @@
             "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/910907394_4592184034261622_4525432962738047994_n.png?stp=dst-jpg_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=Tz6NXwdoWS8Q7kNvwExq-kP&_nc_oc=AdraYzE5hBPPnDtaggDxcDU3ySy31PggqpkukAD5v90opXVbCiRybJ1pBOQNUjsomow&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQJx-LLaUu6ZhvOFOT8-T0kBsdErRupiYyykLoBBB3qDXfvY77UGdEn3bXTxDvb-CVWie5oR7qIwuA&oh=00_AQTZrUmnClyy1XxXRt-xoiI-D1EfM-P7R52wNgfPk0cmeA&oe=6B05B291"
           ],
           "status": "ACTIVE",
-          "spend": 7.54,
-          "impressions": 532,
-          "results": 0,
-          "cpr": null
+          "spend": 14.07,
+          "impressions": 1148,
+          "results": 3,
+          "cpr": 4.69
         },
         {
           "name": "دورميرا · شهري · غرفة وحمام (548)",
@@ -987,10 +987,10 @@
             "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/912270885_4593543347459024_5240965137613107134_n.png?stp=dst-jpg_tt6&_nc_cat=104&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=6JI4dcE7VmUQ7kNvwHTr71-&_nc_oc=AdrLEoI5jm_uIq6A06pAltVvfSCIOlROnrcYtVeSiBN3DzzQOZlTmr22sCDgwQbh2sI&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQK_urrWro-__oIHUZD8DXlLz01iYZAFoItx8DGW9YrkhmxtwyrJHIrYh43aAVWevO16kNGUECuhhA&oh=00_AQQvCUO_ouUX28uXKbWxJeW3EzeVTPzvW4SH-RVgEtInyA&oe=6B05AC69"
           ],
           "status": "ACTIVE",
-          "spend": 6.57,
-          "impressions": 555,
-          "results": 2,
-          "cpr": 3.29
+          "spend": 12.39,
+          "impressions": 1072,
+          "results": 7,
+          "cpr": 1.77
         },
         {
           "name": "دورميرا · يومي B · ليلة قريبة من البوليفارد",
@@ -1003,10 +1003,10 @@
             "https://scontent-ord5-1.xx.fbcdn.net/v/t45.1600-4/915550018_4592184104261615_9199924452035655495_n.png?stp=dst-jpg_tt6&_nc_cat=105&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=9_Lbh18MMkkQ7kNvwEXzp_F&_nc_oc=AdqnxaSj2lFwpu2Z9Tum20_MboCNrSf2fVLB7nVI-oNLCkXPb_RZHP770Kf2xwpAM6c&_nc_zt=1&_nc_ht=scontent-ord5-1.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQK5Za67c7vK9HVhPEErMv0wtEN5t7LrRMUTIQEBMFdKwOA9RSWUwAAJLk3gMDA0q1zWuD3PiHcU0Q&oh=00_AQRmeYySogSMkepItPdnynUAXuKJKP2k8xEcvy-ddJi3kw&oe=6B059EED"
           ],
           "status": "ACTIVE",
-          "spend": 3.5,
-          "impressions": 457,
-          "results": 2,
-          "cpr": 1.75
+          "spend": 10.24,
+          "impressions": 1282,
+          "results": 4,
+          "cpr": 2.56
         },
         {
           "name": "دورميرا · عمل B · أقم قريب من شغلك",
@@ -1019,8 +1019,8 @@
             "https://scontent-ord5-2.xx.fbcdn.net/v/t45.1600-4/914357514_4593543454125680_3533879642326904361_n.png?stp=dst-jpg_tt6&_nc_cat=109&_nc_map=urlgen_bucketless&ccb=1-7&_nc_sid=ff4730&_nc_ohc=oyPepsXk3nAQ7kNvwEyTe2v&_nc_oc=AdoC4BW2h24dnwGDERqDZrcBmw0OXvR4tSzMl1lO-6kPAdB2usXuBRddk35lqXZ4nDw&_nc_zt=1&_nc_ht=scontent-ord5-2.xx&edm=AEZPnVgEAAAA&_nc_gid=zznl1-bgINndv0BKvdQHUw&_nc_tpa=Q5bMBQKhk9F-tYoDTi0Ih5kKXsRp0dpvAGGuu_F2x3qyUU0KhFEByVQqUAw2u-myg1VM5Bad45s7zX6lNw&oh=00_AQQRrTftDgwlE_tisiG5eJYkwXk58fSyIuvYPzjzc8Y6mA&oe=6B05C3D3"
           ],
           "status": "ACTIVE",
-          "spend": 2.88,
-          "impressions": 336,
+          "spend": 3.26,
+          "impressions": 358,
           "results": 0,
           "cpr": null
         }
@@ -1031,9 +1031,9 @@
       "id": "ffa2e369-e15a-4e96-8834-2d77d1c03534",
       "name": "سناب · واتساب أكتوبر (الرمال والملز)",
       "status": "ACTIVE",
-      "spend": 3687.91,
-      "impressions": 623706,
-      "results": 10305,
+      "spend": 3732.89,
+      "impressions": 631802,
+      "results": 10416,
       "resultLabel": "ضغطة واتساب",
       "cpr": 0.36,
       "ads": [
@@ -1075,10 +1075,23 @@
           "format": "ستوري",
           "img": [],
           "status": "ACTIVE",
-          "spend": 420.56,
-          "impressions": 77308,
-          "results": 788,
+          "spend": 430.23,
+          "impressions": 79065,
+          "results": 811,
           "cpr": 0.53
+        },
+        {
+          "name": "الرمال · فاتورتك شاملة وكاملة | v3",
+          "hood": "الرمال",
+          "title": "فاتورتك شاملة وكاملة | v3",
+          "id": "4dfbfe9c-0b48-4e4d-bf19-987dff293a42",
+          "format": "ستوري",
+          "img": [],
+          "status": "ACTIVE",
+          "spend": 307.44,
+          "impressions": 56800,
+          "results": 657,
+          "cpr": 0.47
         },
         {
           "name": "الملز · في قلب الرياض | v3",
@@ -1094,19 +1107,6 @@
           "cpr": 0.66
         },
         {
-          "name": "الرمال · فاتورتك شاملة وكاملة | v3",
-          "hood": "الرمال",
-          "title": "فاتورتك شاملة وكاملة | v3",
-          "id": "4dfbfe9c-0b48-4e4d-bf19-987dff293a42",
-          "format": "ستوري",
-          "img": [],
-          "status": "ACTIVE",
-          "spend": 283.61,
-          "impressions": 52469,
-          "results": 609,
-          "cpr": 0.47
-        },
-        {
           "name": "الرمال · دخول ذكي بدون مفتاح | v3",
           "hood": "الرمال",
           "title": "دخول ذكي بدون مفتاح | v3",
@@ -1114,10 +1114,10 @@
           "format": "ستوري",
           "img": [],
           "status": "ACTIVE",
-          "spend": 223.75,
-          "impressions": 41702,
-          "results": 545,
-          "cpr": 0.41
+          "spend": 234.25,
+          "impressions": 43498,
+          "results": 583,
+          "cpr": 0.4
         },
         {
           "name": "الرمال · فاتورتك شاملة وكاملة | v2",
@@ -1142,9 +1142,9 @@
           "format": "ستوري",
           "img": [],
           "status": "ACTIVE",
-          "spend": 166.17,
-          "impressions": 29739,
-          "results": 523,
+          "spend": 167.16,
+          "impressions": 29951,
+          "results": 525,
           "cpr": 0.32
         },
         {
@@ -1345,9 +1345,9 @@
       "id": "b0792a67-adc8-4a6d-b6c8-f3100c13a478",
       "name": "سناب · واتساب القيروان",
       "status": "ACTIVE",
-      "spend": 370.99,
-      "impressions": 72103,
-      "results": 1738,
+      "spend": 416.49,
+      "impressions": 80625,
+      "results": 1998,
       "resultLabel": "ضغطة واتساب",
       "cpr": 0.21,
       "ads": [
@@ -1359,9 +1359,9 @@
           "img": [],
           "name": "القيروان · ادخل بشنطتك – من 4,200 | v2",
           "status": "ACTIVE",
-          "spend": 196.81,
-          "impressions": 41056,
-          "results": 1217,
+          "spend": 236.24,
+          "impressions": 48540,
+          "results": 1455,
           "cpr": 0.16
         },
         {
@@ -1372,9 +1372,9 @@
           "img": [],
           "name": "القيروان · كاروسيل-جولة داخل الوحدة (فيديو)",
           "status": "ACTIVE",
-          "spend": 91.57,
-          "impressions": 17201,
-          "results": 294,
+          "spend": 94.49,
+          "impressions": 17673,
+          "results": 301,
           "cpr": 0.31
         },
         {
@@ -1404,6 +1404,19 @@
           "cpr": 0.38
         },
         {
+          "id": "133dc9ea-00a7-444c-8dfa-4d7764b184ce",
+          "hood": "القيروان",
+          "title": "استديو مفروش بالشهر – الغرفة | v2",
+          "format": "ستوري",
+          "img": [],
+          "name": "القيروان · استديو مفروش بالشهر – الغرفة | v2",
+          "status": "ACTIVE",
+          "spend": 10.81,
+          "impressions": 2021,
+          "results": 34,
+          "cpr": 0.32
+        },
+        {
           "id": "0f1cb8ee-620b-472b-bd1d-bebf3561b09f",
           "hood": "القيروان",
           "title": "سكنك الشهري في القيروان",
@@ -1417,19 +1430,6 @@
           "cpr": 0.27
         },
         {
-          "id": "133dc9ea-00a7-444c-8dfa-4d7764b184ce",
-          "hood": "القيروان",
-          "title": "استديو مفروش بالشهر – الغرفة | v2",
-          "format": "ستوري",
-          "img": [],
-          "name": "القيروان · استديو مفروش بالشهر – الغرفة | v2",
-          "status": "ACTIVE",
-          "spend": 9.73,
-          "impressions": 1846,
-          "results": 31,
-          "cpr": 0.31
-        },
-        {
           "id": "4e9557f3-400e-41b3-80f1-68a57e5b8e47",
           "hood": "القيروان",
           "title": "فاتورتك شاملة | v2",
@@ -1437,10 +1437,10 @@
           "img": [],
           "name": "القيروان · فاتورتك شاملة | v2",
           "status": "ACTIVE",
-          "spend": 8.69,
-          "impressions": 1620,
-          "results": 33,
-          "cpr": 0.26
+          "spend": 9.51,
+          "impressions": 1783,
+          "results": 42,
+          "cpr": 0.23
         },
         {
           "id": "090ad582-a00e-4855-aebb-fba496464408",
@@ -1450,9 +1450,9 @@
           "img": [],
           "name": "القيروان · استديو مفروش بالشهر – المبنى | v2",
           "status": "ACTIVE",
-          "spend": 7.83,
-          "impressions": 1443,
-          "results": 12,
+          "spend": 8.4,
+          "impressions": 1551,
+          "results": 13,
           "cpr": 0.65
         },
         {
@@ -1463,9 +1463,9 @@
           "img": [],
           "name": "القيروان · سكنك الشهري في القيروان | v2",
           "status": "ACTIVE",
-          "spend": 5.12,
-          "impressions": 1020,
-          "results": 16,
+          "spend": 5.8,
+          "impressions": 1140,
+          "results": 18,
           "cpr": 0.32
         },
         {
@@ -1619,11 +1619,11 @@
       "id": "93ee131a-a0f4-4067-b7d2-1c23519efb91",
       "name": "سناب · دورميرا (واتساب)",
       "status": "ACTIVE",
-      "spend": 65.0,
-      "impressions": 13349,
-      "results": 155,
+      "spend": 120,
+      "impressions": 22995,
+      "results": 257,
       "resultLabel": "ضغطة واتساب",
-      "cpr": 0.42,
+      "cpr": 0.47,
       "ads": [
         {
           "id": "7f3c7807-9183-4eaf-a0f3-abff2a2ae0b6",
@@ -1633,10 +1633,10 @@
           "img": [],
           "name": "دورميرا · شهري · غرفة وحمام (548)",
           "status": "ACTIVE",
-          "spend": 32.66,
-          "impressions": 6825,
-          "results": 72,
-          "cpr": 0.45
+          "spend": 66.52,
+          "impressions": 12997,
+          "results": 135,
+          "cpr": 0.49
         },
         {
           "id": "76bbb7d5-dbad-44de-af88-2b5c1a597857",
@@ -1646,10 +1646,10 @@
           "img": [],
           "name": "دورميرا · يومي A · طالع البوليفارد الليلة؟",
           "status": "ACTIVE",
-          "spend": 15.95,
-          "impressions": 3380,
-          "results": 41,
-          "cpr": 0.39
+          "spend": 24.54,
+          "impressions": 4842,
+          "results": 53,
+          "cpr": 0.46
         },
         {
           "id": "8f5e8005-99db-425d-9070-a8cdef87328d",
@@ -1659,10 +1659,10 @@
           "img": [],
           "name": "دورميرا · يومي B · 350 ريال لليلة",
           "status": "ACTIVE",
-          "spend": 9.05,
-          "impressions": 1657,
-          "results": 27,
-          "cpr": 0.34
+          "spend": 15.46,
+          "impressions": 2664,
+          "results": 40,
+          "cpr": 0.39
         },
         {
           "id": "087bf18a-c5b8-42fc-bc3f-52194f6a1639",
@@ -1672,10 +1672,10 @@
           "img": [],
           "name": "دورميرا · شهري · جناح غرفة وصالة (572)",
           "status": "ACTIVE",
-          "spend": 7.34,
-          "impressions": 1487,
-          "results": 15,
-          "cpr": 0.49
+          "spend": 13.48,
+          "impressions": 2492,
+          "results": 29,
+          "cpr": 0.46
         }
       ]
     },
@@ -1688,7 +1688,7 @@
       "impressions": 201,
       "results": 2,
       "resultLabel": "ضغطة واتساب",
-      "cpr": 0.59,
+      "cpr": 0.6,
       "ads": [
         {
           "id": "e24cf3c4-72c9-49f5-a6e6-4ef5d432892e",
@@ -1714,13 +1714,13 @@
           "spend": 0.59,
           "impressions": 116,
           "results": 2,
-          "cpr": 0.29
+          "cpr": 0.3
         }
       ]
     }
   ],
   "campaignsRange": {
     "from": "2026-10-01",
-    "to": "2026-11-19"
+    "to": "2026-11-20"
   }
 }
